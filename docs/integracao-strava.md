@@ -1,8 +1,35 @@
 # Integração Strava — Contrato do Conector
 
-O conector do Strava é um componente separado do GearLog. Ele cuida do OAuth, das chamadas à API e dos webhooks. Para o GearLog, entrega só dados já normalizados. O GearLog nunca chama o Strava diretamente.
+Requisitos atendidos: RF04, RF05, RF06, RF13, RF14, RNF01, RNF05, RNF06, RB02, RB03, RB08, RB10–RB12.
 
-Requisitos atendidos: RF04, RF05, RF06, RF13, RNF01, RNF05, RNF06, RB02, RB03, RB08.
+## 0. Princípio: compatível com o Strava
+
+O conector do GearLog expõe **um subconjunto da API v3 do Strava**, com os mesmos caminhos, parâmetros, nomes de campos, unidades, paginação e formato de erro. Quem consome o conector ou a API do Strava **recebe o mesmo resultado**. O contrato oficial é o Swagger do Strava (`https://developers.strava.com/swagger/swagger.json`), recortado nos endpoints e campos listados abaixo.
+
+```
+                 STRAVA_API_BASE_URL
+GearLog (core) ─────────────────────────┬──► https://www.strava.com/api/v3   (Strava real)
+  StravaClient                          ├──► https://<conector>/api/v3        (conector GearLog)
+                                        └──► http://localhost:4010/api/v3     (mock gerado do Swagger, para testes)
+```
+
+O que isso garante:
+
+- **Intercambiável:** trocar de fonte é só mudar `STRAVA_API_BASE_URL`. O código do GearLog não muda.
+- **Contrato verificável:** as respostas do conector são validadas contra o mesmo Swagger que descreve o Strava (teste de contrato).
+- **Testes e demo sem depender do Strava:** um mock server gerado do Swagger (ex.: Prism) ou o próprio conector em modo cache.
+- **Clientes prontos:** qualquer biblioteca cliente do Strava (ex.: `strava-v3` para Node) funciona apontando para o conector.
+
+Regra de ouro: **o conector não converte nada.** Distância em metros, tempo em segundos, datas ISO-8601 exatamente como o Strava devolve. A conversão para km e horas acontece **dentro do GearLog**, na camada de domínio (seção 6).
+
+### Modos de operação do conector
+
+| Modo | Comportamento | Uso |
+|---|---|---|
+| **Proxy** | Repassa a chamada ao Strava com o token do atleta e devolve a resposta sem alterar | Produção |
+| **Cache** | Responde a partir das atividades e bikes já importadas, no mesmo formato do Strava | Strava fora do ar (RNF06), rate limit, demo offline |
+
+Os dois modos devolvem o mesmo JSON. O cliente não precisa saber qual está ativo.
 
 ---
 
@@ -11,35 +38,35 @@ Requisitos atendidos: RF04, RF05, RF06, RF13, RNF01, RNF05, RNF06, RB02, RB03, R
 | Dado | Para quê | Requisito |
 |---|---|---|
 | Bikes do atleta (gear) | Associar cada bike do Strava a uma bike do GearLog | RF05 |
-| Atividades de ciclismo, com **bike, data, distância e tempo em movimento** | Somar **km e horas** **só às peças instaladas na data da atividade** | RF06, RB02 |
-| Tipo de esporte da atividade | Contar só atividades de ciclismo | RB03 |
-| Eventos de criação, edição e exclusão de atividade | Manter a km correta quando o atleta troca a bike da atividade ou a apaga | RF06 |
+| Atividades de ciclismo, com **bike, data, distância e tempo em movimento** | Somar **km e horas** só às peças instaladas na data da atividade | RF06, RB02 |
+| `sport_type` da atividade | Contar só atividades de ciclismo | RB03 |
+| Eventos de criação, edição e exclusão de atividade | Manter km e horas corretas quando o atleta troca a bike da atividade ou a apaga | RF06 |
 | Revogação de acesso | Parar a sincronização e apagar os tokens | RNF01 |
 
 ### Duas métricas de desgaste: km e horas
 
-Cada peça se desgasta em uma métrica, ou nas duas:
-
-| Métrica | Origem no Strava | Peças típicas |
+| Métrica | Campo Strava | Peças típicas |
 |---|---|---|
-| **Quilômetros** | `distance` da atividade (m → km) | corrente, cassete, coroas, pneus, pastilhas, cabos |
-| **Horas de uso** | `moving_time` da atividade (s → h) | suspensão dianteira e traseira (revisão de lowers e revisão completa), canote retrátil, rolamentos de pivô |
+| **Quilômetros** | `distance` (metros) | corrente, cassete, coroas, pneus, pastilhas, cabos |
+| **Horas de uso** | `moving_time` (segundos) | garfo e amortecedor (revisão de lowers/câmara de ar e revisão completa), canote retrátil, rolamentos de pivô |
 
-Pelos manuais dos fabricantes, a suspensão é revisada **por horas de uso**. A km pesa pouco ali: uma hora de trilha técnica desgasta muito mais a suspensão do que uma hora de asfalto, mesmo cobrindo menos km. Por isso `moving_time` é **campo obrigatório** do contrato, tão importante quanto `distance`.
+Pelos manuais dos fabricantes, a suspensão é revisada **por horas de uso**: uma hora de trilha técnica desgasta muito mais a suspensão do que uma hora de asfalto, mesmo cobrindo menos km. Por isso `moving_time` é tão obrigatório quanto `distance`.
 
 > **Atenção ao modelo:**
-> - A `distance` que o Strava devolve para cada bike é a **km total da bike**.
+> - A `distance` que o Strava devolve para cada bike é a **distância total da bike**.
 > - O Strava **não guarda horas por bike**. Não existe total de horas no objeto gear.
 >
-> Por isso o conector precisa entregar as **atividades individuais**, cada uma com distância **e** tempo. O GearLog soma as duas métricas por peça, contando só a partir da data de instalação.
+> Por isso o GearLog precisa das **atividades individuais**, cada uma com distância **e** tempo, e soma as duas métricas por peça a partir da data de instalação.
 
-**Por que `moving_time` e não `elapsed_time`:** `elapsed_time` inclui paradas (café, semáforo, pneu furado), quando a suspensão não está trabalhando. `moving_time` é o tempo em que a bike esteve rodando.
+**Por que `moving_time` e não `elapsed_time`:** `elapsed_time` inclui paradas (café, semáforo, pneu furado), quando a suspensão não está trabalhando.
 
-**Não extrair** (minimização de dados, LGPD): GPS e rotas (streams/polyline), frequência cardíaca, potência, cadência, segmentos, fotos, kudos e comentários.
+**Não usar** (minimização de dados, LGPD): streams/GPS, polyline, frequência cardíaca, potência, cadência, segmentos, fotos, kudos e comentários. O conector **não implementa** esses endpoints. No modo proxy, os campos que o Strava devolver a mais são repassados como vieram, mas o GearLog ignora tudo que não está nas tabelas abaixo.
 
 ---
 
 ## 2. Autenticação (OAuth 2.0)
+
+O conector aceita a autenticação **no mesmo formato do Strava**: `Authorization: Bearer <access_token>`.
 
 | Item | Valor |
 |---|---|
@@ -47,128 +74,133 @@ Pelos manuais dos fabricantes, a suspensão é revisada **por horas de uso**. A 
 | Troca e refresh de token | `POST https://www.strava.com/oauth/token` |
 | Escopos | `read`, `profile:read_all` (lista de bikes) e `activity:read_all` (inclui atividades privadas) |
 | Validade do access token | ~6 h (`expires_at`). Renovar com `refresh_token` antes de expirar. |
-| Armazenamento | `access_token` e `refresh_token` criptografados, só no backend (RNF01) |
+| Armazenamento | Tokens criptografados, só no backend (RNF01) |
+
+O OAuth é sempre feito com o Strava real. O conector valida o Bearer recebido e, no modo proxy, repassa o token ao Strava.
 
 O app novo no Strava começa em **Single Player Mode**, com capacidade para 1 atleta: só a conta do desenvolvedor. Isso já cobre a RB08.
 
 ---
 
-## 3. Endpoints usados
+## 3. Endpoints do subconjunto
 
-### 3.1 `GET /api/v3/athlete` — atleta e lista de bikes
-Campos usados: `id`, `firstname`, `lastname` e `bikes[]`, onde cada bike traz `id` (ex.: `"b1234567"`), `name`, `primary`, `distance` (m) e `retired`.
+Todos sob `{STRAVA_API_BASE_URL}` = `.../api/v3`. Caminhos, parâmetros e respostas são **idênticos** aos do Strava.
 
-### 3.2 `GET /api/v3/gear/{id}` — detalhe da bike
-Campos usados: `id`, `name`, `brand_name`, `model_name`, `frame_type`, `distance` (m), `primary` e `retired`.
+| Método e caminho | Schema Strava da resposta | Uso no GearLog |
+|---|---|---|
+| `GET /athlete` | `DetailedAthlete` | Atleta e lista `bikes[]` (RF05) |
+| `GET /gear/{id}` | `DetailedGear` | Detalhe da bike |
+| `GET /athlete/activities?before=&after=&page=&per_page=` | `SummaryActivity[]` | Backfill e polling |
+| `GET /activities/{id}` | `DetailedActivity` | Rebuscar a atividade após um webhook |
+| `GET/POST /push_subscriptions` | `PushSubscription` | Inscrição de webhook (seção 4) |
 
-### 3.3 `GET /api/v3/athlete/activities?after=&before=&page=&per_page=200` — importação em lote
-Usado na **carga inicial** (backfill), para buscar atividades desde a data de instalação da peça mais antiga, e como **polling** de reserva quando não há webhook.
+### 3.1 Campos usados — `DetailedAthlete`
+`id`, `firstname`, `lastname`, `bikes[]` (`SummaryGear`: `id`, `name`, `primary`, `distance`, `retired`).
 
-### 3.4 `GET /api/v3/activities/{id}` — atividade individual
-Usado quando chega um evento de webhook, para buscar o estado atual da atividade.
+### 3.2 Campos usados — `DetailedGear`
+`id` (ex.: `"b1234567"`), `name`, `brand_name`, `model_name`, `frame_type` (1=MTB, 2=cross, 3=road, 4=TT, 5=gravel), `distance` (m), `primary`, `retired`.
 
-Campos de atividade usados (vale para 3.3 e 3.4):
+### 3.3 Campos usados — `SummaryActivity` / `DetailedActivity`
 
-| Campo Strava | Uso |
-|---|---|
-| `id` | chave de idempotência |
-| `sport_type` | filtro RB03 |
-| `gear_id` | qual bike (pode vir `null`) |
-| `start_date` (UTC) | decidir quais peças estavam instaladas (RB02) |
-| `distance` (m) | **km** de desgaste (transmissão, pneus, freios) — obrigatório |
-| `moving_time` (s) | **horas** de uso (suspensão, canote, pivôs) — obrigatório |
-| `total_elevation_gain` (m) | opcional, para uma análise futura |
-| `trainer`, `manual` | marcar atividade em rolo ou digitada à mão |
+| Campo | Tipo/unidade | Uso |
+|---|---|---|
+| `id` | int64 | Chave de idempotência |
+| `sport_type` | enum | Filtro RB03 |
+| `gear_id` | string ou `null` | Qual bike |
+| `start_date` | ISO-8601 UTC | Quais peças estavam instaladas (RB02) |
+| `distance` | float, **metros** | Desgaste em km — obrigatório |
+| `moving_time` | int, **segundos** | Desgaste em horas — obrigatório |
+| `elapsed_time` | int, segundos | Não usado para desgaste (RB12) |
+| `total_elevation_gain` | float, metros | Opcional, análise futura |
+| `trainer` | bool | Atividade em rolo |
+| `manual` | bool | Atividade digitada à mão |
 
-`sport_type` aceitos: `Ride`, `MountainBikeRide`, `GravelRide`, `EBikeRide`, `EMountainBikeRide`, `VirtualRide`. Se `VirtualRide` (rolo) desgasta todas as peças ou só a transmissão é uma decisão em aberto: precisa de um ADR.
+`sport_type` aceitos pelo GearLog: `Ride`, `MountainBikeRide`, `GravelRide`, `EBikeRide`, `EMountainBikeRide`, `VirtualRide`. O conector **não filtra** (o Strava também não). O filtro é regra de negócio e fica no GearLog. Se `VirtualRide` (rolo) desgasta todas as peças ou só a transmissão é uma decisão em aberto: precisa de um ADR.
+
+### 3.4 Paginação, erros e limites (iguais ao Strava)
+
+- **Paginação:** `page` começa em 1, `per_page` vai até 200, e uma lista vazia indica o fim.
+- **Erros:** mesmo corpo do Strava, `{"message": "...", "errors": [{"resource", "field", "code"}]}`, com os mesmos status (`401`, `404`, `429`).
+- **Headers de rate limit:** o conector devolve `X-RateLimit-Limit`, `X-RateLimit-Usage`, `X-ReadRateLimit-Limit` e `X-ReadRateLimit-Usage`. No modo proxy, repassa os do Strava. No modo cache, informa os próprios.
 
 ---
 
-## 4. Webhooks (atualização em tempo real)
+## 4. Webhooks (mesmo formato do Strava)
 
-- **Inscrição:** `POST /api/v3/push_subscriptions` com `client_id`, `client_secret`, `callback_url` e `verify_token`.
-- **Validação:** o Strava faz um `GET` no callback com `hub.challenge`. O conector deve responder `{"hub.challenge": "..."}` em até 2 s.
-- **Evento:** o Strava faz um `POST` com `object_type` (`activity` ou `athlete`), `aspect_type` (`create`, `update` ou `delete`), `object_id`, `owner_id`, `updates` e `event_time`.
-- **Regras do conector:**
-  - Responder `200` **em até 2 s** e processar o evento de forma assíncrona (fila).
-  - Em `create` e `update`, rebuscar a atividade com `GET /activities/{id}`. O campo `updates` não traz todos os campos, e a troca de bike não vem de forma confiável nele.
-  - Se chegar `athlete` com `updates.authorized = "false"`, apagar os tokens e emitir `AthleteDeauthorized`.
-- **Ambiente local:** o callback precisa de uma URL pública. Em desenvolvimento, usar um túnel (ex.: ngrok ou cloudflared) ou depender só do polling.
+O conector **recebe** os webhooks do Strava e **emite** webhooks no mesmo formato. Quem assina o conector recebe eventos idênticos aos do Strava.
 
----
+- **Inscrição:** `POST /push_subscriptions` com `client_id`, `client_secret`, `callback_url` e `verify_token`.
+- **Validação:** `GET {callback_url}?hub.mode=subscribe&hub.challenge=...&hub.verify_token=...`. O assinante responde `{"hub.challenge": "..."}` em até 2 s.
+- **Evento** (`POST` no callback):
 
-## 5. Contrato de saída (conector → GearLog)
-
-Unidades já convertidas: km, segundos e datas em ISO-8601 UTC.
-
-```ts
-type ConnectorBike = {
-  stravaGearId: string;      // "b1234567"
-  name: string;
-  brand?: string;
-  model?: string;
-  frameType?: number;        // código do Strava (1=MTB, 2=cross, 3=road, 4=TT, 5=gravel)
-  totalDistanceKm: number;   // apenas informativo; o Strava não fornece total de horas por bike
-  primary: boolean;
-  retired: boolean;
-};
-
-type ConnectorActivity = {
-  stravaActivityId: string;
-  stravaGearId: string | null;
-  sportType: "Ride" | "MountainBikeRide" | "GravelRide" | "EBikeRide" | "EMountainBikeRide" | "VirtualRide";
-  startDate: string;         // UTC
-  distanceKm: number;        // métrica de desgaste em km
-  movingHours: number;       // métrica de desgaste em horas (moving_time / 3600), 2 casas decimais
-  elevationGainM?: number;
-  trainer: boolean;
-  manual: boolean;
-};
-
-type ConnectorEvent =
-  | { type: "ActivityUpserted"; activity: ConnectorActivity }
-  | { type: "ActivityDeleted"; stravaActivityId: string }
-  | { type: "AthleteDeauthorized"; stravaAthleteId: string };
+```json
+{
+  "object_type": "activity",
+  "object_id": 1234567890,
+  "aspect_type": "update",
+  "owner_id": 134815,
+  "subscription_id": 120475,
+  "event_time": 1516126040,
+  "updates": { "title": "Pedal de domingo" }
+}
 ```
 
-### Interface mínima
-
-| Operação | Descrição |
-|---|---|
-| `getAuthorizationUrl()` / `handleOAuthCallback(code)` | Vincular a conta (RF04) |
-| `listBikes()` | Listar bikes para associação (RF05) |
-| `listActivities(since: Date)` | Backfill e polling, já filtrado por ciclismo |
-| `onEvent(handler)` | Entrega de `ConnectorEvent` vindos do webhook |
-| `getStatus()` | Última sincronização, último erro, tokens válidos (RF13) |
-
-O conector pode ser um módulo no backend ou um serviço separado com REST. O contrato acima vale nos dois casos. Registrar a escolha em um ADR.
+- **Regras do assinante (GearLog):**
+  - Responder `200` **em até 2 s** e processar de forma assíncrona (fila).
+  - Em `create` e `update`, rebuscar com `GET /activities/{id}`. O campo `updates` não traz todos os campos, e a troca de bike não vem de forma confiável nele.
+  - Se chegar `object_type = "athlete"` com `updates.authorized = "false"`, apagar os tokens.
+- **Ambiente local:** o Strava precisa de uma URL pública. Em desenvolvimento, usar um túnel (ngrok ou cloudflared) ou depender só do polling.
 
 ---
 
-## 6. Casos de borda que o GearLog trata (não o conector)
+## 5. Lado do GearLog: `StravaClient` e tradução para o domínio
+
+O GearLog tem **um único cliente** para o formato Strava, configurado por `STRAVA_API_BASE_URL`. A tradução para o domínio acontece aqui, não no conector:
+
+| Campo Strava | Campo no domínio GearLog | Conversão |
+|---|---|---|
+| `id` | `Atividade.stravaId` | — |
+| `gear_id` | `Atividade.bike` (via associação) | Busca da bike associada |
+| `start_date` | `Atividade.data` | — |
+| `distance` | `Atividade.km` | `distance / 1000` |
+| `moving_time` | `Atividade.horas` | `moving_time / 3600`, 2 casas decimais |
+| `sport_type` | `Atividade.tipo` | Descarta o que não é ciclismo (RB03) |
+
+---
+
+## 6. Casos de borda que o GearLog trata
 
 | Caso | Tratamento |
 |---|---|
-| Mesma atividade recebida duas vezes | Idempotência por `stravaActivityId` |
+| Mesma atividade recebida duas vezes | Idempotência por `id` |
 | `update` trocou a bike da atividade | Desfazer km **e horas** na bike antiga e aplicar na nova |
 | `update` corrigiu distância ou tempo | Recalcular km e horas das peças afetadas |
 | `delete` | Subtrair km **e horas** das peças afetadas |
-| Atividade com `moving_time = 0` ou `manual = true` sem tempo | Somar só a km; as horas ficam zeradas e o atleta é avisado de que as peças medidas por hora podem estar subestimadas |
-| `stravaGearId = null` | Atividade fica "pendente de bike" até o atleta associar |
+| `gear_id = null` | Atividade fica "pendente de bike" até o atleta associar |
 | Bike do Strava não associada no GearLog | Ignorar até a associação; ao associar, reprocessar o histórico |
-| Peça instalada com data retroativa | Recalcular a km da peça a partir das atividades salvas |
+| Peça instalada com data retroativa | Recalcular km e horas da peça a partir das atividades salvas |
+| `moving_time = 0` (ex.: atividade manual sem tempo) | Somar só a km; as horas ficam zeradas e o atleta é avisado de que as peças medidas por hora podem estar subestimadas |
 
-Para fazer isso, o GearLog **guarda as atividades importadas**, não só os totais. Os acumulados de cada peça (km e horas) são sempre derivados dessas atividades.
+Para isso, o GearLog **guarda as atividades importadas**, não só os totais. Os acumulados de cada peça (km e horas) são sempre derivados dessas atividades.
 
 ---
 
-## 7. Limites e falhas
+## 7. Testes de contrato
 
-- **Rate limit padrão:** 100 leituras a cada 15 min e 1.000 por dia (total de 200 a cada 15 min e 2.000 por dia). Ler os headers `X-ReadRateLimit-*` e fazer backoff no `429`.
-- **Backfill:** usar `per_page=200` para gastar o mínimo de chamadas.
-- **Falha do Strava:** manter os dados atuais, registrar o erro e permitir nova tentativa manual (RF13). O resto do GearLog continua funcionando (RNF06).
-- **Termos de uso da API:** os dados do Strava são exibidos só para o próprio atleta. Antes de mostrar a "km de uso" de uma peça a outros usuários no marketplace (RB07), confirmar que isso é permitido.
+- O repositório guarda o Swagger do Strava recortado: `docs/api/strava-subset.yaml`, só com os endpoints e schemas da seção 3.
+- **Teste de contrato:** as respostas do conector, nos modos proxy e cache, são validadas contra `strava-subset.yaml`.
+- **Mock:** `prism mock docs/api/strava-subset.yaml` sobe uma API compatível em `localhost:4010`, usada nos testes do GearLog e na demo.
+- **Teste de equivalência:** para uma mesma atividade, a resposta do conector e a do Strava real devem ser iguais nos campos da seção 3.3.
 
-## 8. Credenciais
+---
 
-`STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_WEBHOOK_VERIFY_TOKEN` e `STRAVA_CALLBACK_URL` vão no `.env`, que fica fora do Git. No repositório entra só o `.env.example`.
+## 8. Limites e falhas
+
+- **Rate limit padrão do Strava:** 100 leituras a cada 15 min e 1.000 por dia (total de 200 a cada 15 min e 2.000 por dia). Ler `X-ReadRateLimit-*` e fazer backoff no `429`. O modo cache do conector economiza chamadas.
+- **Backfill:** usar `per_page=200`.
+- **Falha do Strava:** o conector passa ao modo cache, o GearLog mantém os dados, registra o erro e permite nova tentativa manual (RF13, RNF06).
+- **Termos de uso da API:** os dados do Strava são exibidos só para o próprio atleta. Antes de mostrar a km/horas de uso de uma peça a outros usuários no marketplace (RB07), confirmar que isso é permitido.
+
+## 9. Configuração
+
+`STRAVA_API_BASE_URL`, `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_WEBHOOK_VERIFY_TOKEN` e `STRAVA_CALLBACK_URL` vão no `.env`, que fica fora do Git. No repositório entra só o `.env.example`.
