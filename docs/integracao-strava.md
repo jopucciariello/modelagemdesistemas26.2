@@ -11,12 +11,29 @@ Requisitos atendidos: RF04, RF05, RF06, RF13, RNF01, RNF05, RNF06, RB02, RB03, R
 | Dado | Para quê | Requisito |
 |---|---|---|
 | Bikes do atleta (gear) | Associar cada bike do Strava a uma bike do GearLog | RF05 |
-| Atividades de ciclismo, com **bike, data, distância e tempo em movimento** | Somar km e horas **só às peças instaladas na data da atividade** | RF06, RB02 |
+| Atividades de ciclismo, com **bike, data, distância e tempo em movimento** | Somar **km e horas** **só às peças instaladas na data da atividade** | RF06, RB02 |
 | Tipo de esporte da atividade | Contar só atividades de ciclismo | RB03 |
 | Eventos de criação, edição e exclusão de atividade | Manter a km correta quando o atleta troca a bike da atividade ou a apaga | RF06 |
 | Revogação de acesso | Parar a sincronização e apagar os tokens | RNF01 |
 
-> **Atenção ao modelo:** a `distance` que o Strava devolve para cada bike é a **km total da bike**. Isso não basta, porque cada peça tem sua própria km, contada a partir da data de instalação. Por isso o conector precisa entregar as **atividades individuais**, não só o total da bike.
+### Duas métricas de desgaste: km e horas
+
+Cada peça se desgasta em uma métrica, ou nas duas:
+
+| Métrica | Origem no Strava | Peças típicas |
+|---|---|---|
+| **Quilômetros** | `distance` da atividade (m → km) | corrente, cassete, coroas, pneus, pastilhas, cabos |
+| **Horas de uso** | `moving_time` da atividade (s → h) | suspensão dianteira e traseira (revisão de lowers e revisão completa), canote retrátil, rolamentos de pivô |
+
+Pelos manuais dos fabricantes, a suspensão é revisada **por horas de uso**. A km pesa pouco ali: uma hora de trilha técnica desgasta muito mais a suspensão do que uma hora de asfalto, mesmo cobrindo menos km. Por isso `moving_time` é **campo obrigatório** do contrato, tão importante quanto `distance`.
+
+> **Atenção ao modelo:**
+> - A `distance` que o Strava devolve para cada bike é a **km total da bike**.
+> - O Strava **não guarda horas por bike**. Não existe total de horas no objeto gear.
+>
+> Por isso o conector precisa entregar as **atividades individuais**, cada uma com distância **e** tempo. O GearLog soma as duas métricas por peça, contando só a partir da data de instalação.
+
+**Por que `moving_time` e não `elapsed_time`:** `elapsed_time` inclui paradas (café, semáforo, pneu furado), quando a suspensão não está trabalhando. `moving_time` é o tempo em que a bike esteve rodando.
 
 **Não extrair** (minimização de dados, LGPD): GPS e rotas (streams/polyline), frequência cardíaca, potência, cadência, segmentos, fotos, kudos e comentários.
 
@@ -58,8 +75,8 @@ Campos de atividade usados (vale para 3.3 e 3.4):
 | `sport_type` | filtro RB03 |
 | `gear_id` | qual bike (pode vir `null`) |
 | `start_date` (UTC) | decidir quais peças estavam instaladas (RB02) |
-| `distance` (m) | km de desgaste |
-| `moving_time` (s) | horas de uso (suspensão) |
+| `distance` (m) | **km** de desgaste (transmissão, pneus, freios) — obrigatório |
+| `moving_time` (s) | **horas** de uso (suspensão, canote, pivôs) — obrigatório |
 | `total_elevation_gain` (m) | opcional, para uma análise futura |
 | `trainer`, `manual` | marcar atividade em rolo ou digitada à mão |
 
@@ -91,7 +108,7 @@ type ConnectorBike = {
   brand?: string;
   model?: string;
   frameType?: number;        // código do Strava (1=MTB, 2=cross, 3=road, 4=TT, 5=gravel)
-  totalDistanceKm: number;   // apenas informativo
+  totalDistanceKm: number;   // apenas informativo; o Strava não fornece total de horas por bike
   primary: boolean;
   retired: boolean;
 };
@@ -101,8 +118,8 @@ type ConnectorActivity = {
   stravaGearId: string | null;
   sportType: "Ride" | "MountainBikeRide" | "GravelRide" | "EBikeRide" | "EMountainBikeRide" | "VirtualRide";
   startDate: string;         // UTC
-  distanceKm: number;
-  movingTimeSec: number;
+  distanceKm: number;        // métrica de desgaste em km
+  movingHours: number;       // métrica de desgaste em horas (moving_time / 3600), 2 casas decimais
   elevationGainM?: number;
   trainer: boolean;
   manual: boolean;
@@ -133,13 +150,15 @@ O conector pode ser um módulo no backend ou um serviço separado com REST. O co
 | Caso | Tratamento |
 |---|---|
 | Mesma atividade recebida duas vezes | Idempotência por `stravaActivityId` |
-| `update` trocou a bike da atividade | Desfazer a km na bike antiga e aplicar na nova |
-| `delete` | Subtrair a km das peças afetadas |
+| `update` trocou a bike da atividade | Desfazer km **e horas** na bike antiga e aplicar na nova |
+| `update` corrigiu distância ou tempo | Recalcular km e horas das peças afetadas |
+| `delete` | Subtrair km **e horas** das peças afetadas |
+| Atividade com `moving_time = 0` ou `manual = true` sem tempo | Somar só a km; as horas ficam zeradas e o atleta é avisado de que as peças medidas por hora podem estar subestimadas |
 | `stravaGearId = null` | Atividade fica "pendente de bike" até o atleta associar |
 | Bike do Strava não associada no GearLog | Ignorar até a associação; ao associar, reprocessar o histórico |
 | Peça instalada com data retroativa | Recalcular a km da peça a partir das atividades salvas |
 
-Para fazer isso, o GearLog **guarda as atividades importadas**, não só os totais.
+Para fazer isso, o GearLog **guarda as atividades importadas**, não só os totais. Os acumulados de cada peça (km e horas) são sempre derivados dessas atividades.
 
 ---
 
