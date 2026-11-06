@@ -10,35 +10,37 @@ Ciclistas não sabem com precisão quando trocar cada peça da bike. Corrente, c
 
 ## 2. Solução proposta
 
-O **GearLog** é uma aplicação web de **gestão de desgaste e manutenção preventiva de bicicletas**. A quilometragem real de cada bike é importada do **Strava**. O sistema calcula o desgaste de cada peça e avisa quando ela se aproxima do fim da vida útil. Em fases seguintes, o GearLog liga esse alerta à compra da peça (marketplace) e ao serviço (oficina).
+O **GearLog** é uma aplicação web de **gestão de desgaste e manutenção preventiva de bicicletas**. A quilometragem real de cada bike é importada do **Strava**. O sistema calcula o desgaste de cada peça e avisa quando ela se aproxima do fim da vida útil ou do intervalo de revisão. Num segundo estágio, o GearLog poderá ligar esse alerta à compra da peça (marketplace) e ao serviço (oficina).
 
 O GearLog complementa o projeto pessoal **VeloUpgrade-Tracker** (planejamento de upgrades), cobrindo o lado de manutenção e desgaste.
 
-## 3. Escopo por fases
+## 3. Escopo
 
 | Fase | Entrega | Perfis envolvidos |
 |---|---|---|
-| **1 — Tracker de desgaste** | Cadastro de bikes e peças, sincronização de km via Strava, cálculo de desgaste, alertas de troca, histórico de manutenção | Atleta |
-| **2 — Mercado de peças** | Mini marketplace com vitrine de lojistas e de usuários comuns, selo de lojista verificado, aba de "sonhos" (preço desejado) com aviso automático | Atleta, Lojista, Admin |
-| **3 — Oficina** | Agendamento de revisão com mecânicos/oficinas, registro do serviço no histórico da bike | Atleta, Mecânico/Oficina |
+| **1 — Tracker de desgaste** | Cadastro de bikes e peças, sincronização de km e horas de uso via Strava, cálculo de desgaste, alertas de troca/revisão, histórico de manutenção | Atleta, Admin (catálogo de peças, RF30) |
 
-**Foco da disciplina:** a documentação cobre as três fases. A implementação prioriza a Fase 1.
+**Escopo da entrega (26/11):** a documentação completa (requisitos, casos de uso, domínio, UML, ADRs, Specs) e o MVP cobrem somente a Fase 1, com os perfis Atleta e Administrador, para entregar com qualidade no prazo. As Fases 2 e 3 ficam registradas em [segundo-estagio.md](segundo-estagio.md) só em nível de visão e requisitos, como evolução futura.
+
+**Fonte de km e horas na entrega:** o MVP usa o Strava real, pelo conector compatível com a API v3 (modos proxy e cache, ver `integracao-strava.md`). Os testes e a demo sem internet usam o mock gerado do Swagger, porque a disciplina exige que a demo rode sem o Strava. Trocar a fonte é só mudar `STRAVA_API_BASE_URL`.
+
+**Segundo estágio:** o mercado de peças (Fase 2) e a oficina (Fase 3) estão descritos em [segundo-estagio.md](segundo-estagio.md), como evolução futura do produto.
 
 ## 4. Fora de escopo
 
 - Outros equipamentos (motos, calçados, etc.). O GearLog trata **somente bicicletas**.
-- Pagamento dentro da plataforma. A negociação no marketplace é feita entre as partes.
+- Mercado de peças e oficina (Fases 2 e 3): ficam no [segundo estágio](segundo-estagio.md).
 - Homologação comercial com o Strava. Por ser projeto acadêmico, a integração usa apenas os dados da conta do autor. O processo de aprovação da API do Strava só será feito se o produto for profissionalizado.
 
 ## 5. Partes interessadas
 
 | Parte | Interesse |
 |---|---|
-| Atleta | Saber quando trocar peças, gastar menos, comprar e vender peças com confiança |
-| Lojista | Alcançar ciclistas que precisam de uma peça específica naquele momento |
-| Mecânico/Oficina | Receber agendamentos já com o histórico da bike |
-| Administrador | Manter a plataforma confiável (verificação de lojistas, moderação) |
+| Atleta | Saber quando trocar ou revisar peças e gastar menos |
+| Administrador | Manter o catálogo de peças confiável e atualizado |
 | Professor/Disciplina | Avaliar a qualidade da modelagem e da documentação |
+
+> Lojista e Mecânico/Oficina são partes interessadas do [segundo estágio](segundo-estagio.md).
 
 ## 6. Restrições
 
@@ -49,6 +51,6 @@ O GearLog complementa o projeto pessoal **VeloUpgrade-Tracker** (planejamento de
 ## 7. Critérios de sucesso (Fase 1)
 
 - O atleta cadastra uma bike e suas peças em menos de 5 minutos.
-- A km da bike é atualizada a partir do Strava sem digitação manual.
-- O sistema emite alerta antes de a peça ultrapassar sua vida útil configurada.
-- Toda troca de peça fica registrada no histórico da bike.
+- A km e as horas de uso da bike são atualizadas a partir do Strava sem digitação manual.
+- O sistema emite alerta antes de a peça ultrapassar sua vida útil ou seu intervalo de revisão configurado.
+- Toda troca e toda revisão de peça ficam registradas no histórico da bike.
