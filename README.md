@@ -1,12 +1,14 @@
 # modelagemdesistemas26.2
-# GearLog - Sistema de Gestão de Frotas e Manutenção Preventiva
+# GearLog - Gestão de Desgaste e Manutenção Preventiva de Bicicletas
 
 > Projeto desenvolvido para a disciplina de **Modelagem e Desenvolvimento de Software**.
 
 ---
 
 ## 🎯 Sobre o Projeto
-O **GearLog** é uma aplicação web voltada para atletas e proprietários de equipamentos esportivos (bicicletas, motos e calçados) acompanharem o desgaste real de peças críticas com base em quilometragem e horas de uso, integrando o agendamento de revisões e histórico de manutenção com oficinas e mecânicos parceiros.
+O **GearLog** é uma aplicação web para ciclistas acompanharem o desgaste real das peças de suas bicicletas com base na quilometragem e nas horas de uso importadas do **Strava**. O sistema avisa quando cada peça precisa ser trocada e, nas fases seguintes, conecta o atleta a um mercado de peças (lojistas e usuários) e a oficinas parceiras.
+
+**Fases:** 1) tracker de desgaste · 2) mercado de peças · 3) oficina.
 
 ---
 

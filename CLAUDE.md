@@ -1,0 +1,44 @@
+# Constituição do Projeto — GearLog (Spec-Driven Development)
+
+Este arquivo define as regras do projeto para pessoas e agentes de IA que trabalham no repositório.
+
+## Princípios
+
+1. **Spec antes do código.** Nenhuma funcionalidade é implementada sem requisito correspondente em `docs/requisitos.md`.
+2. **Rastreabilidade.** Todo commit, PR e teste referencia o ID do requisito (ex.: `RF08`, `RB04`).
+3. **Decisões registradas.** Toda decisão técnica relevante vira um ADR em `docs/adr/`.
+4. **Escopo fechado.** O GearLog trata somente bicicletas. Mudança de escopo exige atualização de `docs/visao.md` antes.
+5. **Fase 1 primeiro.** Nada da Fase 2 ou 3 é implementado antes de a Fase 1 estar funcional.
+
+## Fluxo de trabalho
+
+1. Escrever ou ajustar o requisito em EARS.
+2. Atualizar caso de uso e modelo de domínio, se afetados.
+3. Escrever o teste a partir do requisito.
+4. Implementar.
+5. Abrir PR citando os IDs; outro membro revisa.
+
+## Convenções
+
+- Idioma da documentação: português. Código, nomes de variáveis e commits em inglês.
+- Commits no padrão Conventional Commits: `feat(RF06): sync strava activities`.
+- Branches: `feat/RFxx-descricao`, `docs/descricao`, `fix/descricao`.
+
+## Estrutura da documentação
+
+```
+docs/
+  visao.md          # visão do produto e escopo
+  personas.md       # personas e perfis
+  requisitos.md     # RFs (EARS), RNFs, RBs
+  combinados.md     # acordos da equipe
+  dominio.md        # modelo conceitual de domínio
+  casos-de-uso.md   # casos de uso
+  arquitetura.md    # drivers arquiteturais e documento consolidado
+  adr/              # Architecture Decision Records (ADR-001, ...)
+```
+
+## Restrições para agentes de IA
+
+- Não inventar requisitos: propor e marcar como `[PROPOSTO]` até aprovação da equipe.
+- Não expor tokens ou segredos do Strava em código, logs ou documentação.
