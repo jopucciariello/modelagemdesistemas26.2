@@ -1,0 +1,8 @@
+# Arquivos locais do Claude Code (nao versionar)
+CLAUDE.local.md
+.claude/settings.local.json
+
+# Segredos
+.env
+.env.*
+!.env.example
