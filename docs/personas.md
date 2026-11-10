@@ -1,6 +1,6 @@
 # Personas — GearLog
 
-O sistema tem quatro perfis de acesso: **Atleta**, **Lojista**, **Mecânico/Oficina** e **Administrador**. Cada persona abaixo representa um perfil.
+Na entrega da disciplina, o sistema tem dois perfis de acesso: **Atleta** e **Administrador**. Cada persona abaixo representa um perfil. Os perfis **Lojista** e **Mecânico/Oficina** pertencem ao [segundo estágio](segundo-estagio.md).
 
 ---
 
@@ -11,44 +11,25 @@ O sistema tem quatro perfis de acesso: **Atleta**, **Lojista**, **Mecânico/Ofic
 - **Uso:** treina de 5 a 6 vezes por semana e registra tudo no Strava
 - **Dor:** troca a corrente "quando lembra". Já perdeu um cassete por isso. Não sabe quantos km tem o pneu traseiro.
 - **Objetivo:** receber um aviso antes de cada peça chegar ao limite e manter um histórico de cada bike
-- **Como o GearLog ajuda:** km automática via Strava, alerta por peça, histórico, e (Fase 2) uma aba de "sonhos" para comprar a próxima peça pelo preço que quer pagar
-- **Fases:** 1, 2 e 3
+- **Como o GearLog ajuda:** km e horas de uso automáticas via Strava, alerta por peça, histórico, e (Fase 2) uma aba de "sonhos" para comprar a próxima peça pelo preço que quer pagar
+- **Fases:** 1 (e 2–3 no segundo estágio)
 
-## 2. Marcos — Lojista
-
-- **Idade:** 41 anos · **Ocupação:** dono de uma loja de bike de bairro
-- **Dor:** tem estoque parado e não sabe quem está procurando aquela peça
-- **Objetivo:** anunciar peças para ciclistas que realmente precisam delas e ganhar credibilidade online
-- **Como o GearLog ajuda:** vitrine própria, selo de lojista verificado e avisos de "sonhos" compatíveis com seus anúncios
-- **Fase:** 2
-
-## 3. Cláudia — Mecânica/Oficina
-
-- **Idade:** 35 anos · **Ocupação:** mecânica e dona de uma oficina especializada em suspensão
-- **Dor:** o cliente chega sem saber quantos km a bike tem nem quando foi a última revisão
-- **Objetivo:** receber agendamentos já com o histórico do equipamento e registrar o serviço feito
-- **Como o GearLog ajuda:** agenda de revisões e acesso ao histórico da bike autorizado pelo atleta
-- **Fase:** 3
-
-## 4. Beatriz — Administradora
+## 2. Beatriz — Administradora
 
 - **Idade:** 30 anos · **Ocupação:** responsável pela operação da plataforma
-- **Dor:** precisa garantir que lojistas sejam reais e que anúncios não sejam golpe
-- **Objetivo:** cadastrar e verificar lojistas, moderar anúncios e manter o catálogo de peças
-- **Como o GearLog ajuda:** painel de verificação de lojistas, concessão de selo e moderação
-- **Fases:** 2 e 3
+- **Dor:** atletas cadastram a mesma peça com nomes diferentes e sem vida útil de referência, e o catálogo fica desatualizado a cada lançamento
+- **Objetivo:** manter o catálogo de peças: categorias, vida útil padrão e lançamentos de componentes (RF30). No segundo estágio, também verifica lojistas e modera anúncios.
+- **Como o GearLog ajuda:** cadastro central de categorias e componentes, usado pelos atletas no cadastro de peças
+- **Fases:** 1, 2 e 3
 
 ---
 
-## Matriz persona × funcionalidade
+## Matriz persona × funcionalidade (entrega)
 
-| Funcionalidade | Atleta | Lojista | Mecânico | Admin |
-|---|:-:|:-:|:-:|:-:|
-| Cadastrar bike e peças | ✔ | | | |
-| Sincronizar Strava | ✔ | | | |
-| Alertas de desgaste | ✔ | | | |
-| Anunciar peça | ✔ | ✔ | | |
-| Aba de "sonhos" | ✔ | (recebe aviso) | | |
-| Verificar lojista | | | | ✔ |
-| Agendar revisão | ✔ | | ✔ | |
-| Registrar serviço | | | ✔ | |
+| Funcionalidade | Atleta | Admin |
+|---|:-:|:-:|
+| Cadastrar bike e peças | ✔ | |
+| Sincronizar Strava | ✔ | |
+| Alertas de desgaste | ✔ | |
+| Registrar troca, revisão e manutenção | ✔ | |
+| Manter catálogo de peças (categorias e componentes) | | ✔ |
