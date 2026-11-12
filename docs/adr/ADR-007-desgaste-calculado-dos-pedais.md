@@ -1,6 +1,6 @@
 # ADR-007 — Desgaste calculado a partir dos pedais guardados
 
-- **Status:** Proposto (aguarda aprovação da equipe)
+- **Status:** Aceito (12/11/2026, OPEN-15)
 - **Data:** 12/11/2026
 - **Decisor:** João Pucciariello
 - **Requisitos relacionados:** RF06, RF07, RF10, RF13, RF14, RB02, RB13, RB14, RB16, RNF08
