@@ -17,7 +17,7 @@ O GearLog depende de segredos: o *client secret* do Strava e o do Google, a chav
 - Não se cria `.env`. Ele continua no `.gitignore` como proteção.
 - O código só lê `process.env`, então não depende do Infisical. Trocar de cofre não muda o código.
 - Os testes automatizados (`npm test`) não precisam de segredo nenhum: usam valores falsos e `fetch` simulado.
-- Em produção (ADR-004), o contêiner também usa `infisical run`, autenticado por uma *machine identity* com acesso só de leitura ao ambiente `prod`.
+- Em produção (ADR-004), o workflow de deploy lê o ambiente `prod` por OIDC (sem credencial guardada) e grava os segredos no Fly.
 
 ## Alternativas consideradas
 

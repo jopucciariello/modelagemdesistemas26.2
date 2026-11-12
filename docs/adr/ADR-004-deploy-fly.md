@@ -16,7 +16,7 @@ Para a demo e para testar o OAuth do Strava e do Google com uma URL fixa, o Gear
 - Ao subir, o contêiner roda `prisma migrate deploy` e depois `next start`.
 - Roda **uma única máquina**, porque o SQLite não aceita várias instâncias escrevendo no mesmo arquivo. A máquina para sozinha quando não há acesso (`auto_stop_machines`) e liga na próxima requisição.
 - **Deploy pelo GitHub Actions** (`.github/workflows/deploy.yml`), a cada push na `main`. O build da imagem roda no *remote builder* do Fly (`fly deploy --remote-only`); o GitHub só guarda o `FLY_API_TOKEN`, um token de deploy restrito ao app (`fly tokens create deploy`).
-- **O app puxa os segredos do Infisical ao subir.** O contêiner tem o Infisical CLI. O `docker-entrypoint.sh` faz login com uma *machine identity* (Universal Auth) e roda `prisma migrate deploy` e `next start` dentro de `infisical run --env=prod`. O Fly guarda só `INFISICAL_CLIENT_ID` e `INFISICAL_CLIENT_SECRET` (`fly secrets`), e o `fly.toml` guarda o `INFISICAL_PROJECT_ID`, que não é segredo. Para aplicar um segredo alterado no Infisical, basta reiniciar o app (`fly apps restart gearlog-mds`).
+- **Segredos no momento do deploy, por OIDC.** O workflow entra no Infisical (instância própria, `https://secrets.minson.com.br`) com uma *machine identity* de autenticação **OIDC**, sem nenhuma credencial guardada. Ela só aceita o repositório `jopucciariello/modelagemdesistemas26.2` nas branches `main` e `feat/RF04-baseline`. O workflow lê o ambiente `prod`, confere se as 13 chaves existem e as grava no Fly com `fly secrets import --stage`, antes do `fly deploy`. O GitHub guarda só o `FLY_API_TOKEN` (secret) e as variáveis `INFISICAL_IDENTITY_ID` e `INFISICAL_PROJECT_SLUG`, que não são segredos. Para aplicar um segredo alterado no Infisical, basta rodar o workflow de novo (`workflow_dispatch`).
 - **Domínio próprio:** o app atende em **`https://gearlog.jopucci.com`** (domínio de João, com DNS na Hostinger). O certificado TLS é emitido pelo Fly (`fly certs add gearlog.jopucci.com`), e na Hostinger fica um registro `CNAME gearlog → <app>.fly.dev`.
 - **Nada no `.fly.dev`:** o `src/proxy.ts` redireciona (308) qualquer acesso a `*.fly.dev` para o `APP_URL`. Assim os links, cookies e callbacks OAuth existem só no domínio próprio.
 - URLs de produção: `APP_URL = https://gearlog.jopucci.com`, e os callbacks `https://gearlog.jopucci.com/auth/strava/callback` e `https://gearlog.jopucci.com/auth/google/callback`. No Strava, o *Authorization Callback Domain* passa a ser `gearlog.jopucci.com` (o Strava sempre libera `localhost` também). No Google, o redirect de produção é incluído junto com o de `localhost`.
@@ -31,7 +31,7 @@ Para a demo e para testar o OAuth do Strava e do Google com uma URL fixa, o Gear
 
 ## Consequências
 
-- Se o Infisical estiver fora do ar, a máquina não sobe (não há cópia dos segredos no Fly). Aceitável para a Fase 1; em troca, o Infisical é a única fonte dos segredos.
+- O Fly guarda uma cópia dos segredos (importada no deploy), então o app continua subindo mesmo com o Infisical fora do ar. Só o deploy depende dele.
 
 - Uma máquina só significa que não há alta disponibilidade. Isso é aceitável na Fase 1 (uma conta Strava, RB08).
 - A primeira requisição depois de um tempo parado demora alguns segundos (*cold start*), o que pesa contra o RNF04. Na apresentação, é bom acessar o app antes de começar.

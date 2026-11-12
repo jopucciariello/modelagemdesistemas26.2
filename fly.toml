@@ -1,4 +1,4 @@
-# GearLog on Fly.io (ADR-004). Secrets are pulled from Infisical at boot (ADR-003).
+# GearLog on Fly.io (ADR-004). Secrets come from Infisical at deploy time (ADR-003, ADR-004).
 app = "gearlog-mds"
 primary_region = "gru"
 
@@ -6,10 +6,6 @@ primary_region = "gru"
 
 [env]
   NODE_ENV = "production"
-  # Secrets are pulled from Infisical at boot (docker-entrypoint.sh). Fly secrets hold only
-  # INFISICAL_CLIENT_ID and INFISICAL_CLIENT_SECRET (machine identity with read access).
-  INFISICAL_PROJECT_ID = "REPLACE_WITH_INFISICAL_PROJECT_ID"
-  INFISICAL_ENV = "prod"
 
 # SQLite file lives here; DATABASE_URL must be "file:/data/gearlog.db".
 [mounts]
