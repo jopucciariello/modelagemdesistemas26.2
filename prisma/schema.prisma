@@ -1,0 +1,53 @@
+// GearLog — Prisma schema (ADR-001: Prisma + SQLite).
+// Baseline: only what RF04 (Strava login) needs. Domain models (bikes, parts,
+// maintenance plans, catalog) come with their Specs.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// Access profiles (OPEN-06 / RF30): ATHLETE and ADMIN.
+enum Role {
+  ATHLETE
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  role      Role     @default(ATHLETE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  strava   StravaConnection?
+  sessions Session[]
+}
+
+// RF04, RNF01: tokens are stored encrypted (AES-256-GCM) and never sent to the frontend.
+model StravaConnection {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stravaAthleteId       String   @unique
+  scope                 String
+  accessTokenEncrypted  String
+  refreshTokenEncrypted String
+  expiresAt             DateTime
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+// Server-side session. Only the SHA-256 of the cookie token is stored.
+model Session {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
