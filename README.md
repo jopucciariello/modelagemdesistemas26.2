@@ -28,11 +28,11 @@ Toda a documentação técnica e de engenharia de requisitos do projeto está ce
 
 ## 🛠️ Tecnologias
 
-> Decidido em 06/11/2026 (OPEN-03); o registro completo fica no ADR-001.
+> Decidido em 06/11/2026 (OPEN-03); o registro completo fica no [ADR-001](docs/adr/ADR-001-stack.md).
 
 * **Linguagem:** TypeScript (frontend e backend)
-* **Framework:** Next.js
-* **Banco de Dados:** SQLite, com Prisma
+* **Framework:** Next.js 16 (App Router)
+* **Banco de Dados:** SQLite, com Prisma 7
 * **Testes:** Vitest
 * **Metodologia:** Spec-Driven Development (SDD)
 
@@ -40,19 +40,33 @@ Toda a documentação técnica e de engenharia de requisitos do projeto está ce
 
 ## 🚀 Como Executar o Projeto
 
-*(Ambiente de desenvolvimento em configuração inicial)*
-
 ### Pré-requisitos
 * Git
-* Node.js (LTS)
+* Node.js 22 (LTS)
+* Um app de API no Strava ([strava.com/settings/api](https://www.strava.com/settings/api)) com **Authorization Callback Domain** = `localhost`
 
 ### Instalação e Execução
 ```bash
-# 1. Clonar o repositório
+# 1. Clonar e instalar (o postinstall gera o cliente Prisma)
 git clone https://github.com/jopucciariello/modelagemdesistemas26.2.git
-
-# 2. Acessar a pasta
 cd modelagemdesistemas26.2
+npm install
 
-# 3. Instruções de inicialização do backend e frontend serão adicionadas na Fase de Implementação.
+# 2. Configurar o ambiente: copie e preencha STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET
+#    e TOKEN_ENCRYPTION_KEY (o comando para gerar a chave está no próprio arquivo)
+cp .env.example .env
+
+# 3. Criar o banco SQLite (prisma/dev.db)
+npm run db:migrate
+
+# 4. Subir o app em http://localhost:3000 e clicar em "Conectar com o Strava"
+npm run dev
 ```
+
+### Testes
+```bash
+npm test        # Vitest, uma vez
+npm run lint    # ESLint
+```
+
+O `.env` nunca vai para o Git. Os tokens do Strava ficam criptografados no banco (RNF01).
