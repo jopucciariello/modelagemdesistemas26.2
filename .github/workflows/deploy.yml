@@ -1,5 +1,7 @@
-# ADR-004: deploy to Fly.io. Secrets live in Infisical (ADR-003) and reach this workflow as
-# GitHub repository secrets through Infisical's GitHub secret sync (Production environment).
+# ADR-004: deploy to Fly.io. App secrets live in Infisical (ADR-003) and reach this workflow as
+# secrets of the GitHub environment "production", through Infisical's GitHub secret sync
+# (Production -> environment "production"). FLY_API_TOKEN stays a repository secret, so the
+# sync can overwrite the environment without deleting it.
 # The image is built on Fly's remote builder; GitHub only orchestrates.
 name: Deploy (Fly.io)
 
@@ -18,6 +20,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: production
     env:
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
