@@ -26,13 +26,14 @@ Toda a documentação técnica e de engenharia de requisitos do projeto está ce
 
 ---
 
-## 🛠️ Tecnologias Candidatas
+## 🛠️ Tecnologias
 
-> A stack ainda não foi decidida (ver OPEN-03 em [decisões em aberto](docs/decisoes-em-aberto.md)); a escolha será registrada em ADR.
+> Decidido em 06/11/2026 (OPEN-03); o registro completo fica no ADR-001.
 
-* **Frontend:** React / Next.js / TypeScript
-* **Backend:** Node.js / FastAPI
-* **Banco de Dados:** PostgreSQL / SQLite
+* **Linguagem:** TypeScript (frontend e backend)
+* **Framework:** Next.js
+* **Banco de Dados:** SQLite, com Prisma
+* **Testes:** Vitest
 * **Metodologia:** Spec-Driven Development (SDD)
 
 ---
@@ -43,7 +44,7 @@ Toda a documentação técnica e de engenharia de requisitos do projeto está ce
 
 ### Pré-requisitos
 * Git
-* Node.js / Python (a definir nas próximas sprints)
+* Node.js (LTS)
 
 ### Instalação e Execução
 ```bash

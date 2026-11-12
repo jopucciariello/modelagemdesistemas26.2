@@ -23,12 +23,12 @@ Prioridade (MoSCoW): **M** = Must, **S** = Should, **C** = Could.
 | ID | Requisito (EARS) | Prio |
 |---|---|:-:|
 | RF01 | O sistema deve permitir que o atleta cadastre, edite e arquive bicicletas (nome, tipo, marca, modelo, ano). | M |
-| RF02 | O sistema deve permitir que o atleta cadastre peças em uma bike, informando categoria, marca/modelo, data de instalação, uso inicial (km e/ou horas) e vida útil estimada em km, em horas ou em ambos. | M |
+| RF02 | O sistema deve permitir que o atleta cadastre peças em uma bike, escolhendo a categoria e o componente (marca/modelo) do catálogo (RF30) e informando data de instalação, uso inicial (km e/ou horas) e os planos de manutenção da peça (RB16). | M |
 | RF03 | Quando o atleta cadastrar uma peça sem informar vida útil, o sistema deve sugerir a vida útil padrão da categoria. | S |
 | RF04 | Quando o atleta autorizar a conexão, o sistema deve vincular sua conta Strava via OAuth 2.0. | M |
 | RF05 | Quando o atleta vincular o Strava, o sistema deve listar as bikes da conta Strava para associá-las às bikes do GearLog. | M |
 | RF06 | Quando uma nova atividade de ciclismo for registrada no Strava, o sistema deve somar a distância (km) e o tempo em movimento (horas) da atividade à bike associada e às peças instaladas nela. | M |
-| RF07 | O sistema deve calcular o desgaste de cada peça como percentual da vida útil consumida, em km e em horas, considerando o maior dos dois percentuais quando a peça tiver as duas vidas úteis. | M |
+| RF07 | O sistema deve calcular o desgaste de cada plano de manutenção da peça como percentual do intervalo consumido, em km e em horas, considerando o maior dos dois percentuais quando o plano tiver as duas métricas. | M |
 | RF08 | Quando o desgaste de uma peça atingir 80%, o sistema deve emitir um alerta de "troca próxima" ou, para peças cuja ação é revisão (RB13), de "revisão próxima". | M |
 | RF09 | Quando o desgaste de uma peça atingir 100%, o sistema deve emitir um alerta de "troca necessária" ou, para peças cuja ação é revisão (RB13), de "revisão necessária". | M |
 | RF10 | Quando o atleta registrar a troca de uma peça, o sistema deve encerrar a peça antiga, registrá-la no histórico e iniciar a nova com km e horas zerados. | M |
@@ -37,9 +37,10 @@ Prioridade (MoSCoW): **M** = Must, **S** = Should, **C** = Could.
 | RF13 | Se a sincronização com o Strava falhar, então o sistema deve manter os dados anteriores, registrar a falha e permitir nova tentativa manual. | M |
 | RF14 | Onde o Strava não estiver vinculado, o sistema deve permitir que o atleta informe km e horas manualmente. | S |
 | RF15 | O sistema deve exibir um painel com as peças de todas as bikes ordenadas por desgaste. | S |
-| RF30 | O sistema deve permitir que o administrador mantenha o catálogo de peças: categorias (com métrica de desgaste em km, horas ou ambas, vida útil padrão e ação ao vencer: troca ou revisão) e componentes (marca/modelo), incluindo o cadastro de lançamentos. | M |
+| RF30 | O sistema deve permitir que o administrador mantenha o catálogo de peças: categorias (com os planos de manutenção padrão, cada um com métrica, intervalo e ação: troca ou revisão; e a indicação se a categoria se desgasta em rolo, RB14) e componentes (marca/modelo), incluindo o cadastro de lançamentos. | M |
+| RF31 | Quando o componente desejado não existir no catálogo, o sistema deve permitir que o atleta envie uma sugestão de novo componente, e que o administrador a aprove (incluindo o componente no catálogo) ou a rejeite com um motivo. | S |
 
-> **RF30** foi aprovado em 06/11/2026 para garantir o segundo perfil (Administrador) no MVP da Fase 1, como a disciplina exige (OPEN-06). Ele dá suporte ao RF02, ao RF03 e à RB10.
+> **RF30** foi aprovado em 06/11/2026 para garantir o segundo perfil (Administrador) no MVP da Fase 1, como a disciplina exige (OPEN-06). Ele dá suporte ao RF02, ao RF03 e à RB10. O RF31 foi aprovado na mesma data (OPEN-08).
 
 ---
 
@@ -67,7 +68,7 @@ Os RNFs também seguem o padrão EARS.
 |---|---|
 | RB01 | Uma peça pertence a no máximo uma bike por vez. |
 | RB02 | A km e as horas de uma atividade só são somadas às peças que estavam instaladas na data da atividade. |
-| RB03 | Somente atividades de ciclismo contam para o desgaste: `sport_type` `Ride`, `MountainBikeRide`, `GravelRide`, `EBikeRide`, `EMountainBikeRide` e `VirtualRide` (o efeito do `VirtualRide` está em aberto: OPEN-01). |
+| RB03 | Somente atividades de ciclismo contam para o desgaste: `sport_type` `Ride`, `MountainBikeRide`, `GravelRide`, `EBikeRide`, `EMountainBikeRide` e `VirtualRide` (o `VirtualRide` segue a RB14). |
 | RB04 | Limiares de alerta: 80% da vida útil = troca/revisão próxima; 100% = troca/revisão necessária. |
 | RB05 | Uma peça trocada não pode ser excluída, apenas arquivada no histórico. |
 | RB06–RB07 | *Movidas para o [segundo estágio](segundo-estagio.md).* |
@@ -77,6 +78,9 @@ Os RNFs também seguem o padrão EARS.
 | RB11 | Quando a peça tiver vida útil em km e em horas, vale o critério que for atingido primeiro (maior percentual). |
 | RB12 | Horas de uso = tempo em movimento da atividade (`moving_time`), não o tempo total decorrido. |
 | RB13 | Peças medidas por horas podem ter **revisão** em vez de troca: registrar a revisão zera o contador de horas da peça sem encerrá-la. |
+| RB14 | Uma atividade `VirtualRide` (rolo) só soma km e horas às peças cuja categoria está marcada no catálogo como "desgasta em rolo" (ex.: transmissão sim; pneus, freios e suspensão não). |
+| RB15 | O atleta só cadastra peças com categoria e componente existentes no catálogo. Apenas o administrador inclui, edita ou desativa categorias e componentes. |
+| RB16 | Uma peça tem um ou mais planos de manutenção, herdados da categoria e editáveis pelo atleta. Cada plano tem métrica, intervalo e ação (troca ou revisão). O desgaste, os alertas (RB04) e a revisão (RB13) valem por plano; a troca (RF10) encerra a peça e todos os seus planos. |
 
 ---
 
@@ -101,4 +105,4 @@ Valores de partida, editáveis pelo atleta. Os valores de suspensão seguem a or
 | Rolamentos de pivô | h | 100 h | Revisão/troca |
 | Fluido de freio (sangria) | h | 100 h | Revisão |
 
-> **[PROPOSTO]** Um mesmo componente físico (ex.: garfo) pode ter mais de um intervalo de revisão (lowers e completa). No modelo de domínio, isso vira uma peça com vários **planos de manutenção**, cada um com sua métrica e intervalo. Aguardando aprovação da equipe.
+> Um mesmo componente físico (ex.: garfo) pode ter mais de um plano de manutenção (revisão de lowers e revisão completa), conforme a RB16, aprovada em 06/11/2026 (OPEN-07).

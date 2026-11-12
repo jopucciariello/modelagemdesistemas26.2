@@ -16,7 +16,7 @@ Este arquivo define as regras do projeto para pessoas e agentes de IA que trabal
 2. Atualizar caso de uso e modelo de domínio, se afetados.
 3. Escrever o teste a partir do requisito.
 4. Implementar.
-5. Abrir PR citando os IDs; outro membro revisa.
+5. Abrir PR citando os IDs e a issue; o PR é revisado antes do merge (ver `docs/combinados.md`).
 
 ## Convenções
 
