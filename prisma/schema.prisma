@@ -90,7 +90,7 @@ enum PlanAction {
   SERVICE
 }
 
-// OPEN-13 [PROPOSTO]: closed list of bike types (RF01).
+// OPEN-13 (resolved): closed list of bike types (RF01).
 enum BikeType {
   ROAD
   MTB
