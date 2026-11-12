@@ -131,18 +131,64 @@ model CategoryPlan {
   action        PlanAction
 }
 
-// RF30, RB15: brand/model of a category.
+// RF30, RB15: brand/model of a category, with the fields of the catalog spreadsheet
+// (code such as TRX-018, modality, subcategory, details and price range in R$).
 model Component {
-  id         String   @id @default(cuid())
-  categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
-  brand      String
-  model      String
-  active     Boolean  @default(true)
-  parts      Part[]
-  createdAt  DateTime @default(now())
+  id          String          @id @default(cuid())
+  categoryId  String
+  category    Category        @relation(fields: [categoryId], references: [id])
+  code        String?         @unique
+  brand       String
+  model       String
+  modality    String?
+  subcategory String?
+  details     String?
+  priceMin    Float?
+  priceMax    Float?
+  active      Boolean         @default(true)
+  plans       ComponentPlan[]
+  parts       Part[]
+  bikeModels  BikeModelPart[]
+  createdAt   DateTime        @default(now())
 
   @@unique([categoryId, brand, model])
+}
+
+// RF02, RF30: maintenance plan of a specific component (e.g. chain and cassette of a
+// groupset). When a component has plans, they replace the category defaults.
+model ComponentPlan {
+  id            String     @id @default(cuid())
+  componentId   String
+  component     Component  @relation(fields: [componentId], references: [id], onDelete: Cascade)
+  name          String
+  intervalKm    Float?
+  intervalHours Float?
+  action        PlanAction
+}
+
+// RF35: factory bike from the catalog, with its original components.
+model BikeModel {
+  id        String          @id @default(cuid())
+  code      String          @unique
+  brand     String
+  model     String
+  version   String?
+  category  String?
+  frame     String?
+  listPrice String?
+  active    Boolean         @default(true)
+  parts     BikeModelPart[]
+  bikes     Bike[]
+}
+
+model BikeModelPart {
+  id          String    @id @default(cuid())
+  bikeModelId String
+  bikeModel   BikeModel @relation(fields: [bikeModelId], references: [id], onDelete: Cascade)
+  componentId String
+  component   Component @relation(fields: [componentId], references: [id])
+  // Slot on the bike, e.g. "Pneu dianteiro".
+  position    String
 }
 
 // RF01, RF05: the athlete's bike. Archiving keeps the history.
@@ -155,6 +201,9 @@ model Bike {
   brand        String?
   model        String?
   year         Int?
+  // RF35: factory model the bike was created from, if any.
+  bikeModelId  String?
+  bikeModel    BikeModel?         @relation(fields: [bikeModelId], references: [id])
   // RF05: id of the matching bike (gear) in Strava or the connector.
   stravaGearId String?
   archivedAt   DateTime?
@@ -174,6 +223,8 @@ model Part {
   bike         Bike               @relation(fields: [bikeId], references: [id], onDelete: Cascade)
   componentId  String
   component    Component          @relation(fields: [componentId], references: [id])
+  // Slot on the bike, e.g. "Pneu traseiro" (optional).
+  position     String?
   installedAt  DateTime
   removedAt    DateTime?
   initialKm    Float              @default(0)

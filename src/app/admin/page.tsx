@@ -5,17 +5,16 @@ import { Flash, Nav } from "@/components/ui";
 import { getCurrentAdmin, getCurrentUser } from "@/lib/session";
 
 const OK: Record<string, string> = {
-  catalogo_padrao: "Catálogo inicial carregado.",
+  catalogo_padrao: "Catálogo da planilha carregado.",
   categoria: "Categoria salva.",
   plano: "Planos da categoria atualizados.",
   componente: "Componentes atualizados.",
 };
 
 const ERROR_MESSAGES: Record<string, string> = {
-  categoria_invalida: "Informe o nome e pelo menos um plano com intervalo.",
+  categoria_invalida: "Informe o nome da família.",
   categoria_existe: "Já existe uma categoria com esse nome.",
   plano_invalido: "O plano precisa de nome e de um intervalo em km ou em horas.",
-  ultimo_plano: "A categoria precisa de pelo menos um plano (RB16).",
   componente_invalido: "Informe a marca e o modelo.",
   componente_existe: "Esse componente já está no catálogo.",
   not_authorized: "Este e-mail não está na lista de administradores autorizados.",
