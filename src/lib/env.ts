@@ -9,13 +9,13 @@ function required(name: string): string {
   return value;
 }
 
-export function stravaConfig() {
-  return {
-    clientId: required("STRAVA_CLIENT_ID"),
-    clientSecret: required("STRAVA_CLIENT_SECRET"),
-    callbackUrl: required("STRAVA_CALLBACK_URL"),
-    oauthBaseUrl: process.env.STRAVA_OAUTH_BASE_URL ?? "https://www.strava.com/oauth",
-  };
+/** ADR-006: the Strava app is the athlete's own; only the callback and base URLs are global. */
+export function stravaCallbackUrl(): string {
+  return process.env.STRAVA_CALLBACK_URL ?? `${appUrl()}/auth/strava/callback`;
+}
+
+export function stravaOauthBaseUrl(): string {
+  return process.env.STRAVA_OAUTH_BASE_URL ?? "https://www.strava.com/oauth";
 }
 
 export function tokenEncryptionKey(): string {

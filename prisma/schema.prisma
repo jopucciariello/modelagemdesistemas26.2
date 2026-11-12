@@ -1,5 +1,5 @@
 // GearLog — Prisma schema (ADR-001: Prisma + SQLite).
-// Baseline: only what RF04 (Strava login) needs. Domain models (bikes, parts,
+// Baseline: login (RF04) and the pedal source (RF32-RF34). Domain models (bikes, parts,
 // maintenance plans, catalog) come with their Specs.
 
 generator client {
@@ -17,31 +17,56 @@ enum Role {
   ADMIN
 }
 
+// RF32, ADR-006: where the athlete's rides come from.
+enum ActivitySource {
+  MANUAL
+  STRAVA
+  CONNECTOR
+}
+
 model User {
   id        String   @id @default(cuid())
   name      String
-  // Set for admins (ADR-002): the verified Google e-mail checked against ADMIN_EMAILS.
+  // ADR-005: the verified Google e-mail every user logs in with (admins are listed in ADMIN_EMAILS).
   email     String?  @unique
   role      Role     @default(ATHLETE)
+  // RF32: chosen by the athlete after login; manual until they pick another.
+  activitySource ActivitySource @default(MANUAL)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  strava   StravaConnection?
+  strava    StravaConnection?
+  connector ConnectorConnection?
   sessions Session[]
 }
 
-// RF04, RNF01: tokens are stored encrypted (AES-256-GCM) and never sent to the frontend.
+// RF33, RNF01: the athlete's own Strava app (ADR-006). The client secret and the tokens are
+// stored encrypted (AES-256-GCM) and never sent to the frontend. Tokens stay null until the
+// athlete finishes the OAuth authorization.
 model StravaConnection {
-  id                    String   @id @default(cuid())
-  userId                String   @unique
-  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  stravaAthleteId       String   @unique
-  scope                 String
-  accessTokenEncrypted  String
-  refreshTokenEncrypted String
-  expiresAt             DateTime
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  id                    String    @id @default(cuid())
+  userId                String    @unique
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clientId              String
+  clientSecretEncrypted String
+  stravaAthleteId       String?
+  scope                 String?
+  accessTokenEncrypted  String?
+  refreshTokenEncrypted String?
+  expiresAt             DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}
+
+// RF34, RNF01: the athlete's own strava-connector. The API key is stored encrypted.
+model ConnectorConnection {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  baseUrl         String
+  apiKeyEncrypted String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 // Server-side session. Only the SHA-256 of the cookie token is stored.

@@ -1,30 +1,53 @@
-// RF04: after the OAuth exchange, find or create the athlete and store encrypted tokens (RNF01).
+// RF33, RNF01: the athlete's own Strava app credentials and tokens, always stored encrypted.
 import "server-only";
 import { prisma } from "@/lib/db";
-import { encrypt } from "@/lib/crypto";
-import { tokenEncryptionKey } from "@/lib/env";
-import type { StravaTokenResponse } from "@/lib/strava/oauth";
+import { decrypt, encrypt } from "@/lib/crypto";
+import { stravaCallbackUrl, stravaOauthBaseUrl, tokenEncryptionKey } from "@/lib/env";
+import type { StravaOAuthConfig, StravaTokenResponse } from "@/lib/strava/oauth";
 
-export async function linkStravaAccount(token: StravaTokenResponse, scope: string): Promise<string> {
-  if (!token.athlete) throw new Error("Strava token response has no athlete.");
-  const key = tokenEncryptionKey();
-  const tokens = {
-    scope,
-    accessTokenEncrypted: encrypt(token.accessToken, key),
-    refreshTokenEncrypted: encrypt(token.refreshToken, key),
-    expiresAt: token.expiresAt,
+/** Saves the athlete's Strava app (Client ID + Client Secret) and picks Strava as their source. */
+export async function saveStravaApp(userId: string, clientId: string, clientSecret: string): Promise<void> {
+  const clientSecretEncrypted = encrypt(clientSecret, tokenEncryptionKey());
+  await prisma.$transaction([
+    prisma.stravaConnection.upsert({
+      where: { userId },
+      // A new app invalidates tokens issued to the old one.
+      update: {
+        clientId,
+        clientSecretEncrypted,
+        stravaAthleteId: null,
+        scope: null,
+        accessTokenEncrypted: null,
+        refreshTokenEncrypted: null,
+        expiresAt: null,
+      },
+      create: { userId, clientId, clientSecretEncrypted },
+    }),
+    prisma.user.update({ where: { id: userId }, data: { activitySource: "STRAVA" } }),
+  ]);
+}
+
+export async function getStravaOAuthConfig(userId: string): Promise<StravaOAuthConfig | null> {
+  const connection = await prisma.stravaConnection.findUnique({ where: { userId } });
+  if (!connection) return null;
+  return {
+    clientId: connection.clientId,
+    clientSecret: decrypt(connection.clientSecretEncrypted, tokenEncryptionKey()),
+    callbackUrl: stravaCallbackUrl(),
+    oauthBaseUrl: stravaOauthBaseUrl(),
   };
-  const name = `${token.athlete.firstname} ${token.athlete.lastname}`.trim() || "Atleta";
+}
 
-  const existing = await prisma.stravaConnection.findUnique({
-    where: { stravaAthleteId: token.athlete.id },
+export async function storeStravaTokens(userId: string, token: StravaTokenResponse, scope: string): Promise<void> {
+  const key = tokenEncryptionKey();
+  await prisma.stravaConnection.update({
+    where: { userId },
+    data: {
+      stravaAthleteId: token.athlete?.id ?? null,
+      scope,
+      accessTokenEncrypted: encrypt(token.accessToken, key),
+      refreshTokenEncrypted: encrypt(token.refreshToken, key),
+      expiresAt: token.expiresAt,
+    },
   });
-  if (existing) {
-    await prisma.stravaConnection.update({ where: { id: existing.id }, data: tokens });
-    return existing.userId;
-  }
-  const user = await prisma.user.create({
-    data: { name, strava: { create: { stravaAthleteId: token.athlete.id, ...tokens } } },
-  });
-  return user.id;
 }

@@ -2,13 +2,15 @@ import { Suspense } from "react";
 import { getCurrentUser } from "@/lib/session";
 
 const ERROR_MESSAGES: Record<string, string> = {
-  access_denied: "Você não autorizou o acesso ao Strava.",
-  missing_scope:
-    "O GearLog precisa ler seu perfil, suas bikes e suas atividades (inclusive as privadas). Marque todas as permissões ao autorizar.",
+  email_not_verified: "O e-mail da conta Google não está verificado.",
+  access_denied: "O login com o Google foi cancelado.",
   invalid_state: "A sessão de login expirou. Tente de novo.",
-  token_exchange_failed: "O Strava recusou a conexão. Tente de novo em alguns minutos.",
+  token_exchange_failed: "O Google recusou o login. Tente de novo.",
+  invalid_id_token: "Não foi possível validar o login do Google. Tente de novo.",
   unexpected: "Não foi possível concluir o login. Tente de novo.",
 };
+
+const SOURCE_LABELS = { MANUAL: "lançamento manual", STRAVA: "API do Strava", CONNECTOR: "conector" } as const;
 
 export default function Home(props: PageProps<"/">) {
   return (
@@ -44,8 +46,11 @@ async function SessionArea({ searchParams }: { searchParams: PageProps<"/">["sea
             Olá, <strong>{user.name}</strong>.
           </p>
           <p className="muted">
-            {user.strava ? "Conta Strava vinculada." : "Strava não vinculado."} Perfil:{" "}
-            {user.role === "ADMIN" ? "Administrador" : "Atleta"}.
+            Perfil: {user.role === "ADMIN" ? "Administrador" : "Atleta"}. Fonte dos pedais:{" "}
+            <strong>{SOURCE_LABELS[user.activitySource]}</strong>.
+          </p>
+          <p>
+            <a className="button" href="/fonte">Escolher a fonte dos pedais</a>
           </p>
           <form action="/auth/logout" method="post">
             <button className="button" type="submit">
@@ -55,9 +60,9 @@ async function SessionArea({ searchParams }: { searchParams: PageProps<"/">["sea
         </section>
       ) : (
         <section className="card">
-          <p>Entre com sua conta Strava para importar km e horas de uso das suas bikes.</p>
-          <a className="button button-strava" href="/auth/strava">
-            Conectar com o Strava
+          <p>Entre com sua conta Google. Depois você escolhe como lançar os pedais: à mão, pela API do Strava ou por um conector.</p>
+          <a className="button" href="/auth/google">
+            Entrar com Google
           </a>
         </section>
       )}

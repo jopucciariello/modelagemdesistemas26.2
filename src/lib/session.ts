@@ -32,7 +32,7 @@ export async function getCurrentUser() {
   await connection();
   const session = await prisma.session.findUnique({
     where: { tokenHash: sha256(token) },
-    include: { user: { select: { id: true, name: true, email: true, role: true, strava: { select: { stravaAthleteId: true } } } } },
+    include: { user: { select: { id: true, name: true, email: true, role: true, activitySource: true, strava: { select: { clientId: true, accessTokenEncrypted: true } }, connector: { select: { baseUrl: true } } } } },
   });
   if (!session || session.expiresAt < new Date()) return null;
   return session.user;

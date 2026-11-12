@@ -203,4 +203,6 @@ Para isso, o GearLog **guarda as atividades importadas**, não só os totais. Os
 
 ## 9. Configuração
 
-`STRAVA_API_BASE_URL`, `STRAVA_OAUTH_BASE_URL` (padrão `https://www.strava.com/oauth`; trocado só em testes), `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_WEBHOOK_VERIFY_TOKEN`, `STRAVA_CALLBACK_URL` e `TOKEN_ENCRYPTION_KEY` (RNF01) ficam no Infisical (ambiente `dev`) e são injetados no processo por `infisical run` ([ADR-003](adr/ADR-003-segredos-infisical.md)). No repositório entra só o `.env.example`, com os nomes das variáveis e sem valores.
+`STRAVA_API_BASE_URL`, `STRAVA_OAUTH_BASE_URL` (padrão `https://www.strava.com/oauth`; trocado só em testes), `STRAVA_CALLBACK_URL` (padrão `APP_URL` + `/auth/strava/callback`) e `TOKEN_ENCRYPTION_KEY` (RNF01) ficam no Infisical (ambiente `dev`) e são injetados no processo por `infisical run` ([ADR-003](adr/ADR-003-segredos-infisical.md)). No repositório entra só o `.env.example`, com os nomes das variáveis e sem valores.
+
+> **[PROPOSTO] (12/11/2026, ADR-006):** não há app do Strava global. Cada atleta cadastra o próprio app (`Client ID` e `Client Secret` guardados criptografados no banco, RF33) ou usa o próprio conector (RF34). Por isso `STRAVA_CLIENT_ID` e `STRAVA_CLIENT_SECRET` não existem mais como variáveis de ambiente.

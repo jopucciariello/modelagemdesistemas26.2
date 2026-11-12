@@ -1,4 +1,4 @@
-// RF30 entry point: admin area, reachable only by allow-listed Google accounts (ADR-002, RB17).
+// RF30 entry point: admin area, reachable only by allow-listed Google accounts (ADR-005, RB17).
 import { Suspense } from "react";
 import { getCurrentAdmin, getCurrentUser } from "@/lib/session";
 
@@ -60,7 +60,7 @@ async function AdminArea({ searchParams }: { searchParams: PageProps<"/admin">["
             </p>
           )}
           <p>Entre com uma conta Google autorizada para administrar o catálogo.</p>
-          <a className="button" href="/auth/google">
+          <a className="button" href="/auth/google?next=/admin">
             Entrar com Google
           </a>
         </section>

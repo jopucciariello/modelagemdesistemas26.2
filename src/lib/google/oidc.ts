@@ -147,3 +147,8 @@ export function isAuthorizedAdmin(email: string | null | undefined, setting: str
   if (!email) return false;
   return parseAdminEmails(setting).has(email.toLowerCase());
 }
+
+/** ADR-005: admin only if the verified e-mail is in ADMIN_EMAILS; every other verified e-mail is an athlete. */
+export function roleForEmail(email: string, adminEmailsSetting: string): "ADMIN" | "ATHLETE" {
+  return isAuthorizedAdmin(email, adminEmailsSetting) ? "ADMIN" : "ATHLETE";
+}
