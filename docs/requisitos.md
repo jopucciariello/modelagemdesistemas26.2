@@ -42,7 +42,7 @@ Prioridade (MoSCoW): **M** = Must, **S** = Should, **C** = Could.
 | RF32 | O sistema deve permitir que o atleta escolha, e troque depois, a fonte dos seus pedais: **manual** (RF14), **API do Strava com app próprio** (RF33) ou **conector** (RF34). Enquanto não escolher, a fonte é manual. **[PROPOSTO]** | M |
 | RF33 | Quando o atleta escolher a API do Strava, o sistema deve exibir o passo a passo para cadastrar um app no Strava, receber o `Client ID` e o `Client Secret` dele e vincular a conta por OAuth 2.0, usando esse app. **[PROPOSTO]** | M |
 | RF34 | Quando o atleta escolher o conector, o sistema deve receber a URL e a chave de API do conector dele, validar a conexão e ler bikes e atividades por ele, sem chamar o Strava nem guardar token do Strava. **[PROPOSTO]** | M |
-| RF31 | Quando o componente desejado não existir no catálogo, o sistema deve permitir que o atleta envie uma sugestão de novo componente, e que o administrador a aprove (incluindo o componente no catálogo) ou a rejeite com um motivo. | S |
+| RF31 | Quando o componente ou a bike-modelo desejada não existir no catálogo, o sistema deve permitir que o atleta peça a inclusão por um menu de ajuda; o pedido chega ao administrador, que cadastra o modelo no catálogo ou responde com um motivo. O atleta não cadastra nada no catálogo. *(Alterado em 12/11/2026 por decisão de João.)* | S |
 
 > **RF06 e RF07:** o uso de cada plano é calculado a partir dos pedais guardados, e não acumulado num contador da peça ([ADR-007](adr/ADR-007-desgaste-calculado-dos-pedais.md), OPEN-15). Ver o [modelo de domínio](dominio.md).
 
@@ -135,7 +135,7 @@ Atualizado em 12/11/2026. Código em `src/`, testes em `tests/unit/`.
 | RF13 | Feito | `syncRides` grava `lastSyncError` sem apagar dados | — |
 | RF14 | Feito | `src/app/pedais/`, `src/app/actions/rides.ts` | `rides-map.test.ts` (datas) |
 | RF15 | Feito | `src/app/page.tsx`, `src/lib/tracker.ts` | `wear.test.ts` (ordenação) |
-| RF30 | Feito | `src/app/admin/`, `src/app/actions/catalog.ts`, `src/lib/catalog/seed.json` | `catalog.test.ts` |
+| RF30 | Feito | `src/app/admin/`, `src/app/actions/catalog.ts`, `src/lib/catalog/seed.json`, `src/lib/catalog/load.ts`, `src/instrumentation.ts` (carga automática na subida do servidor) | `catalog.test.ts` |
 | RF35 | Feito | `createBike`, `src/app/bikes/page.tsx` | `catalog.test.ts` |
 | RF31 | Pendente | — | — |
 | RF32, RF33, RF34 | Feito | `src/app/fonte/`, `src/lib/strava/`, `src/lib/connector/` | `strava-oauth.test.ts`, `activity-sources.test.ts` |

@@ -2,54 +2,17 @@
 // RF30, RB15: only the admin maintains categories, default plans and components.
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
-import { seed } from "@/lib/catalog/seed";
+import { loadSeed } from "@/lib/catalog/load";
 import { optNumber, readPlans, text } from "@/lib/forms";
 import { requireAdmin } from "@/lib/guards";
 
 const back = (msg: string) => redirect(`/admin?ok=${msg}`);
 const fail = (msg: string) => redirect(`/admin?erro=${msg}`);
 
-/**
- * RF30, RF35: loads the catalog spreadsheet (src/lib/catalog/seed.json). Categories are created
- * when missing; components and bike models are matched by code and updated, so loading again
- * after a new export of the spreadsheet refreshes the catalog without duplicates.
- */
+/** RF30, RF35: reloads the catalog spreadsheet (see loadSeed). */
 export async function loadCatalogSeed() {
   await requireAdmin();
-  const categoryId = new Map<string, string>();
-  for (const c of seed.categories) {
-    const existing = await prisma.category.findUnique({ where: { name: c.name } });
-    const category = existing ?? (await prisma.category.create({ data: { name: c.name, wearsOnTrainer: c.wearsOnTrainer, plans: { create: c.plans } } }));
-    categoryId.set(c.name, category.id);
-  }
-  const componentId = new Map<string, string>();
-  for (const c of seed.components) {
-    const data = {
-      categoryId: categoryId.get(c.category)!,
-      brand: c.brand,
-      model: c.model,
-      modality: c.modality,
-      subcategory: c.subcategory,
-      details: c.details,
-      priceMin: c.priceMin,
-      priceMax: c.priceMax,
-    };
-    const component = await prisma.component.upsert({
-      where: { code: c.code },
-      update: { ...data, plans: { deleteMany: {}, create: c.plans } },
-      create: { ...data, code: c.code, plans: { create: c.plans } },
-    });
-    componentId.set(c.code, component.id);
-  }
-  for (const b of seed.bikeModels) {
-    const data = { brand: b.brand, model: b.model, version: b.version, category: b.category, frame: b.frame, listPrice: b.listPrice };
-    const parts = b.parts.map((p) => ({ position: p.position, componentId: componentId.get(p.code)! }));
-    await prisma.bikeModel.upsert({
-      where: { code: b.code },
-      update: { ...data, parts: { deleteMany: {}, create: parts } },
-      create: { ...data, code: b.code, parts: { create: parts } },
-    });
-  }
+  await loadSeed(prisma);
   back("catalogo_padrao");
 }
 

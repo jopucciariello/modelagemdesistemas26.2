@@ -19,7 +19,7 @@ Na entrega da disciplina, o sistema tem dois perfis de acesso: **Atleta** e **Ad
 - **Idade:** 30 anos · **Ocupação:** responsável pela operação da plataforma
 - **Dor:** atletas cadastram a mesma peça com nomes diferentes e sem vida útil de referência, e o catálogo fica desatualizado a cada lançamento
 - **Objetivo:** manter o catálogo de peças: categorias, vida útil padrão e lançamentos de componentes (RF30). No segundo estágio, também verifica lojistas e modera anúncios.
-- **Como o GearLog ajuda:** cadastro central de categorias e componentes, usado pelos atletas no cadastro de peças, e uma fila de sugestões de componentes novos enviadas pelos atletas (RF31). Entra em `/admin` com sua conta Google autorizada (RB17)
+- **Como o GearLog ajuda:** cadastro central de categorias e componentes, usado pelos atletas no cadastro de peças, e os pedidos de inclusão de modelos (componentes e bikes) que os atletas enviam pelo menu de ajuda (RF31). Entra em `/admin` com sua conta Google autorizada (RB17)
 - **Fases:** 1, 2 e 3
 
 ---
