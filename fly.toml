@@ -1,5 +1,5 @@
 # GearLog on Fly.io (ADR-004). Secrets come from Infisical (ADR-003), imported with `fly secrets import`.
-app = "gearlog"
+app = "gearlog-mds"
 primary_region = "gru"
 
 [build]
