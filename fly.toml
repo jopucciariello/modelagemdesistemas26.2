@@ -1,5 +1,5 @@
 # GearLog on Fly.io (ADR-004). Secrets come from Infisical at deploy time (ADR-003, ADR-004).
-app = "gearlog-mds"
+app = "gearlog"
 primary_region = "gru"
 
 [build]
