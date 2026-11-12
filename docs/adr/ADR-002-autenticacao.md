@@ -21,7 +21,7 @@ Detalhes do login do administrador:
 
 - Fluxo *authorization code* com **PKCE (S256)**, `state` contra CSRF e `nonce` contra replay. Escopos: `openid email profile`.
 - O `id_token` vem direto do endpoint de token do Google, por TLS e autenticado com o `client_secret`. Por isso (OpenID Connect Core §3.1.3.7) a assinatura não é revalidada; o GearLog confere `iss`, `aud`, `exp`, `nonce` e exige `email_verified = true`.
-- A lista de administradores fica na variável `ADMIN_EMAILS` (separada por vírgula, sem diferenciar maiúsculas). Cadastrar um administrador é incluir o e-mail na lista; descadastrar é tirar.
+- A lista de administradores fica na variável `ADMIN_EMAILS`, guardada no Infisical (ADR-003), com os e-mails separados por vírgula, sem diferenciar maiúsculas). Cadastrar um administrador é incluir o e-mail na lista no Infisical; descadastrar é tirar.
 - A permissão é conferida **a cada requisição** em `/admin`: se o e-mail sair da lista, a sessão perde o acesso na hora, mesmo que ainda esteja válida.
 - Um e-mail fora da lista não cria conta nem sessão. O motivo da recusa vai para o log só como código (`not_authorized`), sem o e-mail.
 - O GearLog **não guarda senhas** e não guarda tokens do Google (só usa o `id_token` no login).
@@ -40,4 +40,4 @@ Detalhes do login do administrador:
 - O RNF02 muda: em vez de guardar hash de senha, o sistema não guarda senhas (ver `requisitos.md`).
 - É preciso criar um *OAuth client ID* do tipo "Web application" no Google Cloud Console, com o redirect `http://localhost:3000/auth/google/callback`. Enquanto o app estiver em modo de teste no Google, os administradores também precisam estar na lista de *test users* da tela de consentimento.
 - Atleta e administrador são usuários diferentes no banco, mesmo que sejam a mesma pessoa.
-- Mudar a lista de administradores exige reiniciar o app (a variável é lida do ambiente).
+- Mudar a lista de administradores no Infisical exige reiniciar o app (`infisical run` injeta as variáveis ao subir o processo).

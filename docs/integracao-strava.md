@@ -203,4 +203,4 @@ Para isso, o GearLog **guarda as atividades importadas**, não só os totais. Os
 
 ## 9. Configuração
 
-`STRAVA_API_BASE_URL`, `STRAVA_OAUTH_BASE_URL` (padrão `https://www.strava.com/oauth`; trocado só em testes), `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_WEBHOOK_VERIFY_TOKEN`, `STRAVA_CALLBACK_URL` e `TOKEN_ENCRYPTION_KEY` (RNF01) vão no `.env`, que fica fora do Git. No repositório entra só o `.env.example`.
+`STRAVA_API_BASE_URL`, `STRAVA_OAUTH_BASE_URL` (padrão `https://www.strava.com/oauth`; trocado só em testes), `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_WEBHOOK_VERIFY_TOKEN`, `STRAVA_CALLBACK_URL` e `TOKEN_ENCRYPTION_KEY` (RNF01) ficam no Infisical (ambiente `dev`) e são injetados no processo por `infisical run` ([ADR-003](adr/ADR-003-segredos-infisical.md)). No repositório entra só o `.env.example`, com os nomes das variáveis e sem valores.

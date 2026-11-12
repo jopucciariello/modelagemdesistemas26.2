@@ -42,6 +42,7 @@ Toda a documentação técnica e de engenharia de requisitos do projeto está ce
 
 ### Pré-requisitos
 * Git
+* [Infisical CLI](https://infisical.com/docs/cli/overview), com acesso ao projeto do GearLog
 * Node.js 22 (LTS)
 * Um app de API no Strava ([strava.com/settings/api](https://www.strava.com/settings/api)) com **Authorization Callback Domain** = `localhost`
 * Para a área de administração: um *OAuth client ID* do Google (tipo "Web application", no [Google Cloud Console](https://console.cloud.google.com/apis/credentials)) com o redirect `http://localhost:3000/auth/google/callback` ([ADR-002](docs/adr/ADR-002-autenticacao.md))
@@ -53,10 +54,13 @@ git clone https://github.com/jopucciariello/modelagemdesistemas26.2.git
 cd modelagemdesistemas26.2
 npm install
 
-# 2. Configurar o ambiente: copie e preencha STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET,
-#    GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, ADMIN_EMAILS (e-mails dos administradores)
-#    e TOKEN_ENCRYPTION_KEY (o comando para gerar a chave está no próprio arquivo)
-cp .env.example .env
+# 2. Segredos no Infisical (ADR-003): faça login e vincule o repo ao projeto uma vez.
+#    O `infisical init` cria o .infisical.json (só o ID do projeto, pode ir para o Git).
+infisical login
+infisical init
+#    No ambiente "dev" do Infisical, cadastre as variáveis listadas em .env.example:
+#    DATABASE_URL, APP_URL, STRAVA_*, GOOGLE_*, ADMIN_EMAILS e TOKEN_ENCRYPTION_KEY
+#    (o comando para gerar a chave está no próprio .env.example)
 
 # 3. Criar o banco SQLite (prisma/dev.db)
 npm run db:migrate
@@ -72,4 +76,4 @@ npm test        # Vitest, uma vez
 npm run lint    # ESLint
 ```
 
-O `.env` nunca vai para o Git. Os tokens do Strava ficam criptografados no banco (RNF01).
+Os scripts `dev`, `start`, `db:migrate` e `db:deploy` já rodam com `infisical run --env=dev --`, que injeta os segredos só no processo. Nenhum segredo fica em arquivo no repositório. Os testes (`npm test`) não precisam de segredos. Os tokens do Strava ficam criptografados no banco (RNF01).
