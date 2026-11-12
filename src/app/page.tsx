@@ -92,7 +92,7 @@ async function Dashboard({ userId }: { userId: string }) {
                 {rows.map((r) => (
                   <tr key={r.plan.id}>
                     <td>
-                      <Link href={`/bikes/${r.bikeId}`}>{r.part.component.category.name}</Link>
+                      <Link href={`/bikes/${r.bikeId}`}>{r.part.position ?? r.part.component.category.name}</Link>
                       <br /><span className="muted">{r.bikeName} · {r.part.component.brand} {r.part.component.model}</span>
                     </td>
                     <td>{r.plan.name}</td>

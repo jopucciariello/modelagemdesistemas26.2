@@ -1,10 +1,11 @@
 "use server";
-// RF01, RF02, RF03, RF05, RF10, RF12, RB01, RB05, RB13, RB15, RB16: the athlete's bikes and parts.
+// RF01, RF02, RF03, RF05, RF10, RF12, RF35, RB01, RB05, RB13, RB15, RB16, RB18: the athlete's bikes and parts.
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { parseLocalDay } from "@/lib/dates";
 import { bikeType, optInterval, optNumber, optYear, readPlans, text } from "@/lib/forms";
 import { requireUser } from "@/lib/guards";
+import { bikeTypeFromCategory, canResetPlan, plansFor } from "@/lib/catalog/rules";
 
 /** Loads a bike only if it belongs to the user; otherwise back to the list. */
 async function ownBike(userId: string, bikeId: string) {
@@ -29,13 +30,42 @@ function bikeFields(form: FormData) {
   };
 }
 
-/** RF01 */
+/** RF01, RF35: a new bike, optionally from a catalog model with its original parts installed. */
 export async function createBike(form: FormData) {
   const user = await requireUser();
   const f = bikeFields(form);
-  if (!f.name || !f.type) redirect("/bikes?erro=bike_invalida");
-  const bike = await prisma.bike.create({ data: { ...f, type: f.type!, userId: user.id } });
-  redirect(`/bikes/${bike.id}?ok=bike`);
+  const modelId = text(form, "bikeModelId", 40);
+  if (!modelId) {
+    if (!f.name || !f.type) redirect("/bikes?erro=bike_invalida");
+    const bike = await prisma.bike.create({ data: { ...f, type: f.type!, userId: user.id } });
+    redirect(`/bikes/${bike.id}?ok=bike`);
+  }
+  const model = await prisma.bikeModel.findFirst({
+    where: { id: modelId, active: true },
+    include: { parts: { include: { component: { include: { plans: true, category: { include: { plans: true } } } } } } },
+  });
+  const installedAt = parseLocalDay(text(form, "installedAt", 10));
+  if (!model || !installedAt) redirect("/bikes?erro=modelo_invalido");
+  const bike = await prisma.bike.create({
+    data: {
+      userId: user.id,
+      bikeModelId: model!.id,
+      name: f.name || `${model!.brand} ${model!.model}`,
+      type: bikeTypeFromCategory(model!.category),
+      brand: model!.brand,
+      model: model!.model,
+      year: f.year,
+      parts: {
+        create: model!.parts.map((p) => ({
+          componentId: p.componentId,
+          position: p.position,
+          installedAt: installedAt!,
+          plans: { create: plansFor(p.component.plans, p.component.category.plans) },
+        })),
+      },
+    },
+  });
+  redirect(`/bikes/${bike.id}?ok=bike_modelo`);
 }
 
 /** RF01 */
@@ -78,17 +108,22 @@ export async function linkSourceBike(form: FormData) {
 export async function createPart(form: FormData) {
   const user = await requireUser();
   const bike = await ownBike(user.id, text(form, "bikeId", 40));
-  const component = await prisma.component.findFirst({ where: { id: text(form, "componentId", 40), active: true, category: { active: true } } });
+  const component = await prisma.component.findFirst({
+    where: { id: text(form, "componentId", 40), active: true, category: { active: true } },
+    include: { plans: true, category: { include: { plans: true } } },
+  });
   const installedAt = parseLocalDay(text(form, "installedAt", 10));
   const plans = readPlans(form);
-  const back = `/bikes/${bike.id}/peca?categoria=${text(form, "categoryId", 40)}`;
+  const back = `/bikes/${bike.id}/peca?categoria=${text(form, "categoryId", 40)}&componente=${text(form, "componentId", 40)}`;
   if (!component) redirect(`${back}&erro=componente`);
   if (!installedAt) redirect(`${back}&erro=data`);
-  if (plans.length === 0) redirect(`${back}&erro=planos`);
+  // RB16: a part has plans unless its catalog entry has none (no regular wear).
+  if (plans.length === 0 && plansFor(component!.plans, component!.category.plans).length > 0) redirect(`${back}&erro=planos`);
   await prisma.part.create({
     data: {
       bikeId: bike.id,
       componentId: component!.id,
+      position: text(form, "position", 40) || null,
       installedAt: installedAt!,
       initialKm: optNumber(form, "initialKm") ?? 0,
       initialHours: optNumber(form, "initialHours") ?? 0,
@@ -110,14 +145,18 @@ export async function updatePlan(form: FormData) {
   redirect(`/bikes/${plan!.part.bikeId}?ok=plano`);
 }
 
-/** RB13: a service restarts that plan's usage without closing the part. */
+/**
+ * RB13: a service restarts that plan's usage without closing the part. RB18: so does replacing
+ * one consumable of a part with several plans (e.g. the chain of a groupset).
+ */
 export async function servicePlan(form: FormData) {
   const user = await requireUser();
   const plan = await prisma.maintenancePlan.findFirst({
     where: { id: text(form, "planId", 40), part: { removedAt: null, bike: { userId: user.id } } },
-    include: { part: { include: { component: { include: { category: true } } } } },
+    include: { part: { include: { component: { include: { category: true } }, _count: { select: { plans: true } } } } },
   });
   if (!plan) redirect("/bikes?erro=peca_nao_encontrada");
+  if (!canResetPlan(plan!.action, plan!.part._count.plans)) redirect(`/bikes/${plan!.part.bikeId}?erro=plano_invalido`);
   const date = parseLocalDay(text(form, "date", 10));
   const bikeId = plan!.part.bikeId;
   if (!date || date < plan!.part.installedAt) redirect(`/bikes/${bikeId}?erro=data`);
@@ -125,10 +164,16 @@ export async function servicePlan(form: FormData) {
   await prisma.$transaction([
     prisma.maintenancePlan.update({ where: { id: plan!.id }, data: { lastServiceAt: date } }),
     prisma.maintenanceEvent.create({
-      data: { bikeId, partId: plan!.partId, type: "SERVICE", date: date!, note: `${plan!.name}: ${c.category.name} ${c.brand} ${c.model}` },
+      data: {
+        bikeId,
+        partId: plan!.partId,
+        type: plan!.action === "SERVICE" ? "SERVICE" : "REPLACEMENT",
+        date: date!,
+        note: `${plan!.name}: ${c.category.name} ${c.brand} ${c.model}`,
+      },
     }),
   ]);
-  redirect(`/bikes/${bikeId}?ok=revisao`);
+  redirect(`/bikes/${bikeId}?ok=${plan!.action === "SERVICE" ? "revisao" : "troca_item"}`);
 }
 
 /** RF10, RB05, OPEN-16: close the old part and start a new one with the same plans, zeroed. */
@@ -161,6 +206,7 @@ export async function replacePart(form: FormData) {
       data: {
         bikeId,
         componentId: component!.id,
+        position: old.position,
         installedAt: date!,
         plans: { create: old.plans.map((p) => ({ name: p.name, intervalKm: p.intervalKm, intervalHours: p.intervalHours, action: p.action })) },
       },
