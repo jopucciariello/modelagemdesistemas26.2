@@ -87,4 +87,7 @@ fly apps create <app>
 fly volumes create gearlog_data --region gru --size 1 -a <app>
 infisical export --env=prod --format=dotenv | fly secrets import -a <app>
 fly deploy -a <app> --ha=false
+fly certs add gearlog.jopucci.com -a <app>   # e, na Hostinger: CNAME gearlog -> <app>.fly.dev
 ```
+
+Em produção o app atende só em `https://gearlog.jopucci.com`; acessos ao `.fly.dev` são redirecionados.

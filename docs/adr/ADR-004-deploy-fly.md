@@ -1,7 +1,7 @@
 # ADR-004 — Hospedagem no Fly.io
 
 - **Status:** Aceito
-- **Data:** 12/11/2026
+- **Data:** 12/11/2026 (domínio próprio na mesma data)
 - **Decisor:** João Pucciariello
 - **Requisitos relacionados:** RF04, RNF01, RNF04, RNF06, RB08, RB17; ADR-001 (SQLite), ADR-002 (callbacks OAuth), ADR-003 (segredos)
 
@@ -17,7 +17,9 @@ Para a demo e para testar o OAuth do Strava e do Google com uma URL fixa, o Gear
 - Roda **uma única máquina**, porque o SQLite não aceita várias instâncias escrevendo no mesmo arquivo. A máquina para sozinha quando não há acesso (`auto_stop_machines`) e liga na próxima requisição.
 - Os segredos ficam no ambiente **Production** do Infisical (ADR-003) e são copiados para o Fly com:
   `infisical export --env=prod --format=dotenv | fly secrets import`
-- URLs de produção: `APP_URL = https://<app>.fly.dev`, e os callbacks `https://<app>.fly.dev/auth/strava/callback` e `https://<app>.fly.dev/auth/google/callback`. No Strava, o *Authorization Callback Domain* passa a ser `<app>.fly.dev` (o Strava sempre libera `localhost` também). No Google, o redirect de produção é incluído junto com o de `localhost`.
+- **Domínio próprio:** o app atende em **`https://gearlog.jopucci.com`** (domínio de João, com DNS na Hostinger). O certificado TLS é emitido pelo Fly (`fly certs add gearlog.jopucci.com`), e na Hostinger fica um registro `CNAME gearlog → <app>.fly.dev`.
+- **Nada no `.fly.dev`:** o `src/proxy.ts` redireciona (308) qualquer acesso a `*.fly.dev` para o `APP_URL`. Assim os links, cookies e callbacks OAuth existem só no domínio próprio.
+- URLs de produção: `APP_URL = https://gearlog.jopucci.com`, e os callbacks `https://gearlog.jopucci.com/auth/strava/callback` e `https://gearlog.jopucci.com/auth/google/callback`. No Strava, o *Authorization Callback Domain* passa a ser `gearlog.jopucci.com` (o Strava sempre libera `localhost` também). No Google, o redirect de produção é incluído junto com o de `localhost`.
 
 ## Alternativas consideradas
 
