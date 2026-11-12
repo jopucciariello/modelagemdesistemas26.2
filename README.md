@@ -42,7 +42,7 @@ Toda a documentação técnica e de engenharia de requisitos do projeto está ce
 
 ### Pré-requisitos
 * Git
-* [Infisical CLI](https://infisical.com/docs/cli/overview), com acesso ao projeto do GearLog
+* [Infisical CLI](https://infisical.com/docs/cli/overview), com acesso ao projeto do GearLog em `https://secrets.minson.com.br`
 * Node.js 22 (LTS)
 * Um app de API no Strava ([strava.com/settings/api](https://www.strava.com/settings/api)) com **Authorization Callback Domain** = `localhost`
 * Para a área de administração: um *OAuth client ID* do Google (tipo "Web application", no [Google Cloud Console](https://console.cloud.google.com/apis/credentials)) com o redirect `http://localhost:3000/auth/google/callback` ([ADR-002](docs/adr/ADR-002-autenticacao.md))
@@ -56,7 +56,7 @@ npm install
 
 # 2. Segredos no Infisical (ADR-003): faça login e vincule o repo ao projeto uma vez.
 #    O `infisical init` cria o .infisical.json (só o ID do projeto, pode ir para o Git).
-infisical login
+infisical login --domain=https://secrets.minson.com.br   # instância própria do Infisical
 infisical init
 #    No ambiente "dev" do Infisical, cadastre as variáveis listadas em .env.example:
 #    DATABASE_URL, APP_URL, STRAVA_*, GOOGLE_*, ADMIN_EMAILS e TOKEN_ENCRYPTION_KEY
@@ -87,7 +87,7 @@ fly apps create <app>
 fly volumes create gearlog_data --region gru --size 1 -a <app>
 fly tokens create deploy -a <app> | gh secret set FLY_API_TOKEN   # token de deploy no GitHub
 # No GitHub: variables INFISICAL_IDENTITY_ID e INFISICAL_PROJECT_SLUG (identity com OIDC Auth no Infisical)
-fly certs add gearlog.jopucci.com -a <app>   # e, na Hostinger: CNAME gearlog -> <app>.fly.dev
+fly certs add gearlog.jopucci.com -a <app>   # e, no Cloudflare: CNAME gearlog -> <app>.fly.dev, sem proxy
 ```
 
 Em produção o app atende só em `https://gearlog.jopucci.com`; acessos ao `.fly.dev` são redirecionados.

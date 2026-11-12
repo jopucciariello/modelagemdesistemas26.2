@@ -40,4 +40,4 @@ Detalhes do login do administrador:
 - O RNF02 muda: em vez de guardar hash de senha, o sistema não guarda senhas (ver `requisitos.md`).
 - É preciso criar um *OAuth client ID* do tipo "Web application" no Google Cloud Console, com o redirect `http://localhost:3000/auth/google/callback`. Enquanto o app estiver em modo de teste no Google, os administradores também precisam estar na lista de *test users* da tela de consentimento.
 - Atleta e administrador são usuários diferentes no banco, mesmo que sejam a mesma pessoa.
-- Mudar a lista de administradores no Infisical exige reiniciar o app (`infisical run` injeta as variáveis ao subir o processo).
+- Mudar a lista de administradores no Infisical só vale depois de reiniciar o app local ou, em produção, de rodar o workflow de deploy de novo (ADR-004).
