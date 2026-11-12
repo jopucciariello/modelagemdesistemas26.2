@@ -80,13 +80,13 @@ Os scripts `dev`, `start`, `db:migrate` e `db:deploy` já rodam com `infisical r
 
 ### Deploy (Fly.io)
 
-O app roda no Fly.io com SQLite num volume ([ADR-004](docs/adr/ADR-004-deploy-fly.md)). O deploy é feito pelo GitHub Actions (`.github/workflows/deploy.yml`) a cada push na `main`, com o `FLY_API_TOKEN` como secret do repositório. Os segredos do app ficam no Fly, importados do ambiente Production do Infisical. Configuração inicial, feita uma vez:
+O app roda no Fly.io com SQLite num volume ([ADR-004](docs/adr/ADR-004-deploy-fly.md)). O deploy é feito pelo GitHub Actions (`.github/workflows/deploy.yml`) a cada push na `main`, com o `FLY_API_TOKEN` como secret do repositório. Ao subir, o app busca os segredos no ambiente Production do Infisical, com uma *machine identity*. O Fly guarda só a credencial dela. Configuração inicial, feita uma vez:
 
 ```bash
 fly apps create <app>
 fly volumes create gearlog_data --region gru --size 1 -a <app>
 fly tokens create deploy -a <app> | gh secret set FLY_API_TOKEN   # token de deploy no GitHub
-fly secrets import -a <app> < production.env   # .env exportado do Infisical; apague o arquivo depois
+fly secrets set INFISICAL_CLIENT_ID=... INFISICAL_CLIENT_SECRET=... -a <app>   # machine identity do Infisical
 fly certs add gearlog.jopucci.com -a <app>   # e, na Hostinger: CNAME gearlog -> <app>.fly.dev
 ```
 
