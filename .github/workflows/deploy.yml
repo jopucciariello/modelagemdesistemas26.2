@@ -1,0 +1,69 @@
+# ADR-004: deploy to Fly.io. Secrets live in Infisical (ADR-003) and reach this workflow as
+# GitHub repository secrets through Infisical's GitHub secret sync (Production environment).
+# The image is built on Fly's remote builder; GitHub only orchestrates.
+name: Deploy (Fly.io)
+
+on:
+  push:
+    branches:
+      - main
+      # Temporary: first deploy before PR #35 is merged. Remove after the merge.
+      - feat/RF04-baseline
+  workflow_dispatch:
+
+concurrency:
+  group: fly-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      APP_URL: ${{ secrets.APP_URL }}
+      STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
+      STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
+      STRAVA_CALLBACK_URL: ${{ secrets.STRAVA_CALLBACK_URL }}
+      STRAVA_API_BASE_URL: ${{ secrets.STRAVA_API_BASE_URL }}
+      STRAVA_OAUTH_BASE_URL: ${{ secrets.STRAVA_OAUTH_BASE_URL }}
+      STRAVA_WEBHOOK_VERIFY_TOKEN: ${{ secrets.STRAVA_WEBHOOK_VERIFY_TOKEN }}
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+      GOOGLE_CALLBACK_URL: ${{ secrets.GOOGLE_CALLBACK_URL }}
+      ADMIN_EMAILS: ${{ secrets.ADMIN_EMAILS }}
+      TOKEN_ENCRYPTION_KEY: ${{ secrets.TOKEN_ENCRYPTION_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+        if: env.FLY_API_TOKEN != ''
+
+      - name: Check that every secret is present
+        id: check
+        run: |
+          if [ -z "$FLY_API_TOKEN" ]; then
+            echo "::notice::FLY_API_TOKEN not configured yet; skipping deploy."
+            echo "ready=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          missing=""
+          for k in FLY_API_TOKEN DATABASE_URL APP_URL STRAVA_CLIENT_ID STRAVA_CLIENT_SECRET STRAVA_CALLBACK_URL \
+                   STRAVA_API_BASE_URL STRAVA_OAUTH_BASE_URL STRAVA_WEBHOOK_VERIFY_TOKEN GOOGLE_CLIENT_ID \
+                   GOOGLE_CLIENT_SECRET GOOGLE_CALLBACK_URL ADMIN_EMAILS TOKEN_ENCRYPTION_KEY; do
+            [ -n "${!k}" ] || missing="$missing $k"
+          done
+          if [ -n "$missing" ]; then echo "::error::Missing GitHub secrets:$missing"; exit 1; fi
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+
+      - name: Stage app secrets on Fly
+        if: steps.check.outputs.ready == 'true'
+        run: |
+          for k in DATABASE_URL APP_URL STRAVA_CLIENT_ID STRAVA_CLIENT_SECRET STRAVA_CALLBACK_URL \
+                   STRAVA_API_BASE_URL STRAVA_OAUTH_BASE_URL STRAVA_WEBHOOK_VERIFY_TOKEN GOOGLE_CLIENT_ID \
+                   GOOGLE_CLIENT_SECRET GOOGLE_CALLBACK_URL ADMIN_EMAILS TOKEN_ENCRYPTION_KEY; do
+            printf '%s=%s\n' "$k" "${!k}"
+          done | flyctl secrets import --stage
+
+      - name: Deploy (remote build on Fly)
+        if: steps.check.outputs.ready == 'true'
+        run: flyctl deploy --remote-only --ha=false
