@@ -43,6 +43,8 @@ Prioridade (MoSCoW): **M** = Must, **S** = Should, **C** = Could.
 | RF34 | Quando o atleta escolher o conector, o sistema deve receber a URL e a chave de API do conector dele, validar a conexão e ler bikes e atividades por ele, sem chamar o Strava nem guardar token do Strava. **[PROPOSTO]** | M |
 | RF31 | Quando o componente desejado não existir no catálogo, o sistema deve permitir que o atleta envie uma sugestão de novo componente, e que o administrador a aprove (incluindo o componente no catálogo) ou a rejeite com um motivo. | S |
 
+> **RF06 e RF07:** o uso de cada plano é calculado a partir dos pedais guardados, e não acumulado num contador da peça ([ADR-007](adr/ADR-007-desgaste-calculado-dos-pedais.md), OPEN-15). Ver o [modelo de domínio](dominio.md).
+
 > **RF30** foi aprovado em 06/11/2026 para garantir o segundo perfil (Administrador) no MVP da Fase 1, como a disciplina exige (OPEN-06). Ele dá suporte ao RF02, ao RF03 e à RB10. O RF31 foi aprovado na mesma data (OPEN-08).
 
 ---
