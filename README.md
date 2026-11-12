@@ -77,3 +77,14 @@ npm run lint    # ESLint
 ```
 
 Os scripts `dev`, `start`, `db:migrate` e `db:deploy` já rodam com `infisical run --env=dev --`, que injeta os segredos só no processo. Nenhum segredo fica em arquivo no repositório. Os testes (`npm test`) não precisam de segredos. Os tokens do Strava ficam criptografados no banco (RNF01).
+
+### Deploy (Fly.io)
+
+O app roda no Fly.io com SQLite num volume ([ADR-004](docs/adr/ADR-004-deploy-fly.md)):
+
+```bash
+fly apps create <app>
+fly volumes create gearlog_data --region gru --size 1 -a <app>
+infisical export --env=prod --format=dotenv | fly secrets import -a <app>
+fly deploy -a <app> --ha=false
+```
