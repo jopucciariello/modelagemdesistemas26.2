@@ -40,3 +40,8 @@ export function googleConfig() {
 export function adminEmailsSetting(): string {
   return process.env.ADMIN_EMAILS ?? "";
 }
+
+/** RF06: base of the Strava API v3 (or a Strava-compatible mock in tests). */
+export function stravaApiBaseUrl(): string {
+  return process.env.STRAVA_API_BASE_URL ?? "https://www.strava.com/api/v3";
+}
