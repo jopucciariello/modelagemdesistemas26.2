@@ -31,6 +31,9 @@ export type WearPlan = {
   intervalHours: number | null;
   action: "REPLACE" | "SERVICE";
   lastServiceAt: Date | null;
+  /** OPEN-17: yellow from this usage on (minimum of the catalog range). Null = 80% (RB04). */
+  warnKm?: number | null;
+  warnHours?: number | null;
 };
 
 export type WearStatus = "ok" | "near" | "due";
@@ -73,6 +76,19 @@ export function wearStatus(ratio: number): WearStatus {
   return "ok";
 }
 
+/**
+ * RF08, RF09, RB04, OPEN-17: status of a plan. "due" at 100% of the interval (the average of
+ * the catalog range); "near" from the plan's warning usage (the range minimum) or, without one,
+ * from 80%. Each metric is checked on its own; the worst wins (RB11).
+ */
+export function planStatus(km: number, hours: number, plan: Pick<WearPlan, "intervalKm" | "intervalHours" | "warnKm" | "warnHours">): WearStatus {
+  const ratio = wearRatio(km, hours, plan);
+  if (ratio >= DUE_THRESHOLD) return "due";
+  const near = (used: number, interval: number | null, warn: number | null | undefined) =>
+    !!interval && interval > 0 && (warn && warn > 0 && warn < interval ? used >= warn : used / interval >= NEAR_THRESHOLD);
+  return near(km, plan.intervalKm, plan.warnKm) || near(hours, plan.intervalHours, plan.warnHours) ? "near" : "ok";
+}
+
 /** RF08, RF09, RB13: the alert wording depends on the plan's action. */
 export function alertText(status: WearStatus, action: WearPlan["action"]): string | null {
   const noun = action === "SERVICE" ? "Revisão" : "Troca";
@@ -97,7 +113,7 @@ export function computePlanWear(part: WearPart, plan: WearPlan, rides: readonly 
     hours += part.initialHours;
   }
   const ratio = wearRatio(km, hours, plan);
-  const status = wearStatus(ratio);
+  const status = planStatus(km, hours, plan);
   return { km, hours, ratio, status, alert: alertText(status, plan.action) };
 }
 

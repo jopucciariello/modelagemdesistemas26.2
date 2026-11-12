@@ -8,11 +8,14 @@ import { prisma } from "@/lib/db";
 import { formatDay, toLocalDay } from "@/lib/dates";
 import { BIKE_TYPES } from "@/lib/forms";
 import { requireUser } from "@/lib/guards";
+import { canResetPlan, componentLabel } from "@/lib/catalog/rules";
 import { listSourceBikes } from "@/lib/rides/sync";
 import { loadBikeDetail } from "@/lib/tracker";
 
 const OK: Record<string, string> = {
   bike: "Bike salva.",
+  bike_modelo: "Bike criada com as peças de fábrica. Confira as datas e os planos.",
+  troca_item: "Troca registrada: o contador desse item recomeçou.",
   desarquivada: "Bike reativada.",
   associada: "Associação com a fonte salva.",
   peca: "Peça instalada.",
@@ -53,7 +56,7 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
   const { bike, parts, removed, events, totals, rideCount } = detail;
   const categoryIds = [...new Set(parts.map((p) => p.component.categoryId))];
   const [components, categories, sourceBikes] = await Promise.all([
-    prisma.component.findMany({ where: { categoryId: { in: categoryIds }, active: true }, orderBy: [{ brand: "asc" }, { model: "asc" }] }),
+    prisma.component.findMany({ where: { categoryId: { in: categoryIds }, active: true }, orderBy: [{ code: "asc" }, { brand: "asc" }] }),
     prisma.category.findMany({ where: { active: true }, orderBy: { name: "asc" } }),
     listSourceBikes(user.id, user.activitySource),
   ]);
@@ -91,40 +94,43 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
             {parts.map((part) => (
               <li key={part.id}>
                 <div>
-                  <strong>{part.component.category.name}</strong> · {part.component.brand} {part.component.model}
+                  <strong>{part.position ?? part.component.category.name}</strong> · {componentLabel(part.component)}
                   <br /><span className="muted">Instalada em {formatDay(part.installedAt)}{part.initialKm || part.initialHours ? ` com uso inicial de ${km(part.initialKm)} e ${hours(part.initialHours)}` : ""}</span>
                 </div>
+                {part.planViews.length === 0 && <p className="muted">Sem desgaste regular (sem plano de manutenção).</p>}
                 {part.planViews.map((plan) => (
                   <div key={plan.id} className="row">
                     <span>{plan.name}: {interval(plan)} · usou {plan.intervalKm ? km(plan.wear.km) : ""}{plan.intervalKm && plan.intervalHours ? " e " : ""}{plan.intervalHours ? hours(plan.wear.hours) : ""}{plan.lastServiceAt ? ` desde ${formatDay(plan.lastServiceAt)}` : ""}</span>
                     <WearMeter wear={plan.wear} />
                     <details>
                       <summary className="muted">ações</summary>
-                      {plan.action === "SERVICE" && (
+                      {canResetPlan(plan.action, part.planViews.length) && (
                         <form action={servicePlan} className="row">
                           <input type="hidden" name="planId" value={plan.id} />
-                          <label>Data da revisão <input name="date" type="date" required defaultValue={today} /></label>
-                          <button className="button small" type="submit">Registrar revisão</button>
+                          <label>Data <input name="date" type="date" required defaultValue={today} /></label>
+                          <button className="button small" type="submit">{plan.action === "SERVICE" ? "Registrar revisão" : `Registrar troca: ${plan.name}`}</button>
                         </form>
                       )}
                       <form action={updatePlan} className="row">
                         <input type="hidden" name="planId" value={plan.id} />
                         <label>Intervalo km <input name="intervalKm" type="number" min={0} step="any" defaultValue={plan.intervalKm ?? ""} /></label>
                         <label>Intervalo horas <input name="intervalHours" type="number" min={0} step="any" defaultValue={plan.intervalHours ?? ""} /></label>
+                        <label>Amarelo a partir de (km) <input name="warnKm" type="number" min={0} step="any" defaultValue={plan.warnKm ?? ""} /></label>
+                        <label>Amarelo a partir de (h) <input name="warnHours" type="number" min={0} step="any" defaultValue={plan.warnHours ?? ""} /></label>
                         <button className="button small" type="submit">Salvar intervalo</button>
                       </form>
                     </details>
                   </div>
                 ))}
                 <details>
-                  <summary>Registrar troca</summary>
+                  <summary>Trocar a peça inteira</summary>
                   <form action={replacePart} className="row">
                     <input type="hidden" name="partId" value={part.id} />
                     <label>Data <input name="date" type="date" required defaultValue={today} /></label>
                     <label>Nova peça
                       <select name="componentId" defaultValue={part.componentId}>
                         {!components.some((c) => c.id === part.componentId) && <option value={part.componentId}>{part.component.brand} {part.component.model}</option>}
-                        {components.filter((c) => c.categoryId === part.component.categoryId).map((c) => <option key={c.id} value={c.id}>{c.brand} {c.model}</option>)}
+                        {components.filter((c) => c.categoryId === part.component.categoryId).map((c) => <option key={c.id} value={c.id}>{componentLabel(c)}</option>)}
                       </select>
                     </label>
                     <label>Observação <input name="note" maxLength={200} /></label>
@@ -145,7 +151,7 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
           <label>Peça
             <select name="partId" defaultValue="">
               <option value="">(a bike toda)</option>
-              {parts.map((p) => <option key={p.id} value={p.id}>{p.component.category.name}</option>)}
+              {parts.map((p) => <option key={p.id} value={p.id}>{p.position ?? p.component.category.name}</option>)}
             </select>
           </label>
           <label>O que foi feito <input name="note" required maxLength={200} placeholder="Ex.: lubrificação da corrente" /></label>
@@ -170,7 +176,7 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
             <summary>Peças trocadas ({removed.length})</summary>
             <ul className="list">
               {removed.map((p) => (
-                <li key={p.id}>{p.component.category.name} · {p.component.brand} {p.component.model} <span className="muted">({formatDay(p.installedAt)} a {formatDay(p.removedAt!)})</span></li>
+                <li key={p.id}>{p.position ?? p.component.category.name} · {componentLabel(p.component)} <span className="muted">({formatDay(p.installedAt)} a {formatDay(p.removedAt!)})</span></li>
               ))}
             </ul>
           </details>

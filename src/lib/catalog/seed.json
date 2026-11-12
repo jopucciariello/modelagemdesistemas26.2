@@ -1,0 +1,6460 @@
+{
+ "source": "Planilha 'Catálogo de Peças de Ciclismo — Grupos, Suspensões e Pneus (BR 2026)', pesquisa de nov/2026",
+ "categories": [
+  {
+   "name": "Transmissão",
+   "wearsOnTrainer": true,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 3000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 9000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "name": "Suspensão",
+   "wearsOnTrainer": false,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "name": "Pneus",
+   "wearsOnTrainer": false,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2500,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "name": "Freios",
+   "wearsOnTrainer": false,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 800,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "name": "Rodas",
+   "wearsOnTrainer": false,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 3000,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "name": "Canotes",
+   "wearsOnTrainer": false,
+   "plans": []
+  },
+  {
+   "name": "Selins",
+   "wearsOnTrainer": false,
+   "plans": []
+  }
+ ],
+ "components": [
+  {
+   "code": "TRX-001",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Dura-Ace Di2",
+   "modality": "Road",
+   "subcategory": "Performance / Race",
+   "details": "R9200 (R9270 disco) · 2x12 · Eletrônico · nível Topo",
+   "priceMin": 23400,
+   "priceMax": 31000,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 12000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 9000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-002",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Ultegra Di2",
+   "modality": "Road",
+   "subcategory": "Performance / Race",
+   "details": "R8100 (R8170 disco) · 2x12 · Eletrônico · nível Alto",
+   "priceMin": 10000,
+   "priceMax": 15000,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 12000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 9000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-003",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "105 Di2",
+   "modality": "Road",
+   "subcategory": "Endurance / Performance",
+   "details": "R7100 (R7170 disco) · 2x12 · Eletrônico · nível Médio-alto",
+   "priceMin": 7500,
+   "priceMax": 9600,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 12000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 9000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-004",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "105 mecânico",
+   "modality": "Road",
+   "subcategory": "Endurance / Performance",
+   "details": "R7100 (R7120 hidráulico) · 2x12 · Mecânico · nível Médio",
+   "priceMin": 4750,
+   "priceMax": 7600,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 12000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 9000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-005",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Tiagra",
+   "modality": "Road",
+   "subcategory": "Entrada / Treino",
+   "details": "4700 · 2x10 · Mecânico · nível Entrada+",
+   "priceMin": 2250,
+   "priceMax": 3750,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 10000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 8000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-006",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Sora",
+   "modality": "Road",
+   "subcategory": "Entrada / Treino",
+   "details": "R3000 · 2x9 · Mecânico · nível Entrada",
+   "priceMin": 3000,
+   "priceMax": 3200,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 10000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 8000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-007",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Claris",
+   "modality": "Road",
+   "subcategory": "Entrada / Treino",
+   "details": "R2000 · 2x8 · Mecânico · nível Entrada",
+   "priceMin": 2200,
+   "priceMax": 2900,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 10000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 8000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-008",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Dura-Ace / Ultegra Di2 TT",
+   "modality": "Triathlon / TT",
+   "subcategory": "Contra-relógio",
+   "details": "Kit TT sobre R9200 / R8100 · 2x12 · Eletrônico · nível Topo / Alto",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 12000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 9000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-009",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "GRX 820",
+   "modality": "Gravel",
+   "subcategory": "Race / Aventura",
+   "details": "RX820 · 1x12 / 2x12 · Mecânico · nível Alto",
+   "priceMin": 11700,
+   "priceMax": 12500,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 3000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 8000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 6000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-010",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "GRX 610",
+   "modality": "Gravel",
+   "subcategory": "Aventura / Custo",
+   "details": "RX610 · 1x12 / 2x12 · Mecânico · nível Médio",
+   "priceMin": 3990,
+   "priceMax": 4800,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 3000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 8000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 6000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-011",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "GRX Di2",
+   "modality": "Gravel",
+   "subcategory": "Race",
+   "details": "RX815 · 1x11 / 2x11 · Eletrônico · nível Alto",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 3000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 8000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 6000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-012",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "XTR",
+   "modality": "MTB",
+   "subcategory": "XC / Maratona / Trail",
+   "details": "M9100 · 1x12 / 2x12 · Mecânico · nível Topo",
+   "priceMin": 7000,
+   "priceMax": 9000,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-013",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "XTR Di2",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "M9200 · 1x12 · Eletrônico (wireless) · nível Topo",
+   "priceMin": 14000,
+   "priceMax": 18000,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-014",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Deore XT",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "M8100 · 1x12 / 2x12 · Mecânico · nível Alto",
+   "priceMin": 1960,
+   "priceMax": 2600,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-015",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Deore XT (nova geração)",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "M8200 · 1x12 · Mecânico · nível Alto",
+   "priceMin": 2200,
+   "priceMax": 2350,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-016",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Deore XT Di2",
+   "modality": "MTB",
+   "subcategory": "Trail / E-MTB",
+   "details": "M8250 · 1x12 · Eletrônico · nível Alto",
+   "priceMin": 4300,
+   "priceMax": 4900,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-017",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "SLX",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "M7100 · 1x12 / 2x12 · Mecânico · nível Médio-alto",
+   "priceMin": 1800,
+   "priceMax": 3600,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-018",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Deore",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "M6100 · 1x12 · Mecânico · nível Médio",
+   "priceMin": 1450,
+   "priceMax": 2300,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-019",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Deore Di2",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "M6250 · 1x12 · Eletrônico · nível Médio",
+   "priceMin": 4400,
+   "priceMax": 5900,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-020",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "CUES",
+   "modality": "MTB",
+   "subcategory": "Entrada / Lazer / Urbano",
+   "details": "U6000 / U4000 / U3000 · 9 / 10 / 11v · Mecânico (Linkglide) · nível Entrada",
+   "priceMin": 470,
+   "priceMax": 2330,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 14000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 10000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-021",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Saint",
+   "modality": "MTB",
+   "subcategory": "Downhill",
+   "details": "M820 · 1x10 · Mecânico · nível Topo (gravidade)",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 1500.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-022",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Deore XT / Deore Linkglide",
+   "modality": "E-bike",
+   "subcategory": "E-MTB",
+   "details": "M8130 / M5130 · 1x11 · Mecânico (Linkglide) · nível Alto / Médio",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 1500.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 14000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 10000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-023",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "Red AXS",
+   "modality": "Road",
+   "subcategory": "Performance / Race",
+   "details": "E1 (2024) · 2x12 / 1x12 · Eletrônico (wireless) · nível Topo",
+   "priceMin": 23800,
+   "priceMax": 26800,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 12000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 9000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-024",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "Force AXS",
+   "modality": "Road",
+   "subcategory": "Performance",
+   "details": "D2 · 2x12 · Eletrônico (wireless) · nível Alto",
+   "priceMin": 15000,
+   "priceMax": 18700,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 12000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 9000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-025",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "Rival AXS",
+   "modality": "Road",
+   "subcategory": "Endurance / Performance",
+   "details": "D1 · 2x12 · Eletrônico (wireless) · nível Médio",
+   "priceMin": 11700,
+   "priceMax": 16200,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 12000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 9000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-026",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "Apex AXS / Apex XPLR AXS",
+   "modality": "Road / Gravel",
+   "subcategory": "Entrada",
+   "details": "D1 · 1x12 / 2x12 · Eletrônico (wireless) · nível Entrada-médio",
+   "priceMin": 2890,
+   "priceMax": 3250,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 3000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 8000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 6000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-027",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "Apex mecânico / Apex XPLR",
+   "modality": "Road / Gravel",
+   "subcategory": "Entrada",
+   "details": "1x12 · Mecânico · nível Entrada",
+   "priceMin": 1715,
+   "priceMax": 1930,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 3000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 8000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 6000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-028",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "Red XPLR AXS",
+   "modality": "Gravel",
+   "subcategory": "Race",
+   "details": "E1 · 1x13 · Eletrônico (wireless) · nível Topo",
+   "priceMin": 24000,
+   "priceMax": 27500,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 3000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 8000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 6000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-029",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "Force XPLR AXS",
+   "modality": "Gravel",
+   "subcategory": "Race / Aventura",
+   "details": "E1 · 1x13 · Eletrônico (wireless) · nível Alto",
+   "priceMin": 14000,
+   "priceMax": 18000,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 3000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 8000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 6000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-030",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "Rival XPLR AXS",
+   "modality": "Gravel",
+   "subcategory": "Aventura",
+   "details": "1x13 · Eletrônico (wireless) · nível Médio",
+   "priceMin": 10000,
+   "priceMax": 13000,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 3000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 8000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 6000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-031",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "XX SL Eagle Transmission",
+   "modality": "MTB",
+   "subcategory": "XC (corrida)",
+   "details": "T-Type · 1x12 · Eletrônico (wireless) · nível Topo",
+   "priceMin": 17900,
+   "priceMax": 24000,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-032",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "XX Eagle Transmission",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "T-Type · 1x12 · Eletrônico (wireless) · nível Topo",
+   "priceMin": 15000,
+   "priceMax": 22400,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-033",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "X0 Eagle Transmission",
+   "modality": "MTB",
+   "subcategory": "XC / Trail / Enduro",
+   "details": "T-Type · 1x12 · Eletrônico (wireless) · nível Alto",
+   "priceMin": 12500,
+   "priceMax": 18700,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-034",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "GX Eagle Transmission",
+   "modality": "MTB",
+   "subcategory": "XC / Trail / Enduro",
+   "details": "T-Type · 1x12 · Eletrônico (wireless) · nível Médio",
+   "priceMin": 7800,
+   "priceMax": 13200,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-035",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "S1000 Eagle Transmission",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "T-Type · 1x12 · Eletrônico (wireless) · nível Entrada (OEM)",
+   "priceMin": 5200,
+   "priceMax": 6500,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-036",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "Eagle 90 Transmission",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "T-Type · 1x12 · Mecânico · nível Médio",
+   "priceMin": 6400,
+   "priceMax": 7000,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-037",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "Eagle 70 Transmission",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "T-Type · 1x12 · Mecânico · nível Entrada",
+   "priceMin": 3000,
+   "priceMax": 4000,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-038",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "GX Eagle (geração anterior)",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Lunar · 1x12 · Mecânico · nível Legado",
+   "priceMin": 4580,
+   "priceMax": 5300,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-039",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "SX / NX Eagle",
+   "modality": "MTB",
+   "subcategory": "Entrada",
+   "details": "1x12 · Mecânico · nível Entrada (legado)",
+   "priceMin": 2070,
+   "priceMax": 2300,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-040",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "Eagle Transmission E-MTB (XX / X0 / GX / 90)",
+   "modality": "E-bike",
+   "subcategory": "E-MTB",
+   "details": "T-Type (Bosch / Brose / 104BCD) · 1x12 · Eletrônico ou mecânico · nível Médio a Topo",
+   "priceMin": 9900,
+   "priceMax": 9900,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 1500.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-041",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "X01 DH",
+   "modality": "MTB",
+   "subcategory": "Downhill",
+   "details": "7v (cassete curto) · 1x7 · Mecânico · nível Topo (gravidade)",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 1500.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-042",
+   "category": "Transmissão",
+   "brand": "Campagnolo",
+   "model": "Super Record 13",
+   "modality": "Road",
+   "subcategory": "Performance / Race",
+   "details": "WRL · 2x13 / 1x13 · Eletrônico (wireless) · nível Topo",
+   "priceMin": 30000,
+   "priceMax": 40000,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 12000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 9000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-043",
+   "category": "Transmissão",
+   "brand": "Campagnolo",
+   "model": "Record 13",
+   "modality": "Road / Gravel",
+   "subcategory": "Performance",
+   "details": "WRL (2026) · 2x13 / 1x13 · Eletrônico (wireless) · nível Alto",
+   "priceMin": 17500,
+   "priceMax": 21000,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 12000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 9000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-044",
+   "category": "Transmissão",
+   "brand": "Campagnolo",
+   "model": "Chorus",
+   "modality": "Road",
+   "subcategory": "Performance",
+   "details": "12v · 2x12 · Mecânico · nível Médio-alto",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 12000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 9000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-045",
+   "category": "Transmissão",
+   "brand": "Campagnolo",
+   "model": "Ekar",
+   "modality": "Gravel",
+   "subcategory": "Race / Aventura",
+   "details": "13v · 1x13 · Mecânico · nível Alto",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 3000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 8000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 6000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-046",
+   "category": "Transmissão",
+   "brand": "Campagnolo",
+   "model": "Ekar GT",
+   "modality": "Gravel",
+   "subcategory": "Aventura",
+   "details": "13v · 1x13 · Mecânico · nível Médio-alto",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 3000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 8000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 6000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-047",
+   "category": "Transmissão",
+   "brand": "Microshift",
+   "model": "Advent X",
+   "modality": "MTB / Gravel",
+   "subcategory": "Entrada",
+   "details": "10v · 1x10 · Mecânico · nível Entrada",
+   "priceMin": 900,
+   "priceMax": 2440,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2750.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 7000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 5000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-048",
+   "category": "Transmissão",
+   "brand": "Microshift",
+   "model": "Advent",
+   "modality": "MTB",
+   "subcategory": "Entrada",
+   "details": "9v · 1x9 · Mecânico · nível Entrada",
+   "priceMin": 1150,
+   "priceMax": 1650,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2750.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 7000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 5000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-049",
+   "category": "Transmissão",
+   "brand": "L-Twoo",
+   "model": "AX",
+   "modality": "MTB",
+   "subcategory": "Entrada",
+   "details": "12v · 1x12 · Mecânico · nível Entrada",
+   "priceMin": 274,
+   "priceMax": 484,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-050",
+   "category": "Transmissão",
+   "brand": "L-Twoo",
+   "model": "RX",
+   "modality": "Road",
+   "subcategory": "Entrada",
+   "details": "12v · 2x12 · Mecânico · nível Entrada",
+   "priceMin": 2249,
+   "priceMax": 2499,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 10000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 8000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-051",
+   "category": "Transmissão",
+   "brand": "L-Twoo",
+   "model": "GRT",
+   "modality": "Gravel",
+   "subcategory": "Entrada",
+   "details": "12v · 1x12 / 2x12 · Mecânico · nível Entrada",
+   "priceMin": 2213,
+   "priceMax": 3500,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 3000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 8000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 6000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-001",
+   "category": "Suspensão",
+   "brand": "Fox",
+   "model": "32 Step-Cast (SC)",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Garfo · bengala 32 mm · curso 100 mm · Factory / Performance",
+   "priceMin": 4590,
+   "priceMax": 9390,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-002",
+   "category": "Suspensão",
+   "brand": "Fox",
+   "model": "Podium",
+   "modality": "MTB",
+   "subcategory": "XC (corrida)",
+   "details": "Garfo invertido · curso 100–110 mm · Factory",
+   "priceMin": 15000,
+   "priceMax": 18000,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-003",
+   "category": "Suspensão",
+   "brand": "Fox",
+   "model": "34 SL",
+   "modality": "MTB",
+   "subcategory": "XC / Downcountry",
+   "details": "Garfo · bengala 34 mm · curso 110–130 mm · Factory / Perf. Elite / Performance",
+   "priceMin": 5500,
+   "priceMax": 9500,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-004",
+   "category": "Suspensão",
+   "brand": "Fox",
+   "model": "36 SL",
+   "modality": "MTB",
+   "subcategory": "Trail",
+   "details": "Garfo · bengala 36 mm · curso 120–140 mm · Factory / Perf. Elite / Performance",
+   "priceMin": 5900,
+   "priceMax": 10000,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-005",
+   "category": "Suspensão",
+   "brand": "Fox",
+   "model": "36",
+   "modality": "MTB",
+   "subcategory": "All-Mountain",
+   "details": "Garfo · bengala 36 mm · curso 140–160 mm · Factory / Perf. Elite / Performance / Rhythm",
+   "priceMin": 5490,
+   "priceMax": 10500,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-006",
+   "category": "Suspensão",
+   "brand": "Fox",
+   "model": "38",
+   "modality": "MTB",
+   "subcategory": "Enduro",
+   "details": "Garfo · bengala 38 mm · curso 160–180 mm · Factory / Perf. Elite",
+   "priceMin": 9000,
+   "priceMax": 10500,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-007",
+   "category": "Suspensão",
+   "brand": "Fox",
+   "model": "40",
+   "modality": "MTB",
+   "subcategory": "Downhill",
+   "details": "Garfo coroa dupla · bengala 40 mm · curso 203 mm · Factory / Performance",
+   "priceMin": 14000,
+   "priceMax": 17000,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-008",
+   "category": "Suspensão",
+   "brand": "Fox",
+   "model": "36 / 38 E-Optimized",
+   "modality": "E-bike",
+   "subcategory": "E-MTB",
+   "details": "Garfo · bengala 36 / 38 mm · curso 150–180 mm · Factory / Performance",
+   "priceMin": 9990,
+   "priceMax": 9990,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-009",
+   "category": "Suspensão",
+   "brand": "Fox",
+   "model": "32 TC (Taper-Cast)",
+   "modality": "Gravel",
+   "subcategory": "Gravel / Aventura",
+   "details": "Garfo · bengala 32 mm · curso 40–50 mm · Factory / Perf. Elite / Performance",
+   "priceMin": 6500,
+   "priceMax": 8000,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-010",
+   "category": "Suspensão",
+   "brand": "Fox",
+   "model": "Float SL",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Amortecedor (ar) · Factory / Performance",
+   "priceMin": 3500,
+   "priceMax": 4500,
+   "plans": [
+    {
+     "name": "Revisão da câmara de ar",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-011",
+   "category": "Suspensão",
+   "brand": "Fox",
+   "model": "Float / Float DPS",
+   "modality": "MTB",
+   "subcategory": "Trail",
+   "details": "Amortecedor (ar) · Factory / Performance",
+   "priceMin": 4220,
+   "priceMax": 6800,
+   "plans": [
+    {
+     "name": "Revisão da câmara de ar",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-012",
+   "category": "Suspensão",
+   "brand": "Fox",
+   "model": "Float X",
+   "modality": "MTB",
+   "subcategory": "Trail / All-Mountain",
+   "details": "Amortecedor (ar) · Factory / Perf. Elite",
+   "priceMin": 4500,
+   "priceMax": 5500,
+   "plans": [
+    {
+     "name": "Revisão da câmara de ar",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-013",
+   "category": "Suspensão",
+   "brand": "Fox",
+   "model": "Float X2",
+   "modality": "MTB",
+   "subcategory": "Enduro / DH",
+   "details": "Amortecedor (ar) · Factory / Perf. Elite / Performance",
+   "priceMin": 5600,
+   "priceMax": 6900,
+   "plans": [
+    {
+     "name": "Revisão da câmara de ar",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-014",
+   "category": "Suspensão",
+   "brand": "Fox",
+   "model": "DHX",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Amortecedor (mola) · Factory / Performance",
+   "priceMin": 4500,
+   "priceMax": 5500,
+   "plans": [
+    {
+     "name": "Revisão da câmara de ar",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-015",
+   "category": "Suspensão",
+   "brand": "Fox",
+   "model": "DHX2",
+   "modality": "MTB",
+   "subcategory": "Enduro / DH",
+   "details": "Amortecedor (mola) · Factory / Performance",
+   "priceMin": 5500,
+   "priceMax": 6500,
+   "plans": [
+    {
+     "name": "Revisão da câmara de ar",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-016",
+   "category": "Suspensão",
+   "brand": "RockShox",
+   "model": "SID SL",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Garfo · bengala 32 mm · curso 100–110 mm · Ultimate / Select",
+   "priceMin": 4655,
+   "priceMax": 6000,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 200,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-017",
+   "category": "Suspensão",
+   "brand": "RockShox",
+   "model": "SID",
+   "modality": "MTB",
+   "subcategory": "XC / Downcountry",
+   "details": "Garfo · bengala 35 mm · curso 110–120 mm · Ultimate / Select",
+   "priceMin": 3800,
+   "priceMax": 8800,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 200,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-018",
+   "category": "Suspensão",
+   "brand": "RockShox",
+   "model": "Reba",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Garfo · bengala 32 mm · curso 100–120 mm · Gold Isolator / RL",
+   "priceMin": 3637,
+   "priceMax": 6594,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 200,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-019",
+   "category": "Suspensão",
+   "brand": "RockShox",
+   "model": "Recon",
+   "modality": "MTB",
+   "subcategory": "XC (entrada)",
+   "details": "Garfo · bengala 32 mm · curso 100–130 mm · Gold / Silver",
+   "priceMin": 2000,
+   "priceMax": 3000,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 200,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-020",
+   "category": "Suspensão",
+   "brand": "RockShox",
+   "model": "Judy",
+   "modality": "MTB",
+   "subcategory": "XC (entrada)",
+   "details": "Garfo · bengala 30 mm · curso 100–130 mm · Gold RL / Silver TK",
+   "priceMin": 1400,
+   "priceMax": 3209,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 200,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-021",
+   "category": "Suspensão",
+   "brand": "RockShox",
+   "model": "Psylo",
+   "modality": "MTB",
+   "subcategory": "Trail (custo)",
+   "details": "Garfo · bengala 35 mm · curso 120–160 mm · Gold Isolator / Silver",
+   "priceMin": 3200,
+   "priceMax": 4300,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 200,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-022",
+   "category": "Suspensão",
+   "brand": "RockShox",
+   "model": "Pike",
+   "modality": "MTB",
+   "subcategory": "Trail",
+   "details": "Garfo · bengala 35 mm · curso 120–150 mm · Ultimate / Select",
+   "priceMin": 4800,
+   "priceMax": 9200,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 200,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-023",
+   "category": "Suspensão",
+   "brand": "RockShox",
+   "model": "Lyrik",
+   "modality": "MTB",
+   "subcategory": "All-Mountain / Enduro",
+   "details": "Garfo · bengala 35 mm · curso 140–170 mm · Ultimate / Select / Base",
+   "priceMin": 7000,
+   "priceMax": 10000,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 200,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-024",
+   "category": "Suspensão",
+   "brand": "RockShox",
+   "model": "ZEB",
+   "modality": "MTB",
+   "subcategory": "Enduro",
+   "details": "Garfo · bengala 38 mm · curso 160–190 mm · Ultimate / Select / Base",
+   "priceMin": 5200,
+   "priceMax": 10200,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 200,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-025",
+   "category": "Suspensão",
+   "brand": "RockShox",
+   "model": "Domain",
+   "modality": "MTB",
+   "subcategory": "Enduro (custo)",
+   "details": "Garfo · curso 160–180 mm · Gold / Silver",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 200,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-026",
+   "category": "Suspensão",
+   "brand": "RockShox",
+   "model": "BoXXer",
+   "modality": "MTB",
+   "subcategory": "Downhill",
+   "details": "Garfo coroa dupla · bengala 35 mm · curso 200 mm · Ultimate / Select",
+   "priceMin": 9000,
+   "priceMax": 16000,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 200,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-027",
+   "category": "Suspensão",
+   "brand": "RockShox",
+   "model": "Rudy Ultimate XPLR",
+   "modality": "Gravel",
+   "subcategory": "Gravel / Aventura",
+   "details": "Garfo · curso 30–40 mm · Ultimate",
+   "priceMin": 6500,
+   "priceMax": 7500,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 200,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-028",
+   "category": "Suspensão",
+   "brand": "RockShox",
+   "model": "SIDLuxe",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Amortecedor (ar) · Ultimate / Select+",
+   "priceMin": 1649,
+   "priceMax": 2530,
+   "plans": [
+    {
+     "name": "Revisão da câmara de ar",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 200,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-029",
+   "category": "Suspensão",
+   "brand": "RockShox",
+   "model": "Deluxe",
+   "modality": "MTB",
+   "subcategory": "Trail",
+   "details": "Amortecedor (ar) · Ultimate / Select+ / Select",
+   "priceMin": 1199,
+   "priceMax": 2499,
+   "plans": [
+    {
+     "name": "Revisão da câmara de ar",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 200,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-030",
+   "category": "Suspensão",
+   "brand": "RockShox",
+   "model": "Super Deluxe",
+   "modality": "MTB",
+   "subcategory": "Enduro",
+   "details": "Amortecedor (ar ou mola) · Ultimate / Select+ / Select",
+   "priceMin": 2290,
+   "priceMax": 4300,
+   "plans": [
+    {
+     "name": "Revisão da câmara de ar",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 200,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-031",
+   "category": "Suspensão",
+   "brand": "RockShox",
+   "model": "Vivid",
+   "modality": "MTB",
+   "subcategory": "Enduro / DH",
+   "details": "Amortecedor (ar ou mola) · Ultimate / Select",
+   "priceMin": 4500,
+   "priceMax": 7000,
+   "plans": [
+    {
+     "name": "Revisão da câmara de ar",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 100,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-032",
+   "category": "Suspensão",
+   "brand": "Marzocchi",
+   "model": "Bomber Z2",
+   "modality": "MTB",
+   "subcategory": "Trail",
+   "details": "Garfo · bengala 34 mm · curso 100–150 mm · Ar ou mola",
+   "priceMin": 3500,
+   "priceMax": 4500,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-033",
+   "category": "Suspensão",
+   "brand": "Marzocchi",
+   "model": "Bomber Z1",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Garfo · bengala 36 mm · curso 130–180 mm · Ar ou mola",
+   "priceMin": 4300,
+   "priceMax": 6000,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-034",
+   "category": "Suspensão",
+   "brand": "Marzocchi",
+   "model": "Super Z",
+   "modality": "MTB",
+   "subcategory": "Enduro / Freeride",
+   "details": "Garfo · bengala 38 mm · curso 160–180 mm · Grip X",
+   "priceMin": 7000,
+   "priceMax": 8500,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-035",
+   "category": "Suspensão",
+   "brand": "Marzocchi",
+   "model": "Bomber 58",
+   "modality": "MTB",
+   "subcategory": "Downhill",
+   "details": "Garfo coroa dupla · bengala 40 mm · curso 203 mm · Grip",
+   "priceMin": 8000,
+   "priceMax": 9000,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-036",
+   "category": "Suspensão",
+   "brand": "Marzocchi",
+   "model": "Bomber DJ",
+   "modality": "MTB",
+   "subcategory": "Dirt jump",
+   "details": "Garfo · bengala 36 mm · curso 100 mm · Grip",
+   "priceMin": 5849,
+   "priceMax": 5849,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-037",
+   "category": "Suspensão",
+   "brand": "Marzocchi",
+   "model": "Bomber CR",
+   "modality": "MTB",
+   "subcategory": "Enduro / DH",
+   "details": "Amortecedor (mola)",
+   "priceMin": 2200,
+   "priceMax": 2500,
+   "plans": [
+    {
+     "name": "Revisão da câmara de ar",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 125,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-038",
+   "category": "Suspensão",
+   "brand": "Manitou",
+   "model": "Mezzer / Mezzer LT (Gen 2)",
+   "modality": "MTB",
+   "subcategory": "Enduro",
+   "details": "Garfo · bengala 37 mm · curso 150–190 mm · Pro / Comp",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "SUS-039",
+   "category": "Suspensão",
+   "brand": "Manitou",
+   "model": "Mattoc",
+   "modality": "MTB",
+   "subcategory": "Trail",
+   "details": "Garfo · bengala 34 mm · curso 130–160 mm · Pro / Expert / Comp",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "SUS-040",
+   "category": "Suspensão",
+   "brand": "Manitou",
+   "model": "Machete",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Garfo · bengala 32 mm · curso 100–140 mm · Comp / Expert",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "SUS-041",
+   "category": "Suspensão",
+   "brand": "Manitou",
+   "model": "Markhor",
+   "modality": "MTB",
+   "subcategory": "XC (entrada)",
+   "details": "Garfo · bengala 32 mm · curso 100 mm",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "SUS-042",
+   "category": "Suspensão",
+   "brand": "Manitou",
+   "model": "R7",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Garfo · bengala 32 mm · curso 80–100 mm · Pro / Expert",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "SUS-043",
+   "category": "Suspensão",
+   "brand": "SR Suntour",
+   "model": "XCT / XCM / XCR (mola)",
+   "modality": "MTB",
+   "subcategory": "Entrada / Lazer",
+   "details": "Garfo · bengala 30–32 mm · curso 80–120 mm · Mola",
+   "priceMin": 685,
+   "priceMax": 1990,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 100,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-044",
+   "category": "Suspensão",
+   "brand": "SR Suntour",
+   "model": "XCR 34 Air",
+   "modality": "MTB",
+   "subcategory": "XC / Trail (entrada)",
+   "details": "Garfo · bengala 34 mm · curso 100–120 mm · Ar, R-2CR",
+   "priceMin": 1879,
+   "priceMax": 2399,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 100,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-045",
+   "category": "Suspensão",
+   "brand": "SR Suntour",
+   "model": "Raidon",
+   "modality": "MTB",
+   "subcategory": "XC (entrada)",
+   "details": "Garfo · bengala 32 / 34 mm · curso 100–120 mm · Ar, trava no guidão",
+   "priceMin": 1360,
+   "priceMax": 2650,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 100,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-046",
+   "category": "Suspensão",
+   "brand": "SR Suntour",
+   "model": "Epixon",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Garfo · bengala 32 mm · curso 100 mm · Ar",
+   "priceMin": 1406,
+   "priceMax": 1500,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 100,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-047",
+   "category": "Suspensão",
+   "brand": "SR Suntour",
+   "model": "Axon 32 / Axon 34",
+   "modality": "MTB",
+   "subcategory": "XC (competição)",
+   "details": "Garfo · bengala 32 / 34 mm · curso 100–120 mm · Al ou carbono",
+   "priceMin": 3000,
+   "priceMax": 4400,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 100,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-048",
+   "category": "Suspensão",
+   "brand": "SR Suntour",
+   "model": "Durolux 36",
+   "modality": "MTB",
+   "subcategory": "Enduro",
+   "details": "Garfo · bengala 36 mm · curso 150–170 mm · R2C2",
+   "priceMin": 4399,
+   "priceMax": 5444,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 100,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-049",
+   "category": "Suspensão",
+   "brand": "SR Suntour",
+   "model": "Durolux 38",
+   "modality": "MTB",
+   "subcategory": "Enduro",
+   "details": "Garfo · bengala 38 mm · curso 160–180 mm · R2C2, eixo 20 mm",
+   "priceMin": 4413,
+   "priceMax": 5851,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 100,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-050",
+   "category": "Suspensão",
+   "brand": "SR Suntour",
+   "model": "Rux",
+   "modality": "MTB",
+   "subcategory": "Downhill",
+   "details": "Garfo coroa dupla · bengala 38 mm · curso 200 mm",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 100,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-051",
+   "category": "Suspensão",
+   "brand": "SR Suntour",
+   "model": "Zeron / Aion",
+   "modality": "E-bike",
+   "subcategory": "E-MTB / Trail",
+   "details": "Garfo · bengala 35 mm · curso 130–160 mm · Específico e-bike",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Revisão de lowers (óleo e retentores)",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 100,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-052",
+   "category": "Suspensão",
+   "brand": "SR Suntour",
+   "model": "Raidon / Edge (traseiro)",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Amortecedor (ar) · Trava",
+   "priceMin": 1060,
+   "priceMax": 1060,
+   "plans": [
+    {
+     "name": "Revisão da câmara de ar",
+     "intervalKm": null,
+     "intervalHours": 50,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    },
+    {
+     "name": "Revisão completa",
+     "intervalKm": null,
+     "intervalHours": 100,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "SUS-053",
+   "category": "Suspensão",
+   "brand": "Öhlins",
+   "model": "RXF34 m.2 / RXF36 m.2 / RXF38 m.2 / DH38 m.1",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro / DH",
+   "details": "Garfo · bengala 34 / 36 / 38 mm · curso 120–200 mm · TTX (ar/mola)",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "SUS-054",
+   "category": "Suspensão",
+   "brand": "Lauf",
+   "model": "Grit SL",
+   "modality": "Gravel",
+   "subcategory": "Gravel / Aventura",
+   "details": "Garfo de lâminas · curso 30 mm",
+   "priceMin": 7000,
+   "priceMax": 8000,
+   "plans": []
+  },
+  {
+   "code": "SUS-055",
+   "category": "Suspensão",
+   "brand": "Specialized",
+   "model": "Future Shock",
+   "modality": "Road / Gravel",
+   "subcategory": "Endurance / Gravel",
+   "details": "Suspensão na caixa de direção · curso 20 mm · Integrado (Roubaix, Diverge)",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "SUS-056",
+   "category": "Suspensão",
+   "brand": "Cannondale",
+   "model": "Lefty Oliver",
+   "modality": "Gravel",
+   "subcategory": "Gravel",
+   "details": "Garfo monobraço · curso 30 mm · Integrado (Topstone Lefty)",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "SUS-057",
+   "category": "Suspensão",
+   "brand": "Caloi (OEM)",
+   "model": "Garfo hidráulico 100 mm c/ trava (Explorer Sport)",
+   "modality": "MTB",
+   "subcategory": "XC (entrada)",
+   "details": "Garfo · curso 100 mm · OEM Caloi",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "PNE-001",
+   "category": "Pneus",
+   "brand": "Continental",
+   "model": "Grand Prix 5000 S TR",
+   "modality": "Road",
+   "subcategory": "Treino / All-round",
+   "details": "Ambos · 700x25–32 · Tubeless; BlackChili; Vectran",
+   "priceMin": 700,
+   "priceMax": 1130,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 5650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-002",
+   "category": "Pneus",
+   "brand": "Continental",
+   "model": "Grand Prix 5000 AS TR",
+   "modality": "Road",
+   "subcategory": "Chuva / Inverno",
+   "details": "Ambos · 700x25–35 · Tubeless; all season",
+   "priceMin": 750,
+   "priceMax": 1120,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 6500.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 5000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-003",
+   "category": "Pneus",
+   "brand": "Continental",
+   "model": "Grand Prix 5000 TT TR",
+   "modality": "Triathlon / TT",
+   "subcategory": "Contra-relógio",
+   "details": "Ambos · 700x25–28 · Tubeless",
+   "priceMin": 890,
+   "priceMax": 1250,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-004",
+   "category": "Pneus",
+   "brand": "Continental",
+   "model": "Grand Prix 5000 (câmara)",
+   "modality": "Road",
+   "subcategory": "Treino / All-round",
+   "details": "Ambos · 700x23–28 · Clincher; BlackChili",
+   "priceMin": 529,
+   "priceMax": 900,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 5650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-005",
+   "category": "Pneus",
+   "brand": "Continental",
+   "model": "Grand Sport Race",
+   "modality": "Road",
+   "subcategory": "Treino (custo)",
+   "details": "Ambos · 700x25–28 · Clincher kevlar",
+   "priceMin": 363,
+   "priceMax": 399,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 6500.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 5000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-006",
+   "category": "Pneus",
+   "brand": "Continental",
+   "model": "Terra Speed",
+   "modality": "Gravel",
+   "subcategory": "Rápido",
+   "details": "Ambos · 700x35–45 · TR Protection",
+   "priceMin": 405,
+   "priceMax": 750,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-007",
+   "category": "Pneus",
+   "brand": "Continental",
+   "model": "Terra Trail",
+   "modality": "Gravel",
+   "subcategory": "Misto",
+   "details": "Ambos · 700x35–45 · TR Protection / ShieldWall",
+   "priceMin": 320,
+   "priceMax": 650,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 3500.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-008",
+   "category": "Pneus",
+   "brand": "Continental",
+   "model": "Race King / Cross King",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Traseiro / Ambos · 29x2.2–2.4 · ProTection",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-009",
+   "category": "Pneus",
+   "brand": "Continental",
+   "model": "Kryptotal / Xynotal / Argotal",
+   "modality": "MTB",
+   "subcategory": "Enduro / DH",
+   "details": "Diant. / Tras. · 29x2.4–2.6 · Trail / Enduro / DH",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 850.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-010",
+   "category": "Pneus",
+   "brand": "Maxxis",
+   "model": "Aspen",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Ambos · 29x2.25–2.4 · EXO/TR, 120 TPI",
+   "priceMin": 382,
+   "priceMax": 586,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-011",
+   "category": "Pneus",
+   "brand": "Maxxis",
+   "model": "Ikon",
+   "modality": "MTB",
+   "subcategory": "XC / Downcountry",
+   "details": "Ambos · 29x2.2–2.6 · EXO/TR, 3C MaxxSpeed",
+   "priceMin": 400,
+   "priceMax": 648,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-012",
+   "category": "Pneus",
+   "brand": "Maxxis",
+   "model": "Rekon / Rekon Race",
+   "modality": "MTB",
+   "subcategory": "Trail / Downcountry",
+   "details": "Ambos · 29x2.4–2.6 · EXO/TR",
+   "priceMin": 333,
+   "priceMax": 520,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 1750.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-013",
+   "category": "Pneus",
+   "brand": "Maxxis",
+   "model": "Minion DHF",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Dianteiro · 29x2.3–2.6 · EXO / EXO+ / DD / DH",
+   "priceMin": 420,
+   "priceMax": 980,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 1100.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 700,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-014",
+   "category": "Pneus",
+   "brand": "Maxxis",
+   "model": "Minion DHR II",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Traseiro · 29x2.3–2.6 · EXO / EXO+ / DD / DH",
+   "priceMin": 445,
+   "priceMax": 986,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 750.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-015",
+   "category": "Pneus",
+   "brand": "Maxxis",
+   "model": "Assegai",
+   "modality": "MTB",
+   "subcategory": "Enduro / DH",
+   "details": "Dianteiro · 29x2.5 · EXO / EXO+ / DD / DH",
+   "priceMin": 590,
+   "priceMax": 1110,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 1100.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 700,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-016",
+   "category": "Pneus",
+   "brand": "Maxxis",
+   "model": "Dissector",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Traseiro (rápido) · 29x2.4 · EXO+ / DD; MaxxTerra",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 900.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 600,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-017",
+   "category": "Pneus",
+   "brand": "Maxxis",
+   "model": "Minion / Assegai (carcaça DH)",
+   "modality": "MTB",
+   "subcategory": "Downhill",
+   "details": "Ambos · 29x2.4–2.5 · DH; 3C MaxxGrip",
+   "priceMin": 980,
+   "priceMax": 1110,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 500.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 300,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-018",
+   "category": "Pneus",
+   "brand": "Maxxis",
+   "model": "Minion DHF / DHR II (e50)",
+   "modality": "E-bike",
+   "subcategory": "E-MTB",
+   "details": "Ambos · 29x2.4–2.5 · DH e50",
+   "priceMin": 980,
+   "priceMax": 986,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 1150.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-019",
+   "category": "Pneus",
+   "brand": "Maxxis",
+   "model": "Rambler",
+   "modality": "Gravel",
+   "subcategory": "Misto",
+   "details": "Ambos · 700x38–45 · SilkShield / EXO, TR",
+   "priceMin": 351,
+   "priceMax": 440,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-020",
+   "category": "Pneus",
+   "brand": "Maxxis",
+   "model": "Receptor / Re-Fuse",
+   "modality": "Gravel",
+   "subcategory": "Rápido",
+   "details": "Ambos · 700x40 · EXO/TR, MaxxShield",
+   "priceMin": 380,
+   "priceMax": 500,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-021",
+   "category": "Pneus",
+   "brand": "Maxxis",
+   "model": "Ravager",
+   "modality": "Gravel",
+   "subcategory": "Barro / Ciclocross",
+   "details": "Ambos · 700x40 · SilkShield, TR",
+   "priceMin": 337,
+   "priceMax": 337,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 3500.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-022",
+   "category": "Pneus",
+   "brand": "Pirelli",
+   "model": "P Zero Race TLR (RS / SL-R / X)",
+   "modality": "Road",
+   "subcategory": "Race / Treino",
+   "details": "Ambos · 700x26–32 · SmartEVO / SpeedCore",
+   "priceMin": 412,
+   "priceMax": 555,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 5250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-023",
+   "category": "Pneus",
+   "brand": "Pirelli",
+   "model": "Cinturato Velo",
+   "modality": "Road",
+   "subcategory": "Treino / Durável",
+   "details": "Ambos · 700x26–35 · Anti-furo",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 7500.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 6000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-024",
+   "category": "Pneus",
+   "brand": "Pirelli",
+   "model": "Cinturato Gravel (H / M / S / RC)",
+   "modality": "Gravel",
+   "subcategory": "Todos os terrenos",
+   "details": "Ambos · 700x35–50 · SpeedGrip",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-025",
+   "category": "Pneus",
+   "brand": "Pirelli",
+   "model": "Scorpion XC RC",
+   "modality": "MTB",
+   "subcategory": "XC (competição)",
+   "details": "Ambos · 29x2.2–2.4 · ProWall / Lite",
+   "priceMin": 490,
+   "priceMax": 745,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-026",
+   "category": "Pneus",
+   "brand": "Pirelli",
+   "model": "Scorpion XC M / H",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Ambos · 29x2.2–2.4 · ProWall, 120 TPI",
+   "priceMin": 530,
+   "priceMax": 690,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-027",
+   "category": "Pneus",
+   "brand": "Pirelli",
+   "model": "Scorpion Sport XC (M / H)",
+   "modality": "MTB",
+   "subcategory": "XC (entrada)",
+   "details": "Ambos · 29x2.2–2.4 · ProWall, kevlar",
+   "priceMin": 256,
+   "priceMax": 430,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-028",
+   "category": "Pneus",
+   "brand": "Pirelli",
+   "model": "Scorpion Trail / Enduro (S / M / R)",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Diant. / Tras. · 29x2.4–2.6 · HardWall",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 900.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 600,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-029",
+   "category": "Pneus",
+   "brand": "Pirelli",
+   "model": "Scorpion E-MTB",
+   "modality": "E-bike",
+   "subcategory": "E-MTB",
+   "details": "Ambos · 29x2.6 · HyperWall",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 1150.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-030",
+   "category": "Pneus",
+   "brand": "Schwalbe",
+   "model": "Racing Ray",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Dianteiro · 29x2.25–2.35 · Addix",
+   "priceMin": 275,
+   "priceMax": 700,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-031",
+   "category": "Pneus",
+   "brand": "Schwalbe",
+   "model": "Racing Ralph",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Traseiro · 29x2.25–2.35 · Addix",
+   "priceMin": 320,
+   "priceMax": 480,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-032",
+   "category": "Pneus",
+   "brand": "Schwalbe",
+   "model": "Thunder Burt",
+   "modality": "MTB",
+   "subcategory": "XC / Maratona",
+   "details": "Traseiro · 29x2.35 · Evo Super Race / Super Ground",
+   "priceMin": 479,
+   "priceMax": 495,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-033",
+   "category": "Pneus",
+   "brand": "Schwalbe",
+   "model": "Nobby Nic / Hans Dampf / Magic Mary / Big Betty / Albert",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Diant. / Tras. · 29x2.4–2.6 · Super Trail / Gravity",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 900.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 600,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-034",
+   "category": "Pneus",
+   "brand": "Schwalbe",
+   "model": "Eddy Current",
+   "modality": "E-bike",
+   "subcategory": "E-MTB",
+   "details": "Diant. / Tras. · 29x2.6–2.8 · Super Trail / Gravity",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 1150.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-035",
+   "category": "Pneus",
+   "brand": "Schwalbe",
+   "model": "G-One Allround / Speed / R / RS",
+   "modality": "Gravel",
+   "subcategory": "Todos os terrenos",
+   "details": "Ambos · 700x35–50 · Super Ground / Race, Addix",
+   "priceMin": 376,
+   "priceMax": 600,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-036",
+   "category": "Pneus",
+   "brand": "Schwalbe",
+   "model": "Pro One / One",
+   "modality": "Road",
+   "subcategory": "Race / Treino",
+   "details": "Ambos · 700x25–32 · TLE / clincher, Addix Race",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 5000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-037",
+   "category": "Pneus",
+   "brand": "Schwalbe",
+   "model": "Marathon (Plus)",
+   "modality": "Urbano / Cicloturismo",
+   "subcategory": "Durável",
+   "details": "Ambos · 700x32–50 · SmartGuard",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 10000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 8000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-038",
+   "category": "Pneus",
+   "brand": "Vittoria",
+   "model": "Corsa Pro / Corsa N.EXT",
+   "modality": "Road",
+   "subcategory": "Race",
+   "details": "Ambos · 700x26–32 · Graphene 2.0",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 3600.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3200,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-039",
+   "category": "Pneus",
+   "brand": "Vittoria",
+   "model": "Corsa Pro Speed",
+   "modality": "Triathlon / TT",
+   "subcategory": "Contra-relógio",
+   "details": "Ambos · 700x25–28 · TLR",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-040",
+   "category": "Pneus",
+   "brand": "Vittoria",
+   "model": "Rubino Pro / Zaffiro",
+   "modality": "Road",
+   "subcategory": "Treino",
+   "details": "Ambos · 700x25–30 · Graphene / Duro",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 6500.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 5000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-041",
+   "category": "Pneus",
+   "brand": "Vittoria",
+   "model": "Terreno (Dry / Mix / T50)",
+   "modality": "Gravel",
+   "subcategory": "Misto",
+   "details": "Ambos · 700x38–47 · TNT, Graphene",
+   "priceMin": 419,
+   "priceMax": 419,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-042",
+   "category": "Pneus",
+   "brand": "Vittoria",
+   "model": "Mezcal",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Traseiro / Ambos · 29x2.1–2.6 · XC-Race / Sport, Graphene 2.0 4C",
+   "priceMin": 299,
+   "priceMax": 549,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-043",
+   "category": "Pneus",
+   "brand": "Vittoria",
+   "model": "Barzo",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Dianteiro / Ambos · 29x2.25–2.6 · XC-Race / XC-Trail TNT",
+   "priceMin": 359,
+   "priceMax": 629,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-044",
+   "category": "Pneus",
+   "brand": "Vittoria",
+   "model": "Martello / Mazza / Agarro",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Diant. / Tras. · 29x2.4–2.6 · Enduro / Trail TNT",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 900.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 600,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-045",
+   "category": "Pneus",
+   "brand": "Michelin",
+   "model": "Power Cup / Power Road",
+   "modality": "Road",
+   "subcategory": "Race / Treino",
+   "details": "Ambos · 700x25–32 · TLR, Gum-X",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 5000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-046",
+   "category": "Pneus",
+   "brand": "Michelin",
+   "model": "Force XC2 (Performance / Racing Line)",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Dianteiro / Ambos · 29x2.25 · Kevlar TLR",
+   "priceMin": 192,
+   "priceMax": 666,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-047",
+   "category": "Pneus",
+   "brand": "Michelin",
+   "model": "Wild XC / Jet XC2",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Traseiro / Ambos · 29x2.25–2.35 · Performance / Racing Line",
+   "priceMin": 349,
+   "priceMax": 651,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-048",
+   "category": "Pneus",
+   "brand": "Michelin",
+   "model": "Wild Enduro (Front / Rear)",
+   "modality": "MTB",
+   "subcategory": "Enduro",
+   "details": "Diant. / Tras. · 29x2.4–2.5 · Gum-X, 3x60 TPI",
+   "priceMin": 430,
+   "priceMax": 599,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 850.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-049",
+   "category": "Pneus",
+   "brand": "Michelin",
+   "model": "E-Wild (Enduro)",
+   "modality": "E-bike",
+   "subcategory": "E-MTB",
+   "details": "Diant. / Tras. · 29x2.6 · E-Gum-X",
+   "priceMin": 790,
+   "priceMax": 790,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 1150.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-050",
+   "category": "Pneus",
+   "brand": "Michelin",
+   "model": "Power Gravel",
+   "modality": "Gravel",
+   "subcategory": "Misto",
+   "details": "Ambos · 700x35–47 · TLR",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-051",
+   "category": "Pneus",
+   "brand": "Specialized",
+   "model": "Fast Trak (Control / Grid; T5 / T7)",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Ambos · 29x2.2–2.35 · Gripton T5/T7, 2Bliss",
+   "priceMin": 390,
+   "priceMax": 600,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-052",
+   "category": "Pneus",
+   "brand": "Specialized",
+   "model": "Ground Control",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Ambos · 29x2.2–2.35 · Control / Grid, Gripton T5",
+   "priceMin": 370,
+   "priceMax": 425,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-053",
+   "category": "Pneus",
+   "brand": "Specialized",
+   "model": "Renegade",
+   "modality": "MTB",
+   "subcategory": "XC (rápido)",
+   "details": "Traseiro · 29x2.1–2.35 · Control, 2Bliss",
+   "priceMin": 249,
+   "priceMax": 249,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 2250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-054",
+   "category": "Pneus",
+   "brand": "Specialized",
+   "model": "Butcher / Purgatory / Eliminator",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Diant. / Tras. · 29x2.3–2.6 · Grid Trail / Gravity, T7/T9",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 900.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 600,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-055",
+   "category": "Pneus",
+   "brand": "Specialized",
+   "model": "S-Works Turbo / RapidAir",
+   "modality": "Road",
+   "subcategory": "Race",
+   "details": "Ambos · 700x26–32 · Gripton T2/T5",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-056",
+   "category": "Pneus",
+   "brand": "Specialized",
+   "model": "Pathfinder",
+   "modality": "Gravel",
+   "subcategory": "Misto",
+   "details": "Ambos · 700x38–47 · Gripton, 2Bliss",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-057",
+   "category": "Pneus",
+   "brand": "Panaracer",
+   "model": "GravelKing (Slick / SS / SK / R)",
+   "modality": "Gravel",
+   "subcategory": "Todos os terrenos",
+   "details": "Ambos · 700x35–50 · Tubeless",
+   "priceMin": 217,
+   "priceMax": 664,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 4000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-058",
+   "category": "Pneus",
+   "brand": "Kenda",
+   "model": "Piedmont",
+   "modality": "Gravel",
+   "subcategory": "Entrada",
+   "details": "Ambos · 700x40 · Arame / kevlar",
+   "priceMin": 79,
+   "priceMax": 122,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 3250.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "PNE-059",
+   "category": "Pneus",
+   "brand": "Levorin",
+   "model": "Colina",
+   "modality": "MTB",
+   "subcategory": "Entrada / Lazer",
+   "details": "Ambos · 29x2.1 · Arame, borracha dura",
+   "priceMin": 63,
+   "priceMax": 63,
+   "plans": [
+    {
+     "name": "Troca",
+     "intervalKm": 3000.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-001",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "MT200",
+   "modality": "MTB",
+   "subcategory": "Entrada / Lazer",
+   "details": "Hidráulico 2 pistões, pastilha resina",
+   "priceMin": 289,
+   "priceMax": 340,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-002",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "MT410 / MT400",
+   "modality": "MTB",
+   "subcategory": "Entrada / Trail",
+   "details": "Hidráulico 2 pistões",
+   "priceMin": 450,
+   "priceMax": 650,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-003",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "MT501",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Hidráulico 2 pistões",
+   "priceMin": 600,
+   "priceMax": 900,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-004",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "Deore M6100",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Hidráulico 2 pistões",
+   "priceMin": 900,
+   "priceMax": 1300,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-005",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "SLX M7100 / M7120",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "2 ou 4 pistões",
+   "priceMin": 1200,
+   "priceMax": 1900,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-006",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "Deore XT M8100 / M8120",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "2 ou 4 pistões",
+   "priceMin": 2000,
+   "priceMax": 2800,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-007",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "XTR M9100 / M9120",
+   "modality": "MTB",
+   "subcategory": "XC / Enduro (topo)",
+   "details": "2 ou 4 pistões",
+   "priceMin": 3500,
+   "priceMax": 5000,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-008",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "Alivio M445 / M4050",
+   "modality": "MTB",
+   "subcategory": "Entrada / Lazer",
+   "details": "Hidráulico 2 pistões",
+   "priceMin": 534,
+   "priceMax": 785,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-009",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "105 R7170 (pinça hidráulica)",
+   "modality": "Road",
+   "subcategory": "Endurance / Performance",
+   "details": "Alavanca é a do câmbio (STI)",
+   "priceMin": 500,
+   "priceMax": 900,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 2750.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-010",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "Ultegra R8170 / Dura-Ace R9270 (pinça)",
+   "modality": "Road",
+   "subcategory": "Performance / Race",
+   "details": "Alavanca é a do câmbio (STI)",
+   "priceMin": 900,
+   "priceMax": 1700,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 2750.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-011",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "GRX RX810 / RX820 (pinça)",
+   "modality": "Gravel",
+   "subcategory": "Aventura / Race",
+   "details": "Alavanca é a do câmbio",
+   "priceMin": 700,
+   "priceMax": 1300,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 2750.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-012",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Level T",
+   "modality": "MTB",
+   "subcategory": "XC / Trail (entrada)",
+   "details": "Hidráulico 2 pistões",
+   "priceMin": 900,
+   "priceMax": 1400,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-013",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Guide T",
+   "modality": "MTB",
+   "subcategory": "Trail (entrada)",
+   "details": "Hidráulico 4 pistões",
+   "priceMin": 1000,
+   "priceMax": 1500,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-014",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "DB4",
+   "modality": "MTB",
+   "subcategory": "XC (OEM Scott)",
+   "details": "Linha DB (OEM)",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-015",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Level Bronze / Silver / Ultimate",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Hidráulico 2 pistões",
+   "priceMin": 1200,
+   "priceMax": 3000,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-016",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Motive Bronze / Silver / Ultimate",
+   "modality": "MTB",
+   "subcategory": "Trail / Downcountry",
+   "details": "Hidráulico 4 pistões",
+   "priceMin": 1800,
+   "priceMax": 3500,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-017",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Maven Bronze / Silver / Ultimate",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Hidráulico 4 pistões, alta potência",
+   "priceMin": 2500,
+   "priceMax": 4500,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-018",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Code R / RSC / Ultimate",
+   "modality": "MTB",
+   "subcategory": "Enduro / E-MTB",
+   "details": "Hidráulico 4 pistões",
+   "priceMin": 2000,
+   "priceMax": 4200,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-019",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Rival / Force / Red AXS HRD (pinça)",
+   "modality": "Road / Gravel",
+   "subcategory": "Performance / Aventura",
+   "details": "Alavanca é a do câmbio AXS",
+   "priceMin": 700,
+   "priceMax": 1600,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 2750.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-020",
+   "category": "Freios",
+   "brand": "Magura",
+   "model": "MT5 / MT7",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Hidráulico 4 pistões",
+   "priceMin": 1500,
+   "priceMax": 3200,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-021",
+   "category": "Freios",
+   "brand": "Tektro",
+   "model": "HD-M275 / HD-M280",
+   "modality": "MTB",
+   "subcategory": "Entrada",
+   "details": "Hidráulico 2 pistões",
+   "priceMin": 250,
+   "priceMax": 500,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-022",
+   "category": "Freios",
+   "brand": "Absolute",
+   "model": "M310 / Wild 2 / DXU-16",
+   "modality": "MTB",
+   "subcategory": "Entrada",
+   "details": "Hidráulico 2 pistões, nacional",
+   "priceMin": 165,
+   "priceMax": 260,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-023",
+   "category": "Freios",
+   "brand": "Absolute",
+   "model": "Brutus II",
+   "modality": "MTB",
+   "subcategory": "Entrada / Trail",
+   "details": "Hidráulico 4 pistões, 160 mm",
+   "priceMin": 393,
+   "priceMax": 393,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-024",
+   "category": "Freios",
+   "brand": "Logan",
+   "model": "Hidráulico (OEM)",
+   "modality": "MTB",
+   "subcategory": "Entrada (OEM Caloi)",
+   "details": "Original da Caloi Explorer Sport 2026",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650.0,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-001",
+   "category": "Rodas",
+   "brand": "Specialized (OEM)",
+   "model": "Alumínio 27 mm, 28 raios",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Cubos MT410-B; original da Chisel Comp",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-002",
+   "category": "Rodas",
+   "brand": "Vzan (OEM Caloi)",
+   "model": "Overland R29",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Cubos QC300 / TC500 Boost",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-003",
+   "category": "Rodas",
+   "brand": "Caloi (OEM)",
+   "model": "Aro alumínio + cubo TX506",
+   "modality": "MTB",
+   "subcategory": "Entrada",
+   "details": "Original da Caloi Explorer Sport 2026",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-004",
+   "category": "Rodas",
+   "brand": "Absolute",
+   "model": "Wild 29",
+   "modality": "MTB",
+   "subcategory": "Entrada",
+   "details": "Cassete 8–12v, rolamentos",
+   "priceMin": 550,
+   "priceMax": 550,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-005",
+   "category": "Rodas",
+   "brand": "Absolute",
+   "model": "Prime Boost 29",
+   "modality": "MTB",
+   "subcategory": "XC / Trail (entrada)",
+   "details": "28 raios, tubeless, Boost",
+   "priceMin": 1404,
+   "priceMax": 1451,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-006",
+   "category": "Rodas",
+   "brand": "Shimano",
+   "model": "WH-MT500 29",
+   "modality": "MTB",
+   "subcategory": "Trail",
+   "details": "Center Lock, Micro Spline 12v",
+   "priceMin": 1200,
+   "priceMax": 1800,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-007",
+   "category": "Rodas",
+   "brand": "Shimano",
+   "model": "Deore WH-MT601",
+   "modality": "MTB",
+   "subcategory": "Trail",
+   "details": "Boost, tubeless",
+   "priceMin": 2000,
+   "priceMax": 3000,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-008",
+   "category": "Rodas",
+   "brand": "Mavic",
+   "model": "Crossmax 29 Boost",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Alumínio, 25 mm internos",
+   "priceMin": 4409,
+   "priceMax": 4409,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-009",
+   "category": "Rodas",
+   "brand": "DT Swiss",
+   "model": "XR 1700 Spline 25",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Alumínio, cubo 370",
+   "priceMin": 4500,
+   "priceMax": 6000,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-010",
+   "category": "Rodas",
+   "brand": "DT Swiss",
+   "model": "XM 1700 Spline 30",
+   "modality": "MTB",
+   "subcategory": "Trail / All-Mountain",
+   "details": "Alumínio, 30 mm internos",
+   "priceMin": 4500,
+   "priceMax": 6500,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-011",
+   "category": "Rodas",
+   "brand": "DT Swiss",
+   "model": "EX 1700 Spline",
+   "modality": "MTB",
+   "subcategory": "Enduro",
+   "details": "Alumínio, cubo 350",
+   "priceMin": 4500,
+   "priceMax": 6000,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-012",
+   "category": "Rodas",
+   "brand": "DT Swiss",
+   "model": "XR 1501 Spline One",
+   "modality": "MTB",
+   "subcategory": "XC (topo)",
+   "details": "Alumínio leve",
+   "priceMin": 4500,
+   "priceMax": 7000,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-013",
+   "category": "Rodas",
+   "brand": "Stan's NoTubes",
+   "model": "Crest S2",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Aro tubeless; original da Cannondale Scalpel 4",
+   "priceMin": 2500,
+   "priceMax": 3500,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-014",
+   "category": "Rodas",
+   "brand": "Roval",
+   "model": "Control SL / Control Carbon 29",
+   "modality": "MTB",
+   "subcategory": "XC / Trail (carbono)",
+   "details": "Carbono",
+   "priceMin": 10000,
+   "priceMax": 16000,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-015",
+   "category": "Rodas",
+   "brand": "Syncros (OEM Scott)",
+   "model": "X-30SE",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Original da Scott Spark RC 2025",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-016",
+   "category": "Rodas",
+   "brand": "Alexrims (OEM Oggi)",
+   "model": "MD25",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Cubos MT410 + TC500-B Boost",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-017",
+   "category": "Rodas",
+   "brand": "DT Swiss",
+   "model": "R460 DB",
+   "modality": "Road",
+   "subcategory": "Endurance (disco)",
+   "details": "Alumínio, disco, cubos Shimano",
+   "priceMin": 1199,
+   "priceMax": 1999,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-018",
+   "category": "Rodas",
+   "brand": "DT Swiss",
+   "model": "R470",
+   "modality": "Road",
+   "subcategory": "Performance (disco)",
+   "details": "Alumínio, disco",
+   "priceMin": 2500,
+   "priceMax": 3800,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "ROD-019",
+   "category": "Rodas",
+   "brand": "DT Swiss",
+   "model": "G540",
+   "modality": "Gravel",
+   "subcategory": "Aventura",
+   "details": "Alumínio, disco",
+   "priceMin": 3000,
+   "priceMax": 4500,
+   "plans": [
+    {
+     "name": "Revisão de rolamentos",
+     "intervalKm": 4500.0,
+     "intervalHours": null,
+     "action": "SERVICE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "CAN-001",
+   "category": "Canotes",
+   "brand": "TranzX",
+   "model": "Dropper 30.9 (100 / 125 / 150)",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Original da Specialized Chisel Comp",
+   "priceMin": 450,
+   "priceMax": 800,
+   "plans": [
+    {
+     "name": "Revisão",
+     "intervalKm": null,
+     "intervalHours": 150.0,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": 100
+    }
+   ]
+  },
+  {
+   "code": "CAN-002",
+   "category": "Canotes",
+   "brand": "X-Fusion",
+   "model": "Manic",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Dropper",
+   "priceMin": 1800,
+   "priceMax": 2700,
+   "plans": [
+    {
+     "name": "Revisão",
+     "intervalKm": null,
+     "intervalHours": 150.0,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": 100
+    }
+   ]
+  },
+  {
+   "code": "CAN-003",
+   "category": "Canotes",
+   "brand": "RockShox",
+   "model": "Reverb AXS",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Sem fio, 100–250 mm",
+   "priceMin": 3800,
+   "priceMax": 5200,
+   "plans": [
+    {
+     "name": "Revisão",
+     "intervalKm": null,
+     "intervalHours": 125.0,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": 50
+    }
+   ]
+  },
+  {
+   "code": "CAN-004",
+   "category": "Canotes",
+   "brand": "RockShox",
+   "model": "Reverb Stealth",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Hidráulico",
+   "priceMin": 2000,
+   "priceMax": 2800,
+   "plans": [
+    {
+     "name": "Revisão",
+     "intervalKm": null,
+     "intervalHours": 125.0,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": 50
+    }
+   ]
+  },
+  {
+   "code": "CAN-005",
+   "category": "Canotes",
+   "brand": "OneUp Components",
+   "model": "Dropper V3",
+   "modality": "MTB",
+   "subcategory": "XC / Trail / Enduro",
+   "details": "Curso ajustável",
+   "priceMin": 2300,
+   "priceMax": 3000,
+   "plans": [
+    {
+     "name": "Revisão",
+     "intervalKm": null,
+     "intervalHours": 350.0,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "CAN-006",
+   "category": "Canotes",
+   "brand": "KS",
+   "model": "Exa Form 900i",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "31.6 mm, 100 mm",
+   "priceMin": 611,
+   "priceMax": 679,
+   "plans": [
+    {
+     "name": "Revisão",
+     "intervalKm": null,
+     "intervalHours": 150.0,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": 100
+    }
+   ]
+  },
+  {
+   "code": "CAN-007",
+   "category": "Canotes",
+   "brand": "FSA",
+   "model": "Flowtron",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "31.6 mm, 125 mm",
+   "priceMin": 600,
+   "priceMax": 900,
+   "plans": [
+    {
+     "name": "Revisão",
+     "intervalKm": null,
+     "intervalHours": 150.0,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": 100
+    }
+   ]
+  },
+  {
+   "code": "CAN-008",
+   "category": "Canotes",
+   "brand": "Bike Yoke",
+   "model": "Revive",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Dropper mecânico",
+   "priceMin": 2200,
+   "priceMax": 3200,
+   "plans": [
+    {
+     "name": "Revisão",
+     "intervalKm": null,
+     "intervalHours": 150.0,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": 100
+    }
+   ]
+  },
+  {
+   "code": "CAN-009",
+   "category": "Canotes",
+   "brand": "Fox",
+   "model": "Transfer",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Dropper",
+   "priceMin": 2000,
+   "priceMax": 3000,
+   "plans": [
+    {
+     "name": "Revisão",
+     "intervalKm": null,
+     "intervalHours": 150.0,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": 100
+    }
+   ]
+  },
+  {
+   "code": "CAN-010",
+   "category": "Canotes",
+   "brand": "Bontrager (Trek)",
+   "model": "Line (retrátil 31.6)",
+   "modality": "MTB",
+   "subcategory": "Trail",
+   "details": "Dropper",
+   "priceMin": 1650,
+   "priceMax": 1650,
+   "plans": [
+    {
+     "name": "Revisão",
+     "intervalKm": null,
+     "intervalHours": 150.0,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": 100
+    }
+   ]
+  },
+  {
+   "code": "CAN-011",
+   "category": "Canotes",
+   "brand": "Cannondale (OEM)",
+   "model": "DownLow",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Dropper 31.6, 125 / 150",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Revisão",
+     "intervalKm": null,
+     "intervalHours": 150.0,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": 100
+    }
+   ]
+  },
+  {
+   "code": "CAN-012",
+   "category": "Canotes",
+   "brand": "Syncros (OEM Scott)",
+   "model": "Dropper",
+   "modality": "MTB",
+   "subcategory": "XC",
+   "details": "Original da Scott Spark RC",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Revisão",
+     "intervalKm": null,
+     "intervalHours": 150.0,
+     "action": "SERVICE",
+     "warnKm": null,
+     "warnHours": 100
+    }
+   ]
+  },
+  {
+   "code": "CAN-013",
+   "category": "Canotes",
+   "brand": "Bontrager (Trek)",
+   "model": "Comp",
+   "modality": "MTB / Road",
+   "subcategory": "Rígido",
+   "details": "Canote rígido de alumínio",
+   "priceMin": 200,
+   "priceMax": 200,
+   "plans": []
+  },
+  {
+   "code": "CAN-014",
+   "category": "Canotes",
+   "brand": "Caloi (OEM)",
+   "model": "Alumínio 27.2 / 30.9",
+   "modality": "MTB",
+   "subcategory": "Rígido",
+   "details": "Originais da Caloi Explorer",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "CAN-015",
+   "category": "Canotes",
+   "brand": "ITM (OEM Oggi)",
+   "model": "31.6 × 400",
+   "modality": "MTB",
+   "subcategory": "Rígido",
+   "details": "Original da Oggi Big Wheel 7.2",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "CAN-016",
+   "category": "Canotes",
+   "brand": "Specialized (OEM)",
+   "model": "S-Works Tarmac SL8",
+   "modality": "Road",
+   "subcategory": "Rígido (carbono)",
+   "details": "Original da Tarmac SL8 Comp",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "CAN-017",
+   "category": "Canotes",
+   "brand": "Roval (OEM)",
+   "model": "Terra",
+   "modality": "Gravel",
+   "subcategory": "Rígido (carbono)",
+   "details": "Original da Diverge Comp Carbon",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "CAN-018",
+   "category": "Canotes",
+   "brand": "Sunpeed (OEM)",
+   "model": "Carbono (original)",
+   "modality": "Road",
+   "subcategory": "Rígido (carbono)",
+   "details": "Original da Sunpeed Victory Sport",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "SEL-001",
+   "category": "Selins",
+   "brand": "Specialized (OEM)",
+   "model": "Power Sport",
+   "modality": "MTB / Road / Gravel",
+   "subcategory": "Original",
+   "details": "Body Geometry",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "SEL-002",
+   "category": "Selins",
+   "brand": "Specialized (OEM)",
+   "model": "Bridge Sport",
+   "modality": "MTB",
+   "subcategory": "Original",
+   "details": "Original da Rockhopper Comp",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "SEL-003",
+   "category": "Selins",
+   "brand": "Specialized (OEM)",
+   "model": "Bridge Comp",
+   "modality": "MTB",
+   "subcategory": "Original",
+   "details": "Original da Stumpjumper 15 Comp",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "SEL-004",
+   "category": "Selins",
+   "brand": "Specialized",
+   "model": "Power Comp com Mimic",
+   "modality": "MTB / Road",
+   "subcategory": "Performance",
+   "details": "155 mm",
+   "priceMin": 500,
+   "priceMax": 800,
+   "plans": []
+  },
+  {
+   "code": "SEL-005",
+   "category": "Selins",
+   "brand": "Specialized",
+   "model": "Power Arc Expert",
+   "modality": "MTB / Road",
+   "subcategory": "Performance",
+   "details": null,
+   "priceMin": 800,
+   "priceMax": 1200,
+   "plans": []
+  },
+  {
+   "code": "SEL-006",
+   "category": "Selins",
+   "brand": "Specialized",
+   "model": "Phenom Comp com Mimic",
+   "modality": "MTB",
+   "subcategory": "Performance",
+   "details": null,
+   "priceMin": 600,
+   "priceMax": 900,
+   "plans": []
+  },
+  {
+   "code": "SEL-007",
+   "category": "Selins",
+   "brand": "Specialized",
+   "model": "S-Works Romin Evo com Mirror",
+   "modality": "Road",
+   "subcategory": "Topo",
+   "details": "Carbono",
+   "priceMin": 3000,
+   "priceMax": 3600,
+   "plans": []
+  },
+  {
+   "code": "SEL-008",
+   "category": "Selins",
+   "brand": "Fizik",
+   "model": "Vento Antares R5",
+   "modality": "Road / MTB",
+   "subcategory": "Performance",
+   "details": "150 mm",
+   "priceMin": 1688,
+   "priceMax": 1688,
+   "plans": []
+  },
+  {
+   "code": "SEL-009",
+   "category": "Selins",
+   "brand": "Fizik",
+   "model": "Vento Antares R1",
+   "modality": "Road / MTB",
+   "subcategory": "Performance",
+   "details": "150 mm",
+   "priceMin": 1849,
+   "priceMax": 2436,
+   "plans": []
+  },
+  {
+   "code": "SEL-010",
+   "category": "Selins",
+   "brand": "Fizik",
+   "model": "Vento Antares R3 Adaptive",
+   "modality": "Road / MTB",
+   "subcategory": "Topo",
+   "details": "140 / 150 mm",
+   "priceMin": 2886,
+   "priceMax": 2886,
+   "plans": []
+  },
+  {
+   "code": "SEL-011",
+   "category": "Selins",
+   "brand": "Fizik",
+   "model": "Vento Antares 00 Carbono",
+   "modality": "Road / MTB",
+   "subcategory": "Topo",
+   "details": "140 mm",
+   "priceMin": 3560,
+   "priceMax": 3560,
+   "plans": []
+  },
+  {
+   "code": "SEL-012",
+   "category": "Selins",
+   "brand": "Fizik",
+   "model": "Vento Argo X5",
+   "modality": "Road / MTB",
+   "subcategory": "Performance",
+   "details": "150 mm",
+   "priceMin": 1122,
+   "priceMax": 1122,
+   "plans": []
+  },
+  {
+   "code": "SEL-013",
+   "category": "Selins",
+   "brand": "Fizik",
+   "model": "Terra Argo X1",
+   "modality": "Gravel",
+   "subcategory": "Aventura",
+   "details": "270 × 150 mm, carbono",
+   "priceMin": 1489,
+   "priceMax": 1489,
+   "plans": []
+  },
+  {
+   "code": "SEL-014",
+   "category": "Selins",
+   "brand": "Selle Italia",
+   "model": "Flite Boost TM Superflow S3",
+   "modality": "Road / MTB",
+   "subcategory": "Performance",
+   "details": "135 mm",
+   "priceMin": 892,
+   "priceMax": 999,
+   "plans": []
+  },
+  {
+   "code": "SEL-015",
+   "category": "Selins",
+   "brand": "Selle Italia",
+   "model": "Max Novus Boost Superflow Ti Gel",
+   "modality": "Road / MTB",
+   "subcategory": "Performance",
+   "details": "160 mm",
+   "priceMin": 1358,
+   "priceMax": 1499,
+   "plans": []
+  },
+  {
+   "code": "SEL-016",
+   "category": "Selins",
+   "brand": "Selle Italia",
+   "model": "Max Novus Boost Evo Ti316 Gel",
+   "modality": "Road / MTB",
+   "subcategory": "Performance",
+   "details": null,
+   "priceMin": 1590,
+   "priceMax": 1590,
+   "plans": []
+  },
+  {
+   "code": "SEL-017",
+   "category": "Selins",
+   "brand": "Selle Italia",
+   "model": "T2 Flow Gel",
+   "modality": "Road / Treino",
+   "subcategory": "Entrada",
+   "details": "233 mm",
+   "priceMin": 436,
+   "priceMax": 499,
+   "plans": []
+  },
+  {
+   "code": "SEL-018",
+   "category": "Selins",
+   "brand": "Selle Italia",
+   "model": "Watt Ti316 Superflow",
+   "modality": "Triathlon / TT",
+   "subcategory": "Contra-relógio",
+   "details": null,
+   "priceMin": 1546,
+   "priceMax": 1729,
+   "plans": []
+  },
+  {
+   "code": "SEL-019",
+   "category": "Selins",
+   "brand": "Prologo (OEM Cannondale)",
+   "model": "Dimension NDR",
+   "modality": "MTB",
+   "subcategory": "Original",
+   "details": "Original da Cannondale Scalpel 4",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "SEL-020",
+   "category": "Selins",
+   "brand": "Selle Royal (OEM Caloi)",
+   "model": "Vivo Ergo",
+   "modality": "MTB",
+   "subcategory": "Original",
+   "details": "Original da Caloi Explorer Pro",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "SEL-021",
+   "category": "Selins",
+   "brand": "Royal Ciclo (OEM Caloi)",
+   "model": "Vivo Ergo",
+   "modality": "MTB",
+   "subcategory": "Original",
+   "details": "Original da Caloi Explorer Sport",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  },
+  {
+   "code": "SEL-022",
+   "category": "Selins",
+   "brand": "Velo (OEM Oggi)",
+   "model": "Selim de linha",
+   "modality": "MTB",
+   "subcategory": "Original",
+   "details": "Original da Oggi Big Wheel 7.2",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": []
+  }
+ ],
+ "bikeModels": [
+  {
+   "code": "BKE-001",
+   "brand": "Specialized",
+   "model": "Chisel Comp (Shimano SLX)",
+   "version": "Site nov/2026",
+   "category": "MTB — XC full",
+   "frame": "Alumínio M5, 110 mm",
+   "listPrice": "US$ 3.400",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-017"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-017"
+    },
+    {
+     "position": "Amortecedor",
+     "code": "SUS-029"
+    },
+    {
+     "position": "Pneu dianteiro",
+     "code": "PNE-052"
+    },
+    {
+     "position": "Pneu traseiro",
+     "code": "PNE-051"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-004"
+    },
+    {
+     "position": "Rodas",
+     "code": "ROD-001"
+    },
+    {
+     "position": "Canote",
+     "code": "CAN-001"
+    },
+    {
+     "position": "Selim",
+     "code": "SEL-001"
+    }
+   ]
+  },
+  {
+   "code": "BKE-002",
+   "brand": "Specialized",
+   "model": "Chisel Comp (SRAM GX)",
+   "version": "Site nov/2026",
+   "category": "MTB — XC full",
+   "frame": "Alumínio M5, 110 mm",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-038"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-017"
+    },
+    {
+     "position": "Amortecedor",
+     "code": "SUS-029"
+    },
+    {
+     "position": "Pneu dianteiro",
+     "code": "PNE-052"
+    },
+    {
+     "position": "Pneu traseiro",
+     "code": "PNE-051"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-012"
+    },
+    {
+     "position": "Rodas",
+     "code": "ROD-001"
+    },
+    {
+     "position": "Canote",
+     "code": "CAN-001"
+    },
+    {
+     "position": "Selim",
+     "code": "SEL-001"
+    }
+   ]
+  },
+  {
+   "code": "BKE-003",
+   "brand": "Specialized",
+   "model": "Epic 8 Comp",
+   "version": "Site nov/2026",
+   "category": "MTB — XC full",
+   "frame": "Carbono, 120 mm",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-035"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-017"
+    },
+    {
+     "position": "Amortecedor",
+     "code": "SUS-028"
+    },
+    {
+     "position": "Pneu dianteiro",
+     "code": "PNE-051"
+    },
+    {
+     "position": "Pneu traseiro",
+     "code": "PNE-051"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-016"
+    },
+    {
+     "position": "Rodas",
+     "code": "ROD-001"
+    },
+    {
+     "position": "Canote",
+     "code": "CAN-002"
+    },
+    {
+     "position": "Selim",
+     "code": "SEL-001"
+    }
+   ]
+  },
+  {
+   "code": "BKE-004",
+   "brand": "Specialized",
+   "model": "Epic 8 EVO Comp",
+   "version": "Site nov/2026",
+   "category": "MTB — Downcountry",
+   "frame": "Carbono, 120 mm (garfo 130)",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-035"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-003"
+    },
+    {
+     "position": "Amortecedor",
+     "code": "SUS-011"
+    },
+    {
+     "position": "Pneu dianteiro",
+     "code": "PNE-054"
+    },
+    {
+     "position": "Pneu traseiro",
+     "code": "PNE-052"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-016"
+    },
+    {
+     "position": "Rodas",
+     "code": "ROD-001"
+    },
+    {
+     "position": "Canote",
+     "code": "CAN-002"
+    },
+    {
+     "position": "Selim",
+     "code": "SEL-001"
+    }
+   ]
+  },
+  {
+   "code": "BKE-005",
+   "brand": "Specialized",
+   "model": "Stumpjumper 15 Comp",
+   "version": "Site nov/2026",
+   "category": "MTB — Trail",
+   "frame": "Carbono, 145 mm",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-035"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-005"
+    },
+    {
+     "position": "Amortecedor",
+     "code": "SUS-012"
+    },
+    {
+     "position": "Pneu dianteiro",
+     "code": "PNE-054"
+    },
+    {
+     "position": "Pneu traseiro",
+     "code": "PNE-054"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-017"
+    },
+    {
+     "position": "Rodas",
+     "code": "ROD-001"
+    },
+    {
+     "position": "Canote",
+     "code": "CAN-002"
+    },
+    {
+     "position": "Selim",
+     "code": "SEL-003"
+    }
+   ]
+  },
+  {
+   "code": "BKE-006",
+   "brand": "Specialized",
+   "model": "Rockhopper Comp",
+   "version": "Site nov/2026",
+   "category": "MTB — Trilha / entrada",
+   "frame": "Alumínio A1",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-018"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-020"
+    },
+    {
+     "position": "Pneu dianteiro",
+     "code": "PNE-051"
+    },
+    {
+     "position": "Pneu traseiro",
+     "code": "PNE-051"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-001"
+    },
+    {
+     "position": "Rodas",
+     "code": "ROD-001"
+    },
+    {
+     "position": "Selim",
+     "code": "SEL-002"
+    }
+   ]
+  },
+  {
+   "code": "BKE-007",
+   "brand": "Specialized",
+   "model": "Tarmac SL8 Comp (105 Di2)",
+   "version": "Site nov/2026",
+   "category": "Road — race",
+   "frame": "Carbono",
+   "listPrice": "US$ 6.900",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-003"
+    },
+    {
+     "position": "Pneu dianteiro",
+     "code": "PNE-055"
+    },
+    {
+     "position": "Pneu traseiro",
+     "code": "PNE-055"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-009"
+    },
+    {
+     "position": "Rodas",
+     "code": "ROD-018"
+    },
+    {
+     "position": "Canote",
+     "code": "CAN-016"
+    },
+    {
+     "position": "Selim",
+     "code": "SEL-001"
+    }
+   ]
+  },
+  {
+   "code": "BKE-008",
+   "brand": "Specialized",
+   "model": "Diverge Comp Carbon",
+   "version": "2023",
+   "category": "Gravel",
+   "frame": "Carbono, Future Shock 2.0",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-009"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-055"
+    },
+    {
+     "position": "Pneu dianteiro",
+     "code": "PNE-056"
+    },
+    {
+     "position": "Pneu traseiro",
+     "code": "PNE-056"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-011"
+    },
+    {
+     "position": "Rodas",
+     "code": "ROD-019"
+    },
+    {
+     "position": "Canote",
+     "code": "CAN-017"
+    },
+    {
+     "position": "Selim",
+     "code": "SEL-001"
+    }
+   ]
+  },
+  {
+   "code": "BKE-009",
+   "brand": "Specialized",
+   "model": "Turbo Levo Comp Alloy",
+   "version": "Site nov/2026",
+   "category": "E-MTB — Trail / Enduro",
+   "frame": "Alumínio, 150 mm",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-038"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-005"
+    },
+    {
+     "position": "Amortecedor",
+     "code": "SUS-012"
+    },
+    {
+     "position": "Pneu dianteiro",
+     "code": "PNE-054"
+    },
+    {
+     "position": "Pneu traseiro",
+     "code": "PNE-054"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-018"
+    },
+    {
+     "position": "Rodas",
+     "code": "ROD-001"
+    },
+    {
+     "position": "Canote",
+     "code": "CAN-002"
+    },
+    {
+     "position": "Selim",
+     "code": "SEL-001"
+    }
+   ]
+  },
+  {
+   "code": "BKE-010",
+   "brand": "Caloi",
+   "model": "Explorer Pro",
+   "version": "2026",
+   "category": "MTB — XC",
+   "frame": null,
+   "listPrice": "R$ 6.590",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-018"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-020"
+    },
+    {
+     "position": "Pneu dianteiro",
+     "code": "PNE-043"
+    },
+    {
+     "position": "Pneu traseiro",
+     "code": "PNE-042"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-001"
+    },
+    {
+     "position": "Rodas",
+     "code": "ROD-002"
+    },
+    {
+     "position": "Canote",
+     "code": "CAN-014"
+    },
+    {
+     "position": "Selim",
+     "code": "SEL-020"
+    }
+   ]
+  },
+  {
+   "code": "BKE-011",
+   "brand": "Caloi",
+   "model": "Explorer Sport",
+   "version": "2026",
+   "category": "MTB — entrada",
+   "frame": null,
+   "listPrice": "R$ 3.590",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-020"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-057"
+    },
+    {
+     "position": "Pneu dianteiro",
+     "code": "PNE-043"
+    },
+    {
+     "position": "Pneu traseiro",
+     "code": "PNE-043"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-024"
+    },
+    {
+     "position": "Rodas",
+     "code": "ROD-003"
+    },
+    {
+     "position": "Canote",
+     "code": "CAN-014"
+    },
+    {
+     "position": "Selim",
+     "code": "SEL-021"
+    }
+   ]
+  },
+  {
+   "code": "BKE-012",
+   "brand": "Cannondale",
+   "model": "Scalpel 4",
+   "version": "2025",
+   "category": "MTB — XC full",
+   "frame": null,
+   "listPrice": "US$ 4.199 (aprox.)",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-018"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-017"
+    },
+    {
+     "position": "Amortecedor",
+     "code": "SUS-028"
+    },
+    {
+     "position": "Pneu dianteiro",
+     "code": "PNE-012"
+    },
+    {
+     "position": "Pneu traseiro",
+     "code": "PNE-010"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-003"
+    },
+    {
+     "position": "Rodas",
+     "code": "ROD-013"
+    },
+    {
+     "position": "Canote",
+     "code": "CAN-011"
+    },
+    {
+     "position": "Selim",
+     "code": "SEL-019"
+    }
+   ]
+  },
+  {
+   "code": "BKE-013",
+   "brand": "Scott",
+   "model": "Spark RC Comp",
+   "version": "2025",
+   "category": "MTB — XC full",
+   "frame": null,
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-037"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-001"
+    },
+    {
+     "position": "Amortecedor",
+     "code": "SUS-010"
+    },
+    {
+     "position": "Pneu dianteiro",
+     "code": "PNE-012"
+    },
+    {
+     "position": "Pneu traseiro",
+     "code": "PNE-012"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-014"
+    },
+    {
+     "position": "Rodas",
+     "code": "ROD-015"
+    }
+   ]
+  },
+  {
+   "code": "BKE-014",
+   "brand": "Oggi",
+   "model": "Big Wheel 7.2",
+   "version": "2026",
+   "category": "MTB — XC",
+   "frame": null,
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-018"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-043"
+    },
+    {
+     "position": "Canote",
+     "code": "CAN-015"
+    },
+    {
+     "position": "Selim",
+     "code": "SEL-022"
+    }
+   ]
+  },
+  {
+   "code": "BKE-015",
+   "brand": "Oggi",
+   "model": "Big Wheel 7.3",
+   "version": "2025",
+   "category": "MTB — XC",
+   "frame": null,
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-018"
+    },
+    {
+     "position": "Rodas",
+     "code": "ROD-016"
+    }
+   ]
+  },
+  {
+   "code": "BKE-016",
+   "brand": "Audax",
+   "model": "ADX 400",
+   "version": "2021 (specs antigas)",
+   "category": "MTB — XC",
+   "frame": null,
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-018"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-020"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-003"
+    }
+   ]
+  },
+  {
+   "code": "BKE-017",
+   "brand": "Sunpeed",
+   "model": "Victory Sport",
+   "version": "Atual (não confirmado)",
+   "category": "Road",
+   "frame": "Carbono",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-004"
+    },
+    {
+     "position": "Canote",
+     "code": "CAN-018"
+    }
+   ]
+  }
+ ]
+}

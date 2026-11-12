@@ -24,7 +24,14 @@ export function optYear(form: FormData, name: string): number | null {
   return n !== null && Number.isInteger(n) && n >= 1900 && n <= 2100 ? n : null;
 }
 
-export type PlanFields = { name: string; intervalKm: number | null; intervalHours: number | null; action: "REPLACE" | "SERVICE" };
+export type PlanFields = {
+  name: string;
+  intervalKm: number | null;
+  intervalHours: number | null;
+  action: "REPLACE" | "SERVICE";
+  warnKm: number | null;
+  warnHours: number | null;
+};
 
 /**
  * RB16, RB10: plan rows posted as planName_0, planKm_0, planHours_0, planAction_0, ...
@@ -38,7 +45,8 @@ export function readPlans(form: FormData, max = 6): PlanFields[] {
     const intervalHours = optInterval(form, `planHours_${i}`);
     if (!name || (intervalKm === null && intervalHours === null)) continue;
     const action = text(form, `planAction_${i}`) === "SERVICE" ? "SERVICE" : "REPLACE";
-    plans.push({ name, intervalKm, intervalHours, action });
+    // OPEN-17: optional warning usage (yellow bar from here).
+    plans.push({ name, intervalKm, intervalHours, action, warnKm: optInterval(form, `planWarnKm_${i}`), warnHours: optInterval(form, `planWarnHours_${i}`) });
   }
   return plans;
 }

@@ -77,14 +77,14 @@ npm run dev
 
 | Tela | Quem | O que faz | Requisitos |
 |---|---|---|---|
-| `/admin` | Admin | Catálogo: categorias, planos padrão (km, horas ou ambos; troca ou revisão; "desgasta em rolo") e componentes. O botão **Carregar catálogo inicial** traz a tabela de vida útil dos requisitos | RF30, RB14–RB16 |
+| `/admin` | Admin | Catálogo: categorias, planos padrão (km, horas ou ambos; troca ou revisão; "desgasta em rolo") e componentes. O botão **Carregar catálogo da planilha** traz as 7 famílias, 250 componentes e 17 bikes-modelo da planilha de catálogo | RF30, RB14–RB16 |
 | `/fonte` | Todos | Escolhe a fonte dos pedais: manual, API do Strava com app próprio ou conector | RF32–RF34 |
-| `/bikes` | Todos | Cadastra, edita e arquiva bikes | RF01 |
+| `/bikes` | Todos | Cadastra, edita e arquiva bikes, ou cria uma bike a partir de um modelo de fábrica com as peças já instaladas | RF01, RF35 |
 | `/bikes/<id>` | Todos | Instala peças do catálogo (planos sugeridos e editáveis), registra revisão, troca e manutenção manual, mostra o histórico e associa a bike da fonte | RF02, RF03, RF05, RF10–RF12 |
 | `/pedais` | Todos | Lança pedal à mão e sincroniza com o Strava ou o conector | RF06, RF13, RF14 |
 | `/` | Todos | Painel com todas as peças ordenadas por desgaste e os alertas de 80% e 100% | RF07–RF09, RF15 |
 
-Roteiro rápido de demo sem Strava: entrar como admin, carregar o catálogo inicial, criar uma bike, instalar corrente e garfo, lançar alguns pedais em `/pedais` e ver os alertas no painel.
+Roteiro rápido de demo sem Strava: entrar como admin, carregar o catálogo da planilha, criar uma bike a partir de um modelo (ex.: Caloi Explorer Pro), lançar alguns pedais em `/pedais` e ver os alertas no painel.
 
 ### Testes
 ```bash

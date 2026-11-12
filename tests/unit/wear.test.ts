@@ -93,3 +93,22 @@ describe("RF15: dashboard order", () => {
     expect(byWearDesc(items).map((i) => i.id)).toEqual(["b", "c", "a"]);
   });
 });
+
+describe("RF08 / OPEN-17: yellow from the minimum of the catalog range", () => {
+  // Chain 1,500–3,000 km: interval = average 2,250 km, warning at 1,500 km.
+  const chain = plan({ intervalKm: 2250, warnKm: 1500 });
+  it("stays ok below the minimum", () => {
+    expect(computePlanWear(part(), chain, [ride("2026-01-02T10:00:00Z", 1499, 0)]).status).toBe("ok");
+  });
+  it("turns near at the minimum, before 80% of the average", () => {
+    const w = computePlanWear(part(), chain, [ride("2026-01-02T10:00:00Z", 1500, 0)]);
+    expect(w.status).toBe("near");
+    expect(w.alert).toBe("Troca próxima");
+  });
+  it("is due at the average", () => {
+    expect(computePlanWear(part(), chain, [ride("2026-01-02T10:00:00Z", 2250, 0)]).status).toBe("due");
+  });
+  it("falls back to 80% without a warning value", () => {
+    expect(computePlanWear(part(), plan({ intervalKm: 1000 }), [ride("2026-01-02T10:00:00Z", 800, 0)]).status).toBe("near");
+  });
+});
