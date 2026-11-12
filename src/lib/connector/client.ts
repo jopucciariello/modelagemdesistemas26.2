@@ -13,7 +13,8 @@ export class ConnectorError extends Error {
 export async function connectorGet(
   baseUrl: string,
   apiKey: string,
-  path: "/v1/gearlog/status" | "/v1/gearlog/bikes" | "/v1/gearlog/activities",
+  path: "/v1/gearlog/status" | "/v1/gearlog/bikes" | "/v1/gearlog/activities"
+    | "/v1/gearlog/events",
   fetchFn: typeof fetch = fetch,
 ): Promise<unknown> {
   let response: Response;

@@ -79,3 +79,14 @@ describe("RF34: connector client", () => {
     }
   });
 });
+
+describe("RF34: connector status contract", () => {
+  it("parses a status and rejects payloads that are not one", async () => {
+    const { parseConnectorStatus } = await import("@/lib/connector/types");
+    const s = parseConnectorStatus({ linked: true, stravaAthleteId: "9", lastSyncAt: "2026-11-12T16:30:00.000Z", lastError: null, pendingJobs: 0, webhookSubscribed: true });
+    expect(s).toMatchObject({ linked: true, stravaAthleteId: "9", pendingJobs: 0, lastError: null });
+    expect(parseConnectorStatus({ ok: true })).toBeNull();
+    expect(parseConnectorStatus("x")).toBeNull();
+    expect(parseConnectorStatus(null)).toBeNull();
+  });
+});

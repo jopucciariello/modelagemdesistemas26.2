@@ -85,7 +85,9 @@ async function SourceArea({ searchParams }: { searchParams: PageProps<"/fonte">[
         <h2>Conector{label("CONNECTOR")}</h2>
         <p className="muted">
           Você informa a URL e a chave de API do seu strava-connector.
-          {connector?.ok && " Conectado."}
+          {connector?.ok && (connector.data.linked ? " Conectado e com o Strava vinculado no conector." : " Conectado, mas o conector ainda não está vinculado ao Strava.")}
+          {connector?.ok && connector.data.lastSyncAt && ` Última sincronização: ${new Date(connector.data.lastSyncAt).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })}.`}
+          {connector?.ok && connector.data.lastError && " O conector registrou um erro na última sincronização."}
           {connector && !connector.ok && " O conector não respondeu agora; os dados anteriores continuam salvos."}
         </p>
         <form action="/fonte/conector" method="post">
