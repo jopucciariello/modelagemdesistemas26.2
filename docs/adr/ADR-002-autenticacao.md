@@ -1,6 +1,6 @@
 # ADR-002 — Autenticação: atleta pelo Strava, administrador pelo Google
 
-- **Status:** Aceito
+- **Status:** Parcialmente substituído pelo [ADR-005](ADR-005-login-unico-google.md) (o login do atleta passou a ser pelo Google; o do administrador segue como descrito aqui)
 - **Data:** 12/11/2026
 - **Decisor:** João Pucciariello
 - **Resolve:** OPEN-09
