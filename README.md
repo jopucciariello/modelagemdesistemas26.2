@@ -44,6 +44,7 @@ Toda a documentação técnica e de engenharia de requisitos do projeto está ce
 * Git
 * Node.js 22 (LTS)
 * Um app de API no Strava ([strava.com/settings/api](https://www.strava.com/settings/api)) com **Authorization Callback Domain** = `localhost`
+* Para a área de administração: um *OAuth client ID* do Google (tipo "Web application", no [Google Cloud Console](https://console.cloud.google.com/apis/credentials)) com o redirect `http://localhost:3000/auth/google/callback` ([ADR-002](docs/adr/ADR-002-autenticacao.md))
 
 ### Instalação e Execução
 ```bash
@@ -52,14 +53,16 @@ git clone https://github.com/jopucciariello/modelagemdesistemas26.2.git
 cd modelagemdesistemas26.2
 npm install
 
-# 2. Configurar o ambiente: copie e preencha STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET
+# 2. Configurar o ambiente: copie e preencha STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET,
+#    GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, ADMIN_EMAILS (e-mails dos administradores)
 #    e TOKEN_ENCRYPTION_KEY (o comando para gerar a chave está no próprio arquivo)
 cp .env.example .env
 
 # 3. Criar o banco SQLite (prisma/dev.db)
 npm run db:migrate
 
-# 4. Subir o app em http://localhost:3000 e clicar em "Conectar com o Strava"
+# 4. Subir o app: atleta em http://localhost:3000 ("Conectar com o Strava"),
+#    administrador em http://localhost:3000/admin ("Entrar com Google")
 npm run dev
 ```
 

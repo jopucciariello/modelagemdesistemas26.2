@@ -51,7 +51,7 @@ Os RNFs também seguem o padrão EARS.
 | ID | Categoria | Requisito (EARS) |
 |---|---|---|
 | RNF01 | Segurança | Quando o atleta vincular o Strava, o sistema deve usar OAuth 2.0 e armazenar os tokens criptografados apenas no backend, sem expô-los ao frontend. |
-| RNF02 | Segurança | O sistema deve armazenar senhas apenas como hash (bcrypt ou argon2). |
+| RNF02 | Segurança | O sistema não deve armazenar senhas: o atleta se autentica pelo Strava (OAuth 2.0) e o administrador pelo Google (OpenID Connect), conforme o [ADR-002](adr/ADR-002-autenticacao.md). *(Alterado em 12/11/2026; antes previa hash de senha com bcrypt ou argon2.)* |
 | RNF03 | Privacidade (LGPD) | *Movido para o [segundo estágio](segundo-estagio.md) (compartilhamento do histórico com oficinas).* |
 | RNF04 | Desempenho | O sistema deve carregar as páginas principais em até 2 s em conexão 4G. |
 | RNF05 | Integração | Enquanto estiver integrado ao Strava, o sistema deve respeitar os limites de requisição da API, usando webhooks quando disponíveis e polling como alternativa. |
@@ -81,6 +81,7 @@ Os RNFs também seguem o padrão EARS.
 | RB14 | Uma atividade `VirtualRide` (rolo) só soma km e horas às peças cuja categoria está marcada no catálogo como "desgasta em rolo" (ex.: transmissão sim; pneus, freios e suspensão não). |
 | RB15 | O atleta só cadastra peças com categoria e componente existentes no catálogo. Apenas o administrador inclui, edita ou desativa categorias e componentes. |
 | RB16 | Uma peça tem um ou mais planos de manutenção, herdados da categoria e editáveis pelo atleta. Cada plano tem métrica, intervalo e ação (troca ou revisão). O desgaste, os alertas (RB04) e a revisão (RB13) valem por plano; a troca (RF10) encerra a peça e todos os seus planos. |
+| RB17 | Só acessa a área administrativa (`/admin`) quem entra com uma conta Google de e-mail verificado que está na lista de administradores autorizados (`ADMIN_EMAILS`). A permissão é conferida a cada acesso (ADR-002). |
 
 ---
 

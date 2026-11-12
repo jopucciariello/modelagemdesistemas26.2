@@ -25,3 +25,18 @@ export function tokenEncryptionKey(): string {
 export function appUrl(): string {
   return process.env.APP_URL ?? "http://localhost:3000";
 }
+
+export function googleConfig() {
+  return {
+    clientId: required("GOOGLE_CLIENT_ID"),
+    clientSecret: required("GOOGLE_CLIENT_SECRET"),
+    callbackUrl: required("GOOGLE_CALLBACK_URL"),
+    authorizeUrl: process.env.GOOGLE_AUTHORIZE_URL ?? "https://accounts.google.com/o/oauth2/v2/auth",
+    tokenUrl: process.env.GOOGLE_TOKEN_URL ?? "https://oauth2.googleapis.com/token",
+  };
+}
+
+/** RB17: raw ADMIN_EMAILS list (comma-separated). Empty means nobody is admin. */
+export function adminEmailsSetting(): string {
+  return process.env.ADMIN_EMAILS ?? "";
+}
