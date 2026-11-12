@@ -98,3 +98,43 @@ form input {
   color: inherit;
   font: inherit;
 }
+
+/* Tracker UI (RF01-RF15) */
+main.wide { max-width: 56rem; }
+.nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; font-weight: 600; }
+.nav a { color: inherit; }
+h2 { font-size: 1.25rem; }
+h3 { font-size: 1.05rem; }
+.ok { color: #1e7b34; }
+form.stack { display: flex; flex-direction: column; gap: 0.6rem; }
+form.row, .row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: end; }
+label { display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.9rem; }
+label.check { flex-direction: row; align-items: center; gap: 0.4rem; }
+input, select, textarea {
+  font: inherit; color: inherit; background: transparent;
+  border: 1px solid var(--border); border-radius: 6px; padding: 0.45rem 0.55rem; min-width: 0;
+}
+input[type="number"] { width: 7rem; }
+select option { color: #171717; }
+.button.small { padding: 0.35rem 0.7rem; font-size: 0.85rem; }
+.list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+.list > li { border-top: 1px solid var(--border); padding-top: 0.75rem; display: flex; flex-direction: column; gap: 0.4rem; }
+.list > li:first-child { border-top: 0; padding-top: 0; }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+th, td { text-align: left; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+.wear { display: inline-flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.wear-bar { display: inline-block; width: 6rem; height: 0.5rem; border-radius: 99px; background: var(--border); overflow: hidden; }
+.wear-bar > span { display: block; height: 100%; background: #2e7d32; }
+.wear-near .wear-bar > span { background: #e08a00; }
+.wear-due .wear-bar > span { background: var(--danger); }
+.badge { font-size: 0.8rem; font-weight: 700; padding: 0.1rem 0.5rem; border-radius: 99px; border: 1px solid currentColor; }
+.wear-near .badge { color: #b36b00; }
+.wear-due .badge { color: var(--danger); }
+details > summary { cursor: pointer; font-weight: 600; }
+details[open] > summary { margin-bottom: 0.5rem; }
+form.row label, form.stack label { display: flex; margin: 0; }
+form.row input, form.stack input { width: auto; max-width: 100%; margin-top: 0; border-color: var(--border); }
+form.stack input[type="text"], form.stack input:not([type]) { width: 100%; max-width: 28rem; }
+form.row input[type="checkbox"], form.stack input[type="checkbox"] { width: auto; }
+form.inline { display: inline; }

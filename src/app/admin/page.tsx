@@ -1,8 +1,23 @@
 // RF30 entry point: admin area, reachable only by allow-listed Google accounts (ADR-005, RB17).
 import { Suspense } from "react";
+import { AdminCatalog } from "@/components/admin-catalog";
+import { Flash, Nav } from "@/components/ui";
 import { getCurrentAdmin, getCurrentUser } from "@/lib/session";
 
+const OK: Record<string, string> = {
+  catalogo_padrao: "Catálogo inicial carregado.",
+  categoria: "Categoria salva.",
+  plano: "Planos da categoria atualizados.",
+  componente: "Componentes atualizados.",
+};
+
 const ERROR_MESSAGES: Record<string, string> = {
+  categoria_invalida: "Informe o nome e pelo menos um plano com intervalo.",
+  categoria_existe: "Já existe uma categoria com esse nome.",
+  plano_invalido: "O plano precisa de nome e de um intervalo em km ou em horas.",
+  ultimo_plano: "A categoria precisa de pelo menos um plano (RB16).",
+  componente_invalido: "Informe a marca e o modelo.",
+  componente_existe: "Esse componente já está no catálogo.",
   not_authorized: "Este e-mail não está na lista de administradores autorizados.",
   email_not_verified: "O e-mail da conta Google não está verificado.",
   access_denied: "O login com o Google foi cancelado.",
@@ -14,7 +29,7 @@ const ERROR_MESSAGES: Record<string, string> = {
 
 export default function AdminPage(props: PageProps<"/admin">) {
   return (
-    <main>
+    <main className="wide">
       <header>
         <h1>GearLog · Administração</h1>
         <p className="muted">Catálogo de categorias e componentes (RF30).</p>
@@ -27,7 +42,7 @@ export default function AdminPage(props: PageProps<"/admin">) {
 }
 
 async function AdminArea({ searchParams }: { searchParams: PageProps<"/admin">["searchParams"] }) {
-  const { erro } = await searchParams;
+  const { erro, ok } = await searchParams;
   const errorCode = typeof erro === "string" ? erro : undefined;
   const admin = await getCurrentAdmin();
   const user = admin ?? (await getCurrentUser());
@@ -39,19 +54,23 @@ async function AdminArea({ searchParams }: { searchParams: PageProps<"/admin">["
           {ERROR_MESSAGES[errorCode] ?? ERROR_MESSAGES.unexpected}
         </p>
       )}
+      {admin && <Flash ok={ok} okText={OK} errText={{}} />}
 
       {admin ? (
-        <section className="card">
-          <p>
-            Olá, <strong>{admin.name}</strong> ({admin.email}).
-          </p>
-          <p className="muted">O cadastro do catálogo (RF30) chega na próxima entrega.</p>
-          <form action="/auth/logout?next=/admin" method="post">
-            <button className="button" type="submit">
-              Sair
-            </button>
-          </form>
-        </section>
+        <>
+          <Nav isAdmin />
+          <section className="card">
+            <p>
+              Olá, <strong>{admin.name}</strong> ({admin.email}).
+            </p>
+            <form action="/auth/logout?next=/admin" method="post">
+              <button className="button small" type="submit">
+                Sair
+              </button>
+            </form>
+          </section>
+          <AdminCatalog />
+        </>
       ) : (
         <section className="card">
           {user && (

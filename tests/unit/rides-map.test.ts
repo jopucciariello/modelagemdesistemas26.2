@@ -45,3 +45,26 @@ describe("RF14: dates typed by the athlete are days in São Paulo", () => {
     expect(parseLocalDay("12/11/2026")).toBeNull();
   });
 });
+
+import { optNumber, readPlans } from "@/lib/forms";
+
+describe("RF02 / RB16: form readers", () => {
+  const fd = (o: Record<string, string>) => {
+    const f = new FormData();
+    for (const [k, v] of Object.entries(o)) f.set(k, v);
+    return f;
+  };
+  it("reads Brazilian and plain decimals", () => {
+    expect(optNumber(fd({ a: "1.234,5" }), "a")).toBe(1234.5);
+    expect(optNumber(fd({ a: "12.5" }), "a")).toBe(12.5);
+    expect(optNumber(fd({ a: "-3" }), "a")).toBeNull();
+    expect(optNumber(fd({}), "a")).toBeNull();
+  });
+  it("keeps only plans with a name and at least one interval", () => {
+    const plans = readPlans(fd({ planName_0: "Lowers", planHours_0: "50", planAction_0: "SERVICE", planName_1: "Vazio", planName_2: "Troca", planKm_2: "3000" }));
+    expect(plans).toEqual([
+      { name: "Lowers", intervalKm: null, intervalHours: 50, action: "SERVICE" },
+      { name: "Troca", intervalKm: 3000, intervalHours: null, action: "REPLACE" },
+    ]);
+  });
+});
