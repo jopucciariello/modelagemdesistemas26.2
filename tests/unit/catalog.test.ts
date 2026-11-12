@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { seed } from "@/lib/catalog/seed";
 import { bikeTypeFromCategory, canResetPlan, plansFor, priceRange } from "@/lib/catalog/rules";
 
-const p = (name: string, km: number | null, h: number | null, action: "REPLACE" | "SERVICE" = "REPLACE") => ({ name, intervalKm: km, intervalHours: h, action });
+const p = (name: string, km: number | null, h: number | null, action: "REPLACE" | "SERVICE" = "REPLACE") => ({ name, intervalKm: km, intervalHours: h, action, warnKm: null, warnHours: null });
 
 describe("RF03 / RB16: plans of a new part", () => {
   it("prefers the component's own plans", () => {
@@ -47,6 +47,11 @@ describe("RF30: seed from the catalog spreadsheet", () => {
   });
   it("points every bike model to existing components", () => {
     for (const b of seed.bikeModels) for (const part of b.parts) expect(codes.has(part.code)).toBe(true);
+  });
+  it("uses the average of the range as interval and its minimum as warning (OPEN-17)", () => {
+    const chain = seed.components.find((c) => c.code === "TRX-018")!.plans.find((p) => p.name === "Corrente")!;
+    expect(chain.intervalKm).toBe(2250);
+    expect(chain.warnKm).toBe(1500);
   });
   it("formats price ranges in reais", () => {
     expect(priceRange(1450, 2300)).toBe("R$ 1.450 – R$ 2.300");

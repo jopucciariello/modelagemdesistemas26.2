@@ -11,6 +11,8 @@ function PlanRow({ i }: { i: number }) {
       <label>Plano <input name={`planName_${i}`} maxLength={80} placeholder="Ex.: Corrente" /></label>
       <label>km <input name={`planKm_${i}`} type="number" min={0} step="any" /></label>
       <label>horas <input name={`planHours_${i}`} type="number" min={0} step="any" /></label>
+      <label>amarelo (km) <input name={`planWarnKm_${i}`} type="number" min={0} step="any" /></label>
+      <label>amarelo (h) <input name={`planWarnHours_${i}`} type="number" min={0} step="any" /></label>
       <label>Ação
         <select name={`planAction_${i}`} defaultValue="REPLACE">
           <option value="REPLACE">Troca</option>

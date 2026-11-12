@@ -1,10 +1,18 @@
 -- AlterTable
+ALTER TABLE "CategoryPlan" ADD COLUMN "warnHours" REAL;
+ALTER TABLE "CategoryPlan" ADD COLUMN "warnKm" REAL;
+
+-- AlterTable
 ALTER TABLE "Component" ADD COLUMN "code" TEXT;
 ALTER TABLE "Component" ADD COLUMN "details" TEXT;
 ALTER TABLE "Component" ADD COLUMN "modality" TEXT;
 ALTER TABLE "Component" ADD COLUMN "priceMax" REAL;
 ALTER TABLE "Component" ADD COLUMN "priceMin" REAL;
 ALTER TABLE "Component" ADD COLUMN "subcategory" TEXT;
+
+-- AlterTable
+ALTER TABLE "MaintenancePlan" ADD COLUMN "warnHours" REAL;
+ALTER TABLE "MaintenancePlan" ADD COLUMN "warnKm" REAL;
 
 -- AlterTable
 ALTER TABLE "Part" ADD COLUMN "position" TEXT;
@@ -16,6 +24,8 @@ CREATE TABLE "ComponentPlan" (
     "name" TEXT NOT NULL,
     "intervalKm" REAL,
     "intervalHours" REAL,
+    "warnKm" REAL,
+    "warnHours" REAL,
     "action" TEXT NOT NULL,
     CONSTRAINT "ComponentPlan_componentId_fkey" FOREIGN KEY ("componentId") REFERENCES "Component" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );

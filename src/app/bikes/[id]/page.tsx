@@ -115,6 +115,8 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
                         <input type="hidden" name="planId" value={plan.id} />
                         <label>Intervalo km <input name="intervalKm" type="number" min={0} step="any" defaultValue={plan.intervalKm ?? ""} /></label>
                         <label>Intervalo horas <input name="intervalHours" type="number" min={0} step="any" defaultValue={plan.intervalHours ?? ""} /></label>
+                        <label>Amarelo a partir de (km) <input name="warnKm" type="number" min={0} step="any" defaultValue={plan.warnKm ?? ""} /></label>
+                        <label>Amarelo a partir de (h) <input name="warnHours" type="number" min={0} step="any" defaultValue={plan.warnHours ?? ""} /></label>
                         <button className="button small" type="submit">Salvar intervalo</button>
                       </form>
                     </details>

@@ -1,7 +1,15 @@
 // RF02, RF03, RF30, RF35, RB16: pure catalog rules (no DB).
 import type { BikeTypeKey } from "@/lib/forms";
 
-export type PlanSpec = { name: string; intervalKm: number | null; intervalHours: number | null; action: "REPLACE" | "SERVICE" };
+export type PlanSpec = {
+  name: string;
+  intervalKm: number | null;
+  intervalHours: number | null;
+  action: "REPLACE" | "SERVICE";
+  /** OPEN-17: yellow from this usage (minimum of the catalog range). */
+  warnKm?: number | null;
+  warnHours?: number | null;
+};
 
 /**
  * RF03, RB16: the plans a new part starts with. The component's own plans (from the catalog
@@ -10,7 +18,7 @@ export type PlanSpec = { name: string; intervalKm: number | null; intervalHours:
  */
 export function plansFor(componentPlans: readonly PlanSpec[], categoryPlans: readonly PlanSpec[]): PlanSpec[] {
   const source = componentPlans.length > 0 ? componentPlans : categoryPlans;
-  return source.map(({ name, intervalKm, intervalHours, action }) => ({ name, intervalKm, intervalHours, action }));
+  return source.map(({ name, intervalKm, intervalHours, action, warnKm, warnHours }) => ({ name, intervalKm, intervalHours, action, warnKm: warnKm ?? null, warnHours: warnHours ?? null }));
 }
 
 /** RF35: bike type from the catalog's category label (e.g. "MTB — XC full", "Road — race"). */

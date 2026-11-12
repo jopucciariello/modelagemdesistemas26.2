@@ -29,7 +29,7 @@ Prioridade (MoSCoW): **M** = Must, **S** = Should, **C** = Could.
 | RF05 | Quando a fonte de pedais do atleta for o Strava (API própria, RF33) ou o conector (RF34), o sistema deve listar as bikes dessa fonte para associá-las às bikes do GearLog. | M |
 | RF06 | Quando uma nova atividade de ciclismo chegar pela fonte do atleta (Strava ou conector), o sistema deve somar a distância (km) e o tempo em movimento (horas) da atividade à bike associada e às peças instaladas nela. | M |
 | RF07 | O sistema deve calcular o desgaste de cada plano de manutenção da peça como percentual do intervalo consumido, em km e em horas, considerando o maior dos dois percentuais quando o plano tiver as duas métricas. | M |
-| RF08 | Quando o desgaste de uma peça atingir 80%, o sistema deve emitir um alerta de "troca próxima" ou, para peças cuja ação é revisão (RB13), de "revisão próxima". | M |
+| RF08 | Quando o uso de um plano da peça atingir o mínimo da faixa de durabilidade do catálogo (ou 80% do intervalo, se o plano não tiver mínimo), o sistema deve emitir um alerta de "troca próxima" ou, para peças cuja ação é revisão (RB13), de "revisão próxima". | M |
 | RF09 | Quando o desgaste de uma peça atingir 100%, o sistema deve emitir um alerta de "troca necessária" ou, para peças cuja ação é revisão (RB13), de "revisão necessária". | M |
 | RF10 | Quando o atleta registrar a troca de uma peça, o sistema deve encerrar a peça antiga, registrá-la no histórico e iniciar a nova com km e horas zerados. | M |
 | RF11 | O sistema deve exibir o histórico de manutenção de cada bike em ordem cronológica. | M |
@@ -75,7 +75,7 @@ Os RNFs também seguem o padrão EARS.
 | RB01 | Uma peça pertence a no máximo uma bike por vez. |
 | RB02 | A km e as horas de uma atividade só são somadas às peças que estavam instaladas na data da atividade. |
 | RB03 | Somente atividades de ciclismo contam para o desgaste: `sport_type` `Ride`, `MountainBikeRide`, `GravelRide`, `EBikeRide`, `EMountainBikeRide` e `VirtualRide` (o `VirtualRide` segue a RB14). |
-| RB04 | Limiares de alerta: 80% da vida útil = troca/revisão próxima; 100% = troca/revisão necessária. |
+| RB04 | Limiares de alerta: a partir do mínimo da faixa de durabilidade do plano (ou de 80% do intervalo, se não houver mínimo) = troca/revisão próxima (barra amarela); 100% do intervalo = troca/revisão necessária. O intervalo é a média da faixa (OPEN-17). |
 | RB05 | Uma peça trocada não pode ser excluída, apenas arquivada no histórico. |
 | RB06–RB07 | *Movidas para o [segundo estágio](segundo-estagio.md).* |
 | RB08 | Cada atleta usa o próprio app do Strava (RF33) ou o próprio conector (RF34), então o GearLog não depende de um app único do Strava nem de homologação comercial. |
@@ -87,14 +87,14 @@ Os RNFs também seguem o padrão EARS.
 | RB14 | Uma atividade `VirtualRide` (rolo) só soma km e horas às peças cuja categoria está marcada no catálogo como "desgasta em rolo" (ex.: transmissão sim; pneus, freios e suspensão não). |
 | RB15 | O atleta só cadastra peças com categoria e componente existentes no catálogo. Apenas o administrador inclui, edita ou desativa categorias e componentes. |
 | RB16 | Uma peça tem planos de manutenção, herdados do componente (ou, se ele não tiver, da família) e editáveis pelo atleta. Cada plano tem métrica, intervalo e ação (troca ou revisão). O desgaste, os alertas (RB04) e a revisão (RB13) valem por plano; a troca da peça inteira (RF10) encerra a peça e todos os seus planos. Peça sem desgaste regular (ex.: selim, canote rígido) pode não ter plano. *(Alterado em 12/11/2026.)* |
-| RB18 | Quando a peça tem mais de um plano, a troca de um item consumível dela (ex.: corrente ou cassete do grupo de transmissão) zera só o plano desse item e fica no histórico como troca, sem encerrar a peça. **[PROPOSTO]** (OPEN-18) |
+| RB18 | Quando a peça tem mais de um plano, a troca de um item consumível dela (ex.: corrente ou cassete do grupo de transmissão) zera só o plano desse item e fica no histórico como troca, sem encerrar a peça. Para trocar dois itens (ex.: corrente e cassete), o atleta lança a troca de cada um (OPEN-18). |
 | RB17 | Só acessa a área administrativa (`/admin`) quem entra com uma conta Google de e-mail verificado que está na lista de administradores autorizados (`ADMIN_EMAILS`). A permissão é conferida a cada acesso (ADR-002). |
 
 ---
 
 ## 4. Vida útil padrão sugerida (referência para RF03)
 
-> Desde 12/11/2026 os intervalos por componente vêm da planilha de catálogo (abas Transmissão, Suspensão, Pneus, Freios, Rodas e Canotes, com fontes na aba "Leia-me e fontes"), exportada para `src/lib/catalog/seed.json`. Quando a planilha dá uma faixa (mín–máx), o intervalo do plano é o mínimo (OPEN-17). A tabela abaixo continua como referência dos planos padrão por família.
+> Desde 12/11/2026 os intervalos por componente vêm da planilha de catálogo (abas Transmissão, Suspensão, Pneus, Freios, Rodas e Canotes, com fontes na aba "Leia-me e fontes"), exportada para `src/lib/catalog/seed.json`. Quando a planilha dá uma faixa (mín–máx), o intervalo do plano é a média da faixa e a barra fica amarela a partir do mínimo (OPEN-17). Regras de desgaste por condição de uso ficam para a issue #38. A tabela abaixo continua como referência dos planos padrão por família.
 
 Valores de partida, editáveis pelo atleta. Os valores de suspensão seguem a ordem de grandeza dos manuais dos fabricantes, que variam por modelo. O atleta deve conferir o manual da peça.
 
@@ -140,7 +140,7 @@ Atualizado em 12/11/2026. Código em `src/`, testes em `tests/unit/`.
 | RF31 | Pendente | — | — |
 | RF32, RF33, RF34 | Feito | `src/app/fonte/`, `src/lib/strava/`, `src/lib/connector/` | `strava-oauth.test.ts`, `activity-sources.test.ts` |
 | RB02, RB03, RB04, RB11–RB14, RB16 | Feito | `src/lib/wear.ts` | `wear.test.ts` |
-| RB18 | Feito (proposto) | `servicePlan`, `canResetPlan` | `catalog.test.ts` |
+| RB18 | Feito | `servicePlan`, `canResetPlan` | `catalog.test.ts` |
 | RB17 | Feito | `src/lib/session.ts` (`getCurrentAdmin`) | `google-admin-login.test.ts` |
 | RNF01 | Feito | `src/lib/crypto.ts` | `crypto.test.ts` |
 | RNF05 | Parcial: no máximo 10 páginas por sincronização manual; webhook pendente | `src/lib/rides/sync.ts` | — |

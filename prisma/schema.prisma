@@ -128,6 +128,9 @@ model CategoryPlan {
   name          String
   intervalKm    Float?
   intervalHours Float?
+  // OPEN-17: the bar turns yellow from here (min of the range); null = 80% (RB04).
+  warnKm        Float?
+  warnHours     Float?
   action        PlanAction
 }
 
@@ -163,6 +166,9 @@ model ComponentPlan {
   name          String
   intervalKm    Float?
   intervalHours Float?
+  // OPEN-17: the bar turns yellow from here (min of the range); null = 80% (RB04).
+  warnKm        Float?
+  warnHours     Float?
   action        PlanAction
 }
 
@@ -243,6 +249,9 @@ model MaintenancePlan {
   name          String
   intervalKm    Float?
   intervalHours Float?
+  // OPEN-17: the bar turns yellow from here (min of the range); null = 80% (RB04).
+  warnKm        Float?
+  warnHours     Float?
   action        PlanAction
   lastServiceAt DateTime?
 }

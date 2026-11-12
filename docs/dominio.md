@@ -25,6 +25,8 @@ classDiagram
     nome
     intervaloKm?
     intervaloHoras?
+    amareloKm?
+    amareloHoras?
     acao: TROCA | REVISAO
   }
   class Componente["Componente (Component)"] {
@@ -42,6 +44,8 @@ classDiagram
     nome
     intervaloKm?
     intervaloHoras?
+    amareloKm?
+    amareloHoras?
     acao: TROCA | REVISAO
   }
   class BikeModelo["Bike-modelo (BikeModel)"] {
@@ -74,6 +78,8 @@ classDiagram
     nome
     intervaloKm?
     intervaloHoras?
+    amareloKm?
+    amareloHoras?
     acao: TROCA | REVISAO
     ultimaRevisaoEm?
   }
@@ -130,4 +136,4 @@ O uso de cada plano é **calculado a partir dos pedais guardados**, não somado 
 2. Pedais `VirtualRide` só entram se a categoria "desgasta em rolo" (RB14).
 3. Se o plano nunca foi revisado, somam-se os km e as horas iniciais da peça.
 4. Desgaste do plano = maior entre `km / intervaloKm` e `horas / intervaloHoras` (RF07, RB11).
-5. Status: abaixo de 80% ok; de 80% "troca/revisão próxima" (RF08); de 100% "troca/revisão necessária" (RF09). O texto depende da ação do plano (RB04, RB13).
+5. Status: "troca/revisão próxima" (barra amarela) a partir do mínimo da faixa do catálogo (`amareloKm`/`amareloHoras`, ou 80% se o plano não tiver mínimo) (RF08, OPEN-17); de 100% "troca/revisão necessária" (RF09). O texto depende da ação do plano (RB04, RB13).

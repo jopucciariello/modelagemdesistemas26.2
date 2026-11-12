@@ -75,7 +75,7 @@ async function NewPart({ params, searchParams }: PageProps<"/bikes/[id]/peca">) 
   );
 }
 
-type Plan = { name: string; intervalKm: number | null; intervalHours: number | null; action: "REPLACE" | "SERVICE" };
+type Plan = { name: string; intervalKm: number | null; intervalHours: number | null; action: "REPLACE" | "SERVICE"; warnKm?: number | null; warnHours?: number | null };
 
 function PartForm({ bikeId, category, component }: {
   bikeId: string;
@@ -112,13 +112,15 @@ function PartForm({ bikeId, category, component }: {
             : component.plans.length > 0
               ? "Sugeridos pelo catálogo para este componente (RF03). Ajuste ao manual da sua peça."
               : "Sugeridos pela família (RF03). Ajuste ao manual da sua peça."}
-          {" "}Deixe o nome vazio para ignorar uma linha.
+          {" "}O intervalo é a média da faixa do catálogo, e a barra fica amarela a partir do mínimo (sem esse valor, a partir de 80%). Deixe o nome vazio para ignorar uma linha.
         </p>
         {rows.map((p, i) => (
           <div className="row" key={i}>
             <label>Nome <input name={`planName_${i}`} defaultValue={p?.name ?? ""} maxLength={80} /></label>
             <label>Intervalo km <input name={`planKm_${i}`} type="number" min={0} step="any" defaultValue={p?.intervalKm ?? ""} /></label>
             <label>Intervalo horas <input name={`planHours_${i}`} type="number" min={0} step="any" defaultValue={p?.intervalHours ?? ""} /></label>
+            <label>Amarelo a partir de (km) <input name={`planWarnKm_${i}`} type="number" min={0} step="any" defaultValue={p?.warnKm ?? ""} /></label>
+            <label>Amarelo a partir de (h) <input name={`planWarnHours_${i}`} type="number" min={0} step="any" defaultValue={p?.warnHours ?? ""} /></label>
             <label>Ação
               <select name={`planAction_${i}`} defaultValue={p?.action ?? "REPLACE"}>
                 <option value="REPLACE">Troca</option>

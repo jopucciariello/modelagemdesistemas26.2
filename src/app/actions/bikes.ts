@@ -140,8 +140,10 @@ export async function updatePlan(form: FormData) {
   if (!plan) redirect("/bikes?erro=peca_nao_encontrada");
   const intervalKm = optInterval(form, "intervalKm");
   const intervalHours = optInterval(form, "intervalHours");
+  const warnKm = optInterval(form, "warnKm");
+  const warnHours = optInterval(form, "warnHours");
   if (intervalKm === null && intervalHours === null) redirect(`/bikes/${plan!.part.bikeId}?erro=plano_invalido`);
-  await prisma.maintenancePlan.update({ where: { id: plan!.id }, data: { intervalKm, intervalHours } });
+  await prisma.maintenancePlan.update({ where: { id: plan!.id }, data: { intervalKm, intervalHours, warnKm, warnHours } });
   redirect(`/bikes/${plan!.part.bikeId}?ok=plano`);
 }
 
@@ -208,7 +210,7 @@ export async function replacePart(form: FormData) {
         componentId: component!.id,
         position: old.position,
         installedAt: date!,
-        plans: { create: old.plans.map((p) => ({ name: p.name, intervalKm: p.intervalKm, intervalHours: p.intervalHours, action: p.action })) },
+        plans: { create: old.plans.map((p) => ({ name: p.name, intervalKm: p.intervalKm, intervalHours: p.intervalHours, warnKm: p.warnKm, warnHours: p.warnHours, action: p.action })) },
       },
     });
   });

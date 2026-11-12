@@ -63,8 +63,8 @@ describe("RF02 / RB16: form readers", () => {
   it("keeps only plans with a name and at least one interval", () => {
     const plans = readPlans(fd({ planName_0: "Lowers", planHours_0: "50", planAction_0: "SERVICE", planName_1: "Vazio", planName_2: "Troca", planKm_2: "3000" }));
     expect(plans).toEqual([
-      { name: "Lowers", intervalKm: null, intervalHours: 50, action: "SERVICE" },
-      { name: "Troca", intervalKm: 3000, intervalHours: null, action: "REPLACE" },
+      { name: "Lowers", intervalKm: null, intervalHours: 50, action: "SERVICE", warnKm: null, warnHours: null },
+      { name: "Troca", intervalKm: 3000, intervalHours: null, action: "REPLACE", warnKm: null, warnHours: null },
     ]);
   });
 });

@@ -40,7 +40,8 @@ export function WearMeter({ wear }: { wear: PlanWear }) {
 export const km = (n: number) => `${n.toLocaleString("pt-BR", { maximumFractionDigits: 1 })} km`;
 export const hours = (n: number) => `${n.toLocaleString("pt-BR", { maximumFractionDigits: 1 })} h`;
 
-export function interval(p: { intervalKm: number | null; intervalHours: number | null; action: string }) {
+export function interval(p: { intervalKm: number | null; intervalHours: number | null; action: string; warnKm?: number | null; warnHours?: number | null }) {
   const parts = [p.intervalKm ? km(p.intervalKm) : null, p.intervalHours ? hours(p.intervalHours) : null].filter(Boolean);
-  return `${p.action === "SERVICE" ? "Revisão" : "Troca"} a cada ${parts.join(" ou ")}`;
+  const warn = [p.warnKm ? km(p.warnKm) : null, p.warnHours ? hours(p.warnHours) : null].filter(Boolean);
+  return `${p.action === "SERVICE" ? "Revisão" : "Troca"} a cada ${parts.join(" ou ")}${warn.length ? ` (amarelo a partir de ${warn.join(" ou ")})` : ""}`;
 }
