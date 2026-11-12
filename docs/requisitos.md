@@ -43,6 +43,8 @@ Prioridade (MoSCoW): **M** = Must, **S** = Should, **C** = Could.
 | RF34 | Quando o atleta escolher o conector, o sistema deve receber a URL e a chave de API do conector dele, validar a conexão e ler bikes e atividades por ele, sem chamar o Strava nem guardar token do Strava. **[PROPOSTO]** | M |
 | RF31 | Quando o componente desejado não existir no catálogo, o sistema deve permitir que o atleta envie uma sugestão de novo componente, e que o administrador a aprove (incluindo o componente no catálogo) ou a rejeite com um motivo. | S |
 
+> **RF06 e RF07:** o uso de cada plano é calculado a partir dos pedais guardados, e não acumulado num contador da peça ([ADR-007](adr/ADR-007-desgaste-calculado-dos-pedais.md), OPEN-15). Ver o [modelo de domínio](dominio.md).
+
 > **RF30** foi aprovado em 06/11/2026 para garantir o segundo perfil (Administrador) no MVP da Fase 1, como a disciplina exige (OPEN-06). Ele dá suporte ao RF02, ao RF03 e à RB10. O RF31 foi aprovado na mesma data (OPEN-08).
 
 ---
@@ -110,3 +112,29 @@ Valores de partida, editáveis pelo atleta. Os valores de suspensão seguem a or
 | Fluido de freio (sangria) | h | 100 h | Revisão |
 
 > Um mesmo componente físico (ex.: garfo) pode ter mais de um plano de manutenção (revisão de lowers e revisão completa), conforme a RB16, aprovada em 06/11/2026 (OPEN-07).
+
+---
+
+## 5. Situação da implementação e rastreabilidade (RNF09)
+
+Atualizado em 12/11/2026. Código em `src/`, testes em `tests/unit/`.
+
+| Requisito | Situação | Código | Teste |
+|---|---|---|---|
+| RF01 | Feito | `src/app/bikes/`, `src/app/actions/bikes.ts` | — (fluxo manual) |
+| RF02, RF03 | Feito | `src/app/bikes/[id]/peca/`, `createPart` | `rides-map.test.ts` (planos do formulário) |
+| RF04 | Feito | `src/app/auth/google/`, `src/lib/google/` | `google-admin-login.test.ts`, `activity-sources.test.ts` |
+| RF05 | Feito | `linkSourceBike`, `listSourceBikes` (`src/lib/rides/sync.ts`) | `rides-map.test.ts` |
+| RF06 | Feito (sincronização manual pelo botão) | `src/lib/rides/sync.ts`, `src/lib/wear.ts` | `wear.test.ts`, `rides-map.test.ts` |
+| RF07, RF08, RF09 | Feito (alerta dentro do app, OPEN-14) | `src/lib/wear.ts`, `src/components/ui.tsx` | `wear.test.ts` |
+| RF10, RF11, RF12 | Feito | `replacePart`, `servicePlan`, `addManualMaintenance`, página da bike | `wear.test.ts` (revisão por plano) |
+| RF13 | Feito | `syncRides` grava `lastSyncError` sem apagar dados | — |
+| RF14 | Feito | `src/app/pedais/`, `src/app/actions/rides.ts` | `rides-map.test.ts` (datas) |
+| RF15 | Feito | `src/app/page.tsx`, `src/lib/tracker.ts` | `wear.test.ts` (ordenação) |
+| RF30 | Feito | `src/app/admin/`, `src/app/actions/catalog.ts`, `src/lib/catalog/defaults.ts` | — |
+| RF31 | Pendente | — | — |
+| RF32, RF33, RF34 | Feito | `src/app/fonte/`, `src/lib/strava/`, `src/lib/connector/` | `strava-oauth.test.ts`, `activity-sources.test.ts` |
+| RB02, RB03, RB04, RB11–RB14, RB16 | Feito | `src/lib/wear.ts` | `wear.test.ts` |
+| RB17 | Feito | `src/lib/session.ts` (`getCurrentAdmin`) | `google-admin-login.test.ts` |
+| RNF01 | Feito | `src/lib/crypto.ts` | `crypto.test.ts` |
+| RNF05 | Parcial: no máximo 10 páginas por sincronização manual; webhook pendente | `src/lib/rides/sync.ts` | — |

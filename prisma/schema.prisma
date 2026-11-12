@@ -1,6 +1,6 @@
 // GearLog — Prisma schema (ADR-001: Prisma + SQLite).
-// Baseline: login (RF04) and the pedal source (RF32-RF34). Domain models (bikes, parts,
-// maintenance plans, catalog) come with their Specs.
+// Login (RF04), pedal source (RF32-RF34) and the wear tracker core (docs/dominio.md):
+// catalog (RF30), bikes (RF01), parts and plans (RF02, RB16), rides (RF06, RF14) and history (RF10-RF12).
 
 generator client {
   provider = "prisma-client"
@@ -25,19 +25,24 @@ enum ActivitySource {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  name      String
+  id             String         @id @default(cuid())
+  name           String
   // ADR-005: the verified Google e-mail every user logs in with (admins are listed in ADMIN_EMAILS).
-  email     String?  @unique
-  role      Role     @default(ATHLETE)
+  email          String?        @unique
+  role           Role           @default(ATHLETE)
   // RF32: chosen by the athlete after login; manual until they pick another.
   activitySource ActivitySource @default(MANUAL)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  // RF13: outcome of the last sync with the athlete's source.
+  lastSyncAt     DateTime?
+  lastSyncError  String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 
+  bikes     Bike[]
+  rides     Ride[]
   strava    StravaConnection?
   connector ConnectorConnection?
-  sessions Session[]
+  sessions  Session[]
 }
 
 // RF33, RNF01: the athlete's own Strava app (ADR-006). The client secret and the tokens are
@@ -77,4 +82,152 @@ model Session {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   expiresAt DateTime
   createdAt DateTime @default(now())
+}
+
+// RB13, RB16: what happens when a plan reaches its interval.
+enum PlanAction {
+  REPLACE
+  SERVICE
+}
+
+// OPEN-13 (resolved): closed list of bike types (RF01).
+enum BikeType {
+  ROAD
+  MTB
+  GRAVEL
+  URBAN
+  EBIKE
+  INDOOR
+  OTHER
+}
+
+// RF10-RF12: entries of a bike's maintenance history.
+enum MaintenanceEventType {
+  REPLACEMENT
+  SERVICE
+  MANUAL
+}
+
+// RF30: part category, maintained by the admin. RB14: wearsOnTrainer.
+model Category {
+  id             String         @id @default(cuid())
+  name           String         @unique
+  wearsOnTrainer Boolean        @default(false)
+  active         Boolean        @default(true)
+  plans          CategoryPlan[]
+  components     Component[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+// RF30, RF03, RB10: default maintenance plan of a category (km, hours or both).
+model CategoryPlan {
+  id            String     @id @default(cuid())
+  categoryId    String
+  category      Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  name          String
+  intervalKm    Float?
+  intervalHours Float?
+  action        PlanAction
+}
+
+// RF30, RB15: brand/model of a category.
+model Component {
+  id         String   @id @default(cuid())
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+  brand      String
+  model      String
+  active     Boolean  @default(true)
+  parts      Part[]
+  createdAt  DateTime @default(now())
+
+  @@unique([categoryId, brand, model])
+}
+
+// RF01, RF05: the athlete's bike. Archiving keeps the history.
+model Bike {
+  id           String             @id @default(cuid())
+  userId       String
+  user         User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name         String
+  type         BikeType
+  brand        String?
+  model        String?
+  year         Int?
+  // RF05: id of the matching bike (gear) in Strava or the connector.
+  stravaGearId String?
+  archivedAt   DateTime?
+  parts        Part[]
+  rides        Ride[]
+  events       MaintenanceEvent[]
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  @@unique([userId, stravaGearId])
+}
+
+// RF02, RB01, RB05: a component installed on a bike. Replaced parts keep removedAt.
+model Part {
+  id           String             @id @default(cuid())
+  bikeId       String
+  bike         Bike               @relation(fields: [bikeId], references: [id], onDelete: Cascade)
+  componentId  String
+  component    Component          @relation(fields: [componentId], references: [id])
+  installedAt  DateTime
+  removedAt    DateTime?
+  initialKm    Float              @default(0)
+  initialHours Float              @default(0)
+  plans        MaintenancePlan[]
+  events       MaintenanceEvent[]
+  createdAt    DateTime           @default(now())
+}
+
+// RB16: a part's own maintenance plan, copied from the category and editable.
+// RB13: lastServiceAt restarts the plan's usage without closing the part.
+model MaintenancePlan {
+  id            String     @id @default(cuid())
+  partId        String
+  part          Part       @relation(fields: [partId], references: [id], onDelete: Cascade)
+  name          String
+  intervalKm    Float?
+  intervalHours Float?
+  action        PlanAction
+  lastServiceAt DateTime?
+}
+
+// RF06, RF14, ADR-007: every ride is stored; wear is computed from them.
+model Ride {
+  id           String         @id @default(cuid())
+  userId       String
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bikeId       String?
+  bike         Bike?          @relation(fields: [bikeId], references: [id], onDelete: SetNull)
+  source       ActivitySource
+  // Strava activity id for imported rides; null for manual ones.
+  externalId   String?
+  // Strava gear id as received, kept to re-associate after RF05.
+  stravaGearId String?
+  sportType    String
+  startDate    DateTime
+  distanceKm   Float
+  movingHours  Float
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@unique([userId, externalId])
+  @@index([bikeId, startDate])
+}
+
+// RF10-RF12: maintenance history of a bike.
+model MaintenanceEvent {
+  id        String               @id @default(cuid())
+  bikeId    String
+  bike      Bike                 @relation(fields: [bikeId], references: [id], onDelete: Cascade)
+  partId    String?
+  part      Part?                @relation(fields: [partId], references: [id], onDelete: SetNull)
+  type      MaintenanceEventType
+  date      DateTime
+  note      String
+  createdAt DateTime             @default(now())
 }
