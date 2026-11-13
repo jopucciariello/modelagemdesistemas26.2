@@ -169,6 +169,7 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 - Dado o conector configurado, quando o atleta sincroniza, então todos os pedais de ciclismo do histórico entram uma vez só.
 - Dada uma bike associada ao gear `b123`, quando um pedal desse gear chega, então ele entra nessa bike.
 - Dado o conector fora do ar, quando o atleta sincroniza, então aparece o erro e os pedais anteriores continuam.
+- Dada uma bike montada do zero e já pedalada 120 km no Strava antes do cadastro, quando o atleta associa a bike da fonte marcando "montada do zero", então as peças originais passam a valer desde o primeiro pedal e os 120 km contam no desgaste.
 - Dada a fonte manual, quando o atleta lança 40 km e 1,5 h, então o pedal aparece e conta para as peças instaladas na data.
 
 **12. Casos de teste.** `rides-map.test.ts`, `activity-sources.test.ts`, `strava-oauth.test.ts`, `crypto.test.ts`.

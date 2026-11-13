@@ -19,6 +19,7 @@ const OK: Record<string, string> = {
   troca_item: "Troca registrada: o contador desse item recomeçou.",
   desarquivada: "Bike reativada.",
   associada: "Associação com a fonte salva.",
+  associada_inicio: "Associação salva e peças originais contando desde o primeiro pedal dessa bike no Strava.",
   peca: "Peça instalada.",
   plano: "Plano atualizado.",
   revisao: "Revisão registrada: o contador desse plano recomeçou.",
@@ -286,6 +287,11 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
                 {sourceBikes.map((s) => <option key={s.stravaGearId} value={s.stravaGearId}>{s.name}</option>)}
               </select>
             </label>
+            {parts.length > 0 && (
+              <label className="check">
+                <input type="checkbox" name="startAtFirstRide" /> Montada do zero: contar as peças originais desde o primeiro pedal dessa bike no Strava
+              </label>
+            )}
             <button className="button small" type="submit">Salvar associação</button>
           </form>
         </section>
