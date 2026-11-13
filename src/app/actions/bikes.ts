@@ -31,13 +31,25 @@ function bikeFields(form: FormData) {
 }
 
 /** RF01, RF35: a new bike, optionally from a catalog model with its original parts installed. */
+/** RF05: links a new bike to its bike on the ride source; its stored rides (any date) join it. */
+async function linkNewBike(userId: string, bikeId: string, gearId: string | null) {
+  if (!gearId) return;
+  if (await prisma.bike.findFirst({ where: { userId, stravaGearId: gearId, NOT: { id: bikeId } } })) return;
+  await prisma.$transaction([
+    prisma.bike.update({ where: { id: bikeId }, data: { stravaGearId: gearId } }),
+    prisma.ride.updateMany({ where: { userId, stravaGearId: gearId }, data: { bikeId } }),
+  ]);
+}
+
 export async function createBike(form: FormData) {
   const user = await requireUser();
   const f = bikeFields(form);
+  const gearId = text(form, "stravaGearId", 40) || null;
   const modelId = text(form, "bikeModelId", 40);
   if (!modelId) {
     if (!f.name || !f.type) redirect("/bikes?erro=bike_invalida");
     const bike = await prisma.bike.create({ data: { ...f, type: f.type!, userId: user.id } });
+    await linkNewBike(user.id, bike.id, gearId);
     redirect(`/bikes/${bike.id}?ok=bike`);
   }
   const model = await prisma.bikeModel.findFirst({
@@ -65,6 +77,7 @@ export async function createBike(form: FormData) {
       },
     },
   });
+  await linkNewBike(user.id, bike.id, gearId);
   redirect(`/bikes/${bike.id}?ok=bike_modelo`);
 }
 

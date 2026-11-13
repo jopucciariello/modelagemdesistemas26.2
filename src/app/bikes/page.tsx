@@ -8,6 +8,7 @@ import { prisma } from "@/lib/db";
 import { BIKE_TYPES } from "@/lib/forms";
 import { requireUser } from "@/lib/guards";
 import { toLocalDay } from "@/lib/dates";
+import { listSourceBikes, type SourceBikeOption } from "@/lib/rides/sync";
 
 const OK = { arquivada: "Bike arquivada. O histórico continua guardado." };
 const ERR = { modelo_invalido: "Escolha um modelo do catálogo e a data em que as peças foram instaladas.", bike_invalida: "Informe o nome e o tipo da bike.", bike_nao_encontrada: "Bike não encontrada.", peca_nao_encontrada: "Peça não encontrada." };
@@ -32,6 +33,8 @@ async function Bikes({ searchParams }: { searchParams: PageProps<"/bikes">["sear
     include: { _count: { select: { parts: { where: { removedAt: null } } } } },
     orderBy: [{ archivedAt: "asc" }, { createdAt: "asc" }],
   });
+  const linked = new Set(bikes.map((b) => b.stravaGearId).filter(Boolean));
+  const sourceBikes = (await listSourceBikes(user.id, user.activitySource))?.filter((s) => !linked.has(s.stravaGearId)) ?? null;
   const active = bikes.filter((b) => !b.archivedAt);
   const archived = bikes.filter((b) => b.archivedAt);
   return (
@@ -65,6 +68,7 @@ async function Bikes({ searchParams }: { searchParams: PageProps<"/bikes">["sear
             <label>Nome (opcional) <input name="name" maxLength={60} /></label>
             <label>Ano <input name="year" type="number" min={1900} max={2100} /></label>
             <label>Peças instaladas em <input name="installedAt" type="date" required defaultValue={toLocalDay(new Date())} /></label>
+            <SourceBikeSelect bikes={sourceBikes} />
             <button className="button" type="submit">Criar</button>
           </form>
         </section>
@@ -73,6 +77,7 @@ async function Bikes({ searchParams }: { searchParams: PageProps<"/bikes">["sear
         <h2>Nova bike</h2>
         <form action={createBike} className="row">
           <BikeFields />
+          <SourceBikeSelect bikes={sourceBikes} />
           <button className="button" type="submit">Cadastrar</button>
         </form>
       </section>
@@ -85,5 +90,18 @@ async function Bikes({ searchParams }: { searchParams: PageProps<"/bikes">["sear
         </section>
       )}
     </>
+  );
+}
+
+/** RF05: the bike on the ride source; its rides (also from before today) count for the new bike. */
+function SourceBikeSelect({ bikes }: { bikes: SourceBikeOption[] | null }) {
+  if (!bikes || bikes.length === 0) return null;
+  return (
+    <label>Bike no Strava
+      <select name="stravaGearId" defaultValue="">
+        <option value="">(nenhuma)</option>
+        {bikes.map((s) => <option key={s.stravaGearId} value={s.stravaGearId}>{s.name}</option>)}
+      </select>
+    </label>
   );
 }
