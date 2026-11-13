@@ -88,8 +88,28 @@ export async function updateBike(form: FormData) {
   const bike = await ownBike(user.id, text(form, "bikeId", 40));
   const f = bikeFields(form);
   if (!f.name || !f.type) redirect(`/bikes/${bike.id}?erro=bike_invalida`);
-  await prisma.bike.update({ where: { id: bike.id }, data: { ...f, type: f.type! } });
+  // RF01, RB02: optionally move the installation date of every installed part (assembly date).
+  const raw = text(form, "partsInstalledAt", 10);
+  const installedAt = raw ? parseLocalDay(raw) : null;
+  if (raw && (!installedAt || installedAt > new Date())) redirect(`/bikes/${bike.id}?erro=data_montagem`);
+  await prisma.$transaction([
+    prisma.bike.update({ where: { id: bike.id }, data: { ...f, type: f.type! } }),
+    ...(installedAt ? [prisma.part.updateMany({ where: { bikeId: bike.id, removedAt: null }, data: { installedAt } })] : []),
+  ]);
   redirect(`/bikes/${bike.id}?ok=bike`);
+}
+
+/** RF02, RB02: fix the installation date and the initial usage of one installed part. */
+export async function updatePart(form: FormData) {
+  const user = await requireUser();
+  const part = await ownPart(user.id, text(form, "partId", 40));
+  const installedAt = parseLocalDay(text(form, "installedAt", 10));
+  if (part.removedAt || !installedAt || installedAt > new Date()) redirect(`/bikes/${part.bikeId}?erro=data_montagem`);
+  await prisma.part.update({
+    where: { id: part.id },
+    data: { installedAt: installedAt!, initialKm: optNumber(form, "initialKm") ?? 0, initialHours: optNumber(form, "initialHours") ?? 0 },
+  });
+  redirect(`/bikes/${part.bikeId}?ok=peca_editada`);
 }
 
 /** RF01: archive keeps parts, rides and history. */

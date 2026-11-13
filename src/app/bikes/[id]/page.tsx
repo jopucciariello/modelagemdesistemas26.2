@@ -1,7 +1,7 @@
 // RF01, RF02, RF05, RF07-RF12, RB13, RB16: one bike with its parts, wear and history.
 import Link from "next/link";
 import { Suspense } from "react";
-import { addManualMaintenance, linkSourceBike, recordShopVisit, replacePart, servicePlan, toggleArchiveBike, updateBike, updatePlan } from "@/app/actions/bikes";
+import { addManualMaintenance, linkSourceBike, updatePart, recordShopVisit, replacePart, servicePlan, toggleArchiveBike, updateBike, updatePlan } from "@/app/actions/bikes";
 import { BikeFields } from "@/components/bike-fields";
 import { Flash, Nav, WearMeter, hours, interval, km } from "@/components/ui";
 import { prisma } from "@/lib/db";
@@ -24,6 +24,7 @@ const OK: Record<string, string> = {
   revisao: "Revisão registrada: o contador desse plano recomeçou.",
   troca: "Troca registrada: a peça antiga foi para o histórico e a nova começou do zero.",
   manutencao: "Manutenção registrada no histórico.",
+  peca_editada: "Peça atualizada: o desgaste foi recalculado.",
   visita: "Revisão registrada: os itens foram para o histórico e os contadores zerados recomeçaram.",
 };
 const ERR: Record<string, string> = {
@@ -32,6 +33,7 @@ const ERR: Record<string, string> = {
   gear_em_uso: "Essa bike da fonte já está associada a outra bike sua.",
   plano_invalido: "O plano precisa de um intervalo em km ou em horas.",
   data: "Data inválida (não pode ser antes da instalação da peça).",
+  data_montagem: "Data de instalação inválida (não pode ser no futuro).",
   componente: "Escolha um componente do catálogo.",
   peca_encerrada: "Essa peça já foi trocada.",
   manutencao_invalida: "Informe a data e o que foi feito.",
@@ -76,6 +78,23 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
         </p>
       </header>
       <Flash ok={ok} erro={erro} okText={OK} errText={ERR} />
+
+      <section className="card">
+        <details>
+          <summary><h2 style={{ display: "inline" }}>Editar bike</h2></summary>
+          <form action={updateBike} className="row">
+            <input type="hidden" name="bikeId" value={bike.id} />
+            <BikeFields bike={bike} />
+            {parts.length > 0 && (
+              <label>Data de montagem (muda a instalação de todas as peças)
+                <input name="partsInstalledAt" type="date" max={today} defaultValue="" />
+              </label>
+            )}
+            <button className="button small" type="submit">Salvar</button>
+          </form>
+          <p className="muted">Deixe a data de montagem em branco para manter a de cada peça. Para corrigir uma peça só, use “Editar instalação” na peça. A bike do Strava fica no quadro “Bike na fonte dos pedais”.</p>
+        </details>
+      </section>
 
       <section className="card">
         <div className="row" style={{ justifyContent: "space-between" }}>
@@ -123,6 +142,16 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
                     </details>
                   </div>
                 ))}
+                <details>
+                  <summary>Editar instalação</summary>
+                  <form action={updatePart} className="row">
+                    <input type="hidden" name="partId" value={part.id} />
+                    <label>Instalada em <input name="installedAt" type="date" required max={today} defaultValue={toLocalDay(part.installedAt)} /></label>
+                    <label>Km já rodados antes <input name="initialKm" type="number" min={0} step="any" defaultValue={part.initialKm || ""} /></label>
+                    <label>Horas já usadas antes <input name="initialHours" type="number" min={0} step="any" defaultValue={part.initialHours || ""} /></label>
+                    <button className="button small" type="submit">Salvar</button>
+                  </form>
+                </details>
                 <details>
                   <summary>Trocar a peça inteira</summary>
                   <form action={replacePart} className="row">
@@ -263,14 +292,6 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
       )}
 
       <section className="card">
-        <details>
-          <summary>Editar bike</summary>
-          <form action={updateBike} className="row">
-            <input type="hidden" name="bikeId" value={bike.id} />
-            <BikeFields bike={bike} />
-            <button className="button small" type="submit">Salvar</button>
-          </form>
-        </details>
         <form action={toggleArchiveBike}>
           <input type="hidden" name="bikeId" value={bike.id} />
           <button className="button small" type="submit">{bike.archivedAt ? "Reativar bike" : "Arquivar bike"}</button>
