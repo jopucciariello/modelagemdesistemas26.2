@@ -2,7 +2,7 @@
 // RF01, RF02, RF03, RF05, RF10, RF12, RF35, RF36, RB01, RB05, RB13, RB15, RB16, RB18: the athlete's bikes and parts.
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
-import { parseLocalDay } from "@/lib/dates";
+import { parseLocalDay, toLocalDay } from "@/lib/dates";
 import { bikeType, optInterval, optNumber, optYear, readPlans, text } from "@/lib/forms";
 import { requireUser } from "@/lib/guards";
 import { bikeTypeFromCategory, canResetPlan, plansFor } from "@/lib/catalog/rules";
@@ -42,6 +42,18 @@ async function linkNewBike(userId: string, bikeId: string, gearId: string | null
   ]);
 }
 
+/** RF05: first day (São Paulo) on which the stored rides of a source bike appear, or null. */
+async function firstRideDay(userId: string, gearId: string): Promise<Date | null> {
+  const first = await prisma.ride.aggregate({ where: { userId, stravaGearId: gearId }, _min: { startDate: true } });
+  return first._min.startDate ? parseLocalDay(toLocalDay(first._min.startDate)) : null;
+}
+
+/** RF01, RB02: the parts installed at assembly are those with the bike's earliest installation date. */
+async function originalParts(bikeId: string) {
+  const all = await prisma.part.findMany({ where: { bikeId }, orderBy: { installedAt: "asc" } });
+  return all.filter((p) => p.installedAt.getTime() === all[0]?.installedAt.getTime());
+}
+
 export async function createBike(form: FormData) {
   const user = await requireUser();
   const f = bikeFields(form);
@@ -57,7 +69,9 @@ export async function createBike(form: FormData) {
     where: { id: modelId, active: true },
     include: { parts: { include: { component: { include: { plans: true, category: { include: { plans: true } } } } } } },
   });
-  const installedAt = parseLocalDay(text(form, "installedAt", 10));
+  // RF05: "start at the first ride" makes the original parts count the whole history of the source bike.
+  const firstRide = gearId && form.get("startAtFirstRide") ? await firstRideDay(user.id, gearId) : null;
+  const installedAt = firstRide ?? parseLocalDay(text(form, "installedAt", 10));
   if (!model || !installedAt) redirect("/bikes?erro=modelo_invalido");
   const bike = await prisma.bike.create({
     data: {
@@ -94,9 +108,7 @@ export async function updateBike(form: FormData) {
   const raw = text(form, "partsInstalledAt", 10);
   const installedAt = raw ? parseLocalDay(raw) : null;
   if (raw && (!installedAt || installedAt > new Date())) redirect(`/bikes/${bike.id}?erro=data_montagem`);
-  const original = installedAt
-    ? await prisma.part.findMany({ where: { bikeId: bike.id }, orderBy: { installedAt: "asc" } }).then((all) => all.filter((p) => p.installedAt.getTime() === all[0]?.installedAt.getTime()))
-    : [];
+  const original = installedAt ? await originalParts(bike.id) : [];
   if (original.some((p) => p.removedAt && p.removedAt <= installedAt!)) redirect(`/bikes/${bike.id}?erro=data_montagem`);
   await prisma.$transaction([
     prisma.bike.update({ where: { id: bike.id }, data: { ...f, type: f.type! } }),
@@ -135,13 +147,19 @@ export async function linkSourceBike(form: FormData) {
     const taken = await prisma.bike.findFirst({ where: { userId: user.id, stravaGearId: gearId, NOT: { id: bike.id } } });
     if (taken) redirect(`/bikes/${bike.id}?erro=gear_em_uso`);
   }
+  // RF05, RB02: optionally start the original parts at the first ride of the source bike, so the
+  // history before today counts (e.g. a bike built from zero and ridden before it was registered).
+  const firstRide = gearId && form.get("startAtFirstRide") ? await firstRideDay(user.id, gearId) : null;
+  const original = firstRide ? await originalParts(bike.id) : [];
+  if (firstRide && original.some((p) => p.removedAt && p.removedAt <= firstRide)) redirect(`/bikes/${bike.id}?erro=data_montagem`);
   await prisma.$transaction([
     prisma.bike.update({ where: { id: bike.id }, data: { stravaGearId: gearId } }),
+    ...(original.length ? [prisma.part.updateMany({ where: { id: { in: original.map((p) => p.id) } }, data: { installedAt: firstRide! } })] : []),
     // Rides of the previous gear leave this bike; rides of the new gear join it.
     prisma.ride.updateMany({ where: { userId: user.id, bikeId: bike.id, externalId: { not: null } }, data: { bikeId: null } }),
     ...(gearId ? [prisma.ride.updateMany({ where: { userId: user.id, stravaGearId: gearId }, data: { bikeId: bike.id } })] : []),
   ]);
-  redirect(`/bikes/${bike.id}?ok=associada`);
+  redirect(`/bikes/${bike.id}?ok=${firstRide && original.length ? "associada_inicio" : "associada"}`);
 }
 
 /** RF02, RF03, RB15, RB16: install a catalog component with its plans. */

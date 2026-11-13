@@ -68,7 +68,7 @@ async function Bikes({ searchParams }: { searchParams: PageProps<"/bikes">["sear
             <label>Nome (opcional) <input name="name" maxLength={60} /></label>
             <label>Ano <input name="year" type="number" min={1900} max={2100} /></label>
             <label>Peças instaladas em <input name="installedAt" type="date" required defaultValue={toLocalDay(new Date())} /></label>
-            <SourceBikeSelect bikes={sourceBikes} />
+            <SourceBikeSelect bikes={sourceBikes} withStart />
             <button className="button" type="submit">Criar</button>
           </form>
         </section>
@@ -94,14 +94,21 @@ async function Bikes({ searchParams }: { searchParams: PageProps<"/bikes">["sear
 }
 
 /** RF05: the bike on the ride source; its rides (also from before today) count for the new bike. */
-function SourceBikeSelect({ bikes }: { bikes: SourceBikeOption[] | null }) {
+function SourceBikeSelect({ bikes, withStart }: { bikes: SourceBikeOption[] | null; withStart?: boolean }) {
   if (!bikes || bikes.length === 0) return null;
   return (
-    <label>Bike no Strava
-      <select name="stravaGearId" defaultValue="">
-        <option value="">(nenhuma)</option>
-        {bikes.map((s) => <option key={s.stravaGearId} value={s.stravaGearId}>{s.name}</option>)}
-      </select>
-    </label>
+    <>
+      <label>Bike no Strava
+        <select name="stravaGearId" defaultValue="">
+          <option value="">(nenhuma)</option>
+          {bikes.map((s) => <option key={s.stravaGearId} value={s.stravaGearId}>{s.name}</option>)}
+        </select>
+      </label>
+      {withStart && (
+        <label className="check">
+          <input type="checkbox" name="startAtFirstRide" /> Montada do zero: contar desde o primeiro pedal dessa bike no Strava (ignora a data acima)
+        </label>
+      )}
+    </>
   );
 }
