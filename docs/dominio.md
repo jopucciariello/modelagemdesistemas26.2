@@ -95,6 +95,12 @@ classDiagram
     tipo: TROCA | REVISAO | MANUAL
     data
     descricao
+    condicao?: BOA | ATENCAO | TROCAR_EM_BREVE
+  }
+  class Visita["Revisão na oficina (ServiceVisit)"] {
+    data
+    oficina?
+    observacao?
   }
 
   Categoria "1" *-- "0..*" PlanoPadrao
@@ -111,6 +117,8 @@ classDiagram
   Peca "1" *-- "0..*" PlanoDaPeca
   Bike "1" o-- "0..*" Evento
   Peca "0..1" -- "0..*" Evento
+  Bike "1" o-- "0..*" Visita
+  Visita "0..1" *-- "1..*" Evento : itens
 ```
 
 ## Conceitos
@@ -126,7 +134,8 @@ classDiagram
 | Peça | Um componente instalado numa bike numa data, numa posição (ex.: pneu traseiro). Encerra quando é trocada inteira (`removidaEm`). | RF02, RF10, RB01, RB05 |
 | Plano de manutenção | Cópia do plano do componente (ou da família) na peça, editável pelo atleta. O desgaste e os alertas valem por plano; a troca de um item (ex.: corrente do grupo) zera só o plano dele. | RB16, RB18, RF07–RF09 |
 | Pedal | Uma atividade de ciclismo, lançada à mão ou trazida da fonte do atleta. | RF06, RF14, RB02, RB03, RB12 |
-| Evento de manutenção | Linha do histórico da bike: troca, revisão ou manutenção manual. | RF10–RF12 |
+| Evento de manutenção | Linha do histórico da bike: troca, revisão ou manutenção manual, com a condição informada pelo mecânico quando vem de uma revisão na oficina. | RF10–RF12, RF36 |
+| Revisão na oficina | Uma ida à oficina com vários itens registrados de uma vez (ex.: suspensão revisada, pneu trocado, movimento central com folga). Cada item vira um evento. | RF36 |
 
 ## Como o desgaste é calculado (RF06, RF07)
 

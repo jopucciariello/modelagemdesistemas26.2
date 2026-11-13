@@ -37,7 +37,7 @@ export async function loadBikeDetail(userId: string, bikeId: string) {
   const [parts, removed, events, rides] = await Promise.all([
     loadParts({ bikeId }),
     prisma.part.findMany({ where: { bikeId, removedAt: { not: null } }, include: partInclude, orderBy: { removedAt: "desc" } }),
-    prisma.maintenanceEvent.findMany({ where: { bikeId }, orderBy: [{ date: "desc" }, { createdAt: "desc" }] }),
+    prisma.maintenanceEvent.findMany({ where: { bikeId }, include: { visit: { select: { shop: true } } }, orderBy: [{ date: "desc" }, { createdAt: "desc" }] }),
     prisma.ride.findMany({ where: { bikeId }, select: rideSelect }),
   ]);
   const totals = rides.reduce((t, r) => ({ km: t.km + r.distanceKm, hours: t.hours + r.movingHours }), { km: 0, hours: 0 });
