@@ -8,6 +8,8 @@ import { getStravaOAuthConfig } from "@/lib/strava/link-account";
 import { needsRefresh, refreshAccessToken } from "@/lib/strava/oauth";
 import { parseConnectorActivities, parseSourceBikes, parseStravaActivities, type RideInput, type SourceBike } from "@/lib/rides/map";
 
+export type SourceBikeOption = SourceBike;
+
 export class SyncError extends Error {
   constructor(readonly code: "not_linked" | "unreachable" | "unauthorized" | "bad_response" | "unexpected") {
     super(`Sync failed: ${code}`);

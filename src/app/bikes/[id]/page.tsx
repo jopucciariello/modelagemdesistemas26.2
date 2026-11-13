@@ -78,14 +78,12 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
         <div className="row" style={{ justifyContent: "space-between" }}>
           <h2>Peças instaladas</h2>
           {!bike.archivedAt && (
-            <form action={`/bikes/${bike.id}/peca`} className="row">
-              <label>Categoria
-                <select name="categoria" required>
-                  {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
-                </select>
-              </label>
-              <button className="button small" type="submit" disabled={categories.length === 0}>Adicionar peça</button>
-            </form>
+            <nav className="row" aria-label="Adicionar peça">
+              <span className="muted">Adicionar peça:</span>
+              {categories.map((c) => (
+                <Link key={c.id} className="button small" href={`/bikes/${bike.id}/peca?categoria=${c.id}`}>{c.name}</Link>
+              ))}
+            </nav>
           )}
         </div>
         {categories.length === 0 && <p className="muted">O catálogo ainda está vazio. Peça ao administrador para carregá-lo.</p>}
