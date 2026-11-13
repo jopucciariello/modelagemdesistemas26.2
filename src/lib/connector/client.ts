@@ -10,11 +10,21 @@ export class ConnectorError extends Error {
   }
 }
 
+export type ConnectorPath =
+  | "/v1/gearlog/status"
+  | "/v1/gearlog/bikes"
+  | `/v1/gearlog/activities?since=${string}`
+  | "/v1/gearlog/events";
+
+/** RF06: the connector requires `since`; the epoch brings the whole history (retroactive rides). */
+export function connectorActivitiesPath(since: Date = new Date(0)): ConnectorPath {
+  return `/v1/gearlog/activities?since=${encodeURIComponent(since.toISOString())}`;
+}
+
 export async function connectorGet(
   baseUrl: string,
   apiKey: string,
-  path: "/v1/gearlog/status" | "/v1/gearlog/bikes" | "/v1/gearlog/activities"
-    | "/v1/gearlog/events",
+  path: ConnectorPath,
   fetchFn: typeof fetch = fetch,
 ): Promise<unknown> {
   let response: Response;

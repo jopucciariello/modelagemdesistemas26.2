@@ -1,7 +1,7 @@
 // RF04, RF32-RF34, ADR-005, ADR-006: Google role assignment and the connector safety rules.
 import { describe, expect, it, vi } from "vitest";
 import { roleForEmail } from "@/lib/google/oidc";
-import { ConnectorError, connectorGet } from "@/lib/connector/client";
+import { ConnectorError, connectorActivitiesPath, connectorGet } from "@/lib/connector/client";
 import { ConnectorUrlError, isPrivateAddress, validateConnectorUrl } from "@/lib/connector/url";
 import { safeReturnPath } from "@/lib/redirects";
 
@@ -65,6 +65,13 @@ describe("RF34: connector client", () => {
     expect(url).toBe("https://c.example.com/v1/gearlog/status");
     expect((init.headers as Record<string, string>).Authorization).toBe("Bearer KEY");
     expect(init.redirect).toBe("error");
+  });
+  it("RF06: asks /activities for the whole history with the required since parameter", async () => {
+    expect(connectorActivitiesPath()).toBe("/v1/gearlog/activities?since=1970-01-01T00%3A00%3A00.000Z");
+    const fetchFn = ok({ activities: [] });
+    await connectorGet("https://c.example.com", "KEY", connectorActivitiesPath(), fetchFn as unknown as typeof fetch);
+    const [url] = fetchFn.mock.calls[0] as unknown as [string];
+    expect(new URL(url).searchParams.get("since")).toBe("1970-01-01T00:00:00.000Z");
   });
   it("maps 401, 5xx, network failure and bad JSON to error codes without leaking the key", async () => {
     const call = (f: unknown) => connectorGet("https://c.example.com", "SECRET-KEY", "/v1/gearlog/bikes", f as typeof fetch);
