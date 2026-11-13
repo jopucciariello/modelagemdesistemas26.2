@@ -88,13 +88,19 @@ export async function updateBike(form: FormData) {
   const bike = await ownBike(user.id, text(form, "bikeId", 40));
   const f = bikeFields(form);
   if (!f.name || !f.type) redirect(`/bikes/${bike.id}?erro=bike_invalida`);
-  // RF01, RB02: optionally move the installation date of every installed part (assembly date).
+  // RF01, RB02: optionally move the assembly date. Only the parts installed at assembly (the
+  // earliest installation date of the bike) move; parts installed later, e.g. after a
+  // replacement, keep their own date.
   const raw = text(form, "partsInstalledAt", 10);
   const installedAt = raw ? parseLocalDay(raw) : null;
   if (raw && (!installedAt || installedAt > new Date())) redirect(`/bikes/${bike.id}?erro=data_montagem`);
+  const original = installedAt
+    ? await prisma.part.findMany({ where: { bikeId: bike.id }, orderBy: { installedAt: "asc" } }).then((all) => all.filter((p) => p.installedAt.getTime() === all[0]?.installedAt.getTime()))
+    : [];
+  if (original.some((p) => p.removedAt && p.removedAt <= installedAt!)) redirect(`/bikes/${bike.id}?erro=data_montagem`);
   await prisma.$transaction([
     prisma.bike.update({ where: { id: bike.id }, data: { ...f, type: f.type! } }),
-    ...(installedAt ? [prisma.part.updateMany({ where: { bikeId: bike.id, removedAt: null }, data: { installedAt } })] : []),
+    ...(original.length ? [prisma.part.updateMany({ where: { id: { in: original.map((p) => p.id) } }, data: { installedAt: installedAt! } })] : []),
   ]);
   redirect(`/bikes/${bike.id}?ok=bike`);
 }

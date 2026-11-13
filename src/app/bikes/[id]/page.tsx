@@ -33,7 +33,7 @@ const ERR: Record<string, string> = {
   gear_em_uso: "Essa bike da fonte já está associada a outra bike sua.",
   plano_invalido: "O plano precisa de um intervalo em km ou em horas.",
   data: "Data inválida (não pode ser antes da instalação da peça).",
-  data_montagem: "Data de instalação inválida (não pode ser no futuro).",
+  data_montagem: "Data inválida: não pode ser no futuro nem depois da troca de uma peça original.",
   componente: "Escolha um componente do catálogo.",
   peca_encerrada: "Essa peça já foi trocada.",
   manutencao_invalida: "Informe a data e o que foi feito.",
@@ -86,7 +86,7 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
             <input type="hidden" name="bikeId" value={bike.id} />
             <BikeFields bike={bike} />
             {parts.length > 0 && (
-              <label>Data de montagem (muda a instalação de todas as peças)
+              <label>Data de montagem (muda as peças originais da montagem)
                 <input name="partsInstalledAt" type="date" max={today} defaultValue="" />
               </label>
             )}
