@@ -40,7 +40,7 @@ jobs:
           DATABASE_URL: file:./ci.db
         run: |
           npm ci
-          npx tsc --noEmit
+          npx next typegen && npx tsc --noEmit
           npm run lint
           npm test
 
