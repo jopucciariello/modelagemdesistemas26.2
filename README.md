@@ -15,11 +15,18 @@ O **GearLog** é uma aplicação web para ciclistas acompanharem o desgaste real
 ## 📚 Documentação do Sistema
 Toda a documentação técnica e de engenharia de requisitos do projeto está centralizada na pasta [`/docs`](docs/):
 
+* 📌 [spec.md](spec.md) (fonte de verdade), [plan.md](plan.md) (plano técnico) e [tasks.md](tasks.md) (tarefas)
 * 📋 [Visão do Produto e Escopo](docs/visao.md)
 * 👤 [Personas do Sistema](docs/personas.md)
 * 📐 [Especificação de Requisitos (EARS, RNFs e RBs)](docs/requisitos.md)
 * 🔭 [Segundo estágio (Fases 2 e 3)](docs/segundo-estagio.md)
 * 🧩 [Modelo de domínio](docs/dominio.md)
+* 🎭 [Casos de uso](docs/casos-de-uso.md)
+* 📐 [Diagramas UML (classes e sequência)](docs/uml.md) e [glossário](docs/glossario.md)
+* 🗺️ [Mapa de Specs](docs/mapa-specs.md) e [Specs SPEC-001 a SPEC-007](docs/specs.md)
+* 🏗️ [Arquitetura](docs/arquitetura.md)
+* 🔍 [Revisão (arquitetura, desempenho, segurança, observabilidade)](docs/review/)
+* 🧪 [Estratégia de testes e evidências](docs/testes.md)
 * 🚴 [Integração com o Strava (contrato do conector)](docs/integracao-strava.md)
 * 🏛️ [Decisões de arquitetura (ADR-001 a ADR-007)](docs/adr/)
 * ❓ [Decisões em aberto](docs/decisoes-em-aberto.md)
@@ -88,15 +95,18 @@ Roteiro rápido de demo sem Strava: entrar como admin, carregar o catálogo da p
 
 ### Testes
 ```bash
-npm test        # Vitest, uma vez
-npm run lint    # ESLint
+npm test           # Vitest, uma vez
+npm run lint       # ESLint
+npx tsc --noEmit   # tipos
 ```
+
+O CI do GitHub Actions (`.github/workflows/ci.yml`) roda tipos, lint, testes e build em todo PR; a estratégia está em [docs/testes.md](docs/testes.md).
 
 Os scripts `dev`, `start`, `db:migrate` e `db:deploy` já rodam com `infisical run --env=dev --`, que injeta os segredos só no processo. Nenhum segredo fica em arquivo no repositório. Os testes (`npm test`) não precisam de segredos. O `Client Secret` e os tokens do Strava de cada atleta e a chave do conector ficam criptografados no banco (RNF01).
 
 ### Deploy (Fly.io)
 
-O app roda no Fly.io com SQLite num volume ([ADR-004](docs/adr/ADR-004-deploy-fly.md)). O deploy é feito pelo GitHub Actions (`.github/workflows/deploy.yml`) a cada push na `main` (e, temporariamente, na `feat/RF04-baseline`), com o `FLY_API_TOKEN` como secret do repositório. O workflow lê o ambiente Production do Infisical por OIDC (sem credencial guardada) e grava os segredos no Fly antes do deploy. Para aplicar um segredo alterado, rode o workflow de novo. Configuração inicial, feita uma vez:
+O app roda no Fly.io com SQLite num volume ([ADR-004](docs/adr/ADR-004-deploy-fly.md)). O deploy é feito pelo GitHub Actions (`.github/workflows/deploy.yml`) a cada push na `main`, depois de rodar os testes, com o `FLY_API_TOKEN` como secret do repositório. O workflow lê o ambiente Production do Infisical por OIDC (sem credencial guardada) e grava os segredos no Fly antes do deploy. Para aplicar um segredo alterado, rode o workflow de novo. Configuração inicial, feita uma vez:
 
 ```bash
 fly apps create <app>
