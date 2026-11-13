@@ -16,7 +16,7 @@ Este arquivo define as regras do projeto para pessoas e agentes de IA que trabal
 2. Atualizar caso de uso e modelo de domínio, se afetados.
 3. Escrever o teste a partir do requisito.
 4. Implementar.
-5. Abrir PR citando os IDs; outro membro revisa.
+5. Abrir PR citando os IDs e a issue; o PR é revisado antes do merge (ver `docs/combinados.md`).
 
 ## Convenções
 
@@ -38,7 +38,15 @@ docs/
   dominio.md        # modelo conceitual de domínio
   casos-de-uso.md   # casos de uso
   arquitetura.md    # drivers arquiteturais e documento consolidado
+  uml.md            # diagramas de classes e de sequência
+  glossario.md      # glossário do domínio
+  mapa-specs.md     # mapa ordenado das Specs
+  specs.md          # Specs SPEC-001.. (14 seções)
+  testes.md         # estratégia de testes e evidências
+  review/           # revisão: arquitetura, desempenho, segurança, observabilidade
   adr/              # Architecture Decision Records (ADR-001, ...)
+spec.md, plan.md, tasks.md  # na raiz: fonte de verdade, plano técnico e tarefas
+.specify/           # constituição resumida e modelos de Spec e tarefa
 ```
 
 ## Restrições para agentes de IA

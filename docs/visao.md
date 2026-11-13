@@ -22,7 +22,7 @@ O GearLog complementa o projeto pessoal **VeloUpgrade-Tracker** (planejamento de
 
 **Escopo da entrega (26/11):** a documentação completa (requisitos, casos de uso, domínio, UML, ADRs, Specs) e o MVP cobrem somente a Fase 1, com os perfis Atleta e Administrador, para entregar com qualidade no prazo. As Fases 2 e 3 ficam registradas em [segundo-estagio.md](segundo-estagio.md) só em nível de visão e requisitos, como evolução futura.
 
-**Fonte de km e horas na entrega:** o MVP usa o Strava real, pelo conector compatível com a API v3 (modos proxy e cache, ver `integracao-strava.md`). Os testes e a demo sem internet usam o mock gerado do Swagger, porque a disciplina exige que a demo rode sem o Strava. Trocar a fonte é só mudar `STRAVA_API_BASE_URL`.
+**Fonte de km e horas na entrega:** todos entram com o Google e cada atleta escolhe a fonte dos seus pedais: lançamento **manual**, **API do Strava** com app próprio (o GearLog mostra o passo a passo de cadastro) ou **conector** compatível com a API v3 (modos proxy e cache, ver `integracao-strava.md` e o [ADR-006](adr/ADR-006-fontes-de-pedais.md)). Os testes e a demo sem internet usam o mock gerado do Swagger, porque a disciplina exige que a demo rode sem o Strava. Trocar a fonte é só mudar `STRAVA_API_BASE_URL`.
 
 **Segundo estágio:** o mercado de peças (Fase 2) e a oficina (Fase 3) estão descritos em [segundo-estagio.md](segundo-estagio.md), como evolução futura do produto.
 
@@ -30,7 +30,7 @@ O GearLog complementa o projeto pessoal **VeloUpgrade-Tracker** (planejamento de
 
 - Outros equipamentos (motos, calçados, etc.). O GearLog trata **somente bicicletas**.
 - Mercado de peças e oficina (Fases 2 e 3): ficam no [segundo estágio](segundo-estagio.md).
-- Homologação comercial com o Strava. Por ser projeto acadêmico, a integração usa apenas os dados da conta do autor. O processo de aprovação da API do Strava só será feito se o produto for profissionalizado.
+- Homologação comercial com o Strava. Por ser projeto acadêmico, cada atleta usa o próprio app do Strava ou o próprio conector. O processo de aprovação da API do Strava só será feito se o produto for profissionalizado.
 
 ## 5. Partes interessadas
 

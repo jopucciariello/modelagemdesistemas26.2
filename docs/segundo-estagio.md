@@ -70,6 +70,8 @@
 | RF26 | O sistema deve permitir que o atleta agende uma revisão em um horário disponível de uma oficina. | M |
 | RF27 | Quando o atleta agendar uma revisão, o sistema deve compartilhar com a oficina o histórico daquela bike. | M |
 | RF28 | Quando a oficina concluir um serviço, o sistema deve registrar o serviço e as peças trocadas no histórico da bike. | M |
+
+> Nota (13/11/2026, João): as oficinas trabalham com vários níveis de revisão. Na Fase 3, cada oficina cadastrada terá os seus níveis (o que cada um inclui), e a revisão já virá preenchida com o que será e o que foi feito. Na Fase 1, o atleta registra a revisão à mão, item a item (RF36).
 | RF29 | Se o atleta cancelar um agendamento com menos de 24 h de antecedência, então o sistema deve notificar a oficina imediatamente. | S |
 
 ## 4. Requisitos não funcionais

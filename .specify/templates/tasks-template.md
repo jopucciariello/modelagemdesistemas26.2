@@ -1,0 +1,1 @@
+- [ ] T-NN <verbo> <o quê> — <RF/RB/RNF> — #<issue>
