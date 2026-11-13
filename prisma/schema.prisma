@@ -108,6 +108,13 @@ enum MaintenanceEventType {
   MANUAL
 }
 
+// RF36: condition of an item as reported at a shop visit.
+enum ItemCondition {
+  GOOD
+  WATCH
+  REPLACE_SOON
+}
+
 // RF30: part category, maintained by the admin. RB14: wearsOnTrainer.
 model Category {
   id             String         @id @default(cuid())
@@ -216,6 +223,7 @@ model Bike {
   parts        Part[]
   rides        Ride[]
   events       MaintenanceEvent[]
+  visits       ServiceVisit[]
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @updatedAt
 
@@ -289,5 +297,21 @@ model MaintenanceEvent {
   type      MaintenanceEventType
   date      DateTime
   note      String
+  // RF36: set when the event is one item of a shop visit.
+  visitId   String?
+  visit     ServiceVisit?        @relation(fields: [visitId], references: [id], onDelete: Cascade)
+  condition ItemCondition?
   createdAt DateTime             @default(now())
+}
+
+// RF36: one visit to a shop (or home service) with several items done at once.
+model ServiceVisit {
+  id        String             @id @default(cuid())
+  bikeId    String
+  bike      Bike               @relation(fields: [bikeId], references: [id], onDelete: Cascade)
+  date      DateTime
+  shop      String?
+  note      String?
+  events    MaintenanceEvent[]
+  createdAt DateTime           @default(now())
 }

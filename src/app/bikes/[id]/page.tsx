@@ -1,7 +1,7 @@
 // RF01, RF02, RF05, RF07-RF12, RB13, RB16: one bike with its parts, wear and history.
 import Link from "next/link";
 import { Suspense } from "react";
-import { addManualMaintenance, linkSourceBike, replacePart, servicePlan, toggleArchiveBike, updateBike, updatePlan } from "@/app/actions/bikes";
+import { addManualMaintenance, linkSourceBike, recordShopVisit, replacePart, servicePlan, toggleArchiveBike, updateBike, updatePlan } from "@/app/actions/bikes";
 import { BikeFields } from "@/components/bike-fields";
 import { Flash, Nav, WearMeter, hours, interval, km } from "@/components/ui";
 import { prisma } from "@/lib/db";
@@ -11,6 +11,7 @@ import { requireUser } from "@/lib/guards";
 import { canResetPlan, componentLabel } from "@/lib/catalog/rules";
 import { listSourceBikes } from "@/lib/rides/sync";
 import { loadBikeDetail } from "@/lib/tracker";
+import { CONDITION_LABEL, FREE_ROWS, visitRows } from "@/lib/visit";
 
 const OK: Record<string, string> = {
   bike: "Bike salva.",
@@ -23,8 +24,10 @@ const OK: Record<string, string> = {
   revisao: "Revisão registrada: o contador desse plano recomeçou.",
   troca: "Troca registrada: a peça antiga foi para o histórico e a nova começou do zero.",
   manutencao: "Manutenção registrada no histórico.",
+  visita: "Revisão registrada: os itens foram para o histórico e os contadores zerados recomeçaram.",
 };
 const ERR: Record<string, string> = {
+  visita_vazia: "Informe a data e pelo menos um item da revisão.",
   bike_invalida: "Informe o nome e o tipo da bike.",
   gear_em_uso: "Essa bike da fonte já está associada a outra bike sua.",
   plano_invalido: "O plano precisa de um intervalo em km ou em horas.",
@@ -141,6 +144,60 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
         )}
       </section>
 
+      {!bike.archivedAt && (
+        <section className="card">
+          <details>
+            <summary><h2 style={{ display: "inline" }}>Revisão na oficina (vários itens)</h2></summary>
+            <p className="muted">Registre de uma vez tudo o que foi feito numa revisão e a condição de cada item. Deixe em branco o que não foi mexido.</p>
+            <form action={recordShopVisit}>
+              <input type="hidden" name="bikeId" value={bike.id} />
+              <div className="row">
+                <label>Data <input name="date" type="date" required defaultValue={today} /></label>
+                <label>Oficina <input name="shop" maxLength={80} placeholder="Ex.: Oficina do Zé" /></label>
+                <label>Observação geral <input name="note" maxLength={200} /></label>
+              </div>
+              <div className="table-wrap">
+                <table>
+                  <thead><tr><th>Item</th><th>O que foi feito</th><th>Condição</th><th>Detalhe</th></tr></thead>
+                  <tbody>
+                    {visitRows(parts.map((p) => ({ ...p, plans: p.planViews }))).map((r) => (
+                      <tr key={r.key}>
+                        <td>{r.label}</td>
+                        <td>
+                          <select name={`${r.key}_act`} defaultValue="">
+                            <option value="">—</option>
+                            <option value="check">Verificado / ajustado</option>
+                            {r.canReset && <option value="reset">{r.resetLabel}</option>}
+                            <option value="replace">Peça inteira trocada (mesmo modelo)</option>
+                          </select>
+                        </td>
+                        <td><ConditionSelect name={`${r.key}_cond`} /></td>
+                        <td><input name={`${r.key}_note`} maxLength={200} placeholder="Ex.: pastilha com 50%" /></td>
+                      </tr>
+                    ))}
+                    {Array.from({ length: FREE_ROWS }, (_, i) => (
+                      <tr key={`free_${i}`}>
+                        <td><input name={`free_${i}_label`} maxLength={80} placeholder="Outro item (ex.: movimento central)" /></td>
+                        <td>
+                          <select name={`free_${i}_act`} defaultValue="check">
+                            <option value="check">Verificado / ajustado</option>
+                            <option value="replace">Trocado</option>
+                          </select>
+                        </td>
+                        <td><ConditionSelect name={`free_${i}_cond`} /></td>
+                        <td><input name={`free_${i}_note`} maxLength={200} /></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="muted">Para trocar uma peça por outro modelo, use “Trocar a peça inteira” na lista de peças.</p>
+              <button className="button" type="submit">Registrar revisão</button>
+            </form>
+          </details>
+        </section>
+      )}
+
       <section className="card">
         <h2>Manutenção sem troca</h2>
         <form action={addManualMaintenance} className="row">
@@ -162,9 +219,16 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
         {events.length === 0 ? <p className="muted">Nada registrado ainda.</p> : (
           <div className="table-wrap">
             <table>
-              <thead><tr><th>Data</th><th>Tipo</th><th>Descrição</th></tr></thead>
+              <thead><tr><th>Data</th><th>Tipo</th><th>Descrição</th><th>Condição</th></tr></thead>
               <tbody>
-                {events.map((e) => <tr key={e.id}><td>{formatDay(e.date)}</td><td>{EVENT_LABEL[e.type]}</td><td>{e.note}</td></tr>)}
+                {events.map((e) => (
+                  <tr key={e.id}>
+                    <td>{formatDay(e.date)}</td>
+                    <td>{EVENT_LABEL[e.type]}</td>
+                    <td>{e.note}{e.visit?.shop ? ` · ${e.visit.shop}` : ""}</td>
+                    <td>{e.condition ? CONDITION_LABEL[e.condition] : ""}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -213,5 +277,14 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
         </form>
       </section>
     </>
+  );
+}
+
+function ConditionSelect({ name }: { name: string }) {
+  return (
+    <select name={name} defaultValue="">
+      <option value="">—</option>
+      {Object.entries(CONDITION_LABEL).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
+    </select>
   );
 }

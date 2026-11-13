@@ -1,11 +1,12 @@
 "use server";
-// RF01, RF02, RF03, RF05, RF10, RF12, RF35, RB01, RB05, RB13, RB15, RB16, RB18: the athlete's bikes and parts.
+// RF01, RF02, RF03, RF05, RF10, RF12, RF35, RF36, RB01, RB05, RB13, RB15, RB16, RB18: the athlete's bikes and parts.
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { parseLocalDay } from "@/lib/dates";
 import { bikeType, optInterval, optNumber, optYear, readPlans, text } from "@/lib/forms";
 import { requireUser } from "@/lib/guards";
 import { bikeTypeFromCategory, canResetPlan, plansFor } from "@/lib/catalog/rules";
+import { readVisitItems, visitItemNote, visitRows } from "@/lib/visit";
 
 /** Loads a bike only if it belongs to the user; otherwise back to the list. */
 async function ownBike(userId: string, bikeId: string) {
@@ -241,4 +242,59 @@ export async function addManualMaintenance(form: FormData) {
   const part = partId ? await prisma.part.findFirst({ where: { id: partId, bikeId: bike.id } }) : null;
   await prisma.maintenanceEvent.create({ data: { bikeId: bike.id, partId: part?.id ?? null, type: "MANUAL", date: date!, note } });
   redirect(`/bikes/${bike.id}?ok=manutencao`);
+}
+
+/**
+ * RF36: a visit to the shop with several items at once. Each item says what was done (checked,
+ * serviced/replaced item, or whole part replaced) and the condition the mechanic reported.
+ */
+export async function recordShopVisit(form: FormData) {
+  const user = await requireUser();
+  const bike = await ownBike(user.id, text(form, "bikeId", 40));
+  const date = parseLocalDay(text(form, "date", 10));
+  const parts = await prisma.part.findMany({
+    where: { bikeId: bike.id, removedAt: null },
+    include: { plans: true, component: { include: { category: true } } },
+  });
+  const rows = visitRows(parts);
+  const items = readVisitItems(form, rows);
+  if (!date || items.length === 0) redirect(`/bikes/${bike.id}?erro=visita_vazia`);
+  const partById = new Map(parts.map((p) => [p.id, p]));
+  const rowByPlan = new Map(rows.filter((r) => r.planId).map((r) => [r.planId!, r]));
+  for (const item of items) {
+    const part = item.partId ? partById.get(item.partId) : null;
+    if (part && item.action !== "check" && date! < part.installedAt) redirect(`/bikes/${bike.id}?erro=data`);
+    if (item.action === "reset" && (!item.planId || !rowByPlan.get(item.planId)?.canReset)) redirect(`/bikes/${bike.id}?erro=plano_invalido`);
+  }
+  const shop = text(form, "shop", 80) || null;
+  await prisma.$transaction(async (tx) => {
+    const visit = await tx.serviceVisit.create({ data: { bikeId: bike.id, date: date!, shop, note: text(form, "note", 200) || null } });
+    const replaced = new Set<string>();
+    for (const item of items) {
+      const part = item.partId ? partById.get(item.partId)! : null;
+      const base = { bikeId: bike.id, partId: part?.id ?? null, date: date!, visitId: visit.id, condition: item.condition };
+      if (item.action === "replace" && part) {
+        if (replaced.has(part.id)) continue;
+        replaced.add(part.id);
+        await tx.part.update({ where: { id: part.id }, data: { removedAt: date } });
+        await tx.part.create({
+          data: {
+            bikeId: bike.id,
+            componentId: part.componentId,
+            position: part.position,
+            installedAt: date!,
+            plans: { create: part.plans.map((p) => ({ name: p.name, intervalKm: p.intervalKm, intervalHours: p.intervalHours, warnKm: p.warnKm, warnHours: p.warnHours, action: p.action })) },
+          },
+        });
+        await tx.maintenanceEvent.create({ data: { ...base, type: "REPLACEMENT", note: visitItemNote({ ...item, label: part.position ?? part.component.category.name }, "peça trocada") } });
+      } else if (item.action === "reset" && part && !replaced.has(part.id)) {
+        const plan = part.plans.find((p) => p.id === item.planId)!;
+        await tx.maintenancePlan.update({ where: { id: plan.id }, data: { lastServiceAt: date } });
+        await tx.maintenanceEvent.create({ data: { ...base, type: plan.action === "SERVICE" ? "SERVICE" : "REPLACEMENT", note: visitItemNote(item, plan.action === "SERVICE" ? "revisado" : "trocado") } });
+      } else if (!part || !replaced.has(part.id)) {
+        await tx.maintenanceEvent.create({ data: { ...base, type: "MANUAL", note: visitItemNote(item, item.action === "replace" ? "trocado" : "verificado") } });
+      }
+    }
+  });
+  redirect(`/bikes/${bike.id}?ok=visita`);
 }
