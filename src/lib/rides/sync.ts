@@ -3,7 +3,7 @@ import "server-only";
 import { prisma } from "@/lib/db";
 import { decrypt, encrypt } from "@/lib/crypto";
 import { stravaApiBaseUrl, tokenEncryptionKey } from "@/lib/env";
-import { ConnectorError, connectorGet } from "@/lib/connector/client";
+import { ConnectorError, connectorActivitiesPath, connectorGet, type ConnectorPath } from "@/lib/connector/client";
 import { getStravaOAuthConfig } from "@/lib/strava/link-account";
 import { needsRefresh, refreshAccessToken } from "@/lib/strava/oauth";
 import { parseConnectorActivities, parseSourceBikes, parseStravaActivities, type RideInput, type SourceBike } from "@/lib/rides/map";
@@ -57,7 +57,7 @@ async function stravaGet(token: string, path: string): Promise<unknown> {
   }
 }
 
-async function connectorCall(userId: string, path: "/v1/gearlog/bikes" | "/v1/gearlog/activities"): Promise<unknown> {
+async function connectorCall(userId: string, path: ConnectorPath): Promise<unknown> {
   const conn = await prisma.connectorConnection.findUnique({ where: { userId } });
   if (!conn) throw new SyncError("not_linked");
   try {
@@ -68,7 +68,9 @@ async function connectorCall(userId: string, path: "/v1/gearlog/bikes" | "/v1/ge
 }
 
 async function fetchRides(userId: string, source: "STRAVA" | "CONNECTOR"): Promise<RideInput[]> {
-  if (source === "CONNECTOR") return parseConnectorActivities(await connectorCall(userId, "/v1/gearlog/activities"));
+  // The connector reads from its own store (no Strava quota), so every sync asks for the whole
+  // history: rides from before a bike was linked are imported too, and upserts never duplicate.
+  if (source === "CONNECTOR") return parseConnectorActivities(await connectorCall(userId, connectorActivitiesPath()));
   const token = await stravaAccessToken(userId);
   // Incremental: from one day before the newest imported ride (edits of recent rides are picked up).
   const newest = await prisma.ride.findFirst({ where: { userId, source: "STRAVA" }, orderBy: { startDate: "desc" } });
