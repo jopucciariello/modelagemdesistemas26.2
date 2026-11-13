@@ -10,8 +10,6 @@ on:
   push:
     branches:
       - main
-      # Temporary: first deploy before PR #35 is merged. Remove after the merge.
-      - feat/RF04-baseline
   workflow_dispatch:
 
 concurrency:
@@ -31,6 +29,20 @@ jobs:
       INFISICAL_PROJECT_SLUG: ${{ vars.INFISICAL_PROJECT_SLUG }}
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Tests before deploy (docs/review/seguranca.md, S2)
+        env:
+          DATABASE_URL: file:./ci.db
+        run: |
+          npm ci
+          npx tsc --noEmit
+          npm run lint
+          npm test
 
       - name: Check configuration
         id: check
