@@ -68,7 +68,7 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 - [ ] T-49 Sugerir anúncios no alerta de troca próxima — RF23 — #28
 
 ## SPEC-010 — Lojistas, selo e moderação
-- [ ] T-50 Admin cadastra lojista, concede e revoga selo — RF18, RB06 — #23
-- [ ] T-51 Selo nos anúncios e na vitrine do lojista — RF19 — #24
-- [ ] T-52 Admin remove anúncio com motivo — RF24 — #29
+- [x] T-50 Admin cadastra lojista, concede e revoga selo — RF18, RB06 — #23
+- [x] T-51 Selo nos anúncios e na vitrine do lojista — RF19 — #24
+- [x] T-52 Admin remove anúncio com motivo — RF24 — #29
 
