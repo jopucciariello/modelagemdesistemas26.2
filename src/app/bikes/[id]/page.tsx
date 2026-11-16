@@ -123,6 +123,7 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
                   <div key={plan.id} className="row">
                     <span>{plan.name}: {interval(plan)} · usou {plan.intervalKm ? km(plan.wear.km) : ""}{plan.intervalKm && plan.intervalHours ? " e " : ""}{plan.intervalHours ? hours(plan.wear.hours) : ""}{plan.lastServiceAt ? ` desde ${formatDay(plan.lastServiceAt)}` : ""}</span>
                     <WearMeter wear={plan.wear} />
+                    {plan.action === "REPLACE" && plan.wear.status !== "ok" && <Link className="muted" href={`/mercado?categoria=${part.component.categoryId}`}>Ver anúncios compatíveis</Link>}
                     <details>
                       <summary className="muted">ações</summary>
                       {canResetPlan(plan.action, part.planViews.length) && (
