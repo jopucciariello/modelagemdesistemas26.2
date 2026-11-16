@@ -1,4 +1,5 @@
 // RF16, RB20: one listing; the seller's e-mail is shown only to signed-in users (INV-043).
+import { SellerBadge } from "@/components/seller-badge";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -52,7 +53,7 @@ async function Listing({ params, searchParams }: PageProps<"/mercado/[id]">) {
       </section>
       <section className="card">
         <h2>Vendedor</h2>
-        <p>{l.seller.merchant ? l.seller.merchant.name : "Atleta"}</p>
+        <p>{l.seller.merchant ? <SellerBadge merchant={l.seller.merchant} /> : "Atleta"}</p>
         {/* RB20: contact only for signed-in users; no payment inside GearLog. */}
         <p>Contato: <a href={`mailto:${l.seller.email}`}>{l.seller.email}</a></p>
         <p className="muted">O GearLog não processa pagamento nem intermedeia a negociação.</p>

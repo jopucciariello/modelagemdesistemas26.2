@@ -1,4 +1,5 @@
 // RF17, INV-041: showcase of ACTIVE listings with filters.
+import { SellerBadge } from "@/components/seller-badge";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Nav } from "@/components/ui";
@@ -75,7 +76,7 @@ async function Market({ searchParams }: { searchParams: PageProps<"/mercado">["s
                 <span><strong>{formatBRL(l.priceCents)}</strong></span>
                 <span className="muted">
                   {l.category.name} · {l.condition === "NEW" ? "Nova" : `Usada${l.usedKm !== null ? `, ${l.usedKm.toLocaleString("pt-BR")} km` : ""}`}
-                  {l.seller.merchant ? ` · ${l.seller.merchant.name}` : " · Atleta"}
+                  {" · "}{l.seller.merchant ? <SellerBadge merchant={l.seller.merchant} /> : "Atleta"}
                 </span>
               </li>
             ))}

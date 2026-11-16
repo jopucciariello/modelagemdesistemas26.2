@@ -161,7 +161,9 @@ Atualizado em 12/11/2026. Código em `src/`, testes em `tests/unit/`.
 | RF35 | Feito | `createBike`, `src/app/bikes/page.tsx` | `catalog.test.ts` |
 | RF36 | Feito | `recordShopVisit`, `src/lib/visit.ts`, página da bike | `visit.test.ts` |
 | RF31 | Pendente | — | — |
-| RF16–RF24 | Em andamento (Fase 2, ver `tasks.md` SPEC-008 a SPEC-010) | — | — |
+| RF16, RF17 | Feito (Fase 2) | `src/app/mercado/`, `src/app/actions/market.ts`, `src/lib/market.ts` | `market.test.ts` |
+| RF18, RF19, RF24 | Feito (Fase 2) | `src/app/actions/merchants.ts`, `src/components/admin-market.tsx`, `src/components/seller-badge.tsx` | `merchants.test.ts` |
+| RF20, RF21, RF22, RF23 | Feito (Fase 2); funções com banco sem teste automatizado | `src/app/sonhos/`, `src/app/notificacoes/`, `src/lib/dreams.ts`, `createListing` | `dreams.test.ts` (`matchesDream`) |
 | RF32, RF33, RF34 | Feito | `src/app/fonte/`, `src/lib/strava/`, `src/lib/connector/` | `strava-oauth.test.ts`, `activity-sources.test.ts` |
 | RB02, RB03, RB04, RB11–RB14, RB16 | Feito | `src/lib/wear.ts` | `wear.test.ts` |
 | RB18 | Feito | `servicePlan`, `canResetPlan` | `catalog.test.ts` |

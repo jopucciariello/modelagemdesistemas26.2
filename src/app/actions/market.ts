@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { optNumber, text } from "@/lib/forms";
+import { notifyDreamMatches } from "@/lib/dreams";
 import { requireUser } from "@/lib/guards";
 import { joinPhotos, parsePriceToCents, validateListing } from "@/lib/market";
 
@@ -51,6 +52,8 @@ export async function createListing(form: FormData) {
   const user = await requireUser();
   const data = await checked(form, "/mercado/novo");
   const listing = await prisma.listing.create({ data: { ...data, sellerId: user.id } });
+  // RF21: tell the owners of matching dreams; a notification failure must not lose the listing.
+  await notifyDreamMatches(listing.id).catch((e) => console.error("notifyDreamMatches failed", e));
   redirect(`/mercado/${listing.id}?ok=publicado`);
 }
 
