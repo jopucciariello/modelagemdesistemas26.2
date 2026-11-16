@@ -50,4 +50,4 @@ Regras de negócio em módulos puros testados sem banco; integrações com Googl
 | Limite de leituras do Strava | Cada atleta usa o próprio app ou o conector (ADR-006); paginação limitada |
 | Perda do volume do SQLite | Backup diário do volume (tarefa T-21) |
 | Regras de desgaste simplificadas | Valores são recomendações; recalibração pela medição real (issue #38) |
-| Prazo (26/11) | Fase 1 primeiro; Fases 2 e 3 só documentadas |
+| Prazo (26/11) | Fase 1 primeiro; Fases 2 e 3 são tentativa (decisão de 16/11/2026) e não podem quebrar a Fase 1 |

@@ -50,3 +50,12 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 - [x] T-32 Documentação da disciplina (spec, plan, tasks, UC, UML, specs, review) — RNF09 — #3
 - [ ] T-21 Backup diário do volume do SQLite — RNF06 — #3
 - [ ] T-33 Regras de desgaste por fator de uso e recalibração pela medição — RF07 — #38
+
+## Fase 3 — Oficina (tentativa a partir de 16/11/2026; só depois de a Fase 1 estar funcional)
+- [ ] T-40 Migração e entidades `Workshop`, `WorkshopService`, `WorkshopSlot`, `Appointment`, `WorkshopNotice` — RF25 — #5
+- [ ] T-41 Admin cadastra oficina com o e-mail do responsável — RF25, RB19 — #5
+- [ ] T-42 Área `/oficina`: perfil, serviços com itens e horários — RF25 — #5
+- [ ] T-43 Atleta lista oficinas e agenda com bike e serviço — RF26, RB20 — #5
+- [ ] T-44 Cancelar agendamento e avisar a oficina (urgente < 24 h) — RF29 — #5
+- [ ] T-45 Regra `canWorkshopAccessBike` e página do atendimento só leitura — RF27, RNF03, RB09 — #5
+- [ ] T-46 Extrair `recordVisit` e concluir o serviço no histórico da bike — RF28, RF36 — #5

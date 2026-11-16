@@ -73,6 +73,7 @@ Mapa ordenado: [mapa-specs.md](docs/mapa-specs.md). Texto com as 14 seções e i
 | SPEC-005 | Desgaste, alertas e painel | Implementada, aguarda aprovação |
 | SPEC-006 | Manutenção e histórico | Implementada, aguarda aprovação |
 | SPEC-007 | Pedido de modelo novo | A implementar |
+| SPEC-008 a SPEC-010 | Fase 3: oficinas, agendamento, histórico compartilhado | Em implementação (tentativa, 16/11/2026) |
 
 ## 8. Decisões e questões em aberto
 
