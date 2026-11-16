@@ -55,9 +55,9 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 
 ## SPEC-008 — Anúncios e vitrine
 - [x] T-40 Migração e modelos `Merchant`, `Listing`, `Dream`, `Notification` — ADR-008 — #4
-- [ ] T-41 Publicar, editar, marcar como vendido e encerrar anúncio próprio — RF16, RB07, RB19 — #21
-- [ ] T-42 Vitrine com filtros de família, condição, preço e tipo de vendedor — RF17 — #22
-- [ ] T-43 Página do anúncio com contato do vendedor para usuário logado — RB20 — #22
+- [x] T-41 Publicar, editar, marcar como vendido e encerrar anúncio próprio — RF16, RB07, RB19 — #21
+- [x] T-42 Vitrine com filtros de família, condição, preço e tipo de vendedor — RF17 — #22
+- [x] T-43 Página do anúncio com contato do vendedor para usuário logado — RB20 — #22
 
 ## SPEC-009 — Sonhos e notificações
 - [ ] T-44 CRUD de sonhos — RF20 — #25
