@@ -17,8 +17,9 @@ Requisitos: RF04, RF32–RF34, RNF01, RNF05. App submetido: **app central do Gea
 | Sem GPS, FC, potência etc. | Atende (só data, esporte, distância, tempo, bike) |
 | Política de privacidade pública | Feita em `/privacidade` (este PR) |
 | "Compatible with Strava" e aviso de não afiliação | Rodapé (este PR); usar o logo oficial é pendência abaixo |
-| "View on Strava" nos pedais importados | Pendente: a lista de pedais ainda não mostra link (`Ride.externalId` existe) |
-| Botão "Connect with Strava" oficial | Pendente: baixar o ativo em developers.strava.com/guidelines e usar na página Fonte |
+| "View on Strava" nos pedais importados | Feito na lista de pedais (fonte Strava) |
+| Botão "Connect with Strava" oficial | **Pendente (você):** o download dos assets é bloqueado no meu ambiente. Baixe os ZIPs em developers.strava.com/guidelines, coloque o botão em `public/strava/` e me avise para trocar o botão de texto atual |
+| Desconectar e revogar | Feito: `POST /fonte/strava/desconectar` chama `oauth/revoke` e apaga os tokens |
 | Token no cliente/conector de terceiro | O conector é do próprio dono do app; ver OPEN-22 |
 | Retenção/cache de dados | Os pedais ficam no banco (ADR-007). O Agreement não fixa prazo; resumos de terceiros citam 7 dias. **Confirmar** antes de submeter |
 | Uso em IA | Nenhum |
@@ -46,7 +47,7 @@ O Strava permite 1 app por conta e a sua conta já tem o app do strava-connector
 
 ## 5. Plano de código (PRs pequenos, depois do app central existir)
 
-1. Credenciais do app central por variáveis (`STRAVA_CLIENT_ID`/`STRAVA_CLIENT_SECRET` no Infisical) e login Strava padrão na página Fonte (RF04, RF32).
-2. Botão oficial "Connect with Strava", logo "Compatible with Strava" e link "View on Strava" nos pedais importados.
-3. Desconectar chama `POST /oauth/revoke` e apaga tokens (RNF01).
-4. Fonte "conector" marcada como temporária; RF33 conforme OPEN-23.
+1. Feito: credenciais do app central por `STRAVA_CLIENT_ID`/`STRAVA_CLIENT_SECRET` (Infisical); a opção "Conectar com o Strava" aparece na página Fonte quando ambas existem (RF04, RF32).
+2. Parcial: link "View on Strava" feito; botão oficial "Connect with Strava", logo "Compatible with Strava" e link "View on Strava" nos pedais importados.
+3. Feito: desconectar revoga e apaga tokens (RNF01).
+4. Feito: conector marcado como temporário e RF33 atrás de "Usar meu próprio app (avançado)" (OPEN-23 proposta).
