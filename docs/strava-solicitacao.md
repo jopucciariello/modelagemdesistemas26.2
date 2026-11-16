@@ -1,6 +1,6 @@
 # Solicitação ao Strava — materiais e conformidade
 
-Requisitos: RF04, RF32–RF34, RNF01, RNF05. App submetido: **app central do GearLog**, caminho principal com dados direto do Strava. O strava-connector é só ponte temporária até a aprovação definitiva (OPEN-20, 16/11/2026). Papel do app por atleta: OPEN-21.
+Requisitos: RF04, RF32–RF34, RNF01, RNF05. App submetido: **app central do GearLog**, caminho principal com dados direto do Strava. O strava-connector é só ponte temporária até a aprovação definitiva (OPEN-22, 16/11/2026). Papel do app por atleta: OPEN-23.
 
 ## 1. O que o Strava exige (fontes oficiais, consultadas em 16/11/2026)
 
@@ -19,7 +19,7 @@ Requisitos: RF04, RF32–RF34, RNF01, RNF05. App submetido: **app central do Gea
 | "Compatible with Strava" e aviso de não afiliação | Rodapé (este PR); usar o logo oficial é pendência abaixo |
 | "View on Strava" nos pedais importados | Pendente: a lista de pedais ainda não mostra link (`Ride.externalId` existe) |
 | Botão "Connect with Strava" oficial | Pendente: baixar o ativo em developers.strava.com/guidelines e usar na página Fonte |
-| Token no cliente/conector de terceiro | O conector é do próprio dono do app; ver OPEN-20 |
+| Token no cliente/conector de terceiro | O conector é do próprio dono do app; ver OPEN-22 |
 | Retenção/cache de dados | Os pedais ficam no banco (ADR-007). O Agreement não fixa prazo; resumos de terceiros citam 7 dias. **Confirmar** antes de submeter |
 | Uso em IA | Nenhum |
 
@@ -49,4 +49,4 @@ O Strava permite 1 app por conta e a sua conta já tem o app do strava-connector
 1. Credenciais do app central por variáveis (`STRAVA_CLIENT_ID`/`STRAVA_CLIENT_SECRET` no Infisical) e login Strava padrão na página Fonte (RF04, RF32).
 2. Botão oficial "Connect with Strava", logo "Compatible with Strava" e link "View on Strava" nos pedais importados.
 3. Desconectar chama `POST /oauth/revoke` e apaga tokens (RNF01).
-4. Fonte "conector" marcada como temporária; RF33 conforme OPEN-21.
+4. Fonte "conector" marcada como temporária; RF33 conforme OPEN-23.
