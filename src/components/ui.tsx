@@ -10,6 +10,8 @@ export function Nav({ isAdmin }: { isAdmin?: boolean }) {
       <Link href="/pedais">Pedais</Link>
       <Link href="/fonte">Fonte</Link>
       <Link href="/mercado">Mercado</Link>
+      <Link href="/sonhos">Sonhos</Link>
+      <Link href="/notificacoes">Avisos</Link>
       {isAdmin && <Link href="/admin">Catálogo</Link>}
     </nav>
   );

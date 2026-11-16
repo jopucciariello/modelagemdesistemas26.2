@@ -60,12 +60,12 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 - [x] T-43 Página do anúncio com contato do vendedor para usuário logado — RB20 — #22
 
 ## SPEC-009 — Sonhos e notificações
-- [ ] T-44 CRUD de sonhos — RF20 — #25
-- [ ] T-45 Função pura de compatibilidade sonho × anúncio, com teste — RF21 — #26
-- [ ] T-46 Notificar o dono do sonho ao publicar anúncio compatível — RF21 — #26
-- [ ] T-47 Sino de notificações dentro do app, marcar como lida — RF21, OPEN-34 — #26
-- [ ] T-48 Notificar lojistas verificados da família ao cadastrar sonho — RF22 — #27
-- [ ] T-49 Sugerir anúncios no alerta de troca próxima — RF23 — #28
+- [x] T-44 CRUD de sonhos — RF20 — #25
+- [x] T-45 Função pura de compatibilidade sonho × anúncio, com teste — RF21 — #26
+- [x] T-46 Notificar o dono do sonho ao publicar anúncio compatível — RF21 — #26
+- [x] T-47 Sino de notificações dentro do app, marcar como lida — RF21, OPEN-34 — #26
+- [x] T-48 Notificar lojistas verificados da família ao cadastrar sonho — RF22 — #27
+- [x] T-49 Sugerir anúncios no alerta de troca próxima — RF23 — #28
 
 ## SPEC-010 — Lojistas, selo e moderação
 - [ ] T-50 Admin cadastra lojista, concede e revoga selo — RF18, RB06 — #23
