@@ -51,15 +51,15 @@ Prioridade (MoSCoW): **M** = Must, **S** = Should, **C** = Could.
 
 ### Fase 3 — Oficina (implementação iniciada em 16/11/2026)
 
-> Decisão de João em 16/11/2026: tentar entregar as Fases 2 e 3. A Fase 1 continua sendo a entrega garantida e tem prioridade. Os requisitos abaixo vêm de [segundo-estagio.md](segundo-estagio.md); as decisões de interpretação estão marcadas **[PROPOSTO]** e listadas em OPEN-22 a OPEN-26.
+> Decisão de João em 16/11/2026: tentar entregar as Fases 2 e 3. A Fase 1 continua sendo a entrega garantida e tem prioridade. Os requisitos abaixo vêm de [segundo-estagio.md](segundo-estagio.md); as decisões de interpretação estão marcadas **[PROPOSTO]** e listadas em OPEN-40 a OPEN-44.
 
 | ID | Requisito (EARS) | Prio |
 |---|---|:-:|
-| RF25 | O sistema deve permitir que mecânicos/oficinas cadastrem perfil (nome, descrição, endereço, telefone), serviços oferecidos (com o que cada nível de revisão inclui) e horários disponíveis. O administrador cadastra a oficina com o e-mail Google do responsável, e só esse responsável edita a oficina. **[PROPOSTO]** (OPEN-22, OPEN-23) | M |
+| RF25 | O sistema deve permitir que mecânicos/oficinas cadastrem perfil (nome, descrição, endereço, telefone), serviços oferecidos (com o que cada nível de revisão inclui) e horários disponíveis. O administrador cadastra a oficina com o e-mail Google do responsável, e só esse responsável edita a oficina. **[PROPOSTO]** (OPEN-40, OPEN-41) | M |
 | RF26 | O sistema deve permitir que o atleta agende uma revisão, para uma das suas bikes, em um horário livre de uma oficina ativa, escolhendo o serviço. Um horário só pode ter um agendamento ativo. | M |
-| RF27 | Quando o atleta agendar uma revisão, o sistema deve compartilhar com a oficina o histórico daquela bike (dados da bike, peças instaladas e histórico de manutenção), e avisar o atleta disso antes de confirmar. **[PROPOSTO]** (OPEN-24) | M |
-| RF28 | Quando a oficina concluir um serviço, o sistema deve registrar o serviço e as peças trocadas no histórico da bike, como uma visita à oficina (RF36), já com os itens do nível de revisão contratado. **[PROPOSTO]** (OPEN-26) | M |
-| RF29 | Se o atleta cancelar um agendamento com menos de 24 h de antecedência, então o sistema deve notificar a oficina imediatamente (aviso dentro do app, OPEN-25). Cancelamentos com mais antecedência também liberam o horário e avisam a oficina, sem destaque de urgência. **[PROPOSTO]** | S |
+| RF27 | Quando o atleta agendar uma revisão, o sistema deve compartilhar com a oficina o histórico daquela bike (dados da bike, peças instaladas e histórico de manutenção), e avisar o atleta disso antes de confirmar. **[PROPOSTO]** (OPEN-42) | M |
+| RF28 | Quando a oficina concluir um serviço, o sistema deve registrar o serviço e as peças trocadas no histórico da bike, como uma visita à oficina (RF36), já com os itens do nível de revisão contratado. **[PROPOSTO]** (OPEN-44) | M |
+| RF29 | Se o atleta cancelar um agendamento com menos de 24 h de antecedência, então o sistema deve notificar a oficina imediatamente (aviso dentro do app, OPEN-43). Cancelamentos com mais antecedência também liberam o horário e avisam a oficina, sem destaque de urgência. **[PROPOSTO]** | S |
 
 ---
 
@@ -93,8 +93,8 @@ Os RNFs também seguem o padrão EARS.
 | RB06–RB07 | *Movidas para o [segundo estágio](segundo-estagio.md).* |
 | RB08 | Cada atleta usa o próprio app do Strava (RF33) ou o próprio conector (RF34), então o GearLog não depende de um app único do Strava nem de homologação comercial. |
 | RB09 | Uma oficina só acessa o histórico de bikes com agendamento ativo ou concluído com ela. Agendamento cancelado encerra o acesso. *(Fase 3, 16/11/2026.)* |
-| RB19 | Só o responsável pela oficina (o e-mail Google cadastrado pelo administrador) edita o perfil, os serviços e os horários dela e conclui os atendimentos dela. A permissão é conferida a cada requisição, como na RB17. **[PROPOSTO]** (OPEN-22) |
-| RB20 | Um horário de oficina tem no máximo um agendamento ativo (agendado ou concluído); só horários futuros podem ser agendados. |
+| RB21 | Só o responsável pela oficina (o e-mail Google cadastrado pelo administrador) edita o perfil, os serviços e os horários dela e conclui os atendimentos dela. A permissão é conferida a cada requisição, como na RB17. **[PROPOSTO]** (OPEN-40) |
+| RB22 | Um horário de oficina tem no máximo um agendamento ativo (agendado ou concluído); só horários futuros podem ser agendados. |
 | RB10 | Cada categoria de peça define sua métrica de desgaste: km, horas ou ambas. Peças de suspensão (garfo, amortecedor) e canote retrátil são medidas por horas de uso. |
 | RB11 | Quando a peça tiver vida útil em km e em horas, vale o critério que for atingido primeiro (maior percentual). |
 | RB12 | Horas de uso = tempo em movimento da atividade (`moving_time`), não o tempo total decorrido. |
@@ -155,7 +155,7 @@ Atualizado em 12/11/2026. Código em `src/`, testes em `tests/unit/`.
 | RF36 | Feito | `recordShopVisit`, `src/lib/visit.ts`, página da bike | `visit.test.ts` |
 | RF31 | Pendente | — | — |
 | RF32, RF33, RF34 | Feito | `src/app/fonte/`, `src/lib/strava/`, `src/lib/connector/` | `strava-oauth.test.ts`, `activity-sources.test.ts` |
-| RF25–RF29 | Fase 3, ver as linhas abaixo | `src/app/oficina/`, `src/app/oficinas/`, `src/app/agendamentos/`, `src/app/actions/workshops.ts`, `src/lib/workshop.ts` | `workshop.test.ts` |
+| RF25–RF29, RNF03, RB09 | Feito (16/11/2026, aguarda aprovação dos [PROPOSTO]) | `src/app/oficina/`, `src/app/oficinas/`, `src/app/agendamentos/`, `src/app/actions/workshops.ts`, `src/lib/workshop.ts` | `workshop.test.ts` |
 | RB02, RB03, RB04, RB11–RB14, RB16 | Feito | `src/lib/wear.ts` | `wear.test.ts` |
 | RB18 | Feito | `servicePlan`, `canResetPlan` | `catalog.test.ts` |
 | RB17 | Feito | `src/lib/session.ts` (`getCurrentAdmin`) | `google-admin-login.test.ts` |

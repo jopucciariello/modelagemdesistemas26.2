@@ -38,11 +38,12 @@ model User {
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 
-  bikes     Bike[]
-  rides     Ride[]
-  strava    StravaConnection?
-  connector ConnectorConnection?
-  sessions  Session[]
+  bikes        Bike[]
+  rides        Ride[]
+  strava       StravaConnection?
+  connector    ConnectorConnection?
+  sessions     Session[]
+  appointments Appointment[]
 }
 
 // RF33, RNF01: the athlete's own Strava app (ADR-006). The client secret and the tokens are
@@ -224,6 +225,7 @@ model Bike {
   rides        Ride[]
   events       MaintenanceEvent[]
   visits       ServiceVisit[]
+  appointments Appointment[]
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @updatedAt
 
@@ -306,12 +308,99 @@ model MaintenanceEvent {
 
 // RF36: one visit to a shop (or home service) with several items done at once.
 model ServiceVisit {
-  id        String             @id @default(cuid())
-  bikeId    String
-  bike      Bike               @relation(fields: [bikeId], references: [id], onDelete: Cascade)
-  date      DateTime
-  shop      String?
-  note      String?
-  events    MaintenanceEvent[]
-  createdAt DateTime           @default(now())
+  id          String             @id @default(cuid())
+  bikeId      String
+  bike        Bike               @relation(fields: [bikeId], references: [id], onDelete: Cascade)
+  date        DateTime
+  shop        String?
+  note        String?
+  events      MaintenanceEvent[]
+  appointment Appointment?
+  createdAt   DateTime           @default(now())
+}
+
+// RF26, RF28: lifecycle of an appointment.
+enum AppointmentStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+// RF25, RB21: a workshop registered by the admin; the owner (Google e-mail) edits it.
+model Workshop {
+  id           String            @id @default(cuid())
+  name         String
+  ownerEmail   String            @unique
+  description  String?
+  address      String?
+  phone        String?
+  active       Boolean           @default(true)
+  services     WorkshopService[]
+  slots        WorkshopSlot[]
+  appointments Appointment[]
+  notices      WorkshopNotice[]
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+}
+
+// RF25, OPEN-44: a service/revision level; `includes` holds one included item per line.
+model WorkshopService {
+  id           String        @id @default(cuid())
+  workshopId   String
+  workshop     Workshop      @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  name         String
+  description  String?
+  includes     String        @default("")
+  active       Boolean       @default(true)
+  appointments Appointment[]
+}
+
+// RF25, RB22, OPEN-41: an available time (UTC) offered by the workshop.
+model WorkshopSlot {
+  id           String        @id @default(cuid())
+  workshopId   String
+  workshop     Workshop      @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  startsAt     DateTime
+  appointments Appointment[]
+
+  @@unique([workshopId, startsAt])
+}
+
+// RF26, RF27, RF28, RB09: booking = the athlete's authorization to share the bike history.
+model Appointment {
+  id          String            @id @default(cuid())
+  workshopId  String
+  workshop    Workshop          @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  slotId      String
+  slot        WorkshopSlot      @relation(fields: [slotId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bikeId      String
+  bike        Bike              @relation(fields: [bikeId], references: [id], onDelete: Cascade)
+  serviceId   String?
+  service     WorkshopService?  @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  status      AppointmentStatus @default(SCHEDULED)
+  cancelledAt DateTime?
+  completedAt DateTime?
+  // RF28: the visit written to the bike history when the workshop concludes.
+  visitId     String?           @unique
+  visit       ServiceVisit?     @relation(fields: [visitId], references: [id], onDelete: SetNull)
+  notices     WorkshopNotice[]
+  createdAt   DateTime          @default(now())
+
+  @@index([workshopId, status])
+  @@index([userId])
+}
+
+// RF29, OPEN-43: in-app notice for the workshop (urgent when cancelled with less than 24 h).
+model WorkshopNotice {
+  id            String       @id @default(cuid())
+  workshopId    String
+  workshop      Workshop     @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  appointmentId String?
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id], onDelete: SetNull)
+  message       String
+  urgent        Boolean      @default(false)
+  readAt        DateTime?
+  createdAt     DateTime     @default(now())
 }

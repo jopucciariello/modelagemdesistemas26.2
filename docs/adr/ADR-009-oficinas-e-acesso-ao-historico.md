@@ -1,10 +1,10 @@
-# ADR-008 — Oficinas: acesso pelo e-mail Google e histórico compartilhado pelo agendamento
+# ADR-009 — Oficinas: acesso pelo e-mail Google e histórico compartilhado pelo agendamento
 
 - **Status:** Proposto (aguarda aprovação de João)
 - **Data:** 16/11/2026
 - **Decisor:** João Pucciariello
-- **Resolve:** OPEN-22, OPEN-24, OPEN-25 (propostas)
-- **Requisitos relacionados:** RF25–RF29, RNF03, RB09, RB19, RB20
+- **Resolve:** OPEN-40, OPEN-42, OPEN-43 (propostas)
+- **Requisitos relacionados:** RF25–RF29, RNF03, RB09, RB21, RB22
 
 ## Contexto
 
@@ -12,7 +12,7 @@ A Fase 3 acrescenta o perfil Mecânico/Oficina. Todos os usuários já entram co
 
 ## Decisão
 
-1. **Entrada da oficina.** O administrador cadastra a oficina com o e-mail Google do responsável (`Workshop.ownerEmail`, único). Quem entra com esse e-mail, já verificado pelo Google, acessa `/oficina` e edita só a própria oficina. Não se cria um novo `Role`: a permissão é derivada da oficina ativa com esse e-mail e conferida a cada requisição, como a do admin (RB17, RB19).
+1. **Entrada da oficina.** O administrador cadastra a oficina com o e-mail Google do responsável (`Workshop.ownerEmail`, único). Quem entra com esse e-mail, já verificado pelo Google, acessa `/oficina` e edita só a própria oficina. Não se cria um novo `Role`: a permissão é derivada da oficina ativa com esse e-mail e conferida a cada requisição, como a do admin (RB17, RB21).
 2. **Autorização do histórico.** O agendamento é a autorização. A tela de agendamento avisa o que será compartilhado. A função pura `canWorkshopAccessBike` (RB09) libera o acesso só para agendamento `SCHEDULED` ou `COMPLETED` da mesma oficina e da mesma bike; `CANCELLED` ou outra oficina negam (RNF03). A oficina só lê; escreve apenas ao concluir o atendimento.
 3. **Notificação.** Tabela `WorkshopNotice`, mostrada em `/oficina`. Cancelamento com menos de 24 h é marcado como urgente (RF29).
 4. **Conclusão.** Ao concluir, o sistema cria uma `ServiceVisit` da bike com a oficina e os itens (RF36), reaproveitando a gravação de visitas da Fase 1.

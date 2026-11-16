@@ -297,19 +297,19 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 
 ---
 
-## SPEC-008 — Oficinas e horários (Fase 3)
+## SPEC-011 — Oficinas e horários (Fase 3)
 
 **1. Identificação.** Objetivo: a oficina tem perfil, serviços e horários; o admin a cadastra. Valor: base para o atleta agendar.
 
-**2. Rastreabilidade.** RF25 · RB19 · UC16, UC17 · Entidades `Workshop`, `WorkshopService`, `WorkshopSlot` · ADR-008.
+**2. Rastreabilidade.** RF25 · RB21 · UC19, UC20 · Entidades `Workshop`, `WorkshopService`, `WorkshopSlot` · ADR-009.
 
 **3. Escopo.** Incluído: cadastro da oficina pelo admin (nome e e-mail do responsável); o responsável edita perfil, serviços (com itens incluídos) e horários avulsos. Fora: calendário recorrente, pagamento, avaliações.
 
 **4. Dependências.** SPEC-001.
 
-**5. Comportamento esperado.** UC16, UC17. Exceções: e-mail que não é de oficina → `/oficina` nega; horário no passado ou duplicado → recusado.
+**5. Comportamento esperado.** UC19, UC20. Exceções: e-mail que não é de oficina → `/oficina` nega; horário no passado ou duplicado → recusado.
 
-**6. Regras e invariantes.** INV-040: só o responsável (e-mail da oficina ativa) edita a oficina (RB19). INV-041: horário no passado não é criado.
+**6. Regras e invariantes.** INV-060: só o responsável (e-mail da oficina ativa) edita a oficina (RB21). INV-061: horário no passado não é criado.
 
 **7. Modelo de domínio.** Oficina 1–N Serviço, 1–N Horário.
 
@@ -326,23 +326,23 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 
 **12. Casos de teste.** `workshop.test.ts`: leitura dos itens do serviço, validação de horário.
 
-**13. Questões em aberto.** OPEN-22, OPEN-23, OPEN-26.
+**13. Questões em aberto.** OPEN-40, OPEN-41, OPEN-44.
 
 **14. DoD.** Critérios passando; migração aplicada; testes; documentos atualizados.
 
-## SPEC-009 — Agendamento de revisão (Fase 3)
+## SPEC-012 — Agendamento de revisão (Fase 3)
 
 **1. Identificação.** Objetivo: o atleta agenda e cancela revisões. Valor: a oficina recebe o cliente já com contexto.
 
-**2. Rastreabilidade.** RF26, RF27, RF29 · RB09, RB20 · UC18, UC19 · Entidades `Appointment`, `WorkshopNotice` · ADR-008.
+**2. Rastreabilidade.** RF26, RF27, RF29 · RB09, RB22 · UC21, UC22 · Entidades `Appointment`, `WorkshopNotice` · ADR-009.
 
 **3. Escopo.** Incluído: listar oficinas e horários livres; agendar com bike e serviço; aviso de compartilhamento; cancelar; aviso à oficina (urgente se < 24 h). Fora: reagendar, e-mail, pagamento.
 
-**4. Dependências.** SPEC-003, SPEC-008.
+**4. Dependências.** SPEC-003, SPEC-011.
 
-**5. Comportamento esperado.** UC18, UC19. Exceções: horário já ocupado ou passado → recusado; bike de outro usuário → recusado.
+**5. Comportamento esperado.** UC21, UC22. Exceções: horário já ocupado ou passado → recusado; bike de outro usuário → recusado.
 
-**6. Regras e invariantes.** INV-042: um horário tem no máximo um agendamento ativo (RB20). INV-043: cancelar libera o horário. INV-044: cancelamento com menos de 24 h gera aviso urgente (RF29).
+**6. Regras e invariantes.** INV-062: um horário tem no máximo um agendamento ativo (RB22). INV-063: cancelar libera o horário. INV-064: cancelamento com menos de 24 h gera aviso urgente (RF29).
 
 **7. Modelo de domínio.** Agendamento liga Atleta, Bike, Oficina, Horário e Serviço; estado agendado, concluído ou cancelado.
 
@@ -359,23 +359,23 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 
 **12. Casos de teste.** `workshop.test.ts`: `isLateCancellation`, `canBook`.
 
-**13. Questões em aberto.** OPEN-24, OPEN-25.
+**13. Questões em aberto.** OPEN-42, OPEN-43.
 
 **14. DoD.** Critérios passando; migração aplicada; testes.
 
-## SPEC-010 — Histórico compartilhado e conclusão do serviço (Fase 3)
+## SPEC-013 — Histórico compartilhado e conclusão do serviço (Fase 3)
 
 **1. Identificação.** Objetivo: a oficina vê o histórico da bike agendada e registra o serviço feito. Valor: o atleta fica com o histórico atualizado sem digitar.
 
-**2. Rastreabilidade.** RF27, RF28 · RNF03 · RB09 · UC20, UC21 · `ServiceVisit`, `MaintenanceEvent` (RF36) · ADR-008.
+**2. Rastreabilidade.** RF27, RF28 · RNF03 · RB09 · UC23, UC24 · `ServiceVisit`, `MaintenanceEvent` (RF36) · ADR-009.
 
 **3. Escopo.** Incluído: página do atendimento com bike, peças e histórico (leitura); conclusão com itens e peças trocadas, que grava visita no histórico da bike. Fora: edição de bike pela oficina, fotos, orçamento.
 
-**4. Dependências.** SPEC-006, SPEC-009.
+**4. Dependências.** SPEC-006, SPEC-012.
 
-**5. Comportamento esperado.** UC20, UC21. Exceção: agendamento cancelado ou de outra oficina → acesso negado.
+**5. Comportamento esperado.** UC23, UC24. Exceção: agendamento cancelado ou de outra oficina → acesso negado.
 
-**6. Regras e invariantes.** INV-045: oficina só lê bike com agendamento ativo ou concluído com ela (RB09, RNF03). INV-046: concluir grava uma única visita e muda o agendamento para concluído; concluir duas vezes é recusado. INV-047: gravar a visita segue as regras da RF36 (RB13, RB18).
+**6. Regras e invariantes.** INV-065: oficina só lê bike com agendamento ativo ou concluído com ela (RB09, RNF03). INV-066: concluir grava uma única visita e muda o agendamento para concluído; concluir duas vezes é recusado. INV-067: gravar a visita segue as regras da RF36 (RB13, RB18).
 
 **7. Modelo de domínio.** `Appointment.visitId` aponta a visita gerada.
 
@@ -392,6 +392,6 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 
 **12. Casos de teste.** `workshop.test.ts`: `canWorkshopAccessBike` para cada estado; `visit.test.ts` (já existente) cobre a leitura dos itens.
 
-**13. Questões em aberto.** OPEN-24, OPEN-26.
+**13. Questões em aberto.** OPEN-42, OPEN-44.
 
 **14. DoD.** Critérios passando; migração aplicada; testes; Fase 1 sem regressão.

@@ -1,6 +1,7 @@
 // RF30 entry point: admin area, reachable only by allow-listed Google accounts (ADR-005, RB17).
 import { Suspense } from "react";
 import { AdminCatalog } from "@/components/admin-catalog";
+import { AdminWorkshops } from "@/components/admin-workshops";
 import { Flash, Nav } from "@/components/ui";
 import { getCurrentAdmin, getCurrentUser } from "@/lib/session";
 
@@ -9,6 +10,7 @@ const OK: Record<string, string> = {
   categoria: "Categoria salva.",
   plano: "Planos da categoria atualizados.",
   componente: "Componentes atualizados.",
+  oficina: "Oficinas atualizadas.",
 };
 
 const ERROR_MESSAGES: Record<string, string> = {
@@ -16,6 +18,8 @@ const ERROR_MESSAGES: Record<string, string> = {
   categoria_existe: "Já existe uma categoria com esse nome.",
   plano_invalido: "O plano precisa de nome e de um intervalo em km ou em horas.",
   componente_invalido: "Informe a marca e o modelo.",
+  oficina_invalida: "Informe o nome da oficina e um e-mail válido.",
+  oficina_existe: "Já existe uma oficina com esse e-mail.",
   componente_existe: "Esse componente já está no catálogo.",
   not_authorized: "Este e-mail não está na lista de administradores autorizados.",
   email_not_verified: "O e-mail da conta Google não está verificado.",
@@ -69,6 +73,7 @@ async function AdminArea({ searchParams }: { searchParams: PageProps<"/admin">["
             </form>
           </section>
           <AdminCatalog />
+          <AdminWorkshops />
         </>
       ) : (
         <section className="card">

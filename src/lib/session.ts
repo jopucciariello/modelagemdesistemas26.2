@@ -48,6 +48,17 @@ export async function getCurrentAdmin() {
   return user;
 }
 
+/**
+ * RB21: the workshop the current user owns, found by their verified Google e-mail on every call.
+ * Null when the user has no active workshop registered by the admin.
+ */
+export async function getCurrentWorkshop() {
+  const user = await getCurrentUser();
+  if (!user?.email) return null;
+  const workshop = await prisma.workshop.findFirst({ where: { ownerEmail: user.email.toLowerCase(), active: true } });
+  return workshop ? { user, workshop } : null;
+}
+
 export async function destroySession(): Promise<void> {
   const store = await cookies();
   const token = store.get(SESSION_COOKIE)?.value;

@@ -20,8 +20,8 @@ RNFs transversais: RNF01 (segredos) em SPEC-004; RNF04 e RNF07 (desempenho e cel
 
 | Ordem | ID | Nome | RF | RB | RNF | UC | Entidades | ADRs | Depende de |
 |---|---|---|---|---|---|---|---|---|---|
-| 8 | SPEC-008 | Oficinas e horários | RF25 | RB19 | RNF07 | UC16, UC17 | Oficina, Serviço, Horário | ADR-008 | SPEC-001 |
-| 9 | SPEC-009 | Agendamento de revisão | RF26, RF27, RF29 | RB09, RB20 | RNF07 | UC18, UC19 | Agendamento, Aviso | ADR-008 | SPEC-003, SPEC-008 |
-| 10 | SPEC-010 | Histórico compartilhado e conclusão | RF27, RF28 | RB09 | RNF03 | UC20, UC21 | Visita, Evento | ADR-008 | SPEC-006, SPEC-009 |
+| 11 | SPEC-011 | Oficinas e horários | RF25 | RB21 | RNF07 | UC19, UC20 | Oficina, Serviço, Horário | ADR-009 | SPEC-001 |
+| 12 | SPEC-012 | Agendamento de revisão | RF26, RF27, RF29 | RB09, RB22 | RNF07 | UC21, UC22 | Agendamento, Aviso | ADR-009 | SPEC-003, SPEC-011 |
+| 13 | SPEC-013 | Histórico compartilhado e conclusão | RF27, RF28 | RB09 | RNF03 | UC23, UC24 | Visita, Evento | ADR-009 | SPEC-006, SPEC-012 |
 
 Ordem: a Fase 3 só depende da Fase 1 (SPEC-001, 003, 006), então anda em paralelo com a Fase 2. As Specs seguem a ordem oficina, agendamento, histórico.

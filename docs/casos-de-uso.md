@@ -225,31 +225,31 @@ Formato: ator, pré-condições, fluxo principal (FP), fluxos alternativos (FA) 
 
 ## Fase 3 — Oficina (16/11/2026)
 
-Novo ator **Mecânico/Oficina** (persona Cláudia): responsável por uma oficina cadastrada pelo administrador (ADR-008). Também entra com o Google. Os casos abaixo ficam fora do diagrama principal da Fase 1.
+Novo ator **Mecânico/Oficina** (persona Cláudia): responsável por uma oficina cadastrada pelo administrador (ADR-009). Também entra com o Google. Os casos abaixo ficam fora do diagrama principal da Fase 1.
 
 | Caso | Requisitos | Regras |
 |---|---|---|
-| UC16 Cadastrar oficina | RF25 | RB19 |
-| UC17 Manter perfil, serviços e horários | RF25 | RB19 |
-| UC18 Agendar revisão | RF26, RF27 | RB09, RB20 |
-| UC19 Cancelar agendamento | RF29 | — |
-| UC20 Consultar bike do atendimento | RF27, RNF03 | RB09 |
-| UC21 Concluir serviço | RF28, RF36 | RB13, RB18 |
+| UC19 Cadastrar oficina | RF25 | RB21 |
+| UC20 Manter perfil, serviços e horários | RF25 | RB21 |
+| UC21 Agendar revisão | RF26, RF27 | RB09, RB22 |
+| UC22 Cancelar agendamento | RF29 | — |
+| UC23 Consultar bike do atendimento | RF27, RNF03 | RB09 |
+| UC24 Concluir serviço | RF28, RF36 | RB13, RB18 |
 
-### UC16 — Cadastrar oficina
+### UC19 — Cadastrar oficina
 - **Ator:** Administrador. **FP:** informa nome e e-mail Google do responsável; a oficina fica ativa. **FE1:** e-mail repetido ou vazio → recusado.
 
-### UC17 — Manter perfil, serviços e horários
+### UC20 — Manter perfil, serviços e horários
 - **Ator:** Mecânico/Oficina. **Pré:** e-mail igual ao de uma oficina ativa. **FP:** 1. edita perfil. 2. cadastra serviços com o que cada um inclui. 3. cadastra horários futuros. **FE1:** outro e-mail → acesso negado.
 
-### UC18 — Agendar revisão
+### UC21 — Agendar revisão
 - **Ator:** Atleta. **FP:** 1. escolhe a oficina. 2. escolhe horário livre, bike e serviço. 3. vê o aviso de que o histórico da bike será compartilhado e confirma. **FE1:** horário ocupado ou passado → recusado. **Pós:** a oficina passa a ver a bike (RB09).
 
-### UC19 — Cancelar agendamento
+### UC22 — Cancelar agendamento
 - **Ator:** Atleta. **FP:** cancela; o horário volta a ficar livre; a oficina recebe aviso. **FA1:** menos de 24 h → aviso urgente. **Pós:** a oficina perde o acesso à bike.
 
-### UC20 — Consultar bike do atendimento
+### UC23 — Consultar bike do atendimento
 - **Ator:** Mecânico/Oficina. **FP:** abre o atendimento e vê bike, peças e histórico, só leitura. **FE1:** agendamento cancelado ou de outra oficina → negado (RNF03).
 
-### UC21 — Concluir serviço
+### UC24 — Concluir serviço
 - **Ator:** Mecânico/Oficina. **FP:** 1. recebe os itens do serviço contratado. 2. marca o que foi feito, peças trocadas e condição. 3. o sistema grava a visita no histórico da bike (UC12) e marca o agendamento como concluído. **FE1:** já concluído → recusado.
