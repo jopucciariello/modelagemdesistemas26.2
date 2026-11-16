@@ -49,6 +49,24 @@ Prioridade (MoSCoW): **M** = Must, **S** = Should, **C** = Could.
 
 > **RF30** foi aprovado em 06/11/2026 para garantir o segundo perfil (Administrador) no MVP da Fase 1, como a disciplina exige (OPEN-06). Ele dá suporte ao RF02, ao RF03 e à RB10. O RF31 foi aprovado na mesma data (OPEN-08).
 
+### Fase 2 — Mercado de peças (tentativa de entrega, 16/11/2026)
+
+> Decisões de implementação marcadas **[PROPOSTO]** aguardam a aprovação do João (OPEN-30 a OPEN-34, [ADR-008](adr/ADR-008-mercado-de-pecas.md)).
+
+| ID | Requisito (EARS) | Prio |
+|---|---|:-:|
+| RF16 | O sistema deve permitir que atletas e lojistas publiquem anúncios de peças (título, família do catálogo, condição nova ou usada, preço, descrição, até 3 fotos por URL e km de uso quando usada). **[PROPOSTO]** fotos por URL, sem upload (OPEN-31). | M |
+| RF17 | O sistema deve exibir uma vitrine de anúncios ativos filtrável por família, condição, faixa de preço e tipo de vendedor (lojista ou atleta). | M |
+| RF18 | O sistema deve permitir que o administrador cadastre lojistas (a partir de um usuário que já entrou pelo Google) e conceda ou revogue o selo de verificado. **[PROPOSTO]** lojista = usuário com perfil de loja, sem novo papel de acesso (OPEN-30). | M |
+| RF19 | Enquanto um lojista possuir selo de verificado, o sistema deve exibir o selo em seus anúncios e em sua vitrine. | M |
+| RF20 | O sistema deve permitir que o atleta cadastre, edite e remova um "sonho": peça desejada (família e palavras-chave opcionais) com preço máximo. | M |
+| RF21 | Quando um anúncio compatível com um sonho for publicado com preço menor ou igual ao preço máximo, o sistema deve notificar o atleta dono do sonho. Compatível = mesma família e, se o sonho tiver palavras-chave, todas aparecem no título. **[PROPOSTO]** (OPEN-32). | M |
+| RF22 | Quando um sonho for cadastrado, o sistema deve notificar os lojistas verificados que já anunciaram naquela família. **[PROPOSTO]** "vende a família" = tem anúncio ativo ou vendido nela (OPEN-33). | S |
+| RF23 | Quando um alerta de "troca próxima" for emitido, o sistema deve sugerir anúncios ativos da família da peça. | C |
+| RF24 | O sistema deve permitir que o administrador remova anúncios que violem as regras da plataforma, registrando o motivo. | M |
+
+Notificações da Fase 2 são **dentro do app** (sino com lista e contador), coerente com a OPEN-14 (OPEN-34).
+
 ---
 
 ## 2. Requisitos Não Funcionais
@@ -78,7 +96,10 @@ Os RNFs também seguem o padrão EARS.
 | RB03 | Somente atividades de ciclismo contam para o desgaste: `sport_type` `Ride`, `MountainBikeRide`, `GravelRide`, `EBikeRide`, `EMountainBikeRide` e `VirtualRide` (o `VirtualRide` segue a RB14). |
 | RB04 | Limiares de alerta: a partir do mínimo da faixa de durabilidade do plano (ou de 80% do intervalo, se não houver mínimo) = troca/revisão próxima (barra amarela); 100% do intervalo = troca/revisão necessária. O intervalo é a média da faixa (OPEN-17). |
 | RB05 | Uma peça trocada não pode ser excluída, apenas arquivada no histórico. |
-| RB06–RB07 | *Movidas para o [segundo estágio](segundo-estagio.md).* |
+| RB06 | Apenas o administrador concede ou revoga o selo de lojista verificado (RF18). |
+| RB07 | Anúncio de peça usada pode informar a km de uso, preenchida **à mão** pelo vendedor. O GearLog não publica km vinda do Strava enquanto a OPEN-02 estiver aberta. **[PROPOSTO]** |
+| RB19 | Só o autor edita, marca como vendido ou encerra o próprio anúncio; o administrador pode removê-lo (RF24). **[PROPOSTO]** |
+| RB20 | O GearLog não processa pagamento nem intermedeia a negociação; a vitrine mostra o contato do vendedor (e-mail da conta Google) só a usuários logados. **[PROPOSTO]** (OPEN-35) |
 | RB08 | Cada atleta usa o próprio app do Strava (RF33) ou o próprio conector (RF34), então o GearLog não depende de um app único do Strava nem de homologação comercial. |
 | RB09 | *Movida para o [segundo estágio](segundo-estagio.md).* |
 | RB10 | Cada categoria de peça define sua métrica de desgaste: km, horas ou ambas. Peças de suspensão (garfo, amortecedor) e canote retrátil são medidas por horas de uso. |
@@ -140,6 +161,7 @@ Atualizado em 12/11/2026. Código em `src/`, testes em `tests/unit/`.
 | RF35 | Feito | `createBike`, `src/app/bikes/page.tsx` | `catalog.test.ts` |
 | RF36 | Feito | `recordShopVisit`, `src/lib/visit.ts`, página da bike | `visit.test.ts` |
 | RF31 | Pendente | — | — |
+| RF16–RF24 | Em andamento (Fase 2, ver `tasks.md` SPEC-008 a SPEC-010) | — | — |
 | RF32, RF33, RF34 | Feito | `src/app/fonte/`, `src/lib/strava/`, `src/lib/connector/` | `strava-oauth.test.ts`, `activity-sources.test.ts` |
 | RB02, RB03, RB04, RB11–RB14, RB16 | Feito | `src/lib/wear.ts` | `wear.test.ts` |
 | RB18 | Feito | `servicePlan`, `canResetPlan` | `catalog.test.ts` |

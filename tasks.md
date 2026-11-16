@@ -50,3 +50,25 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 - [x] T-32 Documentação da disciplina (spec, plan, tasks, UC, UML, specs, review) — RNF09 — #3
 - [ ] T-21 Backup diário do volume do SQLite — RNF06 — #3
 - [ ] T-33 Regras de desgaste por fator de uso e recalibração pela medição — RF07 — #38
+
+# Fase 2 — Mercado de peças (tentativa de entrega; a Fase 1 não depende dela)
+
+## SPEC-008 — Anúncios e vitrine
+- [x] T-40 Migração e modelos `Merchant`, `Listing`, `Dream`, `Notification` — ADR-008 — #4
+- [ ] T-41 Publicar, editar, marcar como vendido e encerrar anúncio próprio — RF16, RB07, RB19 — #21
+- [ ] T-42 Vitrine com filtros de família, condição, preço e tipo de vendedor — RF17 — #22
+- [ ] T-43 Página do anúncio com contato do vendedor para usuário logado — RB20 — #22
+
+## SPEC-009 — Sonhos e notificações
+- [ ] T-44 CRUD de sonhos — RF20 — #25
+- [ ] T-45 Função pura de compatibilidade sonho × anúncio, com teste — RF21 — #26
+- [ ] T-46 Notificar o dono do sonho ao publicar anúncio compatível — RF21 — #26
+- [ ] T-47 Sino de notificações dentro do app, marcar como lida — RF21, OPEN-34 — #26
+- [ ] T-48 Notificar lojistas verificados da família ao cadastrar sonho — RF22 — #27
+- [ ] T-49 Sugerir anúncios no alerta de troca próxima — RF23 — #28
+
+## SPEC-010 — Lojistas, selo e moderação
+- [ ] T-50 Admin cadastra lojista, concede e revoga selo — RF18, RB06 — #23
+- [ ] T-51 Selo nos anúncios e na vitrine do lojista — RF19 — #24
+- [ ] T-52 Admin remove anúncio com motivo — RF24 — #29
+
