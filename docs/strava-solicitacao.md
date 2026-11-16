@@ -1,6 +1,6 @@
 # Solicitação ao Strava — materiais e conformidade
 
-Requisitos: RF04, RF32–RF34, RNF01, RNF05. App submetido: **app central do GearLog** (OPEN-20, decidido em 16/11/2026).
+Requisitos: RF04, RF32–RF34, RNF01, RNF05. App submetido: **app central do GearLog**, caminho principal com dados direto do Strava. O strava-connector é só ponte temporária até a aprovação definitiva (OPEN-20, 16/11/2026). Papel do app por atleta: OPEN-21.
 
 ## 1. O que o Strava exige (fontes oficiais, consultadas em 16/11/2026)
 
@@ -42,4 +42,11 @@ O Strava permite 1 app por conta e a sua conta já tem o app do strava-connector
 2. Guardar Client ID e Client Secret no Infisical (nunca no repositório) e avisar aqui; o código passa a usar esse app como padrão (PR de seguimento).
 3. Subir a capacidade a 10 atletas pelo painel de API (sem revisão).
 4. Quando houver o botão oficial, o link "View on Strava" e a política de privacidade no ar, enviar o [formulário de revisão](https://share.hsforms.com/1VXSwPUYqSH6IxK0y51FjHwcnkd8) com os textos da seção 3. Só é necessário para passar de 10 atletas.
-5. Sem prazo do Strava: manter o app por atleta (RF33) como plano B até 26/11.
+5. Enquanto o Strava não aprova, o conector (RF34) atende quem passar de 10 atletas ou antes do app central estar pronto; ao aprovar, o conector sai da tela.
+
+## 5. Plano de código (PRs pequenos, depois do app central existir)
+
+1. Credenciais do app central por variáveis (`STRAVA_CLIENT_ID`/`STRAVA_CLIENT_SECRET` no Infisical) e login Strava padrão na página Fonte (RF04, RF32).
+2. Botão oficial "Connect with Strava", logo "Compatible with Strava" e link "View on Strava" nos pedais importados.
+3. Desconectar chama `POST /oauth/revoke` e apaga tokens (RNF01).
+4. Fonte "conector" marcada como temporária; RF33 conforme OPEN-21.
