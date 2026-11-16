@@ -1,6 +1,6 @@
 # Solicitação ao Strava — materiais e conformidade
 
-Requisitos: RF04, RF32–RF34, RNF01, RNF05. Decisão de qual app submeter: ver OPEN-20.
+Requisitos: RF04, RF32–RF34, RNF01, RNF05. App submetido: **app central do GearLog** (OPEN-20, decidido em 16/11/2026).
 
 ## 1. O que o Strava exige (fontes oficiais, consultadas em 16/11/2026)
 
@@ -36,6 +36,10 @@ Requisitos: RF04, RF32–RF34, RNF01, RNF05. Decisão de qual app submeter: ver 
 
 ## 4. Passos do usuário (o envio exige a conta Strava)
 
-1. Escolher o app (OPEN-20).
-2. Em strava.com/settings/api, preencher nome, descrição, site, domínio de callback e logo (sem logo do Strava como ícone).
-3. Subir a capacidade a 10 pelo painel; só usar o formulário de revisão se precisar de mais de 10 atletas.
+O Strava permite 1 app por conta e a sua conta já tem o app do strava-connector. Por isso o app central precisa de **outra conta Strava com assinatura ativa**.
+
+1. Na conta nova, abrir strava.com/settings/api e criar o app: nome "GearLog", site `https://gearlog.jopucci.com`, domínio de callback `gearlog.jopucci.com`, ícone próprio (sem partes do logo do Strava).
+2. Guardar Client ID e Client Secret no Infisical (nunca no repositório) e avisar aqui; o código passa a usar esse app como padrão (PR de seguimento).
+3. Subir a capacidade a 10 atletas pelo painel de API (sem revisão).
+4. Quando houver o botão oficial, o link "View on Strava" e a política de privacidade no ar, enviar o [formulário de revisão](https://share.hsforms.com/1VXSwPUYqSH6IxK0y51FjHwcnkd8) com os textos da seção 3. Só é necessário para passar de 10 atletas.
+5. Sem prazo do Strava: manter o app por atleta (RF33) como plano B até 26/11.
