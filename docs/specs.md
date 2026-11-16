@@ -2,7 +2,7 @@
 
 Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 seções do fluxo SDD da disciplina. Invariantes têm IDs globais (`INV-001`…) e cada um aponta para o teste que o verifica.
 
-> **Situação:** SPEC-001 a SPEC-006 foram escritas em 13/11/2026, depois da implementação, e conferidas contra o código (`feat/RF04-baseline`). As divergências encontradas estão na seção 13 de cada Spec e em [review/](review/). Aguardam aprovação do João (OPEN-21). SPEC-007 é a próxima a implementar.
+> **Situação:** SPEC-001 a SPEC-006 foram escritas em 13/11/2026, depois da implementação, e conferidas contra o código (`feat/RF04-baseline`). As divergências encontradas estão na seção 13 de cada Spec e em [review/](review/). Aguardam aprovação do João (OPEN-21). SPEC-007 foi implementada em 16/11/2026.
 
 ---
 
@@ -262,7 +262,7 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 
 ---
 
-## SPEC-007 — Pedido de modelo novo (a implementar)
+## SPEC-007 — Pedido de modelo novo
 
 **1. Identificação.** Objetivo: o atleta pede o que falta no catálogo sem cadastrar nada. Valor: o catálogo cresce com o que os atletas usam, e a qualidade continua com o admin.
 
@@ -288,8 +288,8 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 - Dado um atleta, quando envia um pedido, então ele aparece no admin como "aberto".
 - Dado um pedido aberto, quando o admin responde, então o atleta vê a resposta no menu de ajuda.
 
-**12. Casos de teste.** A escrever junto com a implementação.
+**12. Casos de teste.** `model-request.test.ts` (validação do pedido e da resposta).
 
-**13. Questões em aberto.** Onde o atleta vê a resposta (menu de ajuda ou painel)?
+**13. Questões em aberto.** Resolvida na implementação: o atleta vê a resposta em `/ajuda`, na lista "Meus pedidos"; o painel não mostra nada (proposta, aguarda aprovação).
 
 **14. DoD.** Critérios passando; migração aplicada; testes.

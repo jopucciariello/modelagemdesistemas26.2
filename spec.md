@@ -49,7 +49,7 @@ Issue épica: [#3](https://github.com/jopucciariello/modelagemdesistemas26.2/iss
 | 6 | Desgaste, alertas e painel | RF07–RF09, RF15 | #12, #13, #14, #20 | Feito |
 | 7 | Troca, revisão, manutenção e histórico | RF10–RF12 | #15, #16, #17 | Feito |
 | 8 | Revisão na oficina com vários itens | RF36 | #3 | Feito |
-| 9 | Pedido de modelo novo pelo menu de ajuda | RF31 | #3 | Pendente |
+| 9 | Pedido de modelo novo pelo menu de ajuda | RF31 | #3 | Feito |
 | 10 | Sincronização automática (webhook do conector) | RNF05 | #3 | Pendente |
 
 ## 5. Casos de uso
