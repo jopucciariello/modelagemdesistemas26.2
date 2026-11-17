@@ -35,6 +35,8 @@ Requisitos: RF04, RF32–RF34, RNF01, RNF05. App submetido: **app central do Gea
 - **URLs:** site https://gearlog.jopucci.com · privacidade https://gearlog.jopucci.com/privacidade · callback `gearlog.jopucci.com`.
 - **Contexto:** projeto acadêmico (Modelagem de Sistemas), sem fins comerciais.
 
+> **Estado em 17/11/2026:** o usuário decidiu seguir com o strava-connector como fonte em uso por enquanto e não criar o app central agora. Os passos abaixo ficam prontos para quando for submeter.
+
 ## 4. Passos do usuário (o envio exige a conta Strava)
 
 O Strava permite 1 app por conta e a sua conta já tem o app do strava-connector. Por isso o app central precisa de **outra conta Strava com assinatura ativa**.
