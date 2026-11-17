@@ -31,7 +31,7 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 ## SPEC-005 — Desgaste, alertas e painel
 - [x] T-19 Cálculo por plano, limiares e texto do alerta — RF07–RF09, RB02, RB04, RB11–RB14 — #12, #13, #14
 - [x] T-20 Painel ordenado por desgaste — RF15 — #20
-- [ ] T-22 Painel legível em 390 px (cartões no celular) — RNF07 — #20
+- [x] T-22 Painel legível em 390 px (cartões no celular) — RNF07 — #20
 
 ## SPEC-006 — Manutenção e histórico
 - [x] T-23 Revisão e troca de item por plano — RF10, RB13, RB18 — #15
