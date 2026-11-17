@@ -123,6 +123,9 @@ async function Dashboard({ userId }: { userId: string }) {
                       <span className="plan-use">{r.plan.intervalKm ? km(r.wear.km) : null}{r.plan.intervalKm && r.plan.intervalHours ? " · " : null}{r.plan.intervalHours ? hours(r.wear.hours) : null}</span>
                     </div>
                     <div className="plan-sub">{r.plan.name} · {r.part.component.brand} {r.part.component.model}</div>
+                    {r.plan.action === "REPLACE" && r.wear.status !== "ok" && (
+                      <div className="plan-sub"><Link href={`/mercado?categoria=${r.part.component.categoryId}`}>Ver anúncios compatíveis</Link></div>
+                    )}
                   </div>
                   <WearMeter wear={r.wear} />
                 </li>

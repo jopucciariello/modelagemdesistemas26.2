@@ -1,6 +1,7 @@
 // RF30 entry point: admin area, reachable only by allow-listed Google accounts (ADR-005, RB17).
 import { Suspense } from "react";
 import { AdminCatalog } from "@/components/admin-catalog";
+import { AdminMarket } from "@/components/admin-market";
 import { AdminRequests } from "@/components/admin-requests";
 import { Flash, Nav } from "@/components/ui";
 import { getCurrentAdmin, getCurrentUser } from "@/lib/session";
@@ -10,6 +11,10 @@ const OK: Record<string, string> = {
   categoria: "Categoria salva.",
   plano: "Planos da categoria atualizados.",
   componente: "Componentes atualizados.",
+  lojista: "Lojista cadastrado.",
+  selo_concedido: "Selo de lojista verificado concedido.",
+  selo_revogado: "Selo de lojista verificado revogado.",
+  anuncio_removido: "Anúncio removido.",
   pedido_respondido: "Resposta ao pedido salva.",
 };
 
@@ -19,6 +24,12 @@ const ERROR_MESSAGES: Record<string, string> = {
   plano_invalido: "O plano precisa de nome e de um intervalo em km ou em horas.",
   componente_invalido: "Informe a marca e o modelo.",
   componente_existe: "Esse componente já está no catálogo.",
+  lojista_invalido: "Informe um e-mail válido e o nome da loja.",
+  lojista_sem_usuario: "Não há usuário com esse e-mail. Peça à pessoa para entrar uma vez com o Google.",
+  lojista_existe: "Esse usuário já é lojista.",
+  lojista_nao_encontrado: "Lojista não encontrado.",
+  motivo_obrigatorio: "Informe o motivo da remoção (mínimo de 5 caracteres).",
+  anuncio_invalido: "Anúncio não encontrado.",
   resposta_invalida: "Para recusar um pedido, escreva o motivo.",
   pedido_inexistente: "Pedido não encontrado.",
   not_authorized: "Este e-mail não está na lista de administradores autorizados.",
@@ -73,6 +84,7 @@ async function AdminArea({ searchParams }: { searchParams: PageProps<"/admin">["
             </form>
           </section>
           <AdminCatalog />
+          <AdminMarket />
           <AdminRequests />
         </>
       ) : (

@@ -73,6 +73,9 @@ Mapa ordenado: [mapa-specs.md](docs/mapa-specs.md). Texto com as 14 seções e i
 | SPEC-005 | Desgaste, alertas e painel | Implementada, aguarda aprovação |
 | SPEC-006 | Manutenção e histórico | Implementada, aguarda aprovação |
 | SPEC-007 | Pedido de modelo novo | A implementar |
+| SPEC-008 | Anúncios e vitrine (Fase 2) | Implementada |
+| SPEC-009 | Sonhos e notificações (Fase 2) | Implementada |
+| SPEC-010 | Lojistas, selo e moderação (Fase 2) | Implementada |
 
 ## 8. Decisões e questões em aberto
 
