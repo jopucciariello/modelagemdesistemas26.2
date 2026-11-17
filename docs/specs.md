@@ -10,7 +10,7 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 
 **1. Identificação.** Objetivo: identificar quem usa o GearLog e o que pode fazer. Valor: o atleta entra sem criar senha; só pessoas autorizadas mexem no catálogo.
 
-**2. Rastreabilidade.** RF04 · RB17 · RNF02 · UC01 · Usuário, Sessão · drivers: dois perfis, sem senhas · ADR-002, ADR-005.
+**2. Rastreabilidade.** RF04 · RB17 · RNF02 · UC01 · Usuário, Sessão · drivers: dois perfis, sem senhas · ADR-005.
 
 **3. Escopo.** Incluído: login pelo Google, criação do usuário, perfil Atleta ou Administrador, sessão por cookie, sair. Fora: login por senha, login pelo Strava, papéis de lojista e oficina (Fases 2 e 3).
 
@@ -141,7 +141,7 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 
 **1. Identificação.** Objetivo: trazer os pedais do atleta para o GearLog. Valor: km e horas atualizados sem digitação, e o app funciona mesmo sem Strava.
 
-**2. Rastreabilidade.** RF05, RF06, RF13, RF14, RF32, RF33, RF34 · RB02, RB03, RB08, RB12 · RNF01, RNF05, RNF06 · UC02, UC06, UC07 · Pedal, Conexão Strava, Conexão conector · ADR-003, ADR-006.
+**2. Rastreabilidade.** RF05, RF06, RF13, RF14, RF32, RF34 · RB02, RB03, RB08, RB12 · RNF01, RNF05, RNF06 · UC02, UC06, UC07 · Pedal, Conexão Strava, Conexão conector · ADR-004, ADR-006.
 
 **3. Escopo.** Incluído: escolher a fonte; vincular Strava com app próprio; configurar conector; sincronizar sob demanda; lançar e remover pedal manual; associar bike da fonte. Fora (pendente): sincronização automática, webhooks, exclusões vindas do Strava, atribuir bike a pedal sem `gear_id` (OPEN-20).
 

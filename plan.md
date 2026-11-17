@@ -10,10 +10,10 @@ Como o [spec.md](spec.md) é implementado. Decisões detalhadas em [docs/arquite
 | Web | Next.js 16 (App Router, server actions, formulários HTML) | ADR-001 |
 | Dados | Prisma 7 + SQLite (`better-sqlite3`), migrações versionadas | ADR-001 |
 | Testes | Vitest (unidade, regras puras e integrações com `fetch` simulado) | ADR-001 |
-| Login | Google OpenID Connect com PKCE; admin por lista de e-mails | ADR-002, ADR-005 |
+| Login | Google OpenID Connect com PKCE; admin por lista de e-mails | ADR-005 |
 | Pedais | Manual, API do Strava com app do atleta ou conector do atleta | ADR-006 |
 | Desgaste | Calculado na leitura a partir dos pedais guardados | ADR-007 |
-| Segredos | Infisical (OIDC no deploy); dados de terceiros criptografados (AES-256-GCM) | ADR-003 |
+| Segredos | Infisical (OIDC no deploy); dados de terceiros criptografados (AES-256-GCM) | ADR-004 |
 | Deploy | Fly.io, uma máquina em `gru`, volume para o SQLite, GitHub Actions | ADR-004 |
 
 ## 2. Estrutura do repositório

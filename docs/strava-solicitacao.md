@@ -52,4 +52,4 @@ O Strava permite 1 app por conta e a sua conta já tem o app do strava-connector
 1. Feito: credenciais do app central por `STRAVA_CLIENT_ID`/`STRAVA_CLIENT_SECRET` (Infisical); a opção "Conectar com o Strava" aparece na página Fonte quando ambas existem (RF04, RF32).
 2. Parcial: link "View on Strava" feito; botão oficial "Connect with Strava", logo "Compatible with Strava" e link "View on Strava" nos pedais importados.
 3. Feito: desconectar revoga e apaga tokens (RNF01).
-4. Feito: conector marcado como temporário e RF33 atrás de "Usar meu próprio app (avançado)" (OPEN-23 proposta).
+4. Feito: conector marcado como temporário; RF33 (app próprio por atleta) removido em 17/11/2026 (OPEN-23).
