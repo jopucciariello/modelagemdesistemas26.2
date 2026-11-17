@@ -8,6 +8,7 @@ const ITEMS = [
   { href: "/bikes", label: "Bikes" },
   { href: "/pedais", label: "Pedais" },
   { href: "/fonte", label: "Fonte" },
+  { href: "/ajuda", label: "Ajuda" },
 ];
 
 export function NavLinks({ isAdmin }: { isAdmin?: boolean }) {

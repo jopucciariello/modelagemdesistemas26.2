@@ -40,9 +40,9 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 - [x] T-26 Revisão na oficina com vários itens e condição — RF36 — #3 (PR #42)
 
 ## SPEC-007 — Pedido de modelo novo
-- [ ] T-27 Entidade e migração `ModelRequest` — RF31 — #3
-- [ ] T-28 Menu de ajuda com formulário de pedido — RF31 — #3
-- [ ] T-29 Lista e resposta de pedidos no `/admin` — RF31 — #3
+- [x] T-27 Entidade e migração `ModelRequest` — RF31 — #3
+- [x] T-28 Menu de ajuda com formulário de pedido — RF31 — #3
+- [x] T-29 Lista e resposta de pedidos no `/admin` — RF31 — #3
 
 ## Transversais
 - [x] T-30 Deploy pelo GitHub Actions com segredos do Infisical — RNF01 — #3

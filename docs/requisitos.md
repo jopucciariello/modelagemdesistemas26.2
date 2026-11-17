@@ -139,7 +139,7 @@ Atualizado em 12/11/2026. Código em `src/`, testes em `tests/unit/`.
 | RF30 | Feito | `src/app/admin/`, `src/app/actions/catalog.ts`, `src/lib/catalog/seed.json`, `src/lib/catalog/load.ts`, `src/instrumentation.ts` (carga automática na subida do servidor) | `catalog.test.ts` |
 | RF35 | Feito | `createBike`, `src/app/bikes/page.tsx` | `catalog.test.ts` |
 | RF36 | Feito | `recordShopVisit`, `src/lib/visit.ts`, página da bike | `visit.test.ts` |
-| RF31 | Pendente | — | — |
+| RF31 | Feito | `src/app/ajuda/`, `src/app/actions/help.ts`, `src/components/admin-requests.tsx`, `src/lib/help.ts` | `model-request.test.ts` |
 | RF32, RF33, RF34 | Feito | `src/app/fonte/`, `src/lib/strava/`, `src/lib/connector/` | `strava-oauth.test.ts`, `activity-sources.test.ts` |
 | RB02, RB03, RB04, RB11–RB14, RB16 | Feito | `src/lib/wear.ts` | `wear.test.ts` |
 | RB18 | Feito | `servicePlan`, `canResetPlan` | `catalog.test.ts` |
