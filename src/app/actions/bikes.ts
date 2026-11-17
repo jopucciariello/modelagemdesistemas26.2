@@ -6,6 +6,7 @@ import { parseLocalDay, toLocalDay } from "@/lib/dates";
 import { bikeType, optInterval, optNumber, optYear, readPlans, text } from "@/lib/forms";
 import { requireUser } from "@/lib/guards";
 import { bikeTypeFromCategory, canResetPlan, plansFor } from "@/lib/catalog/rules";
+import { checkPhoto } from "@/lib/bike-photo";
 import { recordVisit } from "@/lib/visit-record";
 
 /** Loads a bike only if it belongs to the user; otherwise back to the list. */
@@ -135,7 +136,7 @@ export async function toggleArchiveBike(form: FormData) {
   const user = await requireUser();
   const bike = await ownBike(user.id, text(form, "bikeId", 40));
   await prisma.bike.update({ where: { id: bike.id }, data: { archivedAt: bike.archivedAt ? null : new Date() } });
-  redirect(bike.archivedAt ? `/bikes/${bike.id}?ok=desarquivada` : "/bikes?ok=arquivada");
+  redirect(bike.archivedAt ? `/bikes/${bike.id}?ok=desarquivada` : "/bikes?ok=aposentada");
 }
 
 /**
@@ -153,6 +154,31 @@ export async function deleteBike(form: FormData) {
     prisma.bike.delete({ where: { id: bike.id } }),
   ]);
   redirect("/bikes?ok=excluida");
+}
+
+/** RF01: the athlete's own picture for a bike (JPEG, PNG or WebP up to 1 MB). */
+export async function setBikePhoto(form: FormData) {
+  const user = await requireUser();
+  const bike = await ownBike(user.id, text(form, "bikeId", 40));
+  const file = form.get("photo");
+  if (!(file instanceof File)) redirect(`/bikes/${bike.id}?erro=foto_vazia`);
+  const bytes = new Uint8Array(await file.arrayBuffer());
+  const check = checkPhoto(bytes);
+  if (!check.ok) redirect(`/bikes/${bike.id}?erro=${check.error}`);
+  const data = Buffer.from(bytes);
+  await prisma.bikePhoto.upsert({
+    where: { bikeId: bike.id },
+    create: { bikeId: bike.id, contentType: check.type, data },
+    update: { contentType: check.type, data },
+  });
+  redirect(`/bikes/${bike.id}?ok=foto`);
+}
+
+export async function removeBikePhoto(form: FormData) {
+  const user = await requireUser();
+  const bike = await ownBike(user.id, text(form, "bikeId", 40));
+  await prisma.bikePhoto.deleteMany({ where: { bikeId: bike.id } });
+  redirect(`/bikes/${bike.id}?ok=foto_removida`);
 }
 
 /** RF05: link the GearLog bike to a bike of the athlete's source and attach its rides. */

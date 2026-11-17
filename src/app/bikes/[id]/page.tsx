@@ -1,7 +1,8 @@
 // RF01, RF02, RF05, RF07-RF12, RB13, RB16: one bike with its parts, wear and history.
 import Link from "next/link";
 import { Suspense } from "react";
-import { addManualMaintenance, linkSourceBike, updatePart, recordShopVisit, replacePart, servicePlan, deleteBike, toggleArchiveBike, updateBike, updatePlan } from "@/app/actions/bikes";
+import { addManualMaintenance, linkSourceBike, updatePart, recordShopVisit, replacePart, servicePlan, deleteBike, removeBikePhoto, setBikePhoto, toggleArchiveBike, updateBike, updatePlan } from "@/app/actions/bikes";
+import { BikeAvatar } from "@/components/bike-avatar";
 import { BikeFields } from "@/components/bike-fields";
 import { Flash, Nav, WearMeter, hours, interval, km } from "@/components/ui";
 import { prisma } from "@/lib/db";
@@ -18,6 +19,8 @@ const OK: Record<string, string> = {
   bike_modelo: "Bike criada com as peças de fábrica. Confira as datas e os planos.",
   troca_item: "Troca registrada: o contador desse item recomeçou.",
   desarquivada: "Bike reativada.",
+  foto: "Foto salva.",
+  foto_removida: "Foto removida.",
   associada: "Associação com a fonte salva.",
   associada_inicio: "Associação salva e peças originais contando desde o primeiro pedal dessa bike no Strava.",
   peca: "Peça instalada.",
@@ -34,6 +37,9 @@ const ERR: Record<string, string> = {
   gear_em_uso: "Essa bike da fonte já está associada a outra bike sua.",
   plano_invalido: "O plano precisa de um intervalo em km ou em horas.",
   data: "Data inválida (não pode ser antes da instalação da peça).",
+  foto_vazia: "Escolha uma imagem.",
+  foto_grande: "A imagem passa de 1 MB. Escolha uma menor.",
+  foto_tipo: "Use uma imagem JPEG, PNG ou WebP.",
   confirmar_exclusao: "Marque a confirmação para excluir a bike.",
   bike_com_agendamento: "Essa bike tem um agendamento em oficina. Cancele o agendamento antes de excluir.",
   data_montagem: "Data inválida: não pode ser no futuro nem depois da troca de uma peça original.",
@@ -63,24 +69,47 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
   }
   const { bike, parts, removed, events, totals, rideCount } = detail;
   const categoryIds = [...new Set(parts.map((p) => p.component.categoryId))];
-  const [components, categories, sourceBikes] = await Promise.all([
+  const [components, categories, sourceBikes, photo] = await Promise.all([
     prisma.component.findMany({ where: { categoryId: { in: categoryIds }, active: true }, orderBy: [{ code: "asc" }, { brand: "asc" }] }),
     prisma.category.findMany({ where: { active: true }, orderBy: { name: "asc" } }),
     listSourceBikes(user.id, user.activitySource),
+    prisma.bikePhoto.findUnique({ where: { bikeId: bike.id }, select: { updatedAt: true } }),
   ]);
   const today = toLocalDay(new Date());
 
   return (
     <>
       <Nav isAdmin={user.role === "ADMIN"} />
-      <header>
-        <h1>{bike.name}</h1>
-        <p className="muted">
-          {BIKE_TYPES[bike.type]}{bike.brand ? ` · ${bike.brand}` : ""}{bike.model ? ` ${bike.model}` : ""}{bike.year ? ` · ${bike.year}` : ""} · {rideCount} pedais, {km(totals.km)}, {hours(totals.hours)}
-          {bike.archivedAt && " · arquivada"}
-        </p>
+      <header className="bike-head">
+        <BikeAvatar bikeId={bike.id} hasPhoto={!!photo} version={photo?.updatedAt.getTime()} size={88} />
+        <div>
+          <h1>{bike.name}</h1>
+          <p className="muted">
+            {BIKE_TYPES[bike.type]}{bike.brand ? ` · ${bike.brand}` : ""}{bike.model ? ` ${bike.model}` : ""}{bike.year ? ` · ${bike.year}` : ""} · {rideCount} pedais, {km(totals.km)}, {hours(totals.hours)}
+            {bike.archivedAt && " · aposentada"}
+          </p>
+        </div>
       </header>
       <Flash ok={ok} erro={erro} okText={OK} errText={ERR} />
+
+      <section className="card">
+        <details>
+          <summary><h2 style={{ display: "inline" }}>Foto da bike</h2></summary>
+          <form action={setBikePhoto} className="row">
+            <input type="hidden" name="bikeId" value={bike.id} />
+            <label>Imagem (JPEG, PNG ou WebP, até 1 MB)
+              <input name="photo" type="file" accept="image/jpeg,image/png,image/webp" required />
+            </label>
+            <button className="button small" type="submit">Salvar foto</button>
+          </form>
+          {photo && (
+            <form action={removeBikePhoto}>
+              <input type="hidden" name="bikeId" value={bike.id} />
+              <button className="button small" type="submit">Remover foto</button>
+            </form>
+          )}
+        </details>
+      </section>
 
       <section className="card">
         <details>
@@ -303,13 +332,13 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
       <section className="card">
         <form action={toggleArchiveBike}>
           <input type="hidden" name="bikeId" value={bike.id} />
-          <button className="button small" type="submit">{bike.archivedAt ? "Reativar bike" : "Arquivar bike"}</button>
+          <button className="button small" type="submit">{bike.archivedAt ? "Reativar bike" : "Aposentar bike"}</button>
         </form>
         <details>
           <summary>Excluir bike</summary>
           <form action={deleteBike} className="stack">
             <input type="hidden" name="bikeId" value={bike.id} />
-            <p className="muted">Apaga a bike, as peças, o histórico e as revisões na oficina, e não dá para desfazer. Os pedais lançados à mão somem junto; os importados do Strava continuam guardados. Se só quer tirá-la do painel, use “Arquivar bike”.</p>
+            <p className="muted">Apaga a bike, as peças, o histórico e as revisões na oficina, e não dá para desfazer. Os pedais lançados à mão somem junto; os importados do Strava continuam guardados. Se só quer tirá-la do painel, use “Aposentar bike”.</p>
             <label className="check"><input type="checkbox" name="confirm" required /> Entendo que isso não pode ser desfeito</label>
             <button className="button small danger" type="submit">Excluir {bike.name}</button>
           </form>

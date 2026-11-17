@@ -1,3 +1,4 @@
+import { BikeAvatar } from "@/components/bike-avatar";
 import { Suspense } from "react";
 import Link from "next/link";
 import { Nav, WearMeter, hours, km } from "@/components/ui";
@@ -66,9 +67,12 @@ async function SessionArea({ searchParams }: { searchParams: PageProps<"/">["sea
   );
 }
 
-/** RF15, RF08, RF09: every maintenance plan of every active bike, grouped by bike, most worn first. */
+/**
+ * RF15, RF08, RF09: one expandable card per active bike (picture and name), each holding the
+ * maintenance plans of its parts, most worn first. The athlete opens the bike they want to see.
+ */
 async function Dashboard({ userId }: { userId: string }) {
-  const { rows, bikeCount } = await loadDashboard(userId);
+  const { rows, bikeCount, bikes } = await loadDashboard(userId);
   if (bikeCount === 0) {
     return (
       <section className="card empty">
@@ -79,26 +83,18 @@ async function Dashboard({ userId }: { userId: string }) {
       </section>
     );
   }
-  if (rows.length === 0) {
-    return (
-      <section className="card empty">
-        <span className="big" aria-hidden="true">🔧</span>
-        <h2>Nenhuma peça instalada</h2>
-        <p className="muted">Abra uma bike e adicione as peças para ver o desgaste aqui.</p>
-        <Link className="button" href="/bikes">Ir para as bikes</Link>
-      </section>
-    );
-  }
   const due = rows.filter((r) => r.wear.status === "due").length;
   const near = rows.filter((r) => r.wear.status === "near").length;
   const ok = rows.length - due - near;
-  // Rows arrive most worn first, so bikes are ordered by their worst part.
-  const byBike = new Map<string, { id: string; name: string; rows: typeof rows }>();
-  for (const r of rows) {
-    const group = byBike.get(r.bikeId) ?? { id: r.bikeId, name: r.bikeName, rows: [] };
-    group.rows.push(r);
-    byBike.set(r.bikeId, group);
-  }
+  const rowsByBike = new Map<string, typeof rows>();
+  for (const r of rows) rowsByBike.set(r.bikeId, [...(rowsByBike.get(r.bikeId) ?? []), r]);
+  // Bikes with the most alerts come first; bikes without parts still appear.
+  const cards = bikes
+    .map((bike) => {
+      const bikeRows = rowsByBike.get(bike.id) ?? [];
+      return { bike, rows: bikeRows, alerts: bikeRows.filter((r) => r.wear.status !== "ok").length, due: bikeRows.filter((r) => r.wear.status === "due").length };
+    })
+    .sort((a, b) => b.due - a.due || b.alerts - a.alerts);
   return (
     <>
       <section className="stats" aria-label="Resumo">
@@ -106,34 +102,44 @@ async function Dashboard({ userId }: { userId: string }) {
         <div className="stat stat-near"><b>{near}</b><span>perto do limite</span></div>
         <div className="stat stat-ok"><b>{ok}</b><span>em dia</span></div>
       </section>
-      {[...byBike.values()].map((bike) => {
-        const bikeAlerts = bike.rows.filter((r) => r.wear.status !== "ok").length;
-        return (
-          <section className="bike-card" key={bike.id}>
-            <header>
-              <h3><Link href={`/bikes/${bike.id}`}>{bike.name}</Link></h3>
-              <span className="muted">{bikeAlerts === 0 ? "Tudo em dia" : `${bikeAlerts} ${bikeAlerts === 1 ? "alerta" : "alertas"}`}</span>
-            </header>
-            <ul className="plan-list">
-              {bike.rows.map((r) => (
-                <li className={`plan-item s-${r.wear.status}`} key={r.plan.id}>
-                  <div>
-                    <div className="plan-top">
-                      <Link href={`/bikes/${r.bikeId}`}>{r.part.position ?? r.part.component.category.name}</Link>
-                      <span className="plan-use">{r.plan.intervalKm ? km(r.wear.km) : null}{r.plan.intervalKm && r.plan.intervalHours ? " · " : null}{r.plan.intervalHours ? hours(r.wear.hours) : null}</span>
+      {cards.map(({ bike, rows: bikeRows, alerts, due: bikeDue }) => (
+        <details className="bike-card" key={bike.id}>
+          <summary className="bike-summary">
+            <BikeAvatar bikeId={bike.id} hasPhoto={bike.photoVersion !== null} version={bike.photoVersion ?? 0} />
+            <span className="bike-summary-text">
+              <strong>{bike.name}</strong>
+              <span className="muted">
+                {bikeRows.length === 0 ? "Sem peças instaladas" : alerts === 0 ? "Tudo em dia" : `${alerts} ${alerts === 1 ? "alerta" : "alertas"}`}
+              </span>
+            </span>
+            {bikeRows.length > 0 && <span className={`dot ${bikeDue > 0 ? "dot-due" : alerts > 0 ? "dot-near" : "dot-ok"}`} aria-hidden="true" />}
+          </summary>
+          {bikeRows.length === 0 ? (
+            <p className="muted bike-empty">Abra a bike para adicionar as peças e acompanhar o desgaste. <Link href={`/bikes/${bike.id}`}>Abrir bike</Link></p>
+          ) : (
+            <>
+              <ul className="plan-list">
+                {bikeRows.map((r) => (
+                  <li className={`plan-item s-${r.wear.status}`} key={r.plan.id}>
+                    <div>
+                      <div className="plan-top">
+                        <Link href={`/bikes/${r.bikeId}`}>{r.part.position ?? r.part.component.category.name}</Link>
+                        <span className="plan-use">{r.plan.intervalKm ? km(r.wear.km) : null}{r.plan.intervalKm && r.plan.intervalHours ? " · " : null}{r.plan.intervalHours ? hours(r.wear.hours) : null}</span>
+                      </div>
+                      <div className="plan-sub">{r.plan.name} · {r.part.component.brand} {r.part.component.model}</div>
+                      {r.plan.action === "REPLACE" && r.wear.status !== "ok" && (
+                        <div className="plan-sub"><Link href={`/mercado?categoria=${r.part.component.categoryId}`}>Ver anúncios compatíveis</Link></div>
+                      )}
                     </div>
-                    <div className="plan-sub">{r.plan.name} · {r.part.component.brand} {r.part.component.model}</div>
-                    {r.plan.action === "REPLACE" && r.wear.status !== "ok" && (
-                      <div className="plan-sub"><Link href={`/mercado?categoria=${r.part.component.categoryId}`}>Ver anúncios compatíveis</Link></div>
-                    )}
-                  </div>
-                  <WearMeter wear={r.wear} />
-                </li>
-              ))}
-            </ul>
-          </section>
-        );
-      })}
+                    <WearMeter wear={r.wear} />
+                  </li>
+                ))}
+              </ul>
+              <p className="bike-open"><Link href={`/bikes/${bike.id}`}>Abrir bike</Link></p>
+            </>
+          )}
+        </details>
+      ))}
     </>
   );
 }

@@ -10,7 +10,7 @@ import { requireUser } from "@/lib/guards";
 import { toLocalDay } from "@/lib/dates";
 import { listSourceBikes, type SourceBikeOption } from "@/lib/rides/sync";
 
-const OK = { arquivada: "Bike arquivada. O histórico continua guardado.", excluida: "Bike excluída." };
+const OK = { aposentada: "Bike aposentada. O histórico continua guardado.", excluida: "Bike excluída." };
 const ERR = { modelo_invalido: "Escolha um modelo do catálogo e a data em que as peças foram instaladas.", bike_invalida: "Informe o nome e o tipo da bike.", bike_nao_encontrada: "Bike não encontrada.", peca_nao_encontrada: "Peça não encontrada." };
 
 export default function BikesPage(props: PageProps<"/bikes">) {
@@ -83,7 +83,7 @@ async function Bikes({ searchParams }: { searchParams: PageProps<"/bikes">["sear
       </section>
       {archived.length > 0 && (
         <section className="card">
-          <h2>Arquivadas</h2>
+          <h2>Aposentadas</h2>
           <ul className="list">
             {archived.map((b) => <li key={b.id}><Link href={`/bikes/${b.id}`}>{b.name}</Link></li>)}
           </ul>

@@ -49,12 +49,17 @@ export async function loadDashboard(userId: string) {
   const [parts, rides, bikes] = await Promise.all([
     loadParts({ bike: { userId, archivedAt: null } }),
     prisma.ride.findMany({ where: { userId, bike: { archivedAt: null } }, select: rideSelect }),
-    prisma.bike.findMany({ where: { userId, archivedAt: null }, select: { id: true, name: true } }),
+    prisma.bike.findMany({
+      where: { userId, archivedAt: null },
+      select: { id: true, name: true, createdAt: true, photo: { select: { updatedAt: true } } },
+      orderBy: { createdAt: "asc" },
+    }),
   ]);
   const bikeName = new Map(bikes.map((b) => [b.id, b.name]));
   const rows = parts.flatMap((p) => {
     const view = withWear(p, rides);
     return view.planViews.map((plan) => ({ bikeId: p.bikeId, bikeName: bikeName.get(p.bikeId) ?? "", part: view, plan, wear: plan.wear }));
   });
-  return { rows: byWearDesc(rows), bikeCount: bikes.length };
+  const bikeList = bikes.map((b) => ({ id: b.id, name: b.name, photoVersion: b.photo ? b.photo.updatedAt.getTime() : null }));
+  return { rows: byWearDesc(rows), bikeCount: bikes.length, bikes: bikeList };
 }
