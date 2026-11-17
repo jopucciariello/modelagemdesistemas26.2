@@ -11,6 +11,7 @@ const ITEMS = [
   { href: "/mercado", label: "Mercado" },
   { href: "/sonhos", label: "Sonhos" },
   { href: "/notificacoes", label: "Avisos" },
+  { href: "/oficinas", label: "Oficinas" },
   { href: "/ajuda", label: "Ajuda" },
 ];
 

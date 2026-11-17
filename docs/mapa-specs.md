@@ -20,3 +20,13 @@
 | 10 | SPEC-010 | Lojistas, selo e moderação | O admin cadastra lojistas, concede o selo e remove anúncios irregulares | RF18, RF19, RF24 | RB06, RB19 | RNF03 | UC18 | Lojista | ADR-008 | SPEC-001, SPEC-008 | Confiança no mercado; o selo aparece nos anúncios já existentes |
 
 RNFs transversais: RNF01 (segredos) em SPEC-004; RNF04 e RNF07 (desempenho e celular) em SPEC-003 e SPEC-005; RNF08 (regra pura testada) em SPEC-005; RNF09 (rastreabilidade) em todas.
+
+## Fase 3 (oficina) — adicionada em 16/11/2026
+
+| Ordem | ID | Nome | RF | RB | RNF | UC | Entidades | ADRs | Depende de |
+|---|---|---|---|---|---|---|---|---|---|
+| 11 | SPEC-011 | Oficinas e horários | RF25 | RB21 | RNF07 | UC19, UC20 | Oficina, Serviço, Horário | ADR-009 | SPEC-001 |
+| 12 | SPEC-012 | Agendamento de revisão | RF26, RF27, RF29 | RB09, RB22 | RNF07 | UC21, UC22 | Agendamento, Aviso | ADR-009 | SPEC-003, SPEC-011 |
+| 13 | SPEC-013 | Histórico compartilhado e conclusão | RF27, RF28 | RB09 | RNF03 | UC23, UC24 | Visita, Evento | ADR-009 | SPEC-006, SPEC-012 |
+
+Ordem: a Fase 3 só depende da Fase 1 (SPEC-001, 003, 006), então anda em paralelo com a Fase 2. As Specs seguem a ordem oficina, agendamento, histórico.

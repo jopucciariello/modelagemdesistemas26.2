@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { AdminCatalog } from "@/components/admin-catalog";
 import { AdminMarket } from "@/components/admin-market";
 import { AdminRequests } from "@/components/admin-requests";
+import { AdminWorkshops } from "@/components/admin-workshops";
 import { Flash, Nav } from "@/components/ui";
 import { getCurrentAdmin, getCurrentUser } from "@/lib/session";
 
@@ -16,6 +17,7 @@ const OK: Record<string, string> = {
   selo_revogado: "Selo de lojista verificado revogado.",
   anuncio_removido: "Anúncio removido.",
   pedido_respondido: "Resposta ao pedido salva.",
+  oficina: "Oficinas atualizadas.",
 };
 
 const ERROR_MESSAGES: Record<string, string> = {
@@ -23,6 +25,8 @@ const ERROR_MESSAGES: Record<string, string> = {
   categoria_existe: "Já existe uma categoria com esse nome.",
   plano_invalido: "O plano precisa de nome e de um intervalo em km ou em horas.",
   componente_invalido: "Informe a marca e o modelo.",
+  oficina_invalida: "Informe o nome da oficina e um e-mail válido.",
+  oficina_existe: "Já existe uma oficina com esse e-mail.",
   componente_existe: "Esse componente já está no catálogo.",
   lojista_invalido: "Informe um e-mail válido e o nome da loja.",
   lojista_sem_usuario: "Não há usuário com esse e-mail. Peça à pessoa para entrar uma vez com o Google.",
@@ -86,6 +90,7 @@ async function AdminArea({ searchParams }: { searchParams: PageProps<"/admin">["
           <AdminCatalog />
           <AdminMarket />
           <AdminRequests />
+          <AdminWorkshops />
         </>
       ) : (
         <section className="card">

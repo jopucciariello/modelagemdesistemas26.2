@@ -76,6 +76,7 @@ Mapa ordenado: [mapa-specs.md](docs/mapa-specs.md). Texto com as 14 seções e i
 | SPEC-008 | Anúncios e vitrine (Fase 2) | Implementada |
 | SPEC-009 | Sonhos e notificações (Fase 2) | Implementada |
 | SPEC-010 | Lojistas, selo e moderação (Fase 2) | Implementada |
+| SPEC-011 a SPEC-013 | Fase 3: oficinas, agendamento, histórico compartilhado | Em implementação (tentativa, 16/11/2026) |
 
 ## 8. Decisões e questões em aberto
 

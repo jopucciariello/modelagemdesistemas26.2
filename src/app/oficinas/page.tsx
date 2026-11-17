@@ -1,0 +1,44 @@
+// RF26: workshops the athlete can book.
+import Link from "next/link";
+import { Suspense } from "react";
+import { connection } from "next/server";
+import { Flash, Nav } from "@/components/ui";
+import { prisma } from "@/lib/db";
+import { requireUser } from "@/lib/guards";
+
+export default function WorkshopsPage(props: PageProps<"/oficinas">) {
+  return (
+    <main className="wide">
+      <header><h1>Oficinas</h1></header>
+      <Suspense fallback={<p className="muted">Carregando…</p>}>
+        <List searchParams={props.searchParams} />
+      </Suspense>
+    </main>
+  );
+}
+
+async function List({ searchParams }: { searchParams: PageProps<"/oficinas">["searchParams"] }) {
+  const user = await requireUser();
+  const { erro } = await searchParams;
+  await connection();
+  const workshops = await prisma.workshop.findMany({
+    where: { active: true },
+    include: { _count: { select: { services: { where: { active: true } } } }, slots: { where: { startsAt: { gt: new Date() }, appointments: { none: { status: { not: "CANCELLED" } } } }, select: { id: true } } },
+    orderBy: { name: "asc" },
+  });
+  return (
+    <>
+      <Nav isAdmin={user.role === "ADMIN"} />
+      <Flash erro={erro} errText={{ oficina_invalida: "Oficina ou horário não encontrado." }} okText={{}} />
+      <p><Link href="/agendamentos">Meus agendamentos</Link> · <Link href="/oficina">Sou responsável por uma oficina</Link></p>
+      {workshops.length === 0 ? <p className="muted">Nenhuma oficina cadastrada ainda.</p> : workshops.map((w) => (
+        <section className="card" key={w.id}>
+          <h2><Link href={`/oficinas/${w.id}`}>{w.name}</Link></h2>
+          <p className="muted">{[w.address, w.phone].filter(Boolean).join(" · ")}</p>
+          {w.description && <p>{w.description}</p>}
+          <p>{w._count.services} serviço(s) · {w.slots.length} horário(s) livre(s)</p>
+        </section>
+      ))}
+    </>
+  );
+}

@@ -72,3 +72,11 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 - [x] T-51 Selo nos anúncios e na vitrine do lojista — RF19 — #24
 - [x] T-52 Admin remove anúncio com motivo — RF24 — #29
 
+## Fase 3 — Oficina (tentativa a partir de 16/11/2026; só depois de a Fase 1 estar funcional)
+- [x] T-60 Migração e entidades `Workshop`, `WorkshopService`, `WorkshopSlot`, `Appointment`, `WorkshopNotice` — RF25 — #5
+- [x] T-61 Admin cadastra oficina com o e-mail do responsável — RF25, RB21 — #5
+- [x] T-62 Área `/oficina`: perfil, serviços com itens e horários — RF25 — #5
+- [x] T-63 Atleta lista oficinas e agenda com bike e serviço — RF26, RB22 — #5
+- [x] T-64 Cancelar agendamento e avisar a oficina (urgente < 24 h) — RF29 — #5
+- [x] T-65 Regra `canWorkshopAccessBike` e página do atendimento só leitura — RF27, RNF03, RB09 — #5
+- [x] T-66 Extrair `recordVisit` e concluir o serviço no histórico da bike — RF28, RF36 — #5

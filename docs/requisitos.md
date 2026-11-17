@@ -18,7 +18,7 @@ Prioridade (MoSCoW): **M** = Must, **S** = Should, **C** = Could.
 
 ### Fase 1 — Tracker de desgaste (escopo da entrega)
 
-> Os requisitos das Fases 2 e 3 (RF16–RF29, RNF03, RB06, RB07, RB09) estão em [segundo-estagio.md](segundo-estagio.md) e não fazem parte da entrega da disciplina.
+> Os requisitos da Fase 2 (RF16–RF24, RB06, RB07) estão em [segundo-estagio.md](segundo-estagio.md). Em 16/11/2026 João decidiu tentar implementar também as Fases 2 e 3, depois que a Fase 1 estiver funcional. Os da Fase 3 (RF25–RF29, RNF03, RB09) estão na seção abaixo.
 
 | ID | Requisito (EARS) | Prio |
 |---|---|:-:|
@@ -66,6 +66,17 @@ Prioridade (MoSCoW): **M** = Must, **S** = Should, **C** = Could.
 | RF24 | O sistema deve permitir que o administrador remova anúncios que violem as regras da plataforma, registrando o motivo. | M |
 
 Notificações da Fase 2 são **dentro do app** (sino com lista e contador), coerente com a OPEN-14 (OPEN-34).
+### Fase 3 — Oficina (implementação iniciada em 16/11/2026)
+
+> Decisão de João em 16/11/2026: tentar entregar as Fases 2 e 3. A Fase 1 continua sendo a entrega garantida e tem prioridade. Os requisitos abaixo vêm de [segundo-estagio.md](segundo-estagio.md); as decisões de interpretação estão marcadas **[PROPOSTO]** e listadas em OPEN-40 a OPEN-44.
+
+| ID | Requisito (EARS) | Prio |
+|---|---|:-:|
+| RF25 | O sistema deve permitir que mecânicos/oficinas cadastrem perfil (nome, descrição, endereço, telefone), serviços oferecidos (com o que cada nível de revisão inclui) e horários disponíveis. O administrador cadastra a oficina com o e-mail Google do responsável, e só esse responsável edita a oficina. **[PROPOSTO]** (OPEN-40, OPEN-41) | M |
+| RF26 | O sistema deve permitir que o atleta agende uma revisão, para uma das suas bikes, em um horário livre de uma oficina ativa, escolhendo o serviço. Um horário só pode ter um agendamento ativo. | M |
+| RF27 | Quando o atleta agendar uma revisão, o sistema deve compartilhar com a oficina o histórico daquela bike (dados da bike, peças instaladas e histórico de manutenção), e avisar o atleta disso antes de confirmar. **[PROPOSTO]** (OPEN-42) | M |
+| RF28 | Quando a oficina concluir um serviço, o sistema deve registrar o serviço e as peças trocadas no histórico da bike, como uma visita à oficina (RF36), já com os itens do nível de revisão contratado. **[PROPOSTO]** (OPEN-44) | M |
+| RF29 | Se o atleta cancelar um agendamento com menos de 24 h de antecedência, então o sistema deve notificar a oficina imediatamente (aviso dentro do app, OPEN-43). Cancelamentos com mais antecedência também liberam o horário e avisam a oficina, sem destaque de urgência. **[PROPOSTO]** | S |
 
 ---
 
@@ -77,7 +88,7 @@ Os RNFs também seguem o padrão EARS.
 |---|---|---|
 | RNF01 | Segurança | Quando o atleta vincular o Strava (RF33) ou o conector (RF34), o sistema deve armazenar criptografados, apenas no backend, os tokens do Strava, o `Client Secret` do app dele e a chave de API do conector, sem expô-los ao frontend nem aos logs. |
 | RNF02 | Segurança | O sistema não deve armazenar senhas: todos os usuários se autenticam pelo Google (OpenID Connect), conforme o [ADR-005](adr/ADR-005-login-unico-google.md) e o [ADR-006](adr/ADR-006-fontes-de-pedais.md). *(Alterado em 12/11/2026; antes previa hash de senha com bcrypt ou argon2.)* |
-| RNF03 | Privacidade (LGPD) | *Movido para o [segundo estágio](segundo-estagio.md) (compartilhamento do histórico com oficinas).* |
+| RNF03 | Privacidade (LGPD) | Se um terceiro (oficina) tentar ver o histórico de uma bike sem autorização do atleta, então o sistema deve negar o acesso. A autorização é o agendamento (RF27) e a permissão é conferida a cada requisição (RB09). *(Fase 3, 16/11/2026.)* |
 | RNF04 | Desempenho | O sistema deve carregar as páginas principais em até 2 s em conexão 4G. |
 | RNF05 | Integração | Enquanto estiver integrado ao Strava, o sistema deve respeitar os limites de requisição da API, usando webhooks quando disponíveis e polling como alternativa. |
 | RNF06 | Disponibilidade | Se o Strava estiver indisponível, então o sistema deve manter as demais funções em uso. |
@@ -101,7 +112,9 @@ Os RNFs também seguem o padrão EARS.
 | RB19 | Só o autor edita, marca como vendido ou encerra o próprio anúncio; o administrador pode removê-lo (RF24). **[PROPOSTO]** |
 | RB20 | O GearLog não processa pagamento nem intermedeia a negociação; a vitrine mostra o contato do vendedor (e-mail da conta Google) só a usuários logados. **[PROPOSTO]** (OPEN-35) |
 | RB08 | Cada atleta usa o próprio app do Strava (RF33) ou o próprio conector (RF34), então o GearLog não depende de um app único do Strava nem de homologação comercial. |
-| RB09 | *Movida para o [segundo estágio](segundo-estagio.md).* |
+| RB09 | Uma oficina só acessa o histórico de bikes com agendamento ativo ou concluído com ela. Agendamento cancelado encerra o acesso. *(Fase 3, 16/11/2026.)* |
+| RB21 | Só o responsável pela oficina (o e-mail Google cadastrado pelo administrador) edita o perfil, os serviços e os horários dela e conclui os atendimentos dela. A permissão é conferida a cada requisição, como na RB17. **[PROPOSTO]** (OPEN-40) |
+| RB22 | Um horário de oficina tem no máximo um agendamento ativo (agendado ou concluído); só horários futuros podem ser agendados. |
 | RB10 | Cada categoria de peça define sua métrica de desgaste: km, horas ou ambas. Peças de suspensão (garfo, amortecedor) e canote retrátil são medidas por horas de uso. |
 | RB11 | Quando a peça tiver vida útil em km e em horas, vale o critério que for atingido primeiro (maior percentual). |
 | RB12 | Horas de uso = tempo em movimento da atividade (`moving_time`), não o tempo total decorrido. |
@@ -165,6 +178,7 @@ Atualizado em 12/11/2026. Código em `src/`, testes em `tests/unit/`.
 | RF18, RF19, RF24 | Feito (Fase 2) | `src/app/actions/merchants.ts`, `src/components/admin-market.tsx`, `src/components/seller-badge.tsx` | `merchants.test.ts` |
 | RF20, RF21, RF22, RF23 | Feito (Fase 2); funções com banco sem teste automatizado | `src/app/sonhos/`, `src/app/notificacoes/`, `src/lib/dreams.ts`, `createListing` | `dreams.test.ts` (`matchesDream`) |
 | RF32, RF33, RF34 | Feito | `src/app/fonte/`, `src/lib/strava/`, `src/lib/connector/` | `strava-oauth.test.ts`, `activity-sources.test.ts` |
+| RF25–RF29, RNF03, RB09 | Feito (16/11/2026, aguarda aprovação dos [PROPOSTO]) | `src/app/oficina/`, `src/app/oficinas/`, `src/app/agendamentos/`, `src/app/actions/workshops.ts`, `src/lib/workshop.ts` | `workshop.test.ts` |
 | RB02, RB03, RB04, RB11–RB14, RB16 | Feito | `src/lib/wear.ts` | `wear.test.ts` |
 | RB18 | Feito | `servicePlan`, `canResetPlan` | `catalog.test.ts` |
 | RB17 | Feito | `src/lib/session.ts` (`getCurrentAdmin`) | `google-admin-login.test.ts` |
