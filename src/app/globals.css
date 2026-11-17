@@ -138,3 +138,6 @@ form.row input, form.stack input { width: auto; max-width: 100%; margin-top: 0; 
 form.stack input[type="text"], form.stack input:not([type]) { width: 100%; max-width: 28rem; }
 form.row input[type="checkbox"], form.stack input[type="checkbox"] { width: auto; }
 form.inline { display: inline; }
+
+/* Strava brand guidelines: "View on Strava" must be bold/underlined or #FC5200. */
+.view-on-strava { color: #fc5200; font-weight: 700; text-decoration: underline; }
