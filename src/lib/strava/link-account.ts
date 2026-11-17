@@ -1,4 +1,4 @@
-// RF33, RNF01: the athlete's own Strava app credentials and tokens, always stored encrypted.
+// RNF01: the central Strava app credentials and the athlete tokens, always stored encrypted.
 import "server-only";
 import { prisma } from "@/lib/db";
 import { decrypt, encrypt } from "@/lib/crypto";
