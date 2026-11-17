@@ -9,7 +9,17 @@ function required(name: string): string {
   return value;
 }
 
-/** ADR-006: the Strava app is the athlete's own; only the callback and base URLs are global. */
+/**
+ * RF04, RF32: the GearLog central Strava app, from Infisical. Null while it is not registered yet,
+ * in which case the central option is hidden. Never log these values.
+ */
+export function stravaCentralApp(): { clientId: string; clientSecret: string } | null {
+  const clientId = process.env.STRAVA_CLIENT_ID?.trim();
+  const clientSecret = process.env.STRAVA_CLIENT_SECRET?.trim();
+  return clientId && clientSecret ? { clientId, clientSecret } : null;
+}
+
+/** ADR-006: athletes may use their own app (RF33); callback and base URLs are global. */
 export function stravaCallbackUrl(): string {
   return process.env.STRAVA_CALLBACK_URL ?? `${appUrl()}/auth/strava/callback`;
 }

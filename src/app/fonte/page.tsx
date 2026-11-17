@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { readConnectorStatus } from "@/lib/connector/save";
+import { stravaCentralApp } from "@/lib/env";
 import { getCurrentUser } from "@/lib/session";
 
 const MESSAGES: Record<string, string> = {
@@ -24,6 +25,7 @@ const OK: Record<string, string> = {
   manual: "Fonte alterada para lançamento manual.",
   strava: "Strava vinculado com o seu app.",
   conector: "Conector vinculado.",
+  desconectado: "Strava desconectado. Os tokens foram apagados.",
 };
 
 export default function SourcePage(props: PageProps<"/fonte">) {
@@ -53,6 +55,7 @@ async function SourceArea({ searchParams }: { searchParams: PageProps<"/fonte">[
   }
   const connector = await readConnectorStatus(user.id);
   const stravaLinked = Boolean(user.strava?.accessTokenEncrypted);
+  const central = stravaCentralApp() !== null;
   const label = (s: string) => (user.activitySource === s ? " (em uso)" : "");
 
   return (
@@ -68,8 +71,29 @@ async function SourceArea({ searchParams }: { searchParams: PageProps<"/fonte">[
         </form>
       </section>
 
-      <section className="card">
-        <h2>API do Strava{label("STRAVA")}</h2>
+      {central && (
+        <section className="card">
+          <h2>Strava{label("STRAVA")}</h2>
+          <p className="muted">
+            Recomendado: autorize o GearLog direto no Strava, sem cadastrar nada.
+            {stravaLinked ? " Conta Strava vinculada." : ""} Lemos só data, esporte, distância, tempo em movimento e bike.
+            {" "}<Link href="/privacidade">Privacidade</Link>.
+          </p>
+          <form action="/fonte/strava" method="post">
+            <input type="hidden" name="central" value="1" />
+            <button className="button button-strava" type="submit">Conectar com o Strava</button>
+          </form>
+        </section>
+      )}
+
+      {user.strava && (
+        <form action="/fonte/strava/desconectar" method="post">
+          <button className="button small" type="submit">Desconectar o Strava e apagar os tokens</button>
+        </form>
+      )}
+
+      <details className="card" open={!central}>
+        <summary><h2 style={{ display: "inline" }}>{central ? "Usar meu próprio app do Strava (avançado)" : "API do Strava"}{label("STRAVA")}</h2></summary>
         <p className="muted">
           Você usa o seu próprio app do Strava. <a href="/tutorial-strava">Veja o passo a passo para cadastrá-lo</a>.
           {stravaLinked ? " Conta Strava vinculada." : user.strava ? " App salvo; falta autorizar no Strava." : ""}
@@ -79,12 +103,12 @@ async function SourceArea({ searchParams }: { searchParams: PageProps<"/fonte">[
           <label>Client Secret <input name="clientSecret" type="password" autoComplete="off" required placeholder={user.strava ? "já configurado (cole de novo para trocar)" : ""} /></label>
           <button className="button button-strava" type="submit">Salvar e conectar com o Strava</button>
         </form>
-      </section>
+      </details>
 
       <section className="card">
-        <h2>Conector{label("CONNECTOR")}</h2>
+        <h2>Conector{label("CONNECTOR")}{central ? " — temporário" : ""}</h2>
         <p className="muted">
-          Você informa a URL e a chave de API do seu strava-connector.
+          Ponte temporária: você informa a URL e a chave de API do seu strava-connector, até o Strava aprovar o app do GearLog.
           {connector?.ok && (connector.data.linked ? " Conectado e com o Strava vinculado no conector." : " Conectado, mas o conector ainda não está vinculado ao Strava.")}
           {connector?.ok && connector.data.lastSyncAt && ` Última sincronização: ${new Date(connector.data.lastSyncAt).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })}.`}
           {connector?.ok && connector.data.lastError && " O conector registrou um erro na última sincronização."}
