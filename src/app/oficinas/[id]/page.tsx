@@ -61,7 +61,7 @@ async function Detail({ params, searchParams }: PageProps<"/oficinas/[id]">) {
       </section>
       <section className="card">
         <h2>Agendar revisão</h2>
-        {bikes.length === 0 && <p className="alert">Cadastre uma bike antes de agendar. <Link href="/bikes">Bikes</Link></p>}
+        {bikes.length === 0 && <p className="alert">Cadastre uma bike antes de agendar. <Link href="/configuracoes">Adicionar bike</Link></p>}
         {!canBook ? <p className="muted">Sem horários livres ou serviços no momento.</p> : (
           <form action={bookAppointment}>
             <input type="hidden" name="workshopId" value={workshop.id} />

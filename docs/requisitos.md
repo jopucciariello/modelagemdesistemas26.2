@@ -22,7 +22,7 @@ Prioridade (MoSCoW): **M** = Must, **S** = Should, **C** = Could.
 
 | ID | Requisito (EARS) | Prio |
 |---|---|:-:|
-| RF01 | O sistema deve permitir que o atleta cadastre, edite, arquive e exclua bicicletas (nome, tipo, marca, modelo, ano). A exclusão apaga a bike, as peças e o histórico e exige confirmação; os pedais importados da fonte permanecem guardados sem bike, e a exclusão é recusada enquanto houver agendamento em oficina. | M |
+| RF01 | O sistema deve permitir que o atleta cadastre, edite, aposente (arquive) e exclua bicicletas (nome, tipo, marca, modelo, ano) e envie uma foto de cada uma (JPEG, PNG ou WebP, até 1 MB; sem foto, aparece um ícone). A exclusão apaga a bike, as peças e o histórico e exige confirmação; os pedais importados da fonte permanecem guardados sem bike, e a exclusão é recusada enquanto houver agendamento em oficina. | M |
 | RF02 | O sistema deve permitir que o atleta cadastre peças em uma bike, escolhendo a família e o componente do catálogo (RF30) e informando posição na bike (opcional), data de instalação, uso inicial (km e/ou horas) e os planos de manutenção da peça (RB16). Os planos sugeridos são os do componente ou, se ele não tiver, os da família. *(Alterado em 12/11/2026.)* | M |
 | RF03 | Quando o atleta cadastrar uma peça sem informar vida útil, o sistema deve sugerir a vida útil padrão da categoria. | S |
 | RF04 | Quando o usuário entrar com a conta Google (OpenID Connect), o sistema deve criar ou localizar o seu perfil: Administrador, se o e-mail verificado estiver em `ADMIN_EMAILS` (RB17), ou Atleta, nos demais casos. **[PROPOSTO]** *(Alterado em 12/11/2026; antes vinculava a conta Strava via OAuth 2.0. O vínculo com o Strava passa a ser a fonte B do RF32.)* | M |
@@ -35,8 +35,8 @@ Prioridade (MoSCoW): **M** = Must, **S** = Should, **C** = Could.
 | RF11 | O sistema deve exibir o histórico de manutenção de cada bike em ordem cronológica. | M |
 | RF12 | O sistema deve permitir que o atleta registre manutenção manual (ex.: lubrificação, sangria de freio) sem troca de peça. | S |
 | RF13 | Se a sincronização com a fonte (Strava ou conector) falhar, então o sistema deve manter os dados anteriores, registrar a falha e permitir nova tentativa manual. | M |
-| RF14 | Onde a fonte de pedais do atleta for manual (RF32), o sistema deve permitir que o atleta lance cada pedal à mão, com bike, data, distância (km) e tempo em movimento (horas). | M |
-| RF15 | O sistema deve exibir um painel com as peças de todas as bikes ordenadas por desgaste. | S |
+| RF14 | Onde a fonte de pedais do atleta for manual (RF32), o sistema deve permitir que o atleta lance cada pedal à mão, com bike, data, distância (km) e tempo em movimento (horas). A tela "Pedais recentes" lista distância, tempo (em h e m), tipo, bike, data e origem de cada pedal, tem um botão para atualizar pela fonte e um botão + para lançar um pedal novo; pedais lançados à mão podem ser excluídos depois de uma confirmação. | M |
+| RF15 | O sistema deve exibir um painel com um cartão por bike (foto e nome), recolhido por padrão, que o atleta expande para ver as peças da bike ordenadas por desgaste. | S |
 | RF30 | O sistema deve permitir que o administrador mantenha o catálogo de peças no formato da planilha de catálogo: famílias (Transmissão, Suspensão, Pneus, Freios, Rodas, Canotes, Selins), cada uma com planos de manutenção padrão (métrica, intervalo e ação: troca ou revisão) e a indicação se desgasta em rolo (RB14); e componentes com código (ex.: `TRX-018`), marca, modelo, modalidade, subcategoria, detalhes, faixa de preço de referência e planos próprios, incluindo lançamentos. O catálogo pode ser carregado da planilha, sem duplicar itens pelo código. *(Alterado em 12/11/2026.)* | M |
 | RF35 | O sistema deve manter bikes-modelo de fábrica (código, marca, modelo, versão, categoria e peças originais por posição) e, quando o atleta criar uma bike a partir de um modelo, instalar as peças originais com os planos sugeridos na data informada. *(Incluído em 12/11/2026, a partir da aba Bikes da planilha.)* | S |
 | RF36 | Quando o atleta registrar uma revisão feita numa oficina (fora do programado), o sistema deve permitir informar de uma vez vários itens (peças e planos da bike, ou itens fora do catálogo, como o movimento central) e, para cada um, o que foi feito (verificado/ajustado, item revisado ou trocado, ou peça inteira trocada) e a condição informada pelo mecânico (boa, atenção, trocar em breve). Itens revisados ou trocados zeram o contador (RB13, RB18, RF10); todos vão para o histórico (RF11) com a oficina. *(Incluído em 13/11/2026 a pedido de João.)* | S |
@@ -168,8 +168,9 @@ Atualizado em 12/11/2026. Código em `src/`, testes em `tests/unit/`.
 | RF07, RF08, RF09 | Feito (alerta dentro do app, OPEN-14) | `src/lib/wear.ts`, `src/components/ui.tsx` | `wear.test.ts` |
 | RF10, RF11, RF12 | Feito | `replacePart`, `servicePlan`, `addManualMaintenance`, página da bike | `wear.test.ts` (revisão por plano) |
 | RF13 | Feito | `syncRides` grava `lastSyncError` sem apagar dados | — |
-| RF14 | Feito | `src/app/pedais/`, `src/app/actions/rides.ts` | `rides-map.test.ts` (datas) |
-| RF15 | Feito | `src/app/page.tsx`, `src/lib/tracker.ts` | `wear.test.ts` (ordenação) |
+| RF14 | Feito | `src/app/pedais/`, `src/app/actions/rides.ts`, `src/lib/format.ts` | `rides-map.test.ts` (datas), `bike-photo.test.ts` (tempo em h e m) |
+| RF15 | Feito | `src/app/page.tsx`, `src/lib/tracker.ts`, `src/components/bike-avatar.tsx` | `wear.test.ts` (ordenação) |
+| RF01 (foto, aposentar, excluir; adicionar bike em Configurações) | Feito | `setBikePhoto`, `src/app/bikes/[id]/foto/route.ts`, `src/lib/bike-photo.ts` | `bike-photo.test.ts` |
 | RF30 | Feito | `src/app/admin/`, `src/app/actions/catalog.ts`, `src/lib/catalog/seed.json`, `src/lib/catalog/load.ts`, `src/instrumentation.ts` (carga automática na subida do servidor) | `catalog.test.ts` |
 | RF35 | Feito | `createBike`, `src/app/bikes/page.tsx` | `catalog.test.ts` |
 | RF36 | Feito | `recordShopVisit`, `src/lib/visit.ts`, página da bike | `visit.test.ts` |

@@ -1,10 +1,12 @@
-// RF06, RF13, RF14: rides typed by hand and the sync with the athlete's source.
+// RF06, RF13, RF14: recent rides, a refresh button (sync) and a + button (new ride by hand).
 import Link from "next/link";
 import { Suspense } from "react";
 import { createManualRide, deleteManualRide, syncNow } from "@/app/actions/rides";
-import { Nav, hours, km } from "@/components/ui";
+import { ConfirmSubmit } from "@/components/confirm-submit";
+import { Nav, km } from "@/components/ui";
 import { prisma } from "@/lib/db";
 import { formatDay, toLocalDay } from "@/lib/dates";
+import { formatDuration } from "@/lib/format";
 import { requireUser } from "@/lib/guards";
 
 const SPORTS: Record<string, string> = {
@@ -27,7 +29,6 @@ const SOURCE_LABEL = { MANUAL: "manual", STRAVA: "Strava", CONNECTOR: "conector"
 export default function RidesPage(props: PageProps<"/pedais">) {
   return (
     <main className="wide">
-      <header><h1>Pedais</h1></header>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <Rides searchParams={props.searchParams} />
       </Suspense>
@@ -50,62 +51,53 @@ async function Rides({ searchParams }: { searchParams: PageProps<"/pedais">["sea
   return (
     <>
       <Nav isAdmin={user.role === "ADMIN"} />
+      <header className="rides-head">
+        <div>
+          <h1>Pedais recentes</h1>
+          <p className="muted">
+            {total > rides.length ? `${rides.length} de ${total} pedais. ` : ""}
+            {user.activitySource !== "MANUAL" && (status?.lastSyncAt ? `Última atualização: ${status.lastSyncAt.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })}.` : "Ainda não atualizado.")}
+          </p>
+        </div>
+        <div className="rides-actions">
+          {user.activitySource !== "MANUAL" && (
+            <form action={syncNow}>
+              <button className="icon-button" type="submit" aria-label={`Atualizar pelo ${SOURCE_LABEL[user.activitySource]}`} title={`Atualizar pelo ${SOURCE_LABEL[user.activitySource]}`}>↻</button>
+            </form>
+          )}
+          <a className="icon-button" href="#novo-pedal" aria-label="Lançar pedal" title="Lançar pedal">+</a>
+        </div>
+      </header>
       {erro === "pedal_invalido" && <p className="alert" role="alert">Informe bike, data, km e horas válidos.</p>}
       {syncError && <p className="alert" role="alert">{SYNC_ERR[syncError] ?? SYNC_ERR.unexpected}</p>}
+      {user.activitySource !== "MANUAL" && status?.lastSyncError && !syncError && <p className="alert" role="alert">A última atualização falhou; os dados anteriores foram mantidos.</p>}
       {ok === "pedal" && <p className="ok" role="status">Pedal lançado.</p>}
-      {ok === "removido" && <p className="ok" role="status">Pedal removido.</p>}
-      {ok === "sync" && <p className="ok" role="status">Sincronizado: {typeof n === "string" ? n : 0} pedais lidos da fonte.</p>}
-
-      {user.activitySource !== "MANUAL" && (
-        <section className="card">
-          <h2>Sincronizar com {SOURCE_LABEL[user.activitySource]}</h2>
-          <p className="muted">
-            {status?.lastSyncAt ? `Última sincronização: ${status.lastSyncAt.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })}.` : "Ainda não sincronizado."}
-            {status?.lastSyncError && " A última tentativa falhou; os dados anteriores foram mantidos."}
-          </p>
-          <form action={syncNow}><button className="button" type="submit">Sincronizar agora</button></form>
-          {unassigned > 0 && <p className="muted">{unassigned} pedais importados ainda sem bike. Associe as bikes da fonte na página de cada bike (RF05).</p>}
-        </section>
-      )}
+      {ok === "removido" && <p className="ok" role="status">Pedal excluído.</p>}
+      {ok === "sync" && <p className="ok" role="status">Atualizado: {typeof n === "string" ? n : 0} pedais lidos da fonte.</p>}
+      {unassigned > 0 && <p className="muted">{unassigned} pedais ainda sem bike. Associe as bikes da fonte na página de cada bike (RF05).</p>}
 
       <section className="card">
-        <h2>Lançar pedal à mão</h2>
-        {bikes.length === 0 ? <p><Link href="/bikes">Cadastre uma bike</Link> antes de lançar pedais.</p> : (
-          <form action={createManualRide} className="row">
-            <label>Bike
-              <select name="bikeId" required>{bikes.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}</select>
-            </label>
-            <label>Data <input name="date" type="date" required defaultValue={toLocalDay(new Date())} /></label>
-            <label>Tipo
-              <select name="sportType" defaultValue="Ride">{Object.entries(SPORTS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select>
-            </label>
-            <label>Distância (km) <input name="distanceKm" type="number" min={0} step="any" required /></label>
-            <label>Tempo em movimento (h) <input name="movingHours" type="number" min={0} step="any" required /></label>
-            <button className="button" type="submit">Lançar</button>
-          </form>
-        )}
-      </section>
-
-      <section className="card">
-        <h2>Últimos pedais {total > rides.length && <span className="muted">({rides.length} de {total})</span>}</h2>
-        {rides.length === 0 ? <p className="muted">Nenhum pedal ainda.</p> : (
+        {rides.length === 0 ? <p className="muted">Nenhum pedal ainda. Use o + para lançar um{user.activitySource !== "MANUAL" ? " ou ↻ para buscar da fonte" : ""}.</p> : (
           <div className="table-wrap">
             <table>
-              <thead><tr><th>Data</th><th>Bike</th><th>Tipo</th><th>Distância</th><th>Tempo</th><th></th></tr></thead>
+              <thead><tr><th>Distância</th><th>Tempo</th><th>Tipo</th><th>Bike</th><th>Data</th><th>Origem</th></tr></thead>
               <tbody>
                 {rides.map((r) => (
                   <tr key={r.id}>
-                    <td>{formatDay(r.startDate)}</td>
-                    <td>{r.bike?.name ?? <span className="muted">sem bike</span>}</td>
-                    <td>{SPORTS[r.sportType] ?? r.sportType}</td>
                     <td>{km(r.distanceKm)}</td>
-                    <td>{hours(r.movingHours)}</td>
+                    <td>{formatDuration(r.movingHours)}</td>
+                    <td>{SPORTS[r.sportType] ?? r.sportType}</td>
+                    <td>{r.bike?.name ?? <span className="muted">sem bike</span>}</td>
+                    <td>{formatDay(r.startDate)}</td>
                     <td>
                       {r.source === "MANUAL" ? (
-                        <form action={deleteManualRide} className="inline">
-                          <input type="hidden" name="rideId" value={r.id} />
-                          <button className="button small" type="submit">Remover</button>
-                        </form>
+                        <>
+                          <span className="muted">{SOURCE_LABEL[r.source]}</span>{" "}
+                          <form action={deleteManualRide} className="inline">
+                            <input type="hidden" name="rideId" value={r.id} />
+                            <ConfirmSubmit className="button small danger" message="Excluir este pedal? Ele deixa de contar no desgaste das peças e não dá para desfazer.">Excluir</ConfirmSubmit>
+                          </form>
+                        </>
                       ) : (
                         <>
                           <span className="muted">{SOURCE_LABEL[r.source]}</span>
@@ -120,6 +112,27 @@ async function Rides({ searchParams }: { searchParams: PageProps<"/pedais">["sea
               </tbody>
             </table>
           </div>
+        )}
+      </section>
+
+      <section className={`card new-ride-card${erro === "pedal_invalido" ? " open" : ""}`} id="novo-pedal">
+        <div className="rides-head">
+          <h2>Lançar pedal</h2>
+          <a href="#" className="muted">Fechar</a>
+        </div>
+        {bikes.length === 0 ? <p><Link href="/configuracoes">Cadastre uma bike</Link> antes de lançar pedais.</p> : (
+          <form action={createManualRide} className="row">
+            <label>Bike
+              <select name="bikeId" required>{bikes.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}</select>
+            </label>
+            <label>Data <input name="date" type="date" required defaultValue={toLocalDay(new Date())} /></label>
+            <label>Tipo
+              <select name="sportType" defaultValue="Ride">{Object.entries(SPORTS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select>
+            </label>
+            <label>Distância (km) <input name="distanceKm" type="number" min={0} step="any" required /></label>
+            <label>Tempo em movimento (h) <input name="movingHours" type="number" min={0} step="any" required /></label>
+            <button className="button" type="submit">Lançar</button>
+          </form>
         )}
       </section>
     </>

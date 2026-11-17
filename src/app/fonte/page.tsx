@@ -1,6 +1,8 @@
 // RF32-RF34: the athlete picks where their rides come from.
 import Link from "next/link";
 import { Suspense } from "react";
+import { Nav } from "@/components/ui";
+import { SettingsTabs } from "@/components/settings-tabs";
 import { readConnectorStatus } from "@/lib/connector/save";
 import { stravaCentralApp } from "@/lib/env";
 import { getCurrentUser } from "@/lib/session";
@@ -60,6 +62,8 @@ async function SourceArea({ searchParams }: { searchParams: PageProps<"/fonte">[
 
   return (
     <>
+      <Nav isAdmin={user.role === "ADMIN"} />
+      <SettingsTabs />
       {typeof erro === "string" && <p className="alert" role="alert">{MESSAGES[erro] ?? MESSAGES.unexpected}</p>}
       {typeof ok === "string" && OK[ok] && <p className="muted" role="status">{OK[ok]}</p>}
 

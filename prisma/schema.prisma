@@ -234,6 +234,7 @@ model Bike {
   events       MaintenanceEvent[]
   visits       ServiceVisit[]
   appointments Appointment[]
+  photo        BikePhoto?
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @updatedAt
 
@@ -517,4 +518,13 @@ model ModelRequest {
 
   @@index([userId])
   @@index([status])
+}
+
+// RF01: the athlete's own picture of a bike. Kept apart from Bike so lists never load the bytes.
+model BikePhoto {
+  bikeId      String   @id
+  bike        Bike     @relation(fields: [bikeId], references: [id], onDelete: Cascade)
+  contentType String
+  data        Bytes
+  updatedAt   DateTime @updatedAt
 }
