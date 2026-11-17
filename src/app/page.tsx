@@ -2,6 +2,7 @@ import { BikeAvatar } from "@/components/bike-avatar";
 import { Suspense } from "react";
 import Link from "next/link";
 import { Nav, WearMeter, hours, km } from "@/components/ui";
+import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 import { loadDashboard } from "@/lib/tracker";
 
@@ -12,8 +13,11 @@ const ERROR_MESSAGES: Record<string, string> = {
   token_exchange_failed: "O Google recusou o login. Tente de novo.",
   invalid_id_token: "Não foi possível validar o login do Google. Tente de novo.",
   unexpected: "Não foi possível concluir o login. Tente de novo.",
+  bike_nao_encontrada: "Bike não encontrada.",
+  peca_nao_encontrada: "Peça não encontrada.",
 };
 
+const BIKE_OK: Record<string, string> = { aposentada: "Bike aposentada. O histórico continua guardado.", excluida: "Bike excluída." };
 const SOURCE_LABELS = { MANUAL: "lançamento manual", STRAVA: "API do Strava", CONNECTOR: "conector" } as const;
 
 export default function Home(props: PageProps<"/">) {
@@ -31,7 +35,7 @@ export default function Home(props: PageProps<"/">) {
 }
 
 async function SessionArea({ searchParams }: { searchParams: PageProps<"/">["searchParams"] }) {
-  const { erro } = await searchParams;
+  const { erro, ok } = await searchParams;
   const errorCode = typeof erro === "string" ? erro : undefined;
   const user = await getCurrentUser();
 
@@ -42,6 +46,7 @@ async function SessionArea({ searchParams }: { searchParams: PageProps<"/">["sea
           {ERROR_MESSAGES[errorCode] ?? ERROR_MESSAGES.unexpected}
         </p>
       )}
+      {user && typeof ok === "string" && BIKE_OK[ok] && <p className="ok" role="status">{BIKE_OK[ok]}</p>}
 
       {user ? (
         <>
@@ -51,6 +56,7 @@ async function SessionArea({ searchParams }: { searchParams: PageProps<"/">["sea
             <p className="muted">Como estão as peças das suas bikes. Fonte dos pedais: <Link href="/fonte">{SOURCE_LABELS[user.activitySource]}</Link>.</p>
           </section>
           <Dashboard userId={user.id} />
+          <RetiredBikes userId={user.id} />
           <form action="/auth/logout" method="post">
             <button className="button small" type="submit">Sair</button>
           </form>
@@ -79,7 +85,7 @@ async function Dashboard({ userId }: { userId: string }) {
         <span className="big" aria-hidden="true">🚲</span>
         <h2>Nenhuma bike ainda</h2>
         <p className="muted">Cadastre a primeira e depois instale as peças para acompanhar o desgaste.</p>
-        <Link className="button" href="/bikes">Cadastrar bike</Link>
+        <Link className="button" href="/configuracoes#nova-bike">Cadastrar bike</Link>
       </section>
     );
   }
@@ -140,6 +146,24 @@ async function Dashboard({ userId }: { userId: string }) {
           )}
         </details>
       ))}
+    </>
+  );
+}
+
+/** RF01: retired bikes stay reachable (history kept) and can be brought back. */
+async function RetiredBikes({ userId }: { userId: string }) {
+  const retired = await prisma.bike.findMany({ where: { userId, archivedAt: { not: null } }, orderBy: { archivedAt: "desc" }, select: { id: true, name: true } });
+  return (
+    <>
+      <p className="bike-open"><Link className="button small" href="/configuracoes#nova-bike">+ Adicionar bike</Link></p>
+      {retired.length > 0 && (
+        <details className="card">
+          <summary>Bikes aposentadas ({retired.length})</summary>
+          <ul className="list">
+            {retired.map((b) => <li key={b.id}><Link href={`/bikes/${b.id}`}>{b.name}</Link></li>)}
+          </ul>
+        </details>
+      )}
     </>
   );
 }

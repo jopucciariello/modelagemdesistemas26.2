@@ -170,7 +170,7 @@ Atualizado em 12/11/2026. Código em `src/`, testes em `tests/unit/`.
 | RF13 | Feito | `syncRides` grava `lastSyncError` sem apagar dados | — |
 | RF14 | Feito | `src/app/pedais/`, `src/app/actions/rides.ts`, `src/lib/format.ts` | `rides-map.test.ts` (datas), `bike-photo.test.ts` (tempo em h e m) |
 | RF15 | Feito | `src/app/page.tsx`, `src/lib/tracker.ts`, `src/components/bike-avatar.tsx` | `wear.test.ts` (ordenação) |
-| RF01 (foto) | Feito | `setBikePhoto`, `src/app/bikes/[id]/foto/route.ts`, `src/lib/bike-photo.ts` | `bike-photo.test.ts` |
+| RF01 (foto, aposentar, excluir; adicionar bike em Configurações) | Feito | `setBikePhoto`, `src/app/bikes/[id]/foto/route.ts`, `src/lib/bike-photo.ts` | `bike-photo.test.ts` |
 | RF30 | Feito | `src/app/admin/`, `src/app/actions/catalog.ts`, `src/lib/catalog/seed.json`, `src/lib/catalog/load.ts`, `src/instrumentation.ts` (carga automática na subida do servidor) | `catalog.test.ts` |
 | RF35 | Feito | `createBike`, `src/app/bikes/page.tsx` | `catalog.test.ts` |
 | RF36 | Feito | `recordShopVisit`, `src/lib/visit.ts`, página da bike | `visit.test.ts` |

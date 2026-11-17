@@ -5,20 +5,23 @@ import { usePathname } from "next/navigation";
 
 const ITEMS = [
   { href: "/", label: "Painel" },
-  { href: "/bikes", label: "Bikes" },
   { href: "/pedais", label: "Pedais" },
-  { href: "/fonte", label: "Fonte" },
   { href: "/mercado", label: "Mercado" },
   { href: "/sonhos", label: "Sonhos" },
   { href: "/notificacoes", label: "Avisos" },
   { href: "/oficinas", label: "Oficinas" },
   { href: "/ajuda", label: "Ajuda" },
+  { href: "/configuracoes", label: "Configurações" },
 ];
 
 export function NavLinks({ isAdmin }: { isAdmin?: boolean }) {
   const path = usePathname();
   const items = isAdmin ? [...ITEMS, { href: "/admin", label: "Catálogo" }] : ITEMS;
-  const active = (href: string) => (href === "/" ? path === "/" : path === href || path.startsWith(`${href}/`));
+  const active = (href: string) => {
+    if (href === "/") return path === "/";
+    if (href === "/configuracoes") return path === href || path.startsWith("/fonte");
+    return path === href || path.startsWith(`${href}/`);
+  };
   return (
     <nav className="nav" aria-label="Principal">
       {items.map((i) => (

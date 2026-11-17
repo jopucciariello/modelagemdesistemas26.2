@@ -120,7 +120,7 @@ async function Rides({ searchParams }: { searchParams: PageProps<"/pedais">["sea
           <h2>Lançar pedal</h2>
           <a href="#" className="muted">Fechar</a>
         </div>
-        {bikes.length === 0 ? <p><Link href="/bikes">Cadastre uma bike</Link> antes de lançar pedais.</p> : (
+        {bikes.length === 0 ? <p><Link href="/configuracoes">Cadastre uma bike</Link> antes de lançar pedais.</p> : (
           <form action={createManualRide} className="row">
             <label>Bike
               <select name="bikeId" required>{bikes.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}</select>

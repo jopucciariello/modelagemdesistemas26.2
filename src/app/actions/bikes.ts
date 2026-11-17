@@ -12,13 +12,13 @@ import { recordVisit } from "@/lib/visit-record";
 /** Loads a bike only if it belongs to the user; otherwise back to the list. */
 async function ownBike(userId: string, bikeId: string) {
   const bike = await prisma.bike.findFirst({ where: { id: bikeId, userId } });
-  if (!bike) redirect("/bikes?erro=bike_nao_encontrada");
+  if (!bike) redirect("/?erro=bike_nao_encontrada");
   return bike;
 }
 
 async function ownPart(userId: string, partId: string) {
   const part = await prisma.part.findFirst({ where: { id: partId, bike: { userId } }, include: { plans: true, component: true } });
-  if (!part) redirect("/bikes?erro=peca_nao_encontrada");
+  if (!part) redirect("/?erro=peca_nao_encontrada");
   return part;
 }
 
@@ -61,7 +61,7 @@ export async function createBike(form: FormData) {
   const gearId = text(form, "stravaGearId", 40) || null;
   const modelId = text(form, "bikeModelId", 40);
   if (!modelId) {
-    if (!f.name || !f.type) redirect("/bikes?erro=bike_invalida");
+    if (!f.name || !f.type) redirect("/configuracoes?erro=bike_invalida");
     const bike = await prisma.bike.create({ data: { ...f, type: f.type!, userId: user.id } });
     await linkNewBike(user.id, bike.id, gearId);
     redirect(`/bikes/${bike.id}?ok=bike`);
@@ -73,7 +73,7 @@ export async function createBike(form: FormData) {
   // RF05: "start at the first ride" makes the original parts count the whole history of the source bike.
   const firstRide = gearId && form.get("startAtFirstRide") ? await firstRideDay(user.id, gearId) : null;
   const installedAt = firstRide ?? parseLocalDay(text(form, "installedAt", 10));
-  if (!model || !installedAt) redirect("/bikes?erro=modelo_invalido");
+  if (!model || !installedAt) redirect("/configuracoes?erro=modelo_invalido");
   const bike = await prisma.bike.create({
     data: {
       userId: user.id,
@@ -136,7 +136,7 @@ export async function toggleArchiveBike(form: FormData) {
   const user = await requireUser();
   const bike = await ownBike(user.id, text(form, "bikeId", 40));
   await prisma.bike.update({ where: { id: bike.id }, data: { archivedAt: bike.archivedAt ? null : new Date() } });
-  redirect(bike.archivedAt ? `/bikes/${bike.id}?ok=desarquivada` : "/bikes?ok=aposentada");
+  redirect(bike.archivedAt ? `/bikes/${bike.id}?ok=desarquivada` : "/?ok=aposentada");
 }
 
 /**
@@ -153,7 +153,7 @@ export async function deleteBike(form: FormData) {
     prisma.ride.deleteMany({ where: { bikeId: bike.id, source: "MANUAL" } }),
     prisma.bike.delete({ where: { id: bike.id } }),
   ]);
-  redirect("/bikes?ok=excluida");
+  redirect("/?ok=excluida");
 }
 
 /** RF01: the athlete's own picture for a bike (JPEG, PNG or WebP up to 1 MB). */
@@ -238,7 +238,7 @@ export async function createPart(form: FormData) {
 export async function updatePlan(form: FormData) {
   const user = await requireUser();
   const plan = await prisma.maintenancePlan.findFirst({ where: { id: text(form, "planId", 40), part: { bike: { userId: user.id } } }, include: { part: true } });
-  if (!plan) redirect("/bikes?erro=peca_nao_encontrada");
+  if (!plan) redirect("/?erro=peca_nao_encontrada");
   const intervalKm = optInterval(form, "intervalKm");
   const intervalHours = optInterval(form, "intervalHours");
   const warnKm = optInterval(form, "warnKm");
@@ -258,7 +258,7 @@ export async function servicePlan(form: FormData) {
     where: { id: text(form, "planId", 40), part: { removedAt: null, bike: { userId: user.id } } },
     include: { part: { include: { component: { include: { category: true } }, _count: { select: { plans: true } } } } },
   });
-  if (!plan) redirect("/bikes?erro=peca_nao_encontrada");
+  if (!plan) redirect("/?erro=peca_nao_encontrada");
   if (!canResetPlan(plan!.action, plan!.part._count.plans)) redirect(`/bikes/${plan!.part.bikeId}?erro=plano_invalido`);
   const date = parseLocalDay(text(form, "date", 10));
   const bikeId = plan!.part.bikeId;
