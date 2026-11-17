@@ -31,7 +31,7 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 ## SPEC-005 — Desgaste, alertas e painel
 - [x] T-19 Cálculo por plano, limiares e texto do alerta — RF07–RF09, RB02, RB04, RB11–RB14 — #12, #13, #14
 - [x] T-20 Painel ordenado por desgaste — RF15 — #20
-- [ ] T-22 Painel legível em 390 px (cartões no celular) — RNF07 — #20
+- [x] T-22 Painel legível em 390 px (cartões no celular) — RNF07 — #20
 
 ## SPEC-006 — Manutenção e histórico
 - [x] T-23 Revisão e troca de item por plano — RF10, RB13, RB18 — #15
@@ -40,9 +40,9 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 - [x] T-26 Revisão na oficina com vários itens e condição — RF36 — #3 (PR #42)
 
 ## SPEC-007 — Pedido de modelo novo
-- [ ] T-27 Entidade e migração `ModelRequest` — RF31 — #3
-- [ ] T-28 Menu de ajuda com formulário de pedido — RF31 — #3
-- [ ] T-29 Lista e resposta de pedidos no `/admin` — RF31 — #3
+- [x] T-27 Entidade e migração `ModelRequest` — RF31 — #3
+- [x] T-28 Menu de ajuda com formulário de pedido — RF31 — #3
+- [x] T-29 Lista e resposta de pedidos no `/admin` — RF31 — #3
 
 ## Transversais
 - [x] T-30 Deploy pelo GitHub Actions com segredos do Infisical — RNF01 — #3
@@ -50,6 +50,27 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 - [x] T-32 Documentação da disciplina (spec, plan, tasks, UC, UML, specs, review) — RNF09 — #3
 - [ ] T-21 Backup diário do volume do SQLite — RNF06 — #3
 - [ ] T-33 Regras de desgaste por fator de uso e recalibração pela medição — RF07 — #38
+
+# Fase 2 — Mercado de peças (tentativa de entrega; a Fase 1 não depende dela)
+
+## SPEC-008 — Anúncios e vitrine
+- [x] T-40 Migração e modelos `Merchant`, `Listing`, `Dream`, `Notification` — ADR-008 — #4
+- [x] T-41 Publicar, editar, marcar como vendido e encerrar anúncio próprio — RF16, RB07, RB19 — #21
+- [x] T-42 Vitrine com filtros de família, condição, preço e tipo de vendedor — RF17 — #22
+- [x] T-43 Página do anúncio com contato do vendedor para usuário logado — RB20 — #22
+
+## SPEC-009 — Sonhos e notificações
+- [x] T-44 CRUD de sonhos — RF20 — #25
+- [x] T-45 Função pura de compatibilidade sonho × anúncio, com teste — RF21 — #26
+- [x] T-46 Notificar o dono do sonho ao publicar anúncio compatível — RF21 — #26
+- [x] T-47 Sino de notificações dentro do app, marcar como lida — RF21, OPEN-34 — #26
+- [x] T-48 Notificar lojistas verificados da família ao cadastrar sonho — RF22 — #27
+- [x] T-49 Sugerir anúncios no alerta de troca próxima — RF23 — #28
+
+## SPEC-010 — Lojistas, selo e moderação
+- [x] T-50 Admin cadastra lojista, concede e revoga selo — RF18, RB06 — #23
+- [x] T-51 Selo nos anúncios e na vitrine do lojista — RF19 — #24
+- [x] T-52 Admin remove anúncio com motivo — RF24 — #29
 
 ## Fase 3 — Oficina (tentativa a partir de 16/11/2026; só depois de a Fase 1 estar funcional)
 - [x] T-60 Migração e entidades `Workshop`, `WorkshopService`, `WorkshopSlot`, `Appointment`, `WorkshopNotice` — RF25 — #5

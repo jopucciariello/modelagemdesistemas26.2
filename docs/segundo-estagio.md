@@ -1,5 +1,7 @@
 # Segundo Estágio — Mercado de Peças e Oficina
 
+> **Atualização (16/11/2026):** João decidiu tentar implementar também as Fases 2 e 3 antes de 26/11. A **Fase 1 continua sendo a entrega garantida** e não pode regredir. A Fase 2 (mercado de peças) está em implementação pela [SPEC-008 a SPEC-010](specs.md) e pelo [ADR-008](adr/ADR-008-mercado-de-pecas.md); o texto dos RF16 a RF24 agora vive em [requisitos.md](requisitos.md) §1. Este documento segue como referência de visão e personas das duas fases.
+>
 > **Atualização de 16/11/2026:** João decidiu tentar implementar também as Fases 2 e 3. A Fase 3 já tem requisitos em [requisitos.md](requisitos.md), Specs SPEC-011 a SPEC-013 e o [ADR-009](adr/ADR-009-oficinas-e-acesso-ao-historico.md). A Fase 1 segue como entrega garantida.
 >
 > **Fora da entrega da disciplina (26/11), decisão original de 06/11.** Decidido em 06/11/2026: para entregar com qualidade no prazo, o escopo foi reduzido à Fase 1 (acompanhamento de desgaste, perfis Atleta e Administrador). Este documento guarda as Fases 2 e 3 como evolução futura do GearLog, em nível de visão, personas e requisitos. Elas não são modeladas em detalhe (casos de uso, domínio, UML) nem implementadas no MVP.

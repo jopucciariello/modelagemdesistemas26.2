@@ -18,9 +18,8 @@ const SOURCE_LABELS = { MANUAL: "lançamento manual", STRAVA: "API do Strava", C
 export default function Home(props: PageProps<"/">) {
   return (
     <main className="wide">
-      <header>
-        <h1>GearLog</h1>
-        <p className="muted">Desgaste e manutenção preventiva das peças da sua bike.</p>
+      <header className="app-header">
+        <div className="brand"><span className="brand-mark" aria-hidden="true">⚙</span>GearLog</div>
       </header>
       {/* The session is read at request time, so it streams in behind Suspense. */}
       <Suspense fallback={<p className="muted">Carregando…</p>}>
@@ -46,16 +45,14 @@ async function SessionArea({ searchParams }: { searchParams: PageProps<"/">["sea
       {user ? (
         <>
           <Nav isAdmin={user.role === "ADMIN"} />
-          <section className="card">
-            <p>
-              Olá, <strong>{user.name}</strong>. Perfil: {user.role === "ADMIN" ? "Administrador" : "Atleta"}. Fonte dos pedais:{" "}
-              <Link href="/fonte">{SOURCE_LABELS[user.activitySource]}</Link>.
-            </p>
-            <form action="/auth/logout" method="post">
-              <button className="button small" type="submit">Sair</button>
-            </form>
+          <section className="page-title">
+            <h1>Olá, {user.name.split(" ")[0]}</h1>
+            <p className="muted">Como estão as peças das suas bikes. Fonte dos pedais: <Link href="/fonte">{SOURCE_LABELS[user.activitySource]}</Link>.</p>
           </section>
           <Dashboard userId={user.id} />
+          <form action="/auth/logout" method="post">
+            <button className="button small" type="submit">Sair</button>
+          </form>
         </>
       ) : (
         <section className="card">
@@ -69,42 +66,74 @@ async function SessionArea({ searchParams }: { searchParams: PageProps<"/">["sea
   );
 }
 
-/** RF15, RF08, RF09: every maintenance plan of every active bike, most worn first. */
+/** RF15, RF08, RF09: every maintenance plan of every active bike, grouped by bike, most worn first. */
 async function Dashboard({ userId }: { userId: string }) {
   const { rows, bikeCount } = await loadDashboard(userId);
-  const alerts = rows.filter((r) => r.wear.status !== "ok").length;
+  if (bikeCount === 0) {
+    return (
+      <section className="card empty">
+        <span className="big" aria-hidden="true">🚲</span>
+        <h2>Nenhuma bike ainda</h2>
+        <p className="muted">Cadastre a primeira e depois instale as peças para acompanhar o desgaste.</p>
+        <Link className="button" href="/bikes">Cadastrar bike</Link>
+      </section>
+    );
+  }
+  if (rows.length === 0) {
+    return (
+      <section className="card empty">
+        <span className="big" aria-hidden="true">🔧</span>
+        <h2>Nenhuma peça instalada</h2>
+        <p className="muted">Abra uma bike e adicione as peças para ver o desgaste aqui.</p>
+        <Link className="button" href="/bikes">Ir para as bikes</Link>
+      </section>
+    );
+  }
+  const due = rows.filter((r) => r.wear.status === "due").length;
+  const near = rows.filter((r) => r.wear.status === "near").length;
+  const ok = rows.length - due - near;
+  // Rows arrive most worn first, so bikes are ordered by their worst part.
+  const byBike = new Map<string, { id: string; name: string; rows: typeof rows }>();
+  for (const r of rows) {
+    const group = byBike.get(r.bikeId) ?? { id: r.bikeId, name: r.bikeName, rows: [] };
+    group.rows.push(r);
+    byBike.set(r.bikeId, group);
+  }
   return (
-    <section className="card">
-      <h2>Painel de desgaste</h2>
-      {bikeCount === 0 ? (
-        <p>Você ainda não tem bikes. <Link href="/bikes">Cadastre a primeira</Link> e depois instale as peças.</p>
-      ) : rows.length === 0 ? (
-        <p>Nenhuma peça instalada ainda. Abra uma bike em <Link href="/bikes">Bikes</Link> e adicione as peças.</p>
-      ) : (
-        <>
-          <p className="muted">{alerts === 0 ? "Nenhum alerta: tudo abaixo de 80%." : `${alerts} ${alerts === 1 ? "plano pede" : "planos pedem"} atenção.`}</p>
-          <div className="table-wrap">
-            <table>
-              <thead>
-                <tr><th>Peça</th><th>Plano</th><th>Uso</th><th>Desgaste</th></tr>
-              </thead>
-              <tbody>
-                {rows.map((r) => (
-                  <tr key={r.plan.id}>
-                    <td>
+    <>
+      <section className="stats" aria-label="Resumo">
+        <div className="stat stat-due"><b>{due}</b><span>{due === 1 ? "pede troca/revisão" : "pedem troca/revisão"}</span></div>
+        <div className="stat stat-near"><b>{near}</b><span>perto do limite</span></div>
+        <div className="stat stat-ok"><b>{ok}</b><span>em dia</span></div>
+      </section>
+      {[...byBike.values()].map((bike) => {
+        const bikeAlerts = bike.rows.filter((r) => r.wear.status !== "ok").length;
+        return (
+          <section className="bike-card" key={bike.id}>
+            <header>
+              <h3><Link href={`/bikes/${bike.id}`}>{bike.name}</Link></h3>
+              <span className="muted">{bikeAlerts === 0 ? "Tudo em dia" : `${bikeAlerts} ${bikeAlerts === 1 ? "alerta" : "alertas"}`}</span>
+            </header>
+            <ul className="plan-list">
+              {bike.rows.map((r) => (
+                <li className={`plan-item s-${r.wear.status}`} key={r.plan.id}>
+                  <div>
+                    <div className="plan-top">
                       <Link href={`/bikes/${r.bikeId}`}>{r.part.position ?? r.part.component.category.name}</Link>
-                      <br /><span className="muted">{r.bikeName} · {r.part.component.brand} {r.part.component.model}</span>
-                    </td>
-                    <td>{r.plan.name}</td>
-                    <td>{r.plan.intervalKm ? km(r.wear.km) : null}{r.plan.intervalKm && r.plan.intervalHours ? " · " : null}{r.plan.intervalHours ? hours(r.wear.hours) : null}</td>
-                    <td><WearMeter wear={r.wear} /></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </>
-      )}
-    </section>
+                      <span className="plan-use">{r.plan.intervalKm ? km(r.wear.km) : null}{r.plan.intervalKm && r.plan.intervalHours ? " · " : null}{r.plan.intervalHours ? hours(r.wear.hours) : null}</span>
+                    </div>
+                    <div className="plan-sub">{r.plan.name} · {r.part.component.brand} {r.part.component.model}</div>
+                    {r.plan.action === "REPLACE" && r.wear.status !== "ok" && (
+                      <div className="plan-sub"><Link href={`/mercado?categoria=${r.part.component.categoryId}`}>Ver anúncios compatíveis</Link></div>
+                    )}
+                  </div>
+                  <WearMeter wear={r.wear} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
+    </>
   );
 }

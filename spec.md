@@ -49,7 +49,7 @@ Issue épica: [#3](https://github.com/jopucciariello/modelagemdesistemas26.2/iss
 | 6 | Desgaste, alertas e painel | RF07–RF09, RF15 | #12, #13, #14, #20 | Feito |
 | 7 | Troca, revisão, manutenção e histórico | RF10–RF12 | #15, #16, #17 | Feito |
 | 8 | Revisão na oficina com vários itens | RF36 | #3 | Feito |
-| 9 | Pedido de modelo novo pelo menu de ajuda | RF31 | #3 | Pendente |
+| 9 | Pedido de modelo novo pelo menu de ajuda | RF31 | #3 | Feito |
 | 10 | Sincronização automática (webhook do conector) | RNF05 | #3 | Pendente |
 
 ## 5. Casos de uso
@@ -73,6 +73,9 @@ Mapa ordenado: [mapa-specs.md](docs/mapa-specs.md). Texto com as 14 seções e i
 | SPEC-005 | Desgaste, alertas e painel | Implementada, aguarda aprovação |
 | SPEC-006 | Manutenção e histórico | Implementada, aguarda aprovação |
 | SPEC-007 | Pedido de modelo novo | A implementar |
+| SPEC-008 | Anúncios e vitrine (Fase 2) | Implementada |
+| SPEC-009 | Sonhos e notificações (Fase 2) | Implementada |
+| SPEC-010 | Lojistas, selo e moderação (Fase 2) | Implementada |
 | SPEC-011 a SPEC-013 | Fase 3: oficinas, agendamento, histórico compartilhado | Em implementação (tentativa, 16/11/2026) |
 
 ## 8. Decisões e questões em aberto

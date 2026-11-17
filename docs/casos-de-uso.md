@@ -93,7 +93,7 @@ flowchart LR
 | UC12 Registrar revisão na oficina | RF36 | RB13, RB18 | Feito |
 | UC13 Consultar histórico da bike | RF11 | RB05 | Feito |
 | UC14 Manter catálogo | RF30, RF35 | RB10, RB15, RB17 | Feito |
-| UC15 Pedir modelo novo pelo menu de ajuda | RF31 | RB15 | Pendente |
+| UC15 Pedir modelo novo pelo menu de ajuda | RF31 | RB15 | Feito |
 
 ## Descrições
 

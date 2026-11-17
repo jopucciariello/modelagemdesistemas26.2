@@ -2,7 +2,7 @@
 
 Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 seções do fluxo SDD da disciplina. Invariantes têm IDs globais (`INV-001`…) e cada um aponta para o teste que o verifica.
 
-> **Situação:** SPEC-001 a SPEC-006 foram escritas em 13/11/2026, depois da implementação, e conferidas contra o código (`feat/RF04-baseline`). As divergências encontradas estão na seção 13 de cada Spec e em [review/](review/). Aguardam aprovação do João (OPEN-21). SPEC-007 é a próxima a implementar.
+> **Situação:** SPEC-001 a SPEC-006 foram escritas em 13/11/2026, depois da implementação, e conferidas contra o código (`feat/RF04-baseline`). As divergências encontradas estão na seção 13 de cada Spec e em [review/](review/). Aguardam aprovação do João (OPEN-21). SPEC-007 foi implementada em 16/11/2026.
 
 ---
 
@@ -262,7 +262,7 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 
 ---
 
-## SPEC-007 — Pedido de modelo novo (a implementar)
+## SPEC-007 — Pedido de modelo novo
 
 **1. Identificação.** Objetivo: o atleta pede o que falta no catálogo sem cadastrar nada. Valor: o catálogo cresce com o que os atletas usam, e a qualidade continua com o admin.
 
@@ -288,12 +288,69 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 - Dado um atleta, quando envia um pedido, então ele aparece no admin como "aberto".
 - Dado um pedido aberto, quando o admin responde, então o atleta vê a resposta no menu de ajuda.
 
-**12. Casos de teste.** A escrever junto com a implementação.
+**12. Casos de teste.** `model-request.test.ts` (validação do pedido e da resposta).
 
-**13. Questões em aberto.** Onde o atleta vê a resposta (menu de ajuda ou painel)?
+**13. Questões em aberto.** Resolvida na implementação: o atleta vê a resposta em `/ajuda`, na lista "Meus pedidos"; o painel não mostra nada (proposta, aguarda aprovação).
 
 **14. DoD.** Critérios passando; migração aplicada; testes.
 
+---
+
+## SPEC-008 — Anúncios e vitrine (Fase 2, a implementar)
+
+**1. Identificação.** Objetivo: atletas e lojistas anunciam peças e qualquer usuário logado as encontra. Valor: é a parte do mercado visível na demo.
+
+**2. Rastreabilidade.** RF16 · RF17 · RB07 · RB19 · RB20 · UC16 · Anúncio.
+
+**3. Escopo.** Incluído: publicar, editar, vender, encerrar; vitrine com filtros; página do anúncio. Fora: pagamento, chat, upload de fotos.
+
+**4. Dependências.** SPEC-001, SPEC-002 (família do catálogo).
+
+**5. Comportamento esperado.** UC16. Usuário logado preenche título, família, condição, preço, descrição, fotos (URLs) e, se usada, km de uso; o anúncio nasce ATIVO. A vitrine lista os ATIVOS, mais novos primeiro, com filtros. Exceções: preço ≤ 0, título vazio ou família inexistente → recusado; mais de 3 fotos → recusado.
+
+**6. Regras e invariantes.** INV-040 só o autor altera o anúncio (RB19). INV-041 anúncio REMOVIDO ou VENDIDO não aparece na vitrine. INV-042 km de uso só é digitada pelo vendedor (RB07). INV-043 o e-mail do vendedor só aparece a logados (RB20).
+
+**7. Modelo de domínio.** Entidade `Listing` ligada a `User` e `Category`; preço em centavos.
+
+**8. Impacto arquitetural.** Rotas novas `/mercado`, `/mercado/novo`, `/mercado/[id]`, `/mercado/meus`; uma ação de servidor `src/app/actions/market.ts`; regras puras em `src/lib/market.ts`. Um item novo no menu.
+
+**9. Contratos.** Filtros por query string: `categoria`, `condicao`, `min`, `max`, `vendedor` (`loja` ou `atleta`).
+
+**10. RNFs.** RNF04 (vitrine com índice em status e família), RNF07 (cartões no celular).
+
+**11. Critérios de aceitação.**
+- Dado um usuário logado, quando publica um anúncio válido, então ele aparece na vitrine.
+- Dada a vitrine, quando filtra por família e preço máximo, então só aparecem anúncios que atendem aos dois.
+- Dado um anúncio de outro usuário, quando tenta editá-lo, então a ação é recusada.
+
+**12. Casos de teste.** Testes unitários dos filtros e da validação (`market.test.ts`); fluxo manual da vitrine.
+
+**13. Questões em aberto.** OPEN-31 (fotos por URL), OPEN-35 (contato).
+
+**14. DoD.** Critérios passando; testes da função pura e do fluxo; sem mudança em tabelas da Fase 1; `tsc`, `lint`, `test` e `build` verdes.
+
+
+---
+
+## SPEC-009 — Sonhos e notificações (Fase 2, a implementar)
+
+**1. Identificação.** Objetivo: o atleta diz o que quer e quanto paga, e o GearLog avisa. Valor: liga o mercado ao desgaste (RF23).
+
+**2. Rastreabilidade.** RF20 · RF21 · RF22 · RF23 · UC17 · Sonho, Notificação.
+
+**3. Escopo.** Incluído: sonhos, avisos dentro do app, sugestão no alerta de troca próxima. Fora: e-mail e push (OPEN-34).
+
+**4. Dependências.** SPEC-008; SPEC-005 (alerta de troca próxima) para o RF23.
+
+**5. Comportamento esperado.** UC17. Ao publicar um anúncio ATIVO, o sistema compara com os sonhos e cria uma notificação para cada dono de sonho compatível com preço ≤ máximo. Ao cadastrar um sonho, notifica lojistas verificados da família. O sino lista as notificações e marca como lida.
+
+**6. Regras e invariantes.** INV-044 compatível = mesma família, todas as palavras-chave no título (sem acento nem caixa) e preço ≤ máximo. INV-045 uma notificação por usuário e referência (`refKey`), sem duplicar. INV-046 o autor do anúncio não é notificado do próprio anúncio.
+
+**7. Modelo de domínio.** Entidades `Dream` e `Notification` ligadas a `User`; `Dream` a `Category`.
+
+**8. Impacto arquitetural.** Função pura `matchesDream` em `src/lib/market.ts`; criação das notificações dentro da ação que publica ou cadastra; rotas `/sonhos` e `/notificacoes`.
+
+**9. Contratos.** Notificação: mensagem, link, lida ou não.
 
 ---
 
@@ -353,6 +410,52 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 **10. RNFs.** RNF07.
 
 **11. Critérios de aceitação.**
+- Dado um sonho de pneu até R$ 200, quando alguém publica um pneu de R$ 180, então o dono recebe uma notificação.
+- Dado o mesmo sonho, quando o anúncio custa R$ 250, então não há notificação.
+- Dado um lojista verificado com anúncio na família, quando um sonho dessa família é cadastrado, então ele é notificado.
+
+**12. Casos de teste.** Testes unitários de `matchesDream` (limites de preço, palavras-chave, acentos) e de idempotência.
+
+**13. Questões em aberto.** OPEN-32, OPEN-33, OPEN-34.
+
+**14. DoD.** Critérios passando; testes da função pura e do fluxo; sem mudança em tabelas da Fase 1; `tsc`, `lint`, `test` e `build` verdes.
+
+
+---
+
+## SPEC-010 — Lojistas, selo e moderação (Fase 2, a implementar)
+
+**1. Identificação.** Objetivo: dar confiança ao mercado. O admin cadastra lojistas, concede o selo e remove anúncios irregulares.
+
+**2. Rastreabilidade.** RF18 · RF19 · RF24 · RB06 · RB19 · RNF03 · UC18 · Lojista.
+
+**3. Escopo.** Incluído: seção no `/admin` com lojistas e anúncios; selo nos anúncios e na vitrine. Fora: cobrança de lojista.
+
+**4. Dependências.** SPEC-001 (admin), SPEC-008.
+
+**5. Comportamento esperado.** UC18. O admin informa o e-mail de um usuário que já entrou, cria o perfil de loja e concede ou revoga o selo. Anúncios de lojista mostram o nome da loja e, se verificado, o selo. O admin remove um anúncio informando o motivo; o anúncio sai da vitrine e o autor vê o motivo.
+
+**6. Regras e invariantes.** INV-047 só `getCurrentAdmin` altera `verified` (RB06, RB17). INV-048 remoção guarda motivo e data e não apaga o registro. INV-049 revogar o selo tira o selo na hora.
+
+**7. Modelo de domínio.** Entidade `Merchant` (um por usuário).
+
+**8. Impacto arquitetural.** Nova seção no `/admin`, guarda `requireAdmin` já existente; componente `SellerBadge`.
+
+**9. Contratos.** Ações `createMerchant`, `setVerified`, `removeListing`.
+
+**10. RNFs.** RNF03 (só o admin vê e age), RNF07.
+
+**11. Critérios de aceitação.**
+- Dado o admin, quando concede o selo, então os anúncios do lojista mostram o selo.
+- Dado um atleta comum, quando tenta conceder selo, então é recusado.
+- Dado um anúncio removido, então ele sai da vitrine e o motivo fica registrado.
+
+**12. Casos de teste.** Testes das guardas e do fluxo de remoção; fluxo manual do admin.
+
+**13. Questões em aberto.** OPEN-30.
+
+**14. DoD.** Critérios passando; testes da função pura e do fluxo; sem mudança em tabelas da Fase 1; `tsc`, `lint`, `test` e `build` verdes.
+
 - Dado um horário livre, quando o atleta agenda, então o horário deixa de aparecer como livre.
 - Dado um agendamento a menos de 24 h, quando o atleta cancela, então a oficina vê um aviso urgente.
 - Dado um cancelamento, então o horário volta a ficar livre.

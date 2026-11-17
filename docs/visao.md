@@ -24,12 +24,12 @@ O GearLog complementa o projeto pessoal **VeloUpgrade-Tracker** (planejamento de
 
 **Fonte de km e horas na entrega:** todos entram com o Google e cada atleta escolhe a fonte dos seus pedais: lançamento **manual**, **API do Strava** com app próprio (o GearLog mostra o passo a passo de cadastro) ou **conector** compatível com a API v3 (modos proxy e cache, ver `integracao-strava.md` e o [ADR-006](adr/ADR-006-fontes-de-pedais.md)). Os testes e a demo sem internet usam o mock gerado do Swagger, porque a disciplina exige que a demo rode sem o Strava. Trocar a fonte é só mudar `STRAVA_API_BASE_URL`.
 
-**Segundo estágio:** o mercado de peças (Fase 2) e a oficina (Fase 3) estão descritos em [segundo-estagio.md](segundo-estagio.md), como evolução futura do produto.
+**Segundo estágio (atualizado em 16/11/2026):** João decidiu tentar implementar também o mercado de peças (Fase 2) e a oficina (Fase 3) antes da entrega. A Fase 1 é a entrega garantida; as Fases 2 e 3 só entram em produção sem afetá-la. Visão e personas em [segundo-estagio.md](segundo-estagio.md); a Fase 2 tem requisitos, Specs e ADR próprios.
 
 ## 4. Fora de escopo
 
 - Outros equipamentos (motos, calçados, etc.). O GearLog trata **somente bicicletas**.
-- Mercado de peças e oficina (Fases 2 e 3): ficam no [segundo estágio](segundo-estagio.md).
+- Pagamento dentro da plataforma (Fases 2 e 3): a negociação é entre as partes.
 - Homologação comercial com o Strava. Por ser projeto acadêmico, cada atleta usa o próprio app do Strava ou o próprio conector. O processo de aprovação da API do Strava só será feito se o produto for profissionalizado.
 
 ## 5. Partes interessadas

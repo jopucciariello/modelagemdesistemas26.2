@@ -1,18 +1,9 @@
 // Small shared pieces of the tracker UI (RNF07: plain HTML forms, responsive CSS).
-import Link from "next/link";
+import { NavLinks } from "@/components/nav";
 import { percent, type PlanWear } from "@/lib/wear";
 
 export function Nav({ isAdmin }: { isAdmin?: boolean }) {
-  return (
-    <nav className="nav">
-      <Link href="/">Painel</Link>
-      <Link href="/bikes">Bikes</Link>
-      <Link href="/pedais">Pedais</Link>
-      <Link href="/fonte">Fonte</Link>
-      <Link href="/oficinas">Oficinas</Link>
-      {isAdmin && <Link href="/admin">Catálogo</Link>}
-    </nav>
-  );
+  return <NavLinks isAdmin={isAdmin} />;
 }
 
 /** Shows ?ok= and ?erro= feedback from a redirect. */

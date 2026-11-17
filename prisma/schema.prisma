@@ -38,12 +38,18 @@ model User {
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 
-  bikes        Bike[]
-  rides        Ride[]
-  strava       StravaConnection?
-  connector    ConnectorConnection?
-  sessions     Session[]
-  appointments Appointment[]
+  bikes         Bike[]
+  rides         Ride[]
+  strava        StravaConnection?
+  connector     ConnectorConnection?
+  sessions      Session[]
+  modelRequests ModelRequest[]
+  // Fase 2 (ADR-008)
+  merchant      Merchant?
+  listings      Listing[]
+  dreams        Dream[]
+  notifications Notification[]
+  appointments  Appointment[]
 }
 
 // RF33, RNF01: the athlete's own Strava app (ADR-006). The client secret and the tokens are
@@ -124,6 +130,8 @@ model Category {
   active         Boolean        @default(true)
   plans          CategoryPlan[]
   components     Component[]
+  listings       Listing[]
+  dreams         Dream[]
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 }
@@ -403,4 +411,110 @@ model WorkshopNotice {
   urgent        Boolean      @default(false)
   readAt        DateTime?
   createdAt     DateTime     @default(now())
+}
+
+// ---- Fase 2: mercado de peças (ADR-008, SPEC-008 a SPEC-010) ----
+
+enum ListingCondition {
+  NEW
+  USED
+}
+
+enum ListingStatus {
+  ACTIVE
+  SOLD
+  REMOVED
+}
+
+// RF18, RF19, RB06: store profile created by the admin for a user; only the admin sets `verified`.
+model Merchant {
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  verified    Boolean   @default(false)
+  verifiedAt  DateTime?
+  createdAt   DateTime  @default(now())
+}
+
+// RF16, RF24, RB07, RB19: part for sale. Price in cents (BRL). usedKm is typed by the seller (RB07).
+model Listing {
+  id            String           @id @default(cuid())
+  sellerId      String
+  seller        User             @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  categoryId    String
+  category      Category         @relation(fields: [categoryId], references: [id])
+  title         String
+  description   String?
+  condition     ListingCondition
+  priceCents    Int
+  usedKm        Float?
+  // RF16: up to 3 image URLs, newline-separated (OPEN-31).
+  photoUrls     String           @default("")
+  status        ListingStatus    @default(ACTIVE)
+  removedReason String?
+  removedAt     DateTime?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  @@index([status, categoryId])
+}
+
+// RF20: wished part with a maximum price (OPEN-32: category + optional keywords).
+model Dream {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id])
+  keywords      String?
+  maxPriceCents Int
+  createdAt     DateTime @default(now())
+}
+
+// RF21, RF22, RF23 (OPEN-34): in-app notifications. refKey makes each one idempotent per user.
+model Notification {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message   String
+  href      String?
+  refKey    String
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@unique([userId, refKey])
+  @@index([userId, readAt])
+}
+
+// RF31, RB15: the athlete asks for a component or bike model that is missing from the catalog
+// (help menu). The request never creates catalog entries; only the admin registers them (INV-032).
+enum ModelRequestKind {
+  COMPONENT
+  BIKE
+}
+
+enum ModelRequestStatus {
+  OPEN
+  REGISTERED
+  REJECTED
+}
+
+model ModelRequest {
+  id         String             @id @default(cuid())
+  userId     String
+  user       User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind       ModelRequestKind
+  // Catalog family the athlete had in mind (optional free text, e.g. "Corrente").
+  family     String?
+  text       String
+  status     ModelRequestStatus @default(OPEN)
+  // Admin answer: the reason when rejected, an optional note when registered.
+  reply      String?
+  answeredAt DateTime?
+  createdAt  DateTime           @default(now())
+
+  @@index([userId])
+  @@index([status])
 }
