@@ -22,7 +22,7 @@ Prioridade (MoSCoW): **M** = Must, **S** = Should, **C** = Could.
 
 | ID | Requisito (EARS) | Prio |
 |---|---|:-:|
-| RF01 | O sistema deve permitir que o atleta cadastre, edite e arquive bicicletas (nome, tipo, marca, modelo, ano). | M |
+| RF01 | O sistema deve permitir que o atleta cadastre, edite, arquive e exclua bicicletas (nome, tipo, marca, modelo, ano). A exclusão apaga a bike, as peças e o histórico e exige confirmação; os pedais importados da fonte permanecem guardados sem bike, e a exclusão é recusada enquanto houver agendamento em oficina. | M |
 | RF02 | O sistema deve permitir que o atleta cadastre peças em uma bike, escolhendo a família e o componente do catálogo (RF30) e informando posição na bike (opcional), data de instalação, uso inicial (km e/ou horas) e os planos de manutenção da peça (RB16). Os planos sugeridos são os do componente ou, se ele não tiver, os da família. *(Alterado em 12/11/2026.)* | M |
 | RF03 | Quando o atleta cadastrar uma peça sem informar vida útil, o sistema deve sugerir a vida útil padrão da categoria. | S |
 | RF04 | Quando o usuário entrar com a conta Google (OpenID Connect), o sistema deve criar ou localizar o seu perfil: Administrador, se o e-mail verificado estiver em `ADMIN_EMAILS` (RB17), ou Atleta, nos demais casos. **[PROPOSTO]** *(Alterado em 12/11/2026; antes vinculava a conta Strava via OAuth 2.0. O vínculo com o Strava passa a ser a fonte B do RF32.)* | M |

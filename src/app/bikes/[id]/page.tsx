@@ -1,7 +1,7 @@
 // RF01, RF02, RF05, RF07-RF12, RB13, RB16: one bike with its parts, wear and history.
 import Link from "next/link";
 import { Suspense } from "react";
-import { addManualMaintenance, linkSourceBike, updatePart, recordShopVisit, replacePart, servicePlan, toggleArchiveBike, updateBike, updatePlan } from "@/app/actions/bikes";
+import { addManualMaintenance, linkSourceBike, updatePart, recordShopVisit, replacePart, servicePlan, deleteBike, toggleArchiveBike, updateBike, updatePlan } from "@/app/actions/bikes";
 import { BikeFields } from "@/components/bike-fields";
 import { Flash, Nav, WearMeter, hours, interval, km } from "@/components/ui";
 import { prisma } from "@/lib/db";
@@ -34,6 +34,8 @@ const ERR: Record<string, string> = {
   gear_em_uso: "Essa bike da fonte já está associada a outra bike sua.",
   plano_invalido: "O plano precisa de um intervalo em km ou em horas.",
   data: "Data inválida (não pode ser antes da instalação da peça).",
+  confirmar_exclusao: "Marque a confirmação para excluir a bike.",
+  bike_com_agendamento: "Essa bike tem um agendamento em oficina. Cancele o agendamento antes de excluir.",
   data_montagem: "Data inválida: não pode ser no futuro nem depois da troca de uma peça original.",
   componente: "Escolha um componente do catálogo.",
   peca_encerrada: "Essa peça já foi trocada.",
@@ -303,6 +305,15 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
           <input type="hidden" name="bikeId" value={bike.id} />
           <button className="button small" type="submit">{bike.archivedAt ? "Reativar bike" : "Arquivar bike"}</button>
         </form>
+        <details>
+          <summary>Excluir bike</summary>
+          <form action={deleteBike} className="stack">
+            <input type="hidden" name="bikeId" value={bike.id} />
+            <p className="muted">Apaga a bike, as peças, o histórico e as revisões na oficina, e não dá para desfazer. Os pedais lançados à mão somem junto; os importados do Strava continuam guardados. Se só quer tirá-la do painel, use “Arquivar bike”.</p>
+            <label className="check"><input type="checkbox" name="confirm" required /> Entendo que isso não pode ser desfeito</label>
+            <button className="button small danger" type="submit">Excluir {bike.name}</button>
+          </form>
+        </details>
       </section>
     </>
   );
