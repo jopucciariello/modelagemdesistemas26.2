@@ -101,7 +101,7 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 
 **2. Rastreabilidade.** RF01, RF02, RF03, RF35 · RB01, RB10, RB15, RB16 · RNF07 · UC03, UC04, UC05 · Bike, Peça, Plano de manutenção.
 
-**3. Escopo.** Incluído: criar (à mão ou de bike-modelo), editar, arquivar e reativar bike; data de montagem; instalar peça do catálogo com posição, data, uso inicial e planos editáveis; editar a instalação de uma peça. Fora: apagar bike; peça fora do catálogo.
+**3. Escopo.** Incluído: criar (à mão ou de bike-modelo), editar, arquivar, reativar e excluir bike (com confirmação; pedais importados ficam guardados); data de montagem; instalar peça do catálogo com posição, data, uso inicial e planos editáveis; editar a instalação de uma peça. Fora: peça fora do catálogo.
 
 **4. Dependências.** SPEC-002.
 
@@ -126,7 +126,8 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 **11. Critérios de aceitação.**
 - Dado um modelo do catálogo e a data 15/01/2024, quando o atleta cria a bike, então todas as peças originais aparecem instaladas em 15/01/2024 com os planos sugeridos.
 - Dada uma peça trocada em 01/01/2025, quando o atleta muda a montagem para 01/06/2023, então só as peças originais mudam.
-- Dada uma bike de outro atleta, quando alguém tenta editá-la, então nada muda.
+- Dada uma bike de outro atleta, quando alguém tenta editá-la ou excluí-la, então nada muda.
+- Dada uma bike com peças e pedais lançados à mão e importados, quando o atleta a exclui confirmando, então peças, histórico e pedais manuais somem e os importados continuam guardados sem bike.
 
 **12. Casos de teste.** `catalog.test.ts`, `rides-map.test.ts` (leitura de formulários e datas). Ponta a ponta: PR #41, #43, #44.
 

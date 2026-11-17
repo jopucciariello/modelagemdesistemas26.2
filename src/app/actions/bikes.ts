@@ -138,6 +138,23 @@ export async function toggleArchiveBike(form: FormData) {
   redirect(bike.archivedAt ? `/bikes/${bike.id}?ok=desarquivada` : "/bikes?ok=arquivada");
 }
 
+/**
+ * RF01: delete a bike for good (parts, plans, history and shop visits go with it). Rides typed by
+ * hand belong to the bike and go too; rides imported from Strava stay stored, without a bike, so
+ * they can join another bike later. Refused while a workshop appointment is still scheduled.
+ */
+export async function deleteBike(form: FormData) {
+  const user = await requireUser();
+  const bike = await ownBike(user.id, text(form, "bikeId", 40));
+  if (!form.get("confirm")) redirect(`/bikes/${bike.id}?erro=confirmar_exclusao`);
+  if (await prisma.appointment.findFirst({ where: { bikeId: bike.id, status: "SCHEDULED" } })) redirect(`/bikes/${bike.id}?erro=bike_com_agendamento`);
+  await prisma.$transaction([
+    prisma.ride.deleteMany({ where: { bikeId: bike.id, source: "MANUAL" } }),
+    prisma.bike.delete({ where: { id: bike.id } }),
+  ]);
+  redirect("/bikes?ok=excluida");
+}
+
 /** RF05: link the GearLog bike to a bike of the athlete's source and attach its rides. */
 export async function linkSourceBike(form: FormData) {
   const user = await requireUser();

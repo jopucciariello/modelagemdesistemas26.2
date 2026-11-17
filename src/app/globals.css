@@ -235,3 +235,5 @@ select { max-width: 100%; }
 
 /* Strava brand guidelines: "View on Strava" must be bold/underlined or #FC5200. */
 .view-on-strava { color: #fc5200; font-weight: 700; text-decoration: underline; }
+
+.button.danger { background: var(--danger); color: #fff; border-color: var(--danger); }
