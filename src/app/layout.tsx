@@ -12,7 +12,14 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1 };
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="pt-BR">
-      <body>{children}</body>
+      <body>
+        {children}
+        <footer>
+          <small>
+            Compatible with Strava. GearLog não é afiliado nem endossado pelo Strava. <a href="/privacidade">Privacidade</a>
+          </small>
+        </footer>
+      </body>
     </html>
   );
 }

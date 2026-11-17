@@ -160,7 +160,7 @@ Atualizado em 12/11/2026. Código em `src/`, testes em `tests/unit/`.
 | RF30 | Feito | `src/app/admin/`, `src/app/actions/catalog.ts`, `src/lib/catalog/seed.json`, `src/lib/catalog/load.ts`, `src/instrumentation.ts` (carga automática na subida do servidor) | `catalog.test.ts` |
 | RF35 | Feito | `createBike`, `src/app/bikes/page.tsx` | `catalog.test.ts` |
 | RF36 | Feito | `recordShopVisit`, `src/lib/visit.ts`, página da bike | `visit.test.ts` |
-| RF31 | Pendente | — | — |
+| RF31 | Feito | `src/app/ajuda/`, `src/app/actions/help.ts`, `src/components/admin-requests.tsx`, `src/lib/help.ts` | `model-request.test.ts` |
 | RF16, RF17 | Feito (Fase 2) | `src/app/mercado/`, `src/app/actions/market.ts`, `src/lib/market.ts` | `market.test.ts` |
 | RF18, RF19, RF24 | Feito (Fase 2) | `src/app/actions/merchants.ts`, `src/components/admin-market.tsx`, `src/components/seller-badge.tsx` | `merchants.test.ts` |
 | RF20, RF21, RF22, RF23 | Feito (Fase 2); funções com banco sem teste automatizado | `src/app/sonhos/`, `src/app/notificacoes/`, `src/lib/dreams.ts`, `createListing` | `dreams.test.ts` (`matchesDream`) |

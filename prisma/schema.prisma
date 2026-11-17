@@ -38,11 +38,12 @@ model User {
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 
-  bikes     Bike[]
-  rides     Ride[]
-  strava    StravaConnection?
-  connector ConnectorConnection?
-  sessions  Session[]
+  bikes         Bike[]
+  rides         Ride[]
+  strava        StravaConnection?
+  connector     ConnectorConnection?
+  sessions      Session[]
+  modelRequests ModelRequest[]
   // Fase 2 (ADR-008)
   merchant      Merchant?
   listings      Listing[]
@@ -396,4 +397,35 @@ model Notification {
 
   @@unique([userId, refKey])
   @@index([userId, readAt])
+}
+
+// RF31, RB15: the athlete asks for a component or bike model that is missing from the catalog
+// (help menu). The request never creates catalog entries; only the admin registers them (INV-032).
+enum ModelRequestKind {
+  COMPONENT
+  BIKE
+}
+
+enum ModelRequestStatus {
+  OPEN
+  REGISTERED
+  REJECTED
+}
+
+model ModelRequest {
+  id         String             @id @default(cuid())
+  userId     String
+  user       User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind       ModelRequestKind
+  // Catalog family the athlete had in mind (optional free text, e.g. "Corrente").
+  family     String?
+  text       String
+  status     ModelRequestStatus @default(OPEN)
+  // Admin answer: the reason when rejected, an optional note when registered.
+  reply      String?
+  answeredAt DateTime?
+  createdAt  DateTime           @default(now())
+
+  @@index([userId])
+  @@index([status])
 }

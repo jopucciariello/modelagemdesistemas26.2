@@ -106,7 +106,14 @@ async function Rides({ searchParams }: { searchParams: PageProps<"/pedais">["sea
                           <input type="hidden" name="rideId" value={r.id} />
                           <button className="button small" type="submit">Remover</button>
                         </form>
-                      ) : <span className="muted">{SOURCE_LABEL[r.source]}</span>}
+                      ) : (
+                        <>
+                          <span className="muted">{SOURCE_LABEL[r.source]}</span>
+                          {r.source === "STRAVA" && r.externalId && /^\d+$/.test(r.externalId) && (
+                            <> · <a className="view-on-strava" href={`https://www.strava.com/activities/${r.externalId}`} rel="noreferrer" target="_blank">View on Strava</a></>
+                          )}
+                        </>
+                      )}
                     </td>
                   </tr>
                 ))}

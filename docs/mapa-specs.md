@@ -2,7 +2,7 @@
 
 Índice ordenado das Specs da Fase 1. Cada Spec é uma **capacidade observável** (fatia vertical), não uma camada. RNFs transversais aparecem nas Specs em que se aplicam. O texto completo, com as 14 seções, está em [specs.md](specs.md).
 
-> **Situação (13/11/2026):** SPEC-001 a SPEC-006 foram escritas depois da implementação inicial, a partir do código e dos requisitos, e conferidas contra o código. Elas aguardam a aprovação do João (OPEN-21). SPEC-007 ainda não foi implementada.
+> **Situação (13/11/2026):** SPEC-001 a SPEC-006 foram escritas depois da implementação inicial, a partir do código e dos requisitos, e conferidas contra o código. Elas aguardam a aprovação do João (OPEN-21). SPEC-007 foi implementada em 16/11/2026 (RF31).
 >
 > **Fase 2 (16/11/2026, tentativa de entrega):** SPEC-008 a SPEC-010 cobrem o mercado de peças ([ADR-008](adr/ADR-008-mercado-de-pecas.md)). Foram escritas antes do código e aguardam a aprovação do João (OPEN-30 a OPEN-35).
 
