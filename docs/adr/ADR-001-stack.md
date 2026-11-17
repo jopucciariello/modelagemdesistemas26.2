@@ -69,4 +69,4 @@ As regras de desgaste (RF07, RB04, RB11, RB16) ficam em funções puras em `src/
 - Tokens do Strava criptografados com AES-256-GCM (`TOKEN_ENCRYPTION_KEY`), nunca enviados ao navegador nem gravados em log.
 - Sessão por cookie `httpOnly`, `sameSite=lax` e `secure` em produção; o banco guarda só o hash SHA-256 do token da sessão.
 - Parâmetro `state` no OAuth contra CSRF.
-- Segredos no Infisical, injetados no processo (ADR-003); o repositório tem apenas `.env.example`, sem valores.
+- Segredos no Infisical, injetados no processo (ADR-004); o repositório tem apenas `.env.example`, sem valores.

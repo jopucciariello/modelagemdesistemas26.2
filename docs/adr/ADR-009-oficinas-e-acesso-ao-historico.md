@@ -1,32 +1,33 @@
-# ADR-009 — Oficinas: acesso pelo e-mail Google e histórico compartilhado pelo agendamento
+# ADR-009 — Oficinas, mecânicos, agenda e OS
 
-- **Status:** Proposto (aguarda aprovação de João)
-- **Data:** 16/11/2026
+- **Status:** Aceito (17/11/2026, respostas de João a OPEN-40 a OPEN-44)
+- **Data:** 16/11/2026; reescrito em 17/11/2026
 - **Decisor:** João Pucciariello
-- **Resolve:** OPEN-40, OPEN-42, OPEN-43 (propostas)
-- **Requisitos relacionados:** RF25–RF29, RNF03, RB09, RB21, RB22
+- **Resolve:** OPEN-40, OPEN-41, OPEN-42, OPEN-43, OPEN-44
+- **Requisitos relacionados:** RF25–RF29, RF38, RNF03, RB09, RB21, RB22, RB23
 
 ## Contexto
 
-A Fase 3 acrescenta o perfil Mecânico/Oficina. Todos os usuários já entram com o Google (ADR-005) e o administrador é definido por uma lista de e-mails (ADR-002). Falta decidir como uma oficina entra, como o atleta autoriza a oficina a ver o histórico da bike (LGPD, RNF03) e como a oficina é avisada de cancelamentos.
+A Fase 3 acrescenta oficina e mecânico. Todos entram pelo login do ADR-005. Faltava decidir como a oficina entra, a agenda, o consentimento do atleta (LGPD), o aviso de cancelamento e o que acontece ao concluir uma OS.
 
 ## Decisão
 
-1. **Entrada da oficina.** O administrador cadastra a oficina com o e-mail Google do responsável (`Workshop.ownerEmail`, único). Quem entra com esse e-mail, já verificado pelo Google, acessa `/oficina` e edita só a própria oficina. Não se cria um novo `Role`: a permissão é derivada da oficina ativa com esse e-mail e conferida a cada requisição, como a do admin (RB17, RB21).
-2. **Autorização do histórico.** O agendamento é a autorização. A tela de agendamento avisa o que será compartilhado. A função pura `canWorkshopAccessBike` (RB09) libera o acesso só para agendamento `SCHEDULED` ou `COMPLETED` da mesma oficina e da mesma bike; `CANCELLED` ou outra oficina negam (RNF03). A oficina só lê; escreve apenas ao concluir o atendimento.
-3. **Notificação.** Tabela `WorkshopNotice`, mostrada em `/oficina`. Cancelamento com menos de 24 h é marcado como urgente (RF29).
-4. **Conclusão.** Ao concluir, o sistema cria uma `ServiceVisit` da bike com a oficina e os itens (RF36), reaproveitando a gravação de visitas da Fase 1.
+1. **Entrada (OPEN-40).** A oficina **pede cadastro** com texto livre e contato; o administrador aprova em `/admin`. O responsável (e-mail do pedido) passa a editar a oficina e **convida mecânicos por e-mail** (`WorkshopMember`); o mecânico convidado entra com o próprio login e vê a área `/oficina`. Não há novo `Role`: a permissão é derivada da oficina ativa e conferida a cada requisição (RB21).
+2. **Agenda (OPEN-41).** Grade semanal de horários (`WorkshopHour`: dia da semana, início e fim e slots). Cada serviço tem **duração estimada** que ocupa a agenda; um slot só aceita um agendamento ativo (RB22). Google Agenda é o "momento dois" e só fica documentado.
+3. **Histórico (OPEN-42).** No agendamento o atleta escolhe se compartilha o histórico da bike. `canWorkshopAccessBike` (RB09) só libera para agendamento `SCHEDULED`/`COMPLETED` da mesma oficina e bike **com consentimento**; cancelado ou sem consentimento nega (RNF03).
+4. **Cancelamento (OPEN-43).** Aviso no app (`WorkshopNotice`) e por e-mail; urgente se < 24 h (RF29). Depois, um WhatsApp Business do GearLog avisará (só documentado).
+5. **Concluir a OS (OPEN-44).** Cria a `ServiceVisit` da bike (RF36), atualizando o histórico. Peças trocadas zeram o desgaste. Peças com revisões em etapas (ex.: suspensão em 100 h, depois 150 h) zeram e **avançam a meta de desgaste** para a etapa seguinte (RB23). **Preço do serviço não entra** (João não pediu).
 
 ## Alternativas consideradas
 
 | Alternativa | Por que não |
 |---|---|
-| Novo `Role` MECHANIC definido no primeiro login | Qualquer pessoa poderia se declarar oficina; o cadastro pelo admin dá confiança (e prepara a verificação de lojistas da Fase 2). |
-| Consentimento separado do agendamento | Mais telas e mais fricção sem ganho: o atleta já escolhe oficina e bike ao agendar. |
-| Notificação por e-mail | Exige provedor de e-mail e novos segredos; o OPEN-14 já adotou avisos só dentro do app. |
+| Admin cadastra a oficina sem pedido | João pediu pedido com texto e contato. |
+| Horários avulsos sem duração | João pediu grade semanal e duração do serviço. |
+| Agendamento é sempre a autorização | João pediu escolha do atleta. |
+| Preço no serviço | Oferecido, não escolhido. |
 
 ## Consequências
 
-- Migração nova com `Workshop`, `WorkshopService`, `WorkshopSlot`, `Appointment` e `WorkshopNotice`.
-- O admin ganha uma seção para cadastrar oficinas.
-- A gravação de visita da Fase 1 foi extraída para `src/lib/visit-record.ts` e passou a ser usada pelo atleta e pela oficina.
+- Migração: `WorkshopMember` (convites), `WorkshopHour`, duração em `WorkshopService`, consentimento em `Appointment`, etapas em plano de peça (`stages`).
+- A gravação da visita (`src/lib/visit-record.ts`) é compartilhada por atleta e oficina.

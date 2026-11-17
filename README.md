@@ -53,7 +53,7 @@ Toda a documentação técnica e de engenharia de requisitos do projeto está ce
 * Git
 * [Infisical CLI](https://infisical.com/docs/cli/overview), com acesso ao projeto do GearLog em `https://secrets.minson.com.br`
 * Node.js 22 (LTS)
-* Um *OAuth client ID* do Google (tipo "Web application", no [Google Cloud Console](https://console.cloud.google.com/apis/credentials)) com o redirect `http://localhost:3000/auth/google/callback`. Todos os perfis entram com o Google ([ADR-005](docs/adr/ADR-005-login-unico-google.md))
+* Um *OAuth client ID* do Google (tipo "Web application", no [Google Cloud Console](https://console.cloud.google.com/apis/credentials)) com o redirect `http://localhost:3000/auth/google/callback`. Todos os perfis entram com o Google ([ADR-005](docs/adr/ADR-005-login.md))
 * Opcional: um app de API no Strava ([strava.com/settings/api](https://www.strava.com/settings/api)) com **Authorization Callback Domain** = `localhost`, só se for testar a fonte "API do Strava" (o app tem um tutorial em `/tutorial-strava`, [ADR-006](docs/adr/ADR-006-fontes-de-pedais.md))
 
 ### Instalação e Execução
@@ -63,7 +63,7 @@ git clone https://github.com/jopucciariello/modelagemdesistemas26.2.git
 cd modelagemdesistemas26.2
 npm install
 
-# 2. Segredos no Infisical (ADR-003): faça login e vincule o repo ao projeto uma vez.
+# 2. Segredos no Infisical (ADR-004): faça login e vincule o repo ao projeto uma vez.
 #    O `infisical init` cria o .infisical.json (só o ID do projeto, pode ir para o Git).
 infisical login --domain=https://secrets.minson.com.br   # instância própria do Infisical
 infisical init

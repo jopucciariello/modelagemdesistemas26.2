@@ -23,10 +23,10 @@ Prioridade (MoSCoW): **M** = Must, **S** = Should, **C** = Could.
 | ID | Requisito (EARS) | Prio |
 |---|---|:-:|
 | RF01 | O sistema deve permitir que o atleta cadastre, edite, aposente (arquive) e exclua bicicletas (nome, tipo, marca, modelo, ano) e envie uma foto de cada uma (JPEG, PNG ou WebP, até 1 MB; sem foto, aparece um ícone). A exclusão apaga a bike, as peças e o histórico e exige confirmação; os pedais importados da fonte permanecem guardados sem bike, e a exclusão é recusada enquanto houver agendamento em oficina. | M |
-| RF02 | O sistema deve permitir que o atleta cadastre peças em uma bike, escolhendo a família e o componente do catálogo (RF30) e informando posição na bike (opcional), data de instalação, uso inicial (km e/ou horas) e os planos de manutenção da peça (RB16). Os planos sugeridos são os do componente ou, se ele não tiver, os da família. *(Alterado em 12/11/2026.)* | M |
+| RF02 | O sistema deve permitir que o atleta cadastre peças em uma bike, escolhendo a família e o componente do catálogo (RF30), se a peça é **nova ou usada** (se usada, registra a condição) e informando posição na bike (opcional), data de instalação, uso inicial (km e/ou horas) e os planos de manutenção da peça (RB16). Os planos sugeridos são os do componente ou, se ele não tiver, os da família. A peça pode ser trocada a qualquer momento; ao removê-la, o atleta escolhe **guardar no estoque** ou **deletar** (RF39). *(Alterado em 12/11 e 17/11/2026.)* | M |
 | RF03 | Quando o atleta cadastrar uma peça sem informar vida útil, o sistema deve sugerir a vida útil padrão da categoria. | S |
-| RF04 | Quando o usuário entrar com a conta Google (OpenID Connect), o sistema deve criar ou localizar o seu perfil: Administrador, se o e-mail verificado estiver em `ADMIN_EMAILS` (RB17), ou Atleta, nos demais casos. **[PROPOSTO]** *(Alterado em 12/11/2026; antes vinculava a conta Strava via OAuth 2.0. O vínculo com o Strava passa a ser a fonte B do RF32.)* | M |
-| RF05 | Quando a fonte de pedais do atleta for o Strava (API própria, RF33) ou o conector (RF34), o sistema deve listar as bikes dessa fonte para associá-las às bikes do GearLog. Quando o atleta indicar que a bike foi montada do zero, o sistema deve usar a data do primeiro pedal da bike da fonte como data de montagem das peças originais, para que o histórico anterior ao cadastro conte no desgaste. | M |
+| RF04 | Quando o usuário entrar, o sistema deve criar ou localizar o seu perfil: Administrador, se o e-mail verificado estiver em `ADMIN_EMAILS` (RB17), ou Atleta, nos demais casos. O login é por **conta Google** (OpenID Connect), por **usuário e senha** (senha guardada só como hash, RNF02) e, quando o Strava aprovar o app central do GearLog, também pelo **Strava**. Qualquer pessoa pode se cadastrar como Atleta. *(Decidido em 17/11/2026.)* | M |
+| RF05 | Quando a fonte de pedais do atleta for o Strava (conector, hoje; app central, depois), o sistema deve listar as bikes dessa fonte para associá-las às bikes do GearLog. A bike que vem do Strava é mantida; se a atividade vier sem bike, o atleta escolhe a bike à mão em cada atividade, e **não existe bike padrão** (OPEN-20). Quando o atleta indicar que a bike foi montada do zero, o sistema deve usar a data do primeiro pedal da bike da fonte como data de montagem das peças originais, para que o histórico anterior ao cadastro conte no desgaste. | M |
 | RF06 | Quando uma nova atividade de ciclismo chegar pela fonte do atleta (Strava ou conector), o sistema deve somar a distância (km) e o tempo em movimento (horas) da atividade à bike associada e às peças instaladas nela. | M |
 | RF07 | O sistema deve calcular o desgaste de cada plano de manutenção da peça como percentual do intervalo consumido, em km e em horas, considerando o maior dos dois percentuais quando o plano tiver as duas métricas. | M |
 | RF08 | Quando o uso de um plano da peça atingir o mínimo da faixa de durabilidade do catálogo (ou 80% do intervalo, se o plano não tiver mínimo), o sistema deve emitir um alerta de "troca próxima" ou, para peças cuja ação é revisão (RB13), de "revisão próxima". | M |
@@ -40,9 +40,12 @@ Prioridade (MoSCoW): **M** = Must, **S** = Should, **C** = Could.
 | RF30 | O sistema deve permitir que o administrador mantenha o catálogo de peças no formato da planilha de catálogo: famílias (Transmissão, Suspensão, Pneus, Freios, Rodas, Canotes, Selins), cada uma com planos de manutenção padrão (métrica, intervalo e ação: troca ou revisão) e a indicação se desgasta em rolo (RB14); e componentes com código (ex.: `TRX-018`), marca, modelo, modalidade, subcategoria, detalhes, faixa de preço de referência e planos próprios, incluindo lançamentos. O catálogo pode ser carregado da planilha, sem duplicar itens pelo código. *(Alterado em 12/11/2026.)* | M |
 | RF35 | O sistema deve manter bikes-modelo de fábrica (código, marca, modelo, versão, categoria e peças originais por posição) e, quando o atleta criar uma bike a partir de um modelo, instalar as peças originais com os planos sugeridos na data informada. *(Incluído em 12/11/2026, a partir da aba Bikes da planilha.)* | S |
 | RF36 | Quando o atleta registrar uma revisão feita numa oficina (fora do programado), o sistema deve permitir informar de uma vez vários itens (peças e planos da bike, ou itens fora do catálogo, como o movimento central) e, para cada um, o que foi feito (verificado/ajustado, item revisado ou trocado, ou peça inteira trocada) e a condição informada pelo mecânico (boa, atenção, trocar em breve). Itens revisados ou trocados zeram o contador (RB13, RB18, RF10); todos vão para o histórico (RF11) com a oficina. *(Incluído em 13/11/2026 a pedido de João.)* | S |
-| RF32 | O sistema deve permitir que o atleta escolha, e troque depois, a fonte dos seus pedais: **manual** (RF14), **API do Strava com app próprio** (RF33) ou **conector** (RF34). Enquanto não escolher, a fonte é manual. **[PROPOSTO]** | M |
-| RF33 | Quando o atleta escolher a API do Strava, o sistema deve exibir o passo a passo para cadastrar um app no Strava, receber o `Client ID` e o `Client Secret` dele e vincular a conta por OAuth 2.0, usando esse app. **[PROPOSTO]** | M |
-| RF34 | Quando o atleta escolher o conector, o sistema deve receber a URL e a chave de API do conector dele, validar a conexão e ler bikes e atividades por ele, sem chamar o Strava nem guardar token do Strava. **[PROPOSTO]** | M |
+| RF37 | O sistema deve permitir que o administrador inclua e remova e-mails de administrador em `/admin`. Como a lista (`ADMIN_EMAILS`) mora no Infisical, o GearLog tenta gravá-la lá pela API; se não for possível, guarda a lista também no banco (ver [ADR-005](adr/ADR-005-login.md)). *(Decidido em 17/11/2026.)* | M |
+| RF38 | O sistema deve permitir que o usuário ative ou desative (opt-in) o aviso por e-mail das notificações (RF21, RF22, RF29); o aviso dentro do app é sempre exibido. *(Decidido em 17/11/2026.)* | S |
+| RF39 | Quando o atleta remover uma peça, o sistema deve perguntar se ele **guarda no estoque** (a peça sai da bike e fica numa lista de peças guardadas, para instalar depois) ou **deleta**. Peça guardada não conta desgaste. *(Decidido em 17/11/2026.)* | S |
+| RF32 | O sistema deve permitir que o atleta escolha, e troque depois, a fonte dos seus pedais: **manual** (RF14) ou **Strava** (RF34). O Strava é o caminho principal: hoje pelo conector do atleta e, quando o Strava aprovar, pelo app central do GearLog. Enquanto não escolher, a fonte é manual. *(Decidido em 17/11/2026.)* | M |
+| RF33 | **[REMOVIDO em 17/11/2026]** O app Strava próprio de cada atleta (Client ID e Client Secret por atleta) deixou de existir, do código e do tutorial (OPEN-23). O vínculo com o Strava é o conector (RF34) e, depois, o app central. | M |
+| RF34 | Quando o atleta escolher o Strava pelo conector, o sistema deve receber a URL e a chave de API do **conector dele** (um por atleta, criptografados), validar a conexão e ler bikes e atividades por ele, sem chamar o Strava nem guardar token do Strava. *(Decidido em 17/11/2026.)* | M |
 | RF31 | Quando o componente ou a bike-modelo desejada não existir no catálogo, o sistema deve permitir que o atleta peça a inclusão por um menu de ajuda; o pedido chega ao administrador, que cadastra o modelo no catálogo ou responde com um motivo. O atleta não cadastra nada no catálogo. *(Alterado em 12/11/2026 por decisão de João.)* | S |
 
 > **RF06 e RF07:** o uso de cada plano é calculado a partir dos pedais guardados, e não acumulado num contador da peça ([ADR-007](adr/ADR-007-desgaste-calculado-dos-pedais.md), OPEN-15). Ver o [modelo de domínio](dominio.md).
@@ -51,32 +54,32 @@ Prioridade (MoSCoW): **M** = Must, **S** = Should, **C** = Could.
 
 ### Fase 2 — Mercado de peças (tentativa de entrega, 16/11/2026)
 
-> Decisões de implementação marcadas **[PROPOSTO]** aguardam a aprovação do João (OPEN-30 a OPEN-34, [ADR-008](adr/ADR-008-mercado-de-pecas.md)).
+> Decisões de 17/11/2026 (OPEN-30 a OPEN-35) em [ADR-008](adr/ADR-008-mercado-de-pecas.md).
 
 | ID | Requisito (EARS) | Prio |
 |---|---|:-:|
-| RF16 | O sistema deve permitir que atletas e lojistas publiquem anúncios de peças (título, família do catálogo, condição nova ou usada, preço, descrição, até 3 fotos por URL e km de uso quando usada). **[PROPOSTO]** fotos por URL, sem upload (OPEN-31). | M |
+| RF16 | O sistema deve permitir que atletas e lojistas publiquem anúncios de peças (título, modelo do catálogo, condição nova ou usada, preço, descrição, até 3 fotos enviadas por **upload** e km de uso quando usada). *(Decidido em 17/11/2026.)* | M |
 | RF17 | O sistema deve exibir uma vitrine de anúncios ativos filtrável por família, condição, faixa de preço e tipo de vendedor (lojista ou atleta). | M |
-| RF18 | O sistema deve permitir que o administrador cadastre lojistas (a partir de um usuário que já entrou pelo Google) e conceda ou revogue o selo de verificado. **[PROPOSTO]** lojista = usuário com perfil de loja, sem novo papel de acesso (OPEN-30). | M |
+| RF18 | O sistema deve permitir que o usuário **peça para virar lojista** por um formulário com texto livre (pedido e contato), para o administrador conferir que a loja existe; o administrador aprova ou recusa em `/admin` e concede ou revoga o selo de verificado. O anúncio de lojista mostra um botão que leva o comprador direto à loja. O lojista marca no perfil as famílias que vende. *(Decidido em 17/11/2026.)* | M |
 | RF19 | Enquanto um lojista possuir selo de verificado, o sistema deve exibir o selo em seus anúncios e em sua vitrine. | M |
-| RF20 | O sistema deve permitir que o atleta cadastre, edite e remova um "sonho": peça desejada (família e palavras-chave opcionais) com preço máximo. | M |
-| RF21 | Quando um anúncio compatível com um sonho for publicado com preço menor ou igual ao preço máximo, o sistema deve notificar o atleta dono do sonho. Compatível = mesma família e, se o sonho tiver palavras-chave, todas aparecem no título. **[PROPOSTO]** (OPEN-32). | M |
-| RF22 | Quando um sonho for cadastrado, o sistema deve notificar os lojistas verificados que já anunciaram naquela família. **[PROPOSTO]** "vende a família" = tem anúncio ativo ou vendido nela (OPEN-33). | S |
+| RF20 | O sistema deve permitir que o atleta cadastre, edite e remova um "sonho": peça desejada, escolhida como **modelo do catálogo**, com preço máximo. *(Decidido em 17/11/2026.)* | M |
+| RF21 | Quando um anúncio do mesmo **modelo do catálogo** de um sonho for publicado com preço menor ou igual ao preço máximo, o sistema deve notificar o atleta dono do sonho, no app e, se ele aceitou (opt-in), por e-mail. *(Decidido em 17/11/2026.)* | M |
+| RF22 | Quando um sonho for cadastrado, o sistema deve notificar apenas os lojistas que vendem a família do modelo **e** que o administrador liberou para esse serviço pago ("informação privilegiada"). *(Decidido em 17/11/2026.)* | S |
 | RF23 | Quando um alerta de "troca próxima" for emitido, o sistema deve sugerir anúncios ativos da família da peça. | C |
 | RF24 | O sistema deve permitir que o administrador remova anúncios que violem as regras da plataforma, registrando o motivo. | M |
 
 Notificações da Fase 2 são **dentro do app** (sino com lista e contador), coerente com a OPEN-14 (OPEN-34).
 ### Fase 3 — Oficina (implementação iniciada em 16/11/2026)
 
-> Decisão de João em 16/11/2026: tentar entregar as Fases 2 e 3. A Fase 1 continua sendo a entrega garantida e tem prioridade. Os requisitos abaixo vêm de [segundo-estagio.md](segundo-estagio.md); as decisões de interpretação estão marcadas **[PROPOSTO]** e listadas em OPEN-40 a OPEN-44.
+> Decisão de João em 16/11/2026: tentar entregar as Fases 2 e 3. A Fase 1 continua sendo a entrega garantida e tem prioridade. Os requisitos abaixo vêm de [segundo-estagio.md](segundo-estagio.md); as decisões de interpretação (OPEN-40 a OPEN-44) foram aprovadas em 17/11/2026 ([ADR-009](adr/ADR-009-oficinas-e-acesso-ao-historico.md)).
 
 | ID | Requisito (EARS) | Prio |
 |---|---|:-:|
-| RF25 | O sistema deve permitir que mecânicos/oficinas cadastrem perfil (nome, descrição, endereço, telefone), serviços oferecidos (com o que cada nível de revisão inclui) e horários disponíveis. O administrador cadastra a oficina com o e-mail Google do responsável, e só esse responsável edita a oficina. **[PROPOSTO]** (OPEN-40, OPEN-41) | M |
-| RF26 | O sistema deve permitir que o atleta agende uma revisão, para uma das suas bikes, em um horário livre de uma oficina ativa, escolhendo o serviço. Um horário só pode ter um agendamento ativo. | M |
-| RF27 | Quando o atleta agendar uma revisão, o sistema deve compartilhar com a oficina o histórico daquela bike (dados da bike, peças instaladas e histórico de manutenção), e avisar o atleta disso antes de confirmar. **[PROPOSTO]** (OPEN-42) | M |
-| RF28 | Quando a oficina concluir um serviço, o sistema deve registrar o serviço e as peças trocadas no histórico da bike, como uma visita à oficina (RF36), já com os itens do nível de revisão contratado. **[PROPOSTO]** (OPEN-44) | M |
-| RF29 | Se o atleta cancelar um agendamento com menos de 24 h de antecedência, então o sistema deve notificar a oficina imediatamente (aviso dentro do app, OPEN-43). Cancelamentos com mais antecedência também liberam o horário e avisam a oficina, sem destaque de urgência. **[PROPOSTO]** | S |
+| RF25 | O sistema deve permitir que a oficina peça cadastro (texto livre e contato); o administrador aprova em `/admin`. Aprovada, o responsável cadastra perfil (nome, descrição, endereço, telefone), serviços (com o que cada nível de revisão inclui e a **duração estimada**), a **grade semanal de horários** e **convida mecânicos por e-mail**. *(Decidido em 17/11/2026.)* | M |
+| RF26 | O sistema deve permitir que o atleta agende uma revisão, para uma das suas bikes, em horário livre da grade de uma oficina ativa, escolhendo o serviço; o serviço ocupa a agenda pela sua duração estimada. Um horário só pode ter um agendamento ativo. A integração com o Google Agenda fica para o "momento dois" (só documentada). | M |
+| RF27 | Quando o atleta agendar uma revisão, o sistema deve perguntar se ele **compartilha o histórico** daquela bike (dados da bike, peças instaladas e histórico de manutenção) com a oficina; só compartilha se ele aceitar. *(Decidido em 17/11/2026.)* | M |
+| RF28 | Quando a oficina concluir uma OS, o sistema deve registrar o serviço e as peças trocadas no histórico da bike, como uma visita à oficina (RF36), já com os itens do nível de revisão contratado. Peças trocadas zeram o desgaste; peças com revisões em etapas avançam a meta de desgaste (RB23). *(Decidido em 17/11/2026.)* | M |
+| RF29 | Se o atleta cancelar um agendamento, então o sistema deve avisar a oficina no app e por e-mail, destacando como urgente o cancelamento com menos de 24 h de antecedência, e liberar o horário. Depois, um WhatsApp Business do GearLog fará o aviso (só documentado). *(Decidido em 17/11/2026.)* | S |
 
 ---
 
@@ -86,8 +89,8 @@ Os RNFs também seguem o padrão EARS.
 
 | ID | Categoria | Requisito (EARS) |
 |---|---|---|
-| RNF01 | Segurança | Quando o atleta vincular o Strava (RF33) ou o conector (RF34), o sistema deve armazenar criptografados, apenas no backend, os tokens do Strava, o `Client Secret` do app dele e a chave de API do conector, sem expô-los ao frontend nem aos logs. |
-| RNF02 | Segurança | O sistema não deve armazenar senhas: todos os usuários se autenticam pelo Google (OpenID Connect), conforme o [ADR-005](adr/ADR-005-login-unico-google.md) e o [ADR-006](adr/ADR-006-fontes-de-pedais.md). *(Alterado em 12/11/2026; antes previa hash de senha com bcrypt ou argon2.)* |
+| RNF01 | Segurança | Quando o atleta vincular o conector (RF34) ou o Strava, o sistema deve armazenar criptografados, apenas no backend, os tokens do Strava e a chave de API do conector, sem expô-los ao frontend nem aos logs. |
+| RNF02 | Segurança | O sistema deve guardar senhas só como hash lento com sal (scrypt) e nunca em texto; quem entra pelo Google ou pelo Strava não tem senha. Ver [ADR-005](adr/ADR-005-login.md). *(Alterado em 17/11/2026: volta o login por usuário e senha.)* |
 | RNF03 | Privacidade (LGPD) | Se um terceiro (oficina) tentar ver o histórico de uma bike sem autorização do atleta, então o sistema deve negar o acesso. A autorização é o agendamento (RF27) e a permissão é conferida a cada requisição (RB09). *(Fase 3, 16/11/2026.)* |
 | RNF04 | Desempenho | O sistema deve carregar as páginas principais em até 2 s em conexão 4G. |
 | RNF05 | Integração | Enquanto estiver integrado ao Strava, o sistema deve respeitar os limites de requisição da API, usando webhooks quando disponíveis e polling como alternativa. |
@@ -108,12 +111,12 @@ Os RNFs também seguem o padrão EARS.
 | RB04 | Limiares de alerta: a partir do mínimo da faixa de durabilidade do plano (ou de 80% do intervalo, se não houver mínimo) = troca/revisão próxima (barra amarela); 100% do intervalo = troca/revisão necessária. O intervalo é a média da faixa (OPEN-17). |
 | RB05 | Uma peça trocada não pode ser excluída, apenas arquivada no histórico. |
 | RB06 | Apenas o administrador concede ou revoga o selo de lojista verificado (RF18). |
-| RB07 | Anúncio de peça usada pode informar a km de uso, preenchida **à mão** pelo vendedor. O GearLog não publica km vinda do Strava enquanto a OPEN-02 estiver aberta. **[PROPOSTO]** |
-| RB19 | Só o autor edita, marca como vendido ou encerra o próprio anúncio; o administrador pode removê-lo (RF24). **[PROPOSTO]** |
-| RB20 | O GearLog não processa pagamento nem intermedeia a negociação; a vitrine mostra o contato do vendedor (e-mail da conta Google) só a usuários logados. **[PROPOSTO]** (OPEN-35) |
-| RB08 | Cada atleta usa o próprio app do Strava (RF33) ou o próprio conector (RF34), então o GearLog não depende de um app único do Strava nem de homologação comercial. |
+| RB07 | Anúncio de peça usada pode informar a km de uso, preenchida **à mão** pelo vendedor. O GearLog não publica km vinda do Strava enquanto a OPEN-02 estiver aberta. |
+| RB19 | Só o autor edita, marca como vendido ou encerra o próprio anúncio; o administrador pode removê-lo (RF24). *(Aprovado em 17/11/2026.)* |
+| RB20 | O GearLog não processa pagamento nem intermedeia a negociação; o anúncio mostra o botão de **WhatsApp** do vendedor (número informado por ele) só a usuários logados. *(Decidido em 17/11/2026.)* |
+| RB08 | Cada atleta usa o próprio conector (RF34) até o Strava aprovar o app central do GearLog; o GearLog não depende de um app único do Strava para funcionar. |
 | RB09 | Uma oficina só acessa o histórico de bikes com agendamento ativo ou concluído com ela. Agendamento cancelado encerra o acesso. *(Fase 3, 16/11/2026.)* |
-| RB21 | Só o responsável pela oficina (o e-mail Google cadastrado pelo administrador) edita o perfil, os serviços e os horários dela e conclui os atendimentos dela. A permissão é conferida a cada requisição, como na RB17. **[PROPOSTO]** (OPEN-40) |
+| RB21 | Só o responsável pela oficina e os mecânicos que ele convidou editam a agenda e concluem os atendimentos dela; só o responsável convida mecânicos. A permissão é conferida a cada requisição, como na RB17. *(Decidido em 17/11/2026.)* |
 | RB22 | Um horário de oficina tem no máximo um agendamento ativo (agendado ou concluído); só horários futuros podem ser agendados. |
 | RB10 | Cada categoria de peça define sua métrica de desgaste: km, horas ou ambas. Peças de suspensão (garfo, amortecedor) e canote retrátil são medidas por horas de uso. |
 | RB11 | Quando a peça tiver vida útil em km e em horas, vale o critério que for atingido primeiro (maior percentual). |
@@ -123,7 +126,8 @@ Os RNFs também seguem o padrão EARS.
 | RB15 | O atleta só cadastra peças com categoria e componente existentes no catálogo. Apenas o administrador inclui, edita ou desativa categorias e componentes. |
 | RB16 | Uma peça tem planos de manutenção, herdados do componente (ou, se ele não tiver, da família) e editáveis pelo atleta. Cada plano tem métrica, intervalo e ação (troca ou revisão). O desgaste, os alertas (RB04) e a revisão (RB13) valem por plano; a troca da peça inteira (RF10) encerra a peça e todos os seus planos. Peça sem desgaste regular (ex.: selim, canote rígido) pode não ter plano. *(Alterado em 12/11/2026.)* |
 | RB18 | Quando a peça tem mais de um plano, a troca de um item consumível dela (ex.: corrente ou cassete do grupo de transmissão) zera só o plano desse item e fica no histórico como troca, sem encerrar a peça. Para trocar dois itens (ex.: corrente e cassete), o atleta lança a troca de cada um (OPEN-18). |
-| RB17 | Só acessa a área administrativa (`/admin`) quem entra com uma conta Google de e-mail verificado que está na lista de administradores autorizados (`ADMIN_EMAILS`). A permissão é conferida a cada acesso (ADR-002). |
+| RB23 | Uma peça com revisões em etapas (ex.: suspensão com revisão aos 100 h e depois aos 150 h) tem uma **meta de desgaste** atual. Concluir a revisão (pelo atleta ou por uma OS, RF28) zera o contador e avança a meta para a etapa seguinte; na última etapa, a meta se repete. *(Decidido em 17/11/2026.)* |
+| RB17 | Só acessa a área administrativa (`/admin`) quem entra com e-mail verificado que está na lista de administradores autorizados (`ADMIN_EMAILS`, guardada no Infisical, RF37). A permissão é conferida a cada acesso ([ADR-005](adr/ADR-005-login.md)). |
 
 ---
 
@@ -178,8 +182,8 @@ Atualizado em 12/11/2026. Código em `src/`, testes em `tests/unit/`.
 | RF16, RF17 | Feito (Fase 2) | `src/app/mercado/`, `src/app/actions/market.ts`, `src/lib/market.ts` | `market.test.ts` |
 | RF18, RF19, RF24 | Feito (Fase 2) | `src/app/actions/merchants.ts`, `src/components/admin-market.tsx`, `src/components/seller-badge.tsx` | `merchants.test.ts` |
 | RF20, RF21, RF22, RF23 | Feito (Fase 2); funções com banco sem teste automatizado | `src/app/sonhos/`, `src/app/notificacoes/`, `src/lib/dreams.ts`, `createListing` | `dreams.test.ts` (`matchesDream`) |
-| RF32, RF33, RF34 | Feito | `src/app/fonte/`, `src/lib/strava/`, `src/lib/connector/` | `strava-oauth.test.ts`, `activity-sources.test.ts` |
-| RF25–RF29, RNF03, RB09 | Feito (16/11/2026, aguarda aprovação dos [PROPOSTO]) | `src/app/oficina/`, `src/app/oficinas/`, `src/app/agendamentos/`, `src/app/actions/workshops.ts`, `src/lib/workshop.ts` | `workshop.test.ts` |
+| RF32, RF34 | Feito (RF33 removido em 17/11/2026) | `src/app/fonte/`, `src/lib/strava/`, `src/lib/connector/` | `strava-oauth.test.ts`, `activity-sources.test.ts` |
+| RF25–RF29, RNF03, RB09 | Feito em 16/11/2026; decisões aprovadas em 17/11/2026, ajustes de código nas tasks T-70+ | `src/app/oficina/`, `src/app/oficinas/`, `src/app/agendamentos/`, `src/app/actions/workshops.ts`, `src/lib/workshop.ts` | `workshop.test.ts` |
 | RB02, RB03, RB04, RB11–RB14, RB16 | Feito | `src/lib/wear.ts` | `wear.test.ts` |
 | RB18 | Feito | `servicePlan`, `canResetPlan` | `catalog.test.ts` |
 | RB17 | Feito | `src/lib/session.ts` (`getCurrentAdmin`) | `google-admin-login.test.ts` |

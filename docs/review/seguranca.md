@@ -5,7 +5,7 @@
 | Fase | Prática |
 |---|---|
 | Requisitos | RNF01 (segredos criptografados), RNF02 (sem senhas), RB17 (admin por lista), minimização LGPD em `arquitetura.md` §5 |
-| Design | ADR-002/005 (OIDC com PKCE), ADR-003 (Infisical), ADR-006 (cada atleta com o próprio app); ameaças abaixo |
+| Design | ADR-005 (OIDC com PKCE), ADR-004 (Infisical), ADR-006 (cada atleta com o próprio app); ameaças abaixo |
 | Implementação | Regras de CLAUDE.md para agentes; autorização em toda server action; segredos fora do Git |
 | Verificação | Testes de OIDC, criptografia, SSRF e mapeamento de erro sem vazar chave; CI em todo PR |
 | Implantação | Segredos entregues pelo Infisical via OIDC (nenhuma credencial do Infisical guardada); HTTPS forçado; domínio canônico |

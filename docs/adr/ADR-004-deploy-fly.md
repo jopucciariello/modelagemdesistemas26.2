@@ -1,9 +1,9 @@
-# ADR-004 — Hospedagem no Fly.io
+# ADR-004 — Hospedagem no Fly.io, segredos no Infisical e deploy
 
 - **Status:** Aceito
 - **Data:** 12/11/2026 (domínio próprio na mesma data)
 - **Decisor:** João Pucciariello
-- **Requisitos relacionados:** RF04, RNF01, RNF04, RNF06, RB08, RB17; ADR-001 (SQLite), ADR-002 (callbacks OAuth), ADR-003 (segredos)
+- **Requisitos relacionados:** RF04, RNF01, RNF04, RNF06, RB08, RB17; ADR-001 (SQLite), ADR-005 (callbacks de login); fundido o antigo ADR-003 (segredos), 17/11/2026
 
 ## Contexto
 
@@ -20,6 +20,16 @@ Para a demo e para testar o OAuth do Strava e do Google com uma URL fixa, o Gear
 - **Domínio próprio:** o app atende em **`https://gearlog.jopucci.com`** (domínio de João, com DNS no Cloudflare). O certificado TLS é emitido pelo Fly (`fly certs add gearlog.jopucci.com`), e no Cloudflare fica um registro `CNAME gearlog` apontando para o app no Fly (`gearlog`), com o proxy desligado ("DNS only"), porque o Fly emite o certificado.
 - **Nada no `.fly.dev`:** o `src/proxy.ts` redireciona (308) qualquer acesso a `*.fly.dev` para o `APP_URL`. Assim os links, cookies e callbacks OAuth existem só no domínio próprio.
 - URLs de produção: `APP_URL = https://gearlog.jopucci.com`, e os callbacks `https://gearlog.jopucci.com/auth/strava/callback` e `https://gearlog.jopucci.com/auth/google/callback`. No Strava, o *Authorization Callback Domain* passa a ser `gearlog.jopucci.com` (o Strava sempre libera `localhost` também). No Google, o redirect de produção é incluído junto com o de `localhost`.
+
+## Segredos e configuração no Infisical (antigo ADR-003, fundido em 17/11/2026)
+
+- Todas as variáveis da aplicação ficam no **Infisical** (instância própria `https://secrets.minson.com.br`): ambiente `dev` no desenvolvimento e `prod` em produção. O CLI aponta para essa instância (`infisical login --domain=...`).
+- Os comandos rodam com `infisical run --env=dev -- <comando>`, que injeta as variáveis só no processo, sem gravar arquivo. `npm run dev`, `start`, `db:migrate` e `db:deploy` já fazem isso.
+- O repositório tem `.infisical.json` (só o ID do projeto) e `.env.example` (só nomes). Não existe `.env`.
+- O código só lê `process.env`; trocar de cofre não muda o código. `npm test` não precisa de segredo.
+- Em produção o workflow lê o ambiente `prod` por OIDC e grava os segredos no Fly (ver Decisão).
+- Mudar um segredo (ex.: `ADMIN_EMAILS`) exige reiniciar o processo local ou rodar o deploy de novo.
+- Alternativas descartadas: `.env` local (se perde e pode ir para o Git), SDK do Infisical dentro do app (acopla ao fornecedor e põe um token de máquina no app) e segredos do GitHub Actions (só valem para o CI).
 
 ## Alternativas consideradas
 

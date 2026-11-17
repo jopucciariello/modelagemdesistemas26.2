@@ -28,7 +28,7 @@ Texto completo em EARS: [requisitos.md](docs/requisitos.md). Resumo da Fase 1:
 |---|---|
 | Bikes e peças | RF01, RF02, RF03, RF35 |
 | Acesso | RF04 |
-| Pedais e fontes | RF05, RF06, RF13, RF14, RF32, RF33, RF34 |
+| Pedais e fontes | RF05, RF06, RF13, RF14, RF32, RF34 |
 | Desgaste e alertas | RF07, RF08, RF09, RF15 |
 | Manutenção | RF10, RF11, RF12, RF36 |
 | Catálogo | RF30, RF31 |

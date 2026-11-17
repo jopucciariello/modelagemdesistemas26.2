@@ -9,7 +9,7 @@ Casos de uso da Fase 1, a entrega da disciplina. Cada caso aponta para os requis
 | Usuário | Principal (abstrato) | Quem entra com a conta Google. Especializa-se em Atleta ou Administrador. |
 | Atleta | Principal | Ciclista dono das bikes. Persona: Rafael ([personas.md](personas.md)). |
 | Administrador | Principal | Mantém o catálogo. Também pode ter bikes, por isso herda os casos do Atleta. Persona: Beatriz. |
-| Google | Secundário (sistema) | Provedor de identidade (OpenID Connect, [ADR-005](adr/ADR-005-login-unico-google.md)). |
+| Google | Secundário (sistema) | Provedor de identidade (OpenID Connect, [ADR-005](adr/ADR-005-login.md)). |
 | Fonte de pedais | Secundário (sistema) | Strava (com o app do próprio atleta) ou o conector do atleta ([ADR-006](adr/ADR-006-fontes-de-pedais.md)). |
 
 ## Diagrama
