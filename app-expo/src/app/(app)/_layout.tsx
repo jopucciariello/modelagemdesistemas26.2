@@ -33,6 +33,10 @@ export default function AppLayout() {
         options={{ title: 'Mercado', tabBarIcon: ({ color, size }) => <Ionicons name="pricetag" size={size} color={color as string} /> }}
       />
       <Tabs.Screen
+        name="avisos"
+        options={{ title: 'Avisos', tabBarIcon: ({ color, size }) => <Ionicons name="notifications" size={size} color={color as string} /> }}
+      />
+      <Tabs.Screen
         name="configuracoes"
         options={{ title: 'Ajustes', tabBarIcon: ({ color, size }) => <Ionicons name="settings" size={size} color={color as string} /> }}
       />
