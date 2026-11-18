@@ -4,12 +4,14 @@ import { Alert, View } from 'react-native';
 
 import { Btn, Field } from '@/components/market-ui';
 import { ThemedText } from '@/components/themed-text';
+import { useTheme } from '@/hooks/use-theme';
 import { ApiError } from '@/lib/api';
 import { market, type AdminOverview } from '@/lib/market';
 
 const msg = (e: unknown) => (e instanceof ApiError ? e.message : 'Algo deu errado.');
 
 export function AdminTab() {
+  const t = useTheme();
   const [data, setData] = useState<AdminOverview | null>(null);
   const [reasons, setReasons] = useState<Record<string, string>>({});
   const load = useCallback(() => market.adminOverview().then(setData).catch((e) => Alert.alert('Erro', msg(e))), []);
@@ -22,7 +24,7 @@ export function AdminTab() {
         <ThemedText type="subtitle">Pedidos de lojista</ThemedText>
         {data.requests.length === 0 && <ThemedText themeColor="textSecondary">Nenhum pedido pendente.</ThemedText>}
         {data.requests.map((r) => (
-          <View key={r.id} style={{ gap: 4 }}>
+          <View key={r.id} style={{ gap: 4, padding: 16, borderWidth: 1, borderColor: t.border }}>
             <ThemedText type="smallBold">{r.storeName} · {r.user.name}</ThemedText>
             <ThemedText type="small">{r.message}</ThemedText>
             <ThemedText type="small" themeColor="textSecondary">Contato: {r.contact}{r.shopUrl ? ` · ${r.shopUrl}` : ''}</ThemedText>
@@ -37,7 +39,7 @@ export function AdminTab() {
       <View style={{ gap: 10 }}>
         <ThemedText type="subtitle">Lojistas</ThemedText>
         {data.merchants.map((m) => (
-          <View key={m.id} style={{ gap: 4 }}>
+          <View key={m.id} style={{ gap: 4, padding: 16, borderWidth: 1, borderColor: t.border }}>
             <ThemedText type="smallBold">{m.name}{m.verified ? ' ✓' : ''}</ThemedText>
             <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>
               <Btn label={m.verified ? 'Revogar selo' : 'Conceder selo'} onPress={() => run(market.setMerchantFlags(m.id, { verified: !m.verified }))} />
@@ -51,7 +53,7 @@ export function AdminTab() {
         <ThemedText type="subtitle">Denúncias</ThemedText>
         {data.reports.length === 0 && <ThemedText themeColor="textSecondary">Nenhuma denúncia aberta.</ThemedText>}
         {data.reports.map((r) => (
-          <View key={r.id} style={{ gap: 4 }}>
+          <View key={r.id} style={{ gap: 4, padding: 16, borderWidth: 1, borderColor: t.border }}>
             <ThemedText type="smallBold">{r.listing.title}</ThemedText>
             <ThemedText type="small">{r.reason}</ThemedText>
             <Field placeholder="Motivo da remoção" value={reasons[r.listing.id] ?? ''} onChangeText={(t) => setReasons((x) => ({ ...x, [r.listing.id]: t }))} />

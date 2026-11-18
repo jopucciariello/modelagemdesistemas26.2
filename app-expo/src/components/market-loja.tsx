@@ -4,6 +4,7 @@ import { Alert, Pressable, View } from 'react-native';
 
 import { Btn, Field } from '@/components/market-ui';
 import { ThemedText } from '@/components/themed-text';
+import { useTheme } from '@/hooks/use-theme';
 import { ApiError } from '@/lib/api';
 import { market } from '@/lib/market';
 
@@ -38,6 +39,7 @@ function RequestForm({ onSent }: { onSent: () => void }) {
 }
 
 function Profile({ me, onSaved }: { me: Me; onSaved: () => void }) {
+  const t = useTheme();
   const merchant = me.merchant!;
   const [cats, setCats] = useState<{ id: string; name: string }[]>([]);
   const [picked, setPicked] = useState<string[]>(merchant.families.map((f) => f.categoryId));
@@ -49,9 +51,11 @@ function Profile({ me, onSaved }: { me: Me; onSaved: () => void }) {
       <ThemedText type="smallBold">{merchant.name}{merchant.verified ? ' ✓ verificado' : ' (aguardando selo do administrador)'}</ThemedText>
       <Field placeholder="Link da loja" value={shopUrl} onChangeText={setShopUrl} autoCapitalize="none" keyboardType="url" />
       <ThemedText type="small" themeColor="textSecondary">Famílias que você vende:</ThemedText>
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
         {cats.map((c) => (
-          <Pressable key={c.id} onPress={() => toggle(c.id)}><ThemedText type={picked.includes(c.id) ? 'smallBold' : 'small'} themeColor={picked.includes(c.id) ? 'text' : 'textSecondary'}>{picked.includes(c.id) ? '✓ ' : ''}{c.name}</ThemedText></Pressable>
+          <Pressable key={c.id} onPress={() => toggle(c.id)} style={{ borderWidth: 1, borderColor: picked.includes(c.id) ? t.accent : t.border, borderRadius: 999, paddingVertical: 6, paddingHorizontal: 14 }}>
+            <ThemedText type={picked.includes(c.id) ? 'smallBold' : 'small'} themeColor={picked.includes(c.id) ? 'accent' : 'textSecondary'}>{c.name}</ThemedText>
+          </Pressable>
         ))}
       </View>
       <Btn label="Salvar perfil" onPress={() => market.saveMerchantProfile({ categoryIds: picked, shopUrl }).then(() => { Alert.alert('Salvo'); onSaved(); }).catch((e) => Alert.alert('Erro', msg(e)))} />

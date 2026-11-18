@@ -16,6 +16,7 @@ export function Button({ label, variant = 'primary', style, ...rest }: ButtonPro
         styles.base,
         primary ? { backgroundColor: theme.accent } : { borderColor: theme.border, borderWidth: 1 },
         state.pressed && { opacity: 0.8 },
+        rest.disabled && { opacity: 0.4 },
         typeof style === 'function' ? style(state) : style,
       ]}
       {...rest}>

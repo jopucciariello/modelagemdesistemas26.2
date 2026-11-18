@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet } from 'react-native';
 
+import { StatusColors } from '@/constants/theme';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useTheme } from '@/hooks/use-theme';
@@ -42,10 +43,10 @@ export default function AdminOficinasScreen() {
         data={items}
         keyExtractor={(r) => r.id}
         contentContainerStyle={{ padding: 16, gap: 12 }}
-        ListHeaderComponent={error ? <ThemedText style={{ color: '#d33' }}>{error}</ThemedText> : undefined}
+        ListHeaderComponent={error ? <ThemedText style={{ color: StatusColors.due }}>{error}</ThemedText> : undefined}
         ListEmptyComponent={<ThemedText themeColor="textSecondary">Nenhum pedido de oficina.</ThemedText>}
         renderItem={({ item: r }) => (
-          <ThemedView style={[styles.card, { backgroundColor: theme.backgroundElement }]}>
+          <ThemedView style={[styles.card, { borderColor: theme.border }]}>
             <ThemedText type="subtitle">{r.name}</ThemedText>
             <ThemedText type="small" themeColor="textSecondary">{r.ownerEmail}{r.contact ? ` · ${r.contact}` : ''}</ThemedText>
             {r.requestText && <ThemedText>{r.requestText}</ThemedText>}
@@ -66,5 +67,5 @@ export default function AdminOficinasScreen() {
 
 const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
-  card: { borderRadius: 16, padding: 16, gap: 6 },
+  card: { borderWidth: 1, padding: 16, gap: 6 },
 });

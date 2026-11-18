@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet } from 'react-native';
 
+import { StatusColors } from '@/constants/theme';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useTheme } from '@/hooks/use-theme';
@@ -50,10 +51,10 @@ export default function AgendamentosScreen() {
         data={items}
         keyExtractor={(a) => a.id}
         contentContainerStyle={{ padding: 16, gap: 12 }}
-        ListHeaderComponent={error ? <ThemedText style={{ color: '#d33' }}>{error}</ThemedText> : undefined}
+        ListHeaderComponent={error ? <ThemedText style={{ color: StatusColors.due }}>{error}</ThemedText> : undefined}
         ListEmptyComponent={<ThemedText themeColor="textSecondary">Você ainda não agendou nenhuma revisão.</ThemedText>}
         renderItem={({ item: a }) => (
-          <ThemedView style={[styles.card, { backgroundColor: theme.backgroundElement }]}>
+          <ThemedView style={[styles.card, { borderColor: theme.border }]}>
             <ThemedText type="subtitle">{a.workshop.name}</ThemedText>
             <ThemedText>{formatStart(a.startsAt)} · {a.bike}</ThemedText>
             {a.service && <ThemedText themeColor="textSecondary">{a.service.name}</ThemedText>}
@@ -74,5 +75,5 @@ export default function AgendamentosScreen() {
 
 const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
-  card: { borderRadius: 16, padding: 16, gap: 4 },
+  card: { borderWidth: 1, padding: 16, gap: 4 },
 });

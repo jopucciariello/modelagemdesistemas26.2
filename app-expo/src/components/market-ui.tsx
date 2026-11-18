@@ -1,18 +1,27 @@
-import { Pressable, TextInput } from 'react-native';
+import { TextInput } from 'react-native';
 
-import { ThemedText } from '@/components/themed-text';
+import { Button } from '@/components/button';
+import { FontFamily } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { View } from 'react-native';
 
+/** Botão do Mercado: pílula laranja do design do app, alinhada à esquerda para ficar em linha com outros. */
 export function Btn({ label, onPress }: { label: string; onPress: () => void }) {
-  const t = useTheme();
   return (
-    <Pressable onPress={onPress} style={{ backgroundColor: t.text, borderRadius: 8, paddingVertical: 10, paddingHorizontal: 14, alignSelf: 'flex-start' }}>
-      <ThemedText type="smallBold" style={{ color: t.background }}>{label}</ThemedText>
-    </Pressable>
+    <View style={{ alignSelf: 'flex-start' }}>
+      <Button label={label} onPress={onPress} style={{ paddingVertical: 10, paddingHorizontal: 18, minHeight: 40 }} />
+    </View>
   );
 }
 
+/** Campo com borda fina, no estilo do portfólio. */
 export function Field(props: React.ComponentProps<typeof TextInput>) {
   const t = useTheme();
-  return <TextInput placeholderTextColor={t.textSecondary} {...props} style={[{ borderWidth: 1, borderColor: t.textSecondary, borderRadius: 8, padding: 10, color: t.text }, props.style]} />;
+  return (
+    <TextInput
+      placeholderTextColor={t.textSecondary}
+      {...props}
+      style={[{ borderWidth: 1, borderColor: t.border, padding: 12, fontSize: 16, color: t.text, fontFamily: FontFamily.body }, props.multiline && { minHeight: 72 }, props.style]}
+    />
+  );
 }

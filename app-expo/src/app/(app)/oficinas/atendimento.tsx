@@ -2,6 +2,8 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, TextInput } from 'react-native';
 
+import { FontFamily, StatusColors } from '@/constants/theme';
+import { Button } from '@/components/button';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useTheme } from '@/hooks/use-theme';
@@ -46,7 +48,7 @@ export default function AtendimentoScreen() {
     return <ThemedView style={styles.center}>{error ? <ThemedText>{error}</ThemedText> : <ActivityIndicator />}</ThemedView>;
   }
   const open = appt.status === 'SCHEDULED';
-  const chip = (on: boolean) => [styles.chip, { backgroundColor: on ? theme.backgroundSelected : theme.backgroundElement }];
+  const chip = (on: boolean) => [styles.chip, { borderColor: on ? theme.accent : theme.border }];
 
   async function conclude() {
     if (!appt) return;
@@ -104,14 +106,14 @@ export default function AtendimentoScreen() {
           <>
             <ThemedText type="subtitle">Concluir serviço</ThemedText>
             <ThemedText type="small" themeColor="textSecondary">Marque o que foi feito. Itens revisados ou trocados zeram o contador e todos vão para o histórico da bike.</ThemedText>
-            <TextInput value={date} onChangeText={setDate} placeholder="AAAA-MM-DD" placeholderTextColor={theme.textSecondary} style={[styles.input, { color: theme.text, backgroundColor: theme.backgroundElement }]} />
-            <TextInput value={note} onChangeText={setNote} placeholder="Observação geral" placeholderTextColor={theme.textSecondary} style={[styles.input, { color: theme.text, backgroundColor: theme.backgroundElement }]} />
+            <TextInput value={date} onChangeText={setDate} placeholder="AAAA-MM-DD" placeholderTextColor={theme.textSecondary} style={[styles.input, { color: theme.text, borderColor: theme.border }]} />
+            <TextInput value={note} onChangeText={setNote} placeholder="Observação geral" placeholderTextColor={theme.textSecondary} style={[styles.input, { color: theme.text, borderColor: theme.border }]} />
 
             {appt.rows.map((r) => {
               const s = rows[r.key] ?? { action: '', condition: '' };
               const set = (patch: Partial<RowState>) => setRows((cur) => ({ ...cur, [r.key]: { ...s, ...patch } }));
               return (
-                <ThemedView key={r.key} style={[styles.card, { backgroundColor: theme.backgroundElement }]}>
+                <ThemedView key={r.key} style={[styles.card, { borderColor: theme.border }]}>
                   <ThemedText type="smallBold">{r.label}</ThemedText>
                   <ThemedView style={styles.wrap}>
                     {ACTIONS.filter((a) => a.value !== 'reset' || r.canReset).map((a) => (
@@ -139,7 +141,7 @@ export default function AtendimentoScreen() {
                   onChangeText={(v) => setFree((cur) => cur.map((x, j) => (j === i ? { ...x, label: v } : x)))}
                   placeholder="Item do serviço"
                   placeholderTextColor={theme.textSecondary}
-                  style={[styles.input, { color: theme.text, backgroundColor: theme.backgroundElement }]}
+                  style={[styles.input, { color: theme.text, borderColor: theme.border }]}
                 />
                 <Pressable style={chip(f.replace)} onPress={() => setFree((cur) => cur.map((x, j) => (j === i ? { ...x, replace: !x.replace } : x)))}>
                   <ThemedText type="small">{f.replace ? 'Trocado' : 'Verificado / ajustado'} (toque para alternar)</ThemedText>
@@ -147,10 +149,8 @@ export default function AtendimentoScreen() {
               </ThemedView>
             ))}
 
-            {error && <ThemedText style={{ color: '#d33' }}>{error}</ThemedText>}
-            <Pressable onPress={conclude} disabled={busy} style={[styles.button, { opacity: busy ? 0.4 : 1 }]}>
-              <ThemedText style={{ color: '#fff' }} type="smallBold">{busy ? 'Concluindo…' : 'Concluir serviço'}</ThemedText>
-            </Pressable>
+            {error && <ThemedText style={{ color: StatusColors.due }}>{error}</ThemedText>}
+            <Button label={busy ? 'Concluindo…' : 'Concluir serviço'} onPress={conclude} disabled={busy} />
           </>
         )}
       </ScrollView>
@@ -160,9 +160,8 @@ export default function AtendimentoScreen() {
 
 const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
-  input: { borderRadius: 12, padding: 12, fontSize: 16 },
-  card: { borderRadius: 12, padding: 12, gap: 8 },
+  input: { borderWidth: 1, padding: 12, fontSize: 16, fontFamily: FontFamily.body },
+  card: { borderWidth: 1, padding: 12, gap: 8 },
   wrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, backgroundColor: 'transparent' },
-  chip: { borderRadius: 10, paddingVertical: 8, paddingHorizontal: 12 },
-  button: { backgroundColor: '#2563eb', borderRadius: 12, padding: 14, alignItems: 'center' },
+  chip: { borderWidth: 1, paddingVertical: 8, paddingHorizontal: 12 },
 });
