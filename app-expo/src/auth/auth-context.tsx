@@ -37,7 +37,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     async (token: string) => {
       setApiToken(token);
       try {
-        setUser(await api<Me>('/me'));
+        setUser(await api<Me>('/api/me'));
         setStatus('signedIn');
       } catch {
         await signOut();
