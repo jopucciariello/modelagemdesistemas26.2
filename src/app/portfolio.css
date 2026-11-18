@@ -1,0 +1,21 @@
+/* Refinos do visual do portfólio para /entrar, /configuracoes e /admin (só estilo).
+   Usa apenas as variáveis do tema global (claro/escuro); nenhuma cor fixa aqui. */
+.pf { max-width: 62rem; gap: 1.25rem; }
+.pf > header { padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+.pf > header h1 { font-size: clamp(2.4rem, 7vw, 3.6rem); }
+.pf .card > h2:first-child { padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
+.pf .card details { border-top-color: var(--border); }
+
+/* Rótulos de campo em caixa alta, como as legendas do portfólio */
+.pf label { text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.72rem; color: var(--muted); }
+.pf label.check { text-transform: none; letter-spacing: 0; color: var(--foreground); font-size: 0.9rem; }
+
+/* Tabelas: moldura fina e cabeçalho em faixa */
+.pf table { border: 1px solid var(--border); }
+.pf th { background: var(--surface); border-bottom: 1px solid var(--border); }
+.pf code { background: var(--surface); border: 1px solid var(--border); border-radius: 3px; padding: 0 0.3rem; font-size: 0.85em; }
+
+/* Avisos e listas */
+.pf .alert { color: var(--danger); }
+.pf .ok { color: var(--good); }
+.pf .list > li, .pf li { border-color: var(--border); }

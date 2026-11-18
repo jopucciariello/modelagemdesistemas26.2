@@ -1,5 +1,6 @@
 // RF30 entry point: admin area, reachable only by allow-listed Google accounts (ADR-005, RB17).
 import { Suspense } from "react";
+import "@/app/portfolio.css";
 import { AdminEmails } from "@/components/admin-emails";
 import { AdminCatalog } from "@/components/admin-catalog";
 import { AdminMarket } from "@/components/admin-market";
@@ -53,7 +54,7 @@ const ERROR_MESSAGES: Record<string, string> = {
 
 export default function AdminPage(props: PageProps<"/admin">) {
   return (
-    <main className="wide">
+    <main className="wide pf">
       <header>
         <h1>GearLog · Administração</h1>
         <p className="muted">Catálogo de categorias e componentes (RF30).</p>
