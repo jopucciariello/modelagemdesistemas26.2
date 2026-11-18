@@ -2,8 +2,8 @@
 import "server-only";
 import { prisma } from "@/lib/db";
 import { decrypt, encrypt } from "@/lib/crypto";
-import { stravaApiBaseUrl, tokenEncryptionKey } from "@/lib/env";
-import { ConnectorError, connectorActivitiesPath, connectorGet, type ConnectorPath } from "@/lib/connector/client";
+import { connectorAdmin, stravaApiBaseUrl, tokenEncryptionKey } from "@/lib/env";
+import { ConnectorError, connectorActivitiesPath, connectorAdminRefresh, connectorGet, type ConnectorPath } from "@/lib/connector/client";
 import { getStravaOAuthConfig } from "@/lib/strava/link-account";
 import { needsRefresh, refreshAccessToken } from "@/lib/strava/oauth";
 import { parseConnectorActivities, parseSourceBikes, parseStravaActivities, type RideInput, type SourceBike } from "@/lib/rides/map";
@@ -72,6 +72,12 @@ async function connectorCall(userId: string, path: ConnectorPath): Promise<unkno
 async function fetchRides(userId: string, source: "STRAVA" | "CONNECTOR"): Promise<RideInput[]> {
   // The connector reads from its own store (no Strava quota), so every sync asks for the whole
   // history: rides from before a bike was linked are imported too, and upserts never duplicate.
+  if (source === "CONNECTOR") {
+    // Temporary bridge until the central Strava app exists: make the connector re-read Strava first
+    // (new/renamed bikes, edits of rides older than 7 days). Best effort; a failure changes nothing.
+    const conn = await prisma.connectorConnection.findUnique({ where: { userId } });
+    if (conn) await connectorAdminRefresh(conn.baseUrl, connectorAdmin());
+  }
   if (source === "CONNECTOR") return parseConnectorActivities(await connectorCall(userId, connectorActivitiesPath()));
   const token = await stravaAccessToken(userId);
   // Incremental: from one day before the newest imported ride (edits of recent rides are picked up).

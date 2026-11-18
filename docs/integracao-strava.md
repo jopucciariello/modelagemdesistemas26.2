@@ -206,3 +206,7 @@ Para isso, o GearLog **guarda as atividades importadas**, não só os totais. Os
 `STRAVA_API_BASE_URL`, `STRAVA_OAUTH_BASE_URL` (padrão `https://www.strava.com/oauth`; trocado só em testes), `STRAVA_CALLBACK_URL` (padrão `APP_URL` + `/auth/strava/callback`) e `TOKEN_ENCRYPTION_KEY` (RNF01) ficam no Infisical (ambiente `dev`) e são injetados no processo por `infisical run` ([ADR-003](adr/ADR-003-segredos-infisical.md)). No repositório entra só o `.env.example`, com os nomes das variáveis e sem valores.
 
 > **[PROPOSTO] (12/11/2026, ADR-006):** não há app do Strava global. Cada atleta cadastra o próprio app (`Client ID` e `Client Secret` guardados criptografados no banco, RF33) ou usa o próprio conector (RF34). Por isso `STRAVA_CLIENT_ID` e `STRAVA_CLIENT_SECRET` não existem mais como variáveis de ambiente.
+
+## Atualização forçada do conector (ponte temporária) — RF06, RF34 [PROPOSTO]
+
+Enquanto o app central do GearLog no Strava não é aprovado, o botão "Sincronizar" (site e app Expo) pede ao conector, antes de ler: `POST /admin/sync` (bike nova ou renomeada) e `POST /admin/backfill` com `since` = hoje − 90 dias (edições de treinos com mais de 7 dias). A chave admin fica no Infisical (`CONNECTOR_ADMIN_API_KEY`) e só é enviada ao conector cuja origem é `CONNECTOR_ADMIN_URL`. É melhor esforço: se falhar, a leitura normal segue (RNF06). Remover quando o app central entrar.
