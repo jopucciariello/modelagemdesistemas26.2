@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -66,7 +67,9 @@ export default function PainelScreen() {
 
               {data.bikes.map((bike) => (
                 <View key={bike.id} style={[styles.card, { backgroundColor: theme.backgroundElement }]}>
-                  <ThemedText type="subtitle">{bike.name}</ThemedText>
+                  <Link href={{ pathname: '/bike/[id]', params: { id: bike.id } }}>
+                    <ThemedText type="subtitle">{bike.name}</ThemedText>
+                  </Link>
                   <ThemedText type="small" themeColor="textSecondary">
                     {bike.plans.length === 0
                       ? 'Sem peças instaladas'
