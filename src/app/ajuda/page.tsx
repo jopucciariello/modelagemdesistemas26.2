@@ -44,7 +44,7 @@ async function HelpArea({ searchParams }: { searchParams: PageProps<"/ajuda">["s
       <section className="card">
         <h2>Pedir um modelo novo</h2>
         <p className="muted">O catálogo é mantido pelo administrador. Você não cadastra nada: ele registra o modelo ou explica por que não.</p>
-        <form action={createModelRequest}>
+        <form action={createModelRequest} className="stack fill">
           <label>Tipo
             <select name="kind" defaultValue="COMPONENT" required>
               {Object.entries(REQUEST_KINDS).map(([k, label]) => <option key={k} value={k}>{label}</option>)}
@@ -56,7 +56,7 @@ async function HelpArea({ searchParams }: { searchParams: PageProps<"/ajuda">["s
           <label>O que está faltando
             <textarea name="text" required maxLength={1000} rows={4} placeholder="Marca, modelo e, se souber, um link ou o intervalo de troca" />
           </label>
-          <button className="button" type="submit">Enviar pedido</button>
+          <button className="button" type="submit" style={{ alignSelf: "flex-start" }}>Enviar pedido</button>
         </form>
       </section>
       <section className="card">
