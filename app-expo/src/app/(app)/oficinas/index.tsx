@@ -86,7 +86,7 @@ export default function OficinasScreen() {
           const dist = formatDistance(w.distanceKm);
           const prices = w.services.map((s) => s.priceCents).filter((p): p is number => p != null);
           return (
-            <ThemedView style={[styles.card, { backgroundColor: theme.backgroundElement }]}>
+            <ThemedView style={[styles.card, { borderColor: theme.border }]}>
               <ThemedText type="subtitle">{w.name}</ThemedText>
               {dist && <ThemedText themeColor="textSecondary">{dist}</ThemedText>}
               {w.address && <ThemedText themeColor="textSecondary">{w.address}</ThemedText>}
@@ -120,5 +120,5 @@ export default function OficinasScreen() {
 
 const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12, padding: 24 },
-  card: { borderRadius: 16, padding: 16, gap: 6 },
+  card: { borderWidth: 1, padding: 16, gap: 6 },
 });

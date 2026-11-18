@@ -2,6 +2,8 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Switch } from 'react-native';
 
+import { StatusColors } from '@/constants/theme';
+import { Button } from '@/components/button';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useTheme } from '@/hooks/use-theme';
@@ -67,7 +69,7 @@ export default function OficinaScreen() {
     );
   }
 
-  const chip = (selected: boolean) => [styles.chip, { backgroundColor: selected ? theme.backgroundSelected : theme.backgroundElement }];
+  const chip = (selected: boolean) => [styles.chip, { borderColor: selected ? theme.accent : theme.border }];
 
   return (
     <ThemedView style={{ flex: 1 }}>
@@ -121,19 +123,16 @@ export default function OficinaScreen() {
               A oficina vê os dados da bike, as peças instaladas e o histórico de manutenção só se você aceitar.
             </ThemedText>
           </ThemedView>
-          <Switch value={share} onValueChange={setShare} />
+          <Switch value={share} onValueChange={setShare} trackColor={{ true: theme.accent }} />
         </ThemedView>
 
-        {error && <ThemedText style={{ color: '#d33' }}>{error}</ThemedText>}
+        {error && <ThemedText style={{ color: StatusColors.due }}>{error}</ThemedText>}
 
-        <Pressable
+        <Button
+          label={busy ? 'Agendando…' : 'Confirmar agendamento'}
           disabled={busy || !service || !bikeId || !startsAt}
           onPress={confirm}
-          style={[styles.button, { opacity: busy || !service || !bikeId || !startsAt ? 0.4 : 1 }]}>
-          <ThemedText style={{ color: '#fff' }} type="smallBold">
-            {busy ? 'Agendando…' : 'Confirmar agendamento'}
-          </ThemedText>
-        </Pressable>
+        />
       </ScrollView>
     </ThemedView>
   );
@@ -141,8 +140,7 @@ export default function OficinaScreen() {
 
 const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
-  chip: { borderRadius: 12, padding: 12, gap: 2 },
+  chip: { borderWidth: 1, padding: 12, gap: 2 },
   wrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, backgroundColor: 'transparent' },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: 'transparent' },
-  button: { backgroundColor: '#2563eb', borderRadius: 12, padding: 14, alignItems: 'center' },
 });

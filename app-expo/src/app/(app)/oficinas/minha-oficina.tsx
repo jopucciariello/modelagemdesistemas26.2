@@ -2,6 +2,8 @@ import { Link } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, TextInput } from 'react-native';
 
+import { FontFamily, StatusColors } from '@/constants/theme';
+import { Button } from '@/components/button';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useTheme } from '@/hooks/use-theme';
@@ -56,17 +58,9 @@ function Field(props: { label: string; value: string; onChangeText: (v: string) 
         multiline={props.multiline}
         keyboardType={props.keyboardType}
         autoCapitalize={props.keyboardType === 'email-address' ? 'none' : 'sentences'}
-        style={[styles.input, { color: theme.text, backgroundColor: theme.backgroundElement }, props.multiline && { minHeight: 72 }]}
+        style={[styles.input, { color: theme.text, borderColor: theme.border }, props.multiline && { minHeight: 72 }]}
       />
     </ThemedView>
-  );
-}
-
-function Button({ label, onPress, disabled }: { label: string; onPress: () => void; disabled?: boolean }) {
-  return (
-    <Pressable onPress={onPress} disabled={disabled} style={[styles.button, { opacity: disabled ? 0.4 : 1 }]}>
-      <ThemedText style={{ color: '#fff' }} type="smallBold">{label}</ThemedText>
-    </Pressable>
   );
 }
 
@@ -159,7 +153,7 @@ function Backoffice({ view, ...p }: { view: Workshop } & Props) {
 
       <ThemedText type="subtitle">Serviços</ThemedText>
       {view.services.map((s) => (
-        <ThemedView key={s.id} style={[styles.card, { backgroundColor: theme.backgroundElement }]}>
+        <ThemedView key={s.id} style={[styles.card, { borderColor: theme.border }]}>
           <ThemedText type="smallBold">{s.name}</ThemedText>
           <ThemedText type="small" themeColor="textSecondary">{formatPrice(s.priceCents)} · {formatDuration(s.durationMin)}</ThemedText>
           <Pressable onPress={() => run(() => removeService(s.id), p)}><ThemedText type="link">Remover</ThemedText></Pressable>
@@ -185,7 +179,7 @@ function Backoffice({ view, ...p }: { view: Workshop } & Props) {
         <>
           <ThemedText type="subtitle">Mecânicos</ThemedText>
           {view.members.map((m) => (
-            <ThemedView key={m.id} style={[styles.card, { backgroundColor: theme.backgroundElement }]}>
+            <ThemedView key={m.id} style={[styles.card, { borderColor: theme.border }]}>
               <ThemedText>{m.email}</ThemedText>
               <Pressable onPress={() => run(() => removeMember(m.id), p)}><ThemedText type="link">Remover</ThemedText></Pressable>
             </ThemedView>
@@ -198,7 +192,7 @@ function Backoffice({ view, ...p }: { view: Workshop } & Props) {
       <ThemedText type="subtitle">Próximos agendamentos</ThemedText>
       {view.appointments.length === 0 && <ThemedText themeColor="textSecondary">Nenhum agendamento.</ThemedText>}
       {view.appointments.map((a) => (
-        <ThemedView key={a.id} style={[styles.card, { backgroundColor: theme.backgroundElement }]}>
+        <ThemedView key={a.id} style={[styles.card, { borderColor: theme.border }]}>
           <ThemedText type="smallBold">{formatStart(a.startsAt)} · {a.athlete}</ThemedText>
           <ThemedText type="small" themeColor="textSecondary">{a.bike}{a.service ? ` · ${a.service}` : ''}</ThemedText>
           <ThemedText type="small" themeColor="textSecondary">Histórico {a.shareHistory ? 'compartilhado' : 'não compartilhado'}</ThemedText>
@@ -211,7 +205,7 @@ function Backoffice({ view, ...p }: { view: Workshop } & Props) {
       <ThemedText type="subtitle">Avisos</ThemedText>
       {view.notices.length === 0 && <ThemedText themeColor="textSecondary">Sem avisos.</ThemedText>}
       {view.notices.map((n) => (
-        <ThemedView key={n.id} style={[styles.card, { backgroundColor: theme.backgroundElement }]}>
+        <ThemedView key={n.id} style={[styles.card, { borderColor: theme.border }]}>
           {n.urgent && <ThemedText type="smallBold" style={styles.error}>Urgente</ThemedText>}
           <ThemedText type="small">{n.message}</ThemedText>
         </ThemedView>
@@ -222,8 +216,7 @@ function Backoffice({ view, ...p }: { view: Workshop } & Props) {
 
 const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
-  input: { borderRadius: 12, padding: 12, fontSize: 16 },
-  button: { backgroundColor: '#2563eb', borderRadius: 12, padding: 14, alignItems: 'center' },
-  card: { borderRadius: 12, padding: 12, gap: 2 },
-  error: { color: '#d33' },
+  input: { borderWidth: 1, padding: 12, fontSize: 16, fontFamily: FontFamily.body },
+  card: { borderWidth: 1, padding: 12, gap: 2 },
+  error: { color: StatusColors.due },
 });

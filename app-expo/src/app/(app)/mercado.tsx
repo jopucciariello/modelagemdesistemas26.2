@@ -3,11 +3,13 @@ import { useCallback, useEffect, useState } from 'react';
 import { Alert, Linking, Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { BrandLogo } from '@/components/brand-logo';
 import { Btn, Field } from '@/components/market-ui';
 import { LojaTab } from '@/components/market-loja';
 import { AdminTab } from '@/components/market-admin';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { useTheme } from '@/hooks/use-theme';
 import { ApiError } from '@/lib/api';
 import { brl, market, type Component, type Dream, type Listing, type Notice } from '@/lib/market';
 
@@ -38,24 +40,33 @@ function ModelPicker({ onPick, picked }: { onPick: (c: Component) => void; picke
   );
 }
 
+/** Filtro/aba em pílula: contorno laranja quando selecionado. */
+function Chip({ label, on, onPress }: { label: string; on: boolean; onPress: () => void }) {
+  const t = useTheme();
+  return (
+    <Pressable onPress={onPress} style={{ borderWidth: 1, borderColor: on ? t.accent : t.border, borderRadius: 999, paddingVertical: 6, paddingHorizontal: 14 }}>
+      <ThemedText type={on ? 'smallBold' : 'small'} themeColor={on ? 'accent' : 'textSecondary'}>{label}</ThemedText>
+    </Pressable>
+  );
+}
+
 function Vitrine() {
+  const theme = useTheme();
   const [rows, setRows] = useState<Listing[]>([]);
   const [cond, setCond] = useState('');
   const [seller, setSeller] = useState('');
   const load = useCallback(() => market.listings({ ...(cond && { condicao: cond }), ...(seller && { vendedor: seller }) }).then(setRows).catch((e) => Alert.alert('Erro', msg(e))), [cond, seller]);
   useEffect(() => { load(); }, [load]);
-  const chip = (label: string, on: boolean, set: () => void) => (
-    <Pressable key={label} onPress={set}><ThemedText type={on ? 'smallBold' : 'small'} themeColor={on ? 'text' : 'textSecondary'}>{label}</ThemedText></Pressable>
-  );
+  const chip = (label: string, on: boolean, set: () => void) => <Chip key={label} label={label} on={on} onPress={set} />;
   return (
     <View style={{ gap: 12 }}>
-      <View style={{ flexDirection: 'row', gap: 12, flexWrap: 'wrap' }}>
+      <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>
         {chip('Todas', !cond, () => setCond(''))}{chip('Novas', cond === 'NEW', () => setCond('NEW'))}{chip('Usadas', cond === 'USED', () => setCond('USED'))}
         {chip('Qualquer vendedor', !seller, () => setSeller(''))}{chip('Lojas', seller === 'loja', () => setSeller('loja'))}{chip('Atletas', seller === 'atleta', () => setSeller('atleta'))}
       </View>
       {rows.length === 0 && <ThemedText themeColor="textSecondary">Nenhum anúncio ainda.</ThemedText>}
       {rows.map((l) => (
-        <View key={l.id} style={{ gap: 4, paddingBottom: 12 }}>
+        <View key={l.id} style={{ gap: 4, padding: 16, borderWidth: 1, borderColor: theme.border }}>
           <ThemedText type="smallBold">{l.title} · {brl(l.priceCents)}</ThemedText>
           <ThemedText type="small" themeColor="textSecondary">
             {l.condition === 'NEW' ? 'Nova' : `Usada${l.usedKm != null ? ` · ${l.usedKm} km` : ''}`} · {l.category.name}{l.component ? ` · ${l.component.brand} ${l.component.model}` : ''}
@@ -102,9 +113,9 @@ function Vender() {
       <ModelPicker onPick={(c) => { setModel(c); if (!title) setTitle(`${c.brand} ${c.model}`); }} picked={model} />
       <Field placeholder="Título" value={title} onChangeText={setTitle} />
       <Field placeholder="Preço (R$)" value={price} onChangeText={setPrice} keyboardType="decimal-pad" />
-      <View style={{ flexDirection: 'row', gap: 12 }}>
-        <Pressable onPress={() => setUsed(false)}><ThemedText type={used ? 'small' : 'smallBold'}>Nova</ThemedText></Pressable>
-        <Pressable onPress={() => setUsed(true)}><ThemedText type={used ? 'smallBold' : 'small'}>Usada</ThemedText></Pressable>
+      <View style={{ flexDirection: 'row', gap: 8 }}>
+        <Chip label="Nova" on={!used} onPress={() => setUsed(false)} />
+        <Chip label="Usada" on={used} onPress={() => setUsed(true)} />
       </View>
       {used && <Field placeholder="Km de uso (opcional)" value={km} onChangeText={setKm} keyboardType="decimal-pad" />}
       <Field placeholder="Descrição" value={desc} onChangeText={setDesc} multiline />
@@ -165,10 +176,11 @@ export default function MercadoScreen() {
     <ThemedView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={{ padding: 24, gap: 16 }} keyboardShouldPersistTaps="handled">
+          <BrandLogo size={32} />
           <ThemedText type="title">Mercado</ThemedText>
-          <View style={{ flexDirection: 'row', gap: 16 }}>
+          <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>
             {[...TABS, ...(isAdmin ? ([['admin', 'Admin']] as [Tab, string][]) : [])].map(([k, label]) => (
-              <Pressable key={k} onPress={() => setTab(k)}><ThemedText type={tab === k ? 'smallBold' : 'small'} themeColor={tab === k ? 'text' : 'textSecondary'}>{label}</ThemedText></Pressable>
+              <Chip key={k} label={label} on={tab === k} onPress={() => setTab(k)} />
             ))}
           </View>
           {tab === 'vitrine' && <Vitrine />}
