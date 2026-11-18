@@ -50,3 +50,28 @@ describe("parseHours", () => {
     expect(parseHours("x")).toBeNull();
   });
 });
+
+import { visitFormFromJson } from "@/lib/workshop-input";
+import { readVisitItems, type VisitRow } from "@/lib/visit";
+
+describe("visitFormFromJson (RF28, RF36)", () => {
+  const rows: VisitRow[] = [{ key: "plan_abc1", partId: "p1", planId: "abc1", label: "Corrente" }];
+  it("maps the JSON body to the web form fields that recordVisit reads", () => {
+    const form = visitFormFromJson({
+      date: "2026-11-18", note: "Revisão",
+      items: [{ key: "plan_abc1", action: "reset", condition: "GOOD", note: "ok" }],
+      free: [{ label: "Caixa de direção", action: "replace" }],
+    })!;
+    expect(form.get("date")).toBe("2026-11-18");
+    const items = readVisitItems(form, rows);
+    expect(items).toHaveLength(2);
+    expect(items[0]).toMatchObject({ planId: "abc1", action: "reset", condition: "GOOD", note: "ok" });
+    expect(items[1]).toMatchObject({ label: "Caixa de direção", action: "replace", partId: null });
+  });
+  it("rejects a bad date, bad keys and too many free items", () => {
+    expect(visitFormFromJson({ date: "18/11/2026" })).toBeNull();
+    expect(visitFormFromJson({ date: "2026-11-18", items: [{ key: "../x" }] })).toBeNull();
+    expect(visitFormFromJson({ date: "2026-11-18", free: [{ label: "a" }, { label: "b" }, { label: "c" }, { label: "d" }] })).toBeNull();
+    expect(visitFormFromJson(null)).toBeNull();
+  });
+});

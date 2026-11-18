@@ -5,8 +5,8 @@ import { prisma } from "@/lib/db";
 import { isValidCoords } from "@/lib/geo";
 import { allAdminEmailsSetting } from "@/lib/admin-emails";
 import { isAuthorizedAdmin } from "@/lib/google/oidc";
-import { parseHours, parseProfile, parseService } from "@/lib/workshop-input";
-import { bookAt, cancelFor, freeStarts, listAppointments, listNearbyWorkshops } from "@/lib/workshop-agenda";
+import { parseHours, parseProfile, parseService, visitFormFromJson } from "@/lib/workshop-input";
+import { appointmentForStaff, bookAt, cancelFor, concludeFor, freeStarts, listAppointments, listNearbyWorkshops } from "@/lib/workshop-agenda";
 import {
   addService, adminDecide, adminRequests, inviteMember, myWorkshopView, removeMember, removeService, replaceHours, requestRegistration, staffWorkshop, updateProfile,
 } from "@/lib/workshop-staff";
@@ -55,6 +55,8 @@ export function parseOrigin(url: URL): { latitude: number; longitude: number } |
  * DELETE /staff/services/:id
  * PUT  /staff/hours                [{ weekday, startMin, endMin }] replaces the weekly grid
  * POST /staff/members              { email } (owner) / DELETE /staff/members/:id (owner)
+ * GET  /staff/appointments/:id     the booked bike; parts and history only if the athlete shared them (RF27)
+ * POST /staff/appointments/:id/conclude  { date, note, items: [{ key, action, condition, note }], free: [...] } (RF28)
  * Admin (RB17):
  * GET  /admin/requests             pending and rejected requests
  * POST /admin/requests/:id/approve | /reject
@@ -130,6 +132,21 @@ async function handleStaff(req: Request, user: ApiUser, path: string[]): Promise
     if (!hours) return fail(400, "Grade inválida");
     await replaceHours(workshop.id, hours);
     return json({ ok: true });
+  }
+  if (a === "appointments" && b) {
+    if (req.method === "GET" && !path[2]) {
+      const view = await appointmentForStaff(workshop.id, b);
+      return view ? json(view) : fail(404, "Agendamento não encontrado");
+    }
+    if (req.method === "POST" && path[2] === "conclude") {
+      const form = visitFormFromJson(await body());
+      if (!form) return fail(400, "Dados do serviço inválidos");
+      const result = await concludeFor(workshop, b, form);
+      if (result.ok) return json({ ok: true });
+      if (result.error === "not_found") return fail(404, "Agendamento não encontrado");
+      if (result.error === "not_scheduled") return fail(409, "Agendamento não está aberto");
+      return fail(400, { visita_vazia: "Informe a data e pelo menos um item do serviço", data: "A data é anterior à instalação de uma peça trocada", plano_invalido: "Esse item não pode ser zerado" }[result.error]);
+    }
   }
   if (a === "members") {
     if (!isOwner) return fail(403, "Só o responsável convida mecânicos");

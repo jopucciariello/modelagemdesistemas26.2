@@ -3,7 +3,9 @@
 import { prisma } from "@/lib/db";
 import { type Coords, sortByDistance } from "@/lib/geo";
 import { sendEmail } from "@/lib/email";
-import { availableStarts, canBook, cancellationNotice, isLateCancellation } from "@/lib/workshop";
+import { recordVisit } from "@/lib/visit-record";
+import { visitRows } from "@/lib/visit";
+import { availableStarts, canBook, canWorkshopReadHistory, cancellationNotice, isLateCancellation } from "@/lib/workshop";
 
 export const AGENDA_DAYS = 14;
 
@@ -116,4 +118,64 @@ export async function listAppointments(userId: string) {
     id: a.id, status: a.status, startsAt: a.slot.startsAt.toISOString(), endsAt: a.endsAt?.toISOString() ?? null, shareHistory: a.shareHistory,
     workshop: a.workshop, service: a.service, bike: a.bike.name,
   }));
+}
+
+export type ConcludeResult = { ok: true } | { ok: false; error: "not_found" | "not_scheduled" | "visita_vazia" | "data" | "plano_invalido" };
+
+/**
+ * RF28: the workshop concludes a scheduled appointment. Writes the shop visit to the bike history
+ * (RF36) and marks the appointment completed in the same transaction (INV-066). Parts are only
+ * listed (and reset) when the athlete shared the history (RF27, RNF03); otherwise free items only.
+ */
+export async function concludeFor(workshop: { id: string; name: string }, appointmentId: string, form: FormData): Promise<ConcludeResult> {
+  const appt = await prisma.appointment.findFirst({ where: { id: appointmentId, workshopId: workshop.id } });
+  if (!appt) return { ok: false, error: "not_found" };
+  if (appt.status !== "SCHEDULED") return { ok: false, error: "not_scheduled" };
+  let raced = false;
+  const result = await recordVisit({
+    bikeId: appt.bikeId,
+    form,
+    shop: workshop.name,
+    partsAllowed: appt.shareHistory,
+    inTransaction: async (tx, visitId) => {
+      const res = await tx.appointment.updateMany({ where: { id: appt.id, status: "SCHEDULED" }, data: { status: "COMPLETED", completedAt: new Date(), visitId } });
+      if (res.count !== 1) {
+        raced = true;
+        throw new Error("appointment_not_scheduled");
+      }
+    },
+  }).catch((e) => {
+    if (raced) return null;
+    throw e;
+  });
+  if (result === null) return { ok: false, error: "not_scheduled" };
+  return result.ok ? { ok: true } : { ok: false, error: result.error };
+}
+
+/** RF27, RB09, RNF03: what the workshop may see of an appointment (bike, and the history only if shared). */
+export async function appointmentForStaff(workshopId: string, appointmentId: string) {
+  const appt = await prisma.appointment.findFirst({
+    where: { id: appointmentId, workshopId },
+    include: { slot: true, user: { select: { name: true } }, service: true, bike: true },
+  });
+  if (!appt || appt.status === "CANCELLED") return null;
+  const shared = canWorkshopReadHistory([appt], workshopId, appt.bikeId);
+  const [parts, events] = shared
+    ? await Promise.all([
+        prisma.part.findMany({ where: { bikeId: appt.bikeId, removedAt: null }, include: { plans: true, component: { include: { category: true } } }, orderBy: { installedAt: "asc" } }),
+        prisma.maintenanceEvent.findMany({ where: { bikeId: appt.bikeId }, orderBy: { date: "desc" }, take: 50 }),
+      ])
+    : [[], []];
+  return {
+    id: appt.id,
+    status: appt.status,
+    startsAt: appt.slot.startsAt.toISOString(),
+    athlete: appt.user.name,
+    bike: { name: appt.bike.name, brand: appt.bike.brand, model: appt.bike.model, year: appt.bike.year },
+    service: appt.service ? { name: appt.service.name, includes: appt.service.includes } : null,
+    shareHistory: shared,
+    rows: visitRows(parts),
+    parts: parts.map((p) => ({ id: p.id, name: p.position ?? p.component.category.name, component: `${p.component.brand} ${p.component.model}`, installedAt: p.installedAt.toISOString() })),
+    history: events.map((e) => ({ id: e.id, date: e.date.toISOString(), note: e.note })),
+  };
 }
