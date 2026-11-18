@@ -88,4 +88,4 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 - [x] T-75 Cancelamento com aviso por e-mail — RF29, RF38 — #34
 - [x] T-76 Concluir OS avança meta de revisão em etapas — RF28, RB23 — #33
 - [x] T-77a API HTTP de oficinas e agenda com token (`/api/v1/oficinas`) — RF25–RF29 — #71
-- [ ] T-77 Telas Expo de oficina e agenda — RF25–RF29 — #71
+- [x] T-77 Telas Expo de oficina e agenda — RF25–RF29 — #71

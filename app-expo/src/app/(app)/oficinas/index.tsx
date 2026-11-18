@@ -3,6 +3,7 @@ import * as Linking from 'expo-linking';
 import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet } from 'react-native';
 
+import { useAuth } from '@/auth/auth-context';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useTheme } from '@/hooks/use-theme';
@@ -11,6 +12,7 @@ import { currentPosition, formatDistance, formatPrice, listWorkshops, osmUrl, ty
 /** #69: oficinas próximas, da mais perto para a mais longe, com serviços, valor, site e mapa. */
 export default function OficinasScreen() {
   const theme = useTheme();
+  const { user } = useAuth();
   const [shops, setShops] = useState<Workshop[] | null>(null);
   const [located, setLocated] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -56,11 +58,25 @@ export default function OficinasScreen() {
         contentContainerStyle={{ padding: 16, gap: 12 }}
         ListHeaderComponent={
           <ThemedView style={{ gap: 4, marginBottom: 4 }}>
-            <Link href="/oficinas/agendamentos" asChild>
-              <Pressable>
-                <ThemedText type="link">Meus agendamentos</ThemedText>
-              </Pressable>
-            </Link>
+            <ThemedView style={{ flexDirection: 'row', gap: 16, flexWrap: 'wrap', backgroundColor: 'transparent' }}>
+              <Link href="/oficinas/agendamentos" asChild>
+                <Pressable>
+                  <ThemedText type="link">Meus agendamentos</ThemedText>
+                </Pressable>
+              </Link>
+              <Link href="/oficinas/minha-oficina" asChild>
+                <Pressable>
+                  <ThemedText type="link">Sou uma oficina</ThemedText>
+                </Pressable>
+              </Link>
+              {user?.role === 'ADMIN' && (
+                <Link href="/oficinas/admin" asChild>
+                  <Pressable>
+                    <ThemedText type="link">Pedidos de oficina (admin)</ThemedText>
+                  </Pressable>
+                </Link>
+              )}
+            </ThemedView>
             {!located && <ThemedText themeColor="textSecondary" type="small">Sem localização: mostrando por ordem alfabética.</ThemedText>}
           </ThemedView>
         }
