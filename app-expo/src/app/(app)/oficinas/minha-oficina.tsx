@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, TextInput } from 'react-native';
 
@@ -201,6 +202,9 @@ function Backoffice({ view, ...p }: { view: Workshop } & Props) {
           <ThemedText type="smallBold">{formatStart(a.startsAt)} · {a.athlete}</ThemedText>
           <ThemedText type="small" themeColor="textSecondary">{a.bike}{a.service ? ` · ${a.service}` : ''}</ThemedText>
           <ThemedText type="small" themeColor="textSecondary">Histórico {a.shareHistory ? 'compartilhado' : 'não compartilhado'}</ThemedText>
+          <Link href={{ pathname: '/oficinas/atendimento', params: { id: a.id } }} asChild>
+            <Pressable><ThemedText type="link">Abrir e concluir</ThemedText></Pressable>
+          </Link>
         </ThemedView>
       ))}
 
