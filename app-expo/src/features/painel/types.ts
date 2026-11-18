@@ -37,3 +37,19 @@ export type BikeDetailDto = {
   removedCount: number;
   events: { id: string; type: 'REPLACEMENT' | 'SERVICE' | 'MANUAL'; date: string; note: string; shop: string | null }[];
 };
+
+/** Formato de GET /api/rides (espelha src/lib/rides-dto.ts). */
+export type RideDto = {
+  id: string;
+  source: 'MANUAL' | 'STRAVA' | 'CONNECTOR';
+  sportType: string;
+  date: string;
+  distanceKm: number;
+  movingHours: number;
+  bikeId: string | null;
+  bikeName: string | null;
+  canChooseBike: boolean;
+  manual: boolean;
+};
+
+export type RidesDto = { source: 'MANUAL' | 'STRAVA' | 'CONNECTOR'; bikes: { id: string; name: string }[]; rides: RideDto[] };

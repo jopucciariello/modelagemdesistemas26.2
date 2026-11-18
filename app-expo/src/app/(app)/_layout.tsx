@@ -5,6 +5,7 @@ export default function AppLayout() {
   return (
     <Tabs screenOptions={{ headerShown: false }}>
       <Tabs.Screen name="index" options={{ title: 'Painel' }} />
+      <Tabs.Screen name="pedais" options={{ title: 'Pedais' }} />
       <Tabs.Screen name="oficinas" options={{ title: 'Oficinas' }} />
       <Tabs.Screen name="mercado" options={{ title: 'Mercado' }} />
       <Tabs.Screen name="configuracoes" options={{ title: 'Configurações' }} />
