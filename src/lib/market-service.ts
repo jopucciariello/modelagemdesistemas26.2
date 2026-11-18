@@ -3,6 +3,7 @@
 import "server-only";
 import { prisma } from "@/lib/db";
 import { brl } from "@/lib/dreams";
+import { sendWithResend } from "@/lib/email";
 import {
   becameMatch, buildListingFilter, cleanReportReason, joinPhotos, matchesDreamByModel, normalizeWhatsapp,
   validateListing, validateMerchantRequest, type ListingInput, type MarketQuery, type MerchantRequestInput,
@@ -12,9 +13,9 @@ import { cleanRemovalReason, verificationFields } from "@/lib/merchants";
 export type Result<T> = { ok: true; data: T } | { ok: false; error: string };
 const fail = (error: string): { ok: false; error: string } => ({ ok: false, error });
 
-/** Hook for the e-mail copy (RF38). Delivery is wired when a mail provider exists (OPEN-47); never throws. */
+/** Hook for the e-mail copy (RF38). Default: Resend (RESEND_API_KEY, EMAIL_FROM); a failure never loses the notification. */
 export type EmailSender = (to: string, subject: string, body: string) => Promise<void>;
-let emailSender: EmailSender | null = null;
+let emailSender: EmailSender | null = sendWithResend;
 export function setEmailSender(fn: EmailSender | null) { emailSender = fn; }
 
 /** INV-045: one notification per (user, refKey). RF38: e-mail copy only when the user opted in. */
@@ -88,11 +89,11 @@ export async function listListings(q: MarketQuery & { modelo?: string }) {
   if (q.modelo) where.componentId = q.modelo;
   const rows = await prisma.listing.findMany({
     where, orderBy: { createdAt: "desc" }, take: 100,
-    include: { category: true, component: true, seller: { select: { id: true, name: true, whatsapp: true, merchant: { select: { name: true, verified: true, shopUrl: true } } } } },
+    include: { category: true, component: true, photos: { select: { id: true }, orderBy: { position: "asc" } }, seller: { select: { id: true, name: true, whatsapp: true, merchant: { select: { name: true, verified: true, shopUrl: true } } } } },
   });
-  return rows.map(({ seller, ...l }) => ({
+  return rows.map(({ seller, photos: uploaded, ...l }) => ({
     ...l,
-    photos: l.photoUrls.split("\n").filter(Boolean),
+    photos: [...uploaded.map((p) => photoUrl(p.id)), ...l.photoUrls.split("\n").filter(Boolean)],
     seller: { id: seller.id, name: seller.name, whatsapp: seller.whatsapp },
     merchant: seller.merchant ? { name: seller.merchant.name, verified: seller.merchant.verified, shopUrl: seller.merchant.shopUrl } : null,
   }));
@@ -246,4 +247,27 @@ export async function resolveReports(listingId: string, removalReason: string | 
   }
   await prisma.listingReport.updateMany({ where: { listingId, resolvedAt: null }, data: { resolvedAt: new Date() } });
   return { ok: true, data: null };
+}
+
+// ---- Photos (RF16: up to 3 uploaded images per listing) -------------------------------------
+
+import { checkPhoto } from "@/lib/bike-photo";
+import { MAX_PHOTOS, splitPhotos } from "@/lib/market";
+
+export const photoUrl = (id: string) => `/api/v1/market/photos/${id}`;
+
+/** RF16, RB19: only the author uploads; legacy URL photos count toward the limit of 3. */
+export async function addListingPhoto(userId: string, listingId: string, bytes: Uint8Array): Promise<Result<{ id: string; url: string }>> {
+  const listing = await prisma.listing.findFirst({ where: { id: listingId, sellerId: userId, status: "ACTIVE" }, include: { _count: { select: { photos: true } } } });
+  if (!listing) return fail("anuncio_nao_encontrado");
+  if (listing._count.photos + splitPhotos(listing.photoUrls).length >= MAX_PHOTOS) return fail("fotos_demais");
+  const check = checkPhoto(bytes);
+  if (!check.ok) return fail(check.error);
+  const photo = await prisma.listingPhoto.create({ data: { listingId, position: listing._count.photos, contentType: check.type, data: Buffer.from(bytes) } });
+  return { ok: true, data: { id: photo.id, url: photoUrl(photo.id) } };
+}
+
+export async function deleteListingPhoto(userId: string, photoId: string): Promise<Result<null>> {
+  const r = await prisma.listingPhoto.deleteMany({ where: { id: photoId, listing: { sellerId: userId } } });
+  return r.count ? { ok: true, data: null } : fail("foto_nao_encontrada");
 }
