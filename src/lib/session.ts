@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { connection } from "next/server";
 import { prisma } from "@/lib/db";
 import { randomToken, sha256 } from "@/lib/crypto";
-import { adminEmailsSetting } from "@/lib/env";
+import { allAdminEmailsSetting } from "@/lib/admin-emails";
 import { isAuthorizedAdmin } from "@/lib/google/oidc";
 
 export const SESSION_COOKIE = "gearlog_session";
@@ -40,11 +40,11 @@ export async function getCurrentUser() {
 
 /**
  * RB17: returns the current user only if they are an admin whose e-mail is still in
- * ADMIN_EMAILS, so removing an e-mail from the list revokes access on the next request.
+ * ADMIN_EMAILS or added in /admin (RF37), so removing an e-mail from the list revokes access on the next request.
  */
 export async function getCurrentAdmin() {
   const user = await getCurrentUser();
-  if (!user || user.role !== "ADMIN" || !isAuthorizedAdmin(user.email, adminEmailsSetting())) return null;
+  if (!user || user.role !== "ADMIN" || !isAuthorizedAdmin(user.email, await allAdminEmailsSetting())) return null;
   return user;
 }
 

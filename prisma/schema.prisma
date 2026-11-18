@@ -528,3 +528,10 @@ model BikePhoto {
   data        Bytes
   updatedAt   DateTime @updatedAt
 }
+
+// RF37, ADR-005: admin e-mails added from /admin; ADMIN_EMAILS (Infisical) keeps the root admins.
+model AdminEmail {
+  email     String   @id
+  addedBy   String?
+  createdAt DateTime @default(now())
+}
