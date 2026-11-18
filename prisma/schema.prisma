@@ -309,6 +309,8 @@ model Ride {
   externalId   String?
   // Strava gear id as received, kept to re-associate after RF05.
   stravaGearId String?
+  // OPEN-20: the athlete picked the bike by hand because the source sent none; sync keeps it.
+  bikeChosen   Boolean        @default(false)
   sportType    String
   startDate    DateTime
   distanceKm   Float
