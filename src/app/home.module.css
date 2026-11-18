@@ -1,0 +1,189 @@
+/*
+ * Portfolio look for the home / painel routes only (near-black, orange accent, Anton titles,
+ * thin-bordered cards, rows with arrows). Tokens are local (--pf-*) so this file does not touch
+ * globals.css; once the global portfolio tokens land, point these at them.
+ */
+:global(body):has(.pf) {
+  /* light (default) */
+  --pf-bg: #fafaf8;
+  --pf-bar: #ffffff;
+  --pf-surface: #ffffff;
+  --pf-text: #0b0d10;
+  --pf-muted: #5b616a;
+  --pf-line: #e0e0db;
+  --pf-accent: #ff5a1f;
+  --pf-accent-text: #d9420a;
+  --pf-ok: #1e7b34;
+  --pf-near: #b36b00;
+  --pf-due: #c0291f;
+  --pf-ok-soft: #e6f4ea;
+  --pf-near-soft: #fff3dc;
+  --pf-due-soft: #fdecea;
+  background: var(--pf-bg);
+  color: var(--pf-text);
+}
+@media (prefers-color-scheme: dark) {
+  :global(html:not([data-theme="light"])) :global(body):has(.pf) {
+    --pf-bg: #07090c;
+    --pf-bar: #000000;
+    --pf-surface: #0d1014;
+    --pf-text: #f2f2f0;
+    --pf-muted: #9aa0a8;
+    --pf-line: #23282f;
+    --pf-accent-text: #ff5a1f;
+    --pf-ok: #3cb371;
+    --pf-near: #f5b02e;
+    --pf-due: #ff5a4f;
+    --pf-ok-soft: #10241a;
+    --pf-near-soft: #2a210c;
+    --pf-due-soft: #2a1412;
+  }
+}
+:global(html[data-theme="dark"]) :global(body):has(.pf) {
+  --pf-bg: #07090c;
+  --pf-bar: #000000;
+  --pf-surface: #0d1014;
+  --pf-text: #f2f2f0;
+  --pf-muted: #9aa0a8;
+  --pf-line: #23282f;
+  --pf-accent-text: #ff5a1f;
+  --pf-ok: #3cb371;
+  --pf-near: #f5b02e;
+  --pf-due: #ff5a4f;
+  --pf-ok-soft: #10241a;
+  --pf-near-soft: #2a210c;
+  --pf-due-soft: #2a1412;
+}
+
+.pf {
+  --foreground: var(--pf-text);
+  --muted: var(--pf-muted);
+  --surface: var(--pf-surface);
+  --border: var(--pf-line);
+  --background: var(--pf-bg);
+  --accent: var(--pf-accent);
+  --accent-ink: #0b0b0b; /* dark ink on orange keeps contrast in both themes */
+  --accent-soft: var(--pf-surface);
+  --shadow: none;
+  --danger: var(--pf-due);
+  --warn: var(--pf-near);
+  --good: var(--pf-ok);
+  --danger-soft: var(--pf-due-soft);
+  --warn-soft: var(--pf-near-soft);
+  --good-soft: var(--pf-ok-soft);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  color: var(--pf-text);
+  max-width: 62rem;
+  padding-top: 0;
+  gap: 1.75rem;
+}
+
+/* Top bar */
+.pf :global(.app-header) {
+  margin: 0 -1rem;
+  padding: 0.9rem 1rem;
+  background: var(--pf-bar);
+  border-bottom: 1px solid var(--pf-line);
+}
+.pf :global(.brand) {
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-size: 1.5rem;
+}
+.pf :global(.nav) {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  gap: 0.25rem 1.25rem;
+}
+.pf :global(.nav a) { color: var(--pf-muted); padding: 0.4rem 0; border-radius: 0; font-size: 0.9rem; border-bottom: 2px solid transparent; }
+.pf :global(.nav a:hover) { background: transparent; color: var(--pf-text); }
+.pf :global(.nav a[aria-current="page"]) { background: transparent; color: var(--pf-text); border-bottom-color: var(--pf-accent); }
+
+/* Titles */
+.pf :global(.page-title h1),
+.pf :global(.card h2) {
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  line-height: 1.02;
+}
+.pf :global(.page-title h1) { font-size: clamp(2.4rem, 8vw, 4.2rem); }
+.pf :global(.page-title p) { color: var(--pf-muted); }
+.pf a { color: var(--pf-text); }
+.pf :global(.bike-open a) { color: var(--pf-accent-text); }
+
+/* Buttons: orange pill + outlined pill */
+.pf :global(.button) {
+  border-radius: 999px;
+  background: var(--pf-accent);
+  border: 1px solid var(--pf-accent);
+  color: #0b0b0b;
+  font-weight: 600;
+  padding: 0.7rem 1.5rem;
+}
+.pf :global(.button.small) {
+  background: transparent;
+  color: var(--pf-text);
+  border-color: var(--pf-line);
+  padding: 0.5rem 1rem;
+}
+.pf :global(.button.small:hover) { border-color: var(--pf-accent); color: var(--pf-accent-text); }
+
+/* Stats: bordered strip with orange top rule */
+.pf :global(.stats) {
+  gap: 0;
+  border: 1px solid var(--pf-line);
+  border-top: 2px solid var(--pf-accent);
+  background: var(--pf-surface);
+}
+.pf :global(.stat) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 1rem 1.25rem;
+}
+.pf :global(.stat + .stat) { border-left: 1px solid var(--pf-line); }
+.pf :global(.stat b) { font-family: var(--font-anton), Impact, sans-serif; font-weight: 400; font-size: 2.4rem; }
+.pf :global(.stat span) { color: var(--pf-muted); }
+
+/* Bike cards: thin border, square, arrow rows */
+.pf :global(.bike-card),
+.pf :global(.card) {
+  background: var(--pf-surface);
+  border: 1px solid var(--pf-line);
+  border-radius: 0;
+  box-shadow: none;
+}
+.pf :global(.bike-card:hover) { border-color: var(--pf-accent); }
+.pf :global(.bike-avatar) { border-radius: 0; filter: grayscale(1); }
+.pf :global(.bike-summary-text strong) {
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 1.35rem;
+  letter-spacing: 0.01em;
+}
+.pf :global(.bike-summary::after) { content: "→"; color: var(--pf-accent-text); }
+.pf :global(details[open] > .bike-summary::after) { transform: rotate(90deg); }
+.pf :global(.plan-item) { border-top: 1px solid var(--pf-line); border-left: 3px solid transparent; }
+.pf :global(.plan-item.s-near) { border-left-color: var(--pf-near); }
+.pf :global(.plan-item.s-due) { border-left-color: var(--pf-due); }
+.pf :global(.plan-top a) { text-decoration: none; font-weight: 600; }
+.pf :global(.plan-top a::after) { content: " →"; color: var(--pf-accent-text); }
+.pf :global(.plan-sub),
+.pf :global(.plan-use) { color: var(--pf-muted); }
+.pf :global(.wear-bar) { background: var(--pf-line); border-radius: 0; }
+.pf :global(.wear-bar > span) { border-radius: 0; }
+.pf :global(.badge) { border-radius: 0; border: 1px solid currentColor; background: transparent; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.68rem; }
+.pf :global(.bike-open) { border-top: 1px solid var(--pf-line); }
+
+.pf :global(.bike-open a) { color: var(--pf-accent-text); text-decoration: none; font-weight: 600; }
+
+/* Feedback + footer */
+.pf :global(.alert), .pf :global(.ok) { border-radius: 0; }
+.pf :global(.empty) { text-align: left; }
