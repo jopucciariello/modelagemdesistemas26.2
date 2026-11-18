@@ -2,13 +2,22 @@
 import "server-only";
 import { prisma } from "@/lib/db";
 import { decrypt, encrypt } from "@/lib/crypto";
-import { connectorAdmin, stravaApiBaseUrl, tokenEncryptionKey } from "@/lib/env";
-import { ConnectorError, connectorActivitiesPath, connectorAdminRefresh, connectorGet, type ConnectorPath } from "@/lib/connector/client";
+import { stravaApiBaseUrl, tokenEncryptionKey } from "@/lib/env";
+import { ConnectorError, connectorActivitiesPath, connectorGet, connectorRequestSync, type ConnectorPath, type ConnectorSyncRequest } from "@/lib/connector/client";
 import { getStravaOAuthConfig } from "@/lib/strava/link-account";
 import { needsRefresh, refreshAccessToken } from "@/lib/strava/oauth";
 import { parseConnectorActivities, parseSourceBikes, parseStravaActivities, type RideInput, type SourceBike } from "@/lib/rides/map";
 
 export type SourceBikeOption = SourceBike;
+
+/** RF06, RF34: the refresh the connector was asked to do; null for sources that have none. */
+export type RefreshRequest = ConnectorSyncRequest | null;
+
+async function requestConnectorRefresh(userId: string): Promise<RefreshRequest> {
+  const conn = await prisma.connectorConnection.findUnique({ where: { userId } });
+  if (!conn) return null;
+  return connectorRequestSync(conn.baseUrl, decrypt(conn.apiKeyEncrypted, tokenEncryptionKey()));
+}
 
 export class SyncError extends Error {
   constructor(readonly code: "not_linked" | "unreachable" | "unauthorized" | "bad_response" | "unexpected") {
@@ -72,12 +81,6 @@ async function connectorCall(userId: string, path: ConnectorPath): Promise<unkno
 async function fetchRides(userId: string, source: "STRAVA" | "CONNECTOR"): Promise<RideInput[]> {
   // The connector reads from its own store (no Strava quota), so every sync asks for the whole
   // history: rides from before a bike was linked are imported too, and upserts never duplicate.
-  if (source === "CONNECTOR") {
-    // Temporary bridge until the central Strava app exists: make the connector re-read Strava first
-    // (new/renamed bikes, edits of rides older than 7 days). Best effort; a failure changes nothing.
-    const conn = await prisma.connectorConnection.findUnique({ where: { userId } });
-    if (conn) await connectorAdminRefresh(conn.baseUrl, connectorAdmin());
-  }
   if (source === "CONNECTOR") return parseConnectorActivities(await connectorCall(userId, connectorActivitiesPath()));
   const token = await stravaAccessToken(userId);
   // Incremental: from one day before the newest imported ride (edits of recent rides are picked up).
@@ -107,11 +110,13 @@ export async function listSourceBikes(userId: string, source: "MANUAL" | "STRAVA
  * RF06, RF13: imports the rides of the athlete's source. Existing rides are updated (same
  * externalId), never duplicated. On failure nothing stored changes and the error is recorded.
  */
-export async function syncRides(userId: string): Promise<{ imported: number }> {
+export async function syncRides(userId: string): Promise<{ imported: number; refresh: RefreshRequest }> {
   const user = await prisma.user.findUniqueOrThrow({ where: { id: userId }, select: { activitySource: true } });
   if (user.activitySource === "MANUAL") throw new SyncError("not_linked");
   const source = user.activitySource;
   try {
+    // Temporary bridge: ask the connector to re-read Strava (best effort, never retried); read what it has now.
+    const refresh = source === "CONNECTOR" ? await requestConnectorRefresh(userId) : null;
     const rides = await fetchRides(userId, source);
     const bikes = await prisma.bike.findMany({ where: { userId, stravaGearId: { not: null } }, select: { id: true, stravaGearId: true } });
     const bikeByGear = new Map(bikes.map((b) => [b.stravaGearId!, b.id]));
@@ -138,7 +143,7 @@ export async function syncRides(userId: string): Promise<{ imported: number }> {
       }),
     );
     await prisma.user.update({ where: { id: userId }, data: { lastSyncAt: new Date(), lastSyncError: null } });
-    return { imported: rides.length };
+    return { imported: rides.length, refresh };
   } catch (e) {
     const code = e instanceof SyncError ? e.code : "unexpected";
     console.error(`[sync] ${source} failed: ${code}`); // code only, never tokens or keys

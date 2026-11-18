@@ -55,19 +55,3 @@ export function adminEmailsSetting(): string {
 export function stravaApiBaseUrl(): string {
   return process.env.STRAVA_API_BASE_URL ?? "https://www.strava.com/api/v3";
 }
-
-/**
- * RF06, RF34: admin key of the athlete's strava-connector (Infisical), used only while the central
- * Strava app is not approved. Sent only to the connector whose origin equals CONNECTOR_ADMIN_URL.
- * Null when not configured. Never log these values.
- */
-export function connectorAdmin(): { url: string; apiKey: string } | null {
-  const url = process.env.CONNECTOR_ADMIN_URL?.trim();
-  const apiKey = process.env.CONNECTOR_ADMIN_API_KEY?.trim();
-  if (!url || !apiKey) return null;
-  try {
-    return { url: new URL(url).origin, apiKey };
-  } catch {
-    return null;
-  }
-}

@@ -7,7 +7,7 @@ import { Field } from '@/components/field';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { today } from '@/features/painel/maintenance';
-import { addRide, chooseBike, syncRides } from '@/features/painel/rides';
+import { addRide, chooseBike, refreshNotice, syncRides } from '@/features/painel/rides';
 import type { RidesDto } from '@/features/painel/types';
 import { useTheme } from '@/hooks/use-theme';
 import { api } from '@/lib/api';
@@ -54,7 +54,7 @@ export default function PedaisScreen() {
               variant="outline"
               onPress={async () => {
                 const result = await syncRides();
-                setMessage('error' in result ? result.error : `${result.imported} pedais novos.`);
+                setMessage('error' in result ? result.error : `${result.imported} pedais lidos.${refreshNotice(result.refresh)}`);
                 await load();
               }}
             />

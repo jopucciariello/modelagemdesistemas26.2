@@ -48,44 +48,55 @@ export async function connectorGet(
   }
 }
 
-export const CONNECTOR_BACKFILL_DAYS = 90;
+export const CONNECTOR_SYNC_SINCE_DAYS = 90;
+
+/** RF06, RF34: outcome of asking the connector to re-read Strava (POST /v1/gearlog/sync). */
+export type ConnectorSyncRequest =
+  | { status: "queued" }
+  | { status: "rate_limited"; retryAfterSeconds: number | null }
+  | { status: "not_linked" }
+  | { status: "failed" };
 
 /**
- * RF06, RF34: asks the connector to re-read Strava before GearLog reads it: /admin/sync brings
- * new or renamed bikes, /admin/backfill brings edits of rides older than 7 days. Best effort:
- * never throws (RNF06), returns whether both calls were accepted. The admin key goes only to the
- * connector whose origin is the configured admin origin.
+ * RF06, RF34: asks the connector to re-read Strava (new or renamed bikes, edits of old rides).
+ * Uses the athlete's own GearLog API key, never an admin key. 202 queued; 429 limit of one call per
+ * hour (never retried here, the caller shows retryAfterSeconds); 409 account not linked. The
+ * result arrives later through /v1/gearlog/events. Best effort: never throws (RNF06).
  */
-export async function connectorAdminRefresh(
+export async function connectorRequestSync(
   baseUrl: string,
-  admin: { url: string; apiKey: string } | null,
+  apiKey: string,
   now: Date = new Date(),
   fetchFn: typeof fetch = fetch,
-): Promise<boolean> {
-  if (!admin) return false;
-  let origin: string;
+): Promise<ConnectorSyncRequest> {
+  const since = new Date(now.getTime() - CONNECTOR_SYNC_SINCE_DAYS * 86_400_000).toISOString();
+  let response: Response;
   try {
-    origin = new URL(baseUrl).origin;
+    response = await fetchFn(`${baseUrl}/v1/gearlog/sync`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ since }),
+      signal: AbortSignal.timeout(10_000),
+      redirect: "error",
+    });
   } catch {
-    return false;
+    return { status: "failed" };
   }
-  if (origin !== admin.url) return false;
-  const since = new Date(now.getTime() - CONNECTOR_BACKFILL_DAYS * 86_400_000).toISOString();
-  const post = async (path: string, body?: unknown) => {
+  if (response.status === 202) return { status: "queued" };
+  if (response.status === 409) return { status: "not_linked" };
+  if (response.status === 429) {
+    let seconds: number | null = null;
     try {
-      const res = await fetchFn(`${origin}${path}`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${admin.apiKey}`, "Content-Type": "application/json" },
-        body: body === undefined ? undefined : JSON.stringify(body),
-        signal: AbortSignal.timeout(20_000),
-        redirect: "error",
-      });
-      return res.ok;
+      const body = (await response.json()) as { retryAfterSeconds?: unknown };
+      if (typeof body.retryAfterSeconds === "number" && body.retryAfterSeconds >= 0) seconds = Math.ceil(body.retryAfterSeconds);
     } catch {
-      return false;
+      /* body is optional */
     }
-  };
-  const synced = await post("/admin/sync");
-  const backfilled = await post("/admin/backfill", { since });
-  return synced && backfilled;
+    if (seconds === null) {
+      const header = Number(response.headers.get("Retry-After"));
+      if (Number.isFinite(header) && header >= 0) seconds = Math.ceil(header);
+    }
+    return { status: "rate_limited", retryAfterSeconds: seconds };
+  }
+  return { status: "failed" };
 }
