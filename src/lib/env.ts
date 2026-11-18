@@ -19,7 +19,7 @@ export function stravaCentralApp(): { clientId: string; clientSecret: string } |
   return clientId && clientSecret ? { clientId, clientSecret } : null;
 }
 
-/** ADR-006: athletes may use their own app (RF33); callback and base URLs are global. */
+/** ADR-006: the central Strava app (RF33, per-athlete apps, was removed); callback and base URLs are global. */
 export function stravaCallbackUrl(): string {
   return process.env.STRAVA_CALLBACK_URL ?? `${appUrl()}/auth/strava/callback`;
 }

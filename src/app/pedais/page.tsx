@@ -79,7 +79,7 @@ async function Rides({ searchParams }: { searchParams: PageProps<"/pedais">["sea
       <section className="card">
         {rides.length === 0 ? <p className="muted">Nenhum pedal ainda. Use o + para lançar um{user.activitySource !== "MANUAL" ? " ou ↻ para buscar da fonte" : ""}.</p> : (
           <div className="table-wrap">
-            <table>
+            <table className="rides-table">
               <thead><tr><th>Distância</th><th>Tempo</th><th>Tipo</th><th>Bike</th><th>Data</th><th>Origem</th></tr></thead>
               <tbody>
                 {rides.map((r) => (
