@@ -27,6 +27,12 @@
       "expo-router",
       "expo-secure-store",
       [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "O GearLog usa sua localização para mostrar as oficinas mais próximas."
+        }
+      ],
+      [
         "expo-splash-screen",
         {
           "backgroundColor": "#208AEF",
