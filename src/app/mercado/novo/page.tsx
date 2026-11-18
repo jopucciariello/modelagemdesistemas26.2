@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { createListing } from "@/app/actions/market";
 import { ListingFields } from "@/components/listing-fields";
 import { Flash, Nav } from "@/components/ui";
-import { prisma } from "@/lib/db";
+import { pickerCategories } from "@/lib/catalog/pick";
 import { requireUser } from "@/lib/guards";
 import { ERROR_TEXT } from "@/lib/market";
 import s from "../mercado.module.css";
@@ -26,7 +26,7 @@ export default function NewListingPage(props: PageProps<"/mercado/novo">) {
 async function NewListing({ searchParams }: { searchParams: PageProps<"/mercado/novo">["searchParams"] }) {
   const user = await requireUser();
   const { erro } = await searchParams;
-  const categories = await prisma.category.findMany({ where: { active: true }, orderBy: { name: "asc" } });
+  const categories = await pickerCategories();
   return (
     <>
       <Nav isAdmin={user.role === "ADMIN"} />

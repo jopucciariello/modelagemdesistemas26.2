@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { closeListing, markSold, updateListing } from "@/app/actions/market";
+import { pickerCategories } from "@/lib/catalog/pick";
 import { ListingFields } from "@/components/listing-fields";
 import { Flash, Nav } from "@/components/ui";
 import { prisma } from "@/lib/db";
@@ -31,7 +32,7 @@ async function Mine({ searchParams }: { searchParams: PageProps<"/mercado/meus">
   const user = await requireUser();
   const { ok, erro, editar } = await searchParams;
   const [categories, listings] = await Promise.all([
-    prisma.category.findMany({ where: { active: true }, orderBy: { name: "asc" } }),
+    pickerCategories(),
     prisma.listing.findMany({ where: { sellerId: user.id }, include: { category: true }, orderBy: { createdAt: "desc" } }),
   ]);
   return (

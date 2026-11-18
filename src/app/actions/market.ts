@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { optNumber, text } from "@/lib/forms";
 import { notifyDreamMatches } from "@/lib/dreams";
+import { resolvePicked } from "@/lib/catalog/pick";
+import { readPicked } from "@/lib/picker";
 import { requireUser } from "@/lib/guards";
 import { joinPhotos, parsePriceToCents, validateListing } from "@/lib/market";
 
@@ -23,9 +25,16 @@ function readListing(form: FormData) {
   };
 }
 
-async function checked(form: FormData, back: string) {
+async function checked(form: FormData, back: string, userId: string) {
   const sep = back.includes("?") ? "&" : "?";
   const input = readListing(form);
+  const picked = readPicked(form);
+  const resolved = picked ? await resolvePicked(userId, picked) : null;
+  if (!picked || !resolved) redirect(`${back}${sep}erro=familia_invalida`);
+  const comp = await prisma.component.findFirst({ where: { id: resolved!.componentId } });
+  // RF16: the title defaults to brand and model; a hand-typed part has no catalog component on the listing.
+  if (!input.title && comp) input.title = `${comp.brand} ${comp.model}`.slice(0, 120);
+  input.categoryId = picked!.categoryId;
   const result = validateListing(input);
   if (!result.ok) redirect(`${back}${sep}erro=${result.error}`);
   const category = await prisma.category.findFirst({ where: { id: input.categoryId, active: true } });
@@ -33,6 +42,7 @@ async function checked(form: FormData, back: string) {
   return {
     title: input.title,
     categoryId: input.categoryId,
+    componentId: picked!.componentId,
     condition: input.condition,
     priceCents: input.priceCents!,
     description: input.description,
@@ -50,7 +60,7 @@ async function ownListing(userId: string, id: string) {
 
 export async function createListing(form: FormData) {
   const user = await requireUser();
-  const data = await checked(form, "/mercado/novo");
+  const data = await checked(form, "/mercado/novo", user.id);
   const listing = await prisma.listing.create({ data: { ...data, sellerId: user.id } });
   // RF21: tell the owners of matching dreams; a notification failure must not lose the listing.
   await notifyDreamMatches(listing.id).catch((e) => console.error("notifyDreamMatches failed", e));
@@ -61,7 +71,7 @@ export async function updateListing(form: FormData) {
   const user = await requireUser();
   const listing = await ownListing(user.id, text(form, "id", 40));
   if (listing.status !== "ACTIVE") redirect("/mercado/meus?erro=anuncio_nao_encontrado");
-  const data = await checked(form, `/mercado/meus?editar=${listing.id}`);
+  const data = await checked(form, `/mercado/meus?editar=${listing.id}`, user.id);
   await prisma.listing.update({ where: { id: listing.id }, data });
   redirect("/mercado/meus?ok=editado");
 }

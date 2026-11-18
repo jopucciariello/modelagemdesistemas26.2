@@ -4,7 +4,9 @@ import Link from "next/link";
 import { Suspense } from "react";
 import "@/app/portfolio-pages.css";
 import { createPart } from "@/app/actions/bikes";
+import { ComponentPicker } from "@/components/component-picker";
 import { Nav } from "@/components/ui";
+import { pickerCategories } from "@/lib/catalog/pick";
 import { POSITIONS, componentLabel, plansFor, priceRange } from "@/lib/catalog/rules";
 import { prisma } from "@/lib/db";
 import { toLocalDay } from "@/lib/dates";
@@ -29,56 +31,63 @@ export default function NewPartPage(props: PageProps<"/bikes/[id]/peca">) {
 async function NewPart({ params, searchParams }: PageProps<"/bikes/[id]/peca">) {
   const user = await requireUser();
   const { id } = await params;
-  const { categoria, componente, erro } = await searchParams;
+  const sp = await searchParams;
+  const { categoria, componente, erro } = sp;
+  const str = (v: unknown) => (typeof v === "string" ? v : "");
   const bike = await prisma.bike.findFirst({ where: { id, userId: user.id, archivedAt: null } });
-  const category = typeof categoria === "string"
-    ? await prisma.category.findFirst({
-        where: { id: categoria, active: true },
-        include: { plans: true, components: { where: { active: true }, orderBy: [{ modality: "asc" }, { brand: "asc" }, { model: "asc" }] } },
-      })
-    : null;
-  if (!bike || !category) {
-    return (<><Nav isAdmin={user.role === "ADMIN"} /><p className="alert">Bike ou categoria não encontrada. <Link href="/bikes">Voltar</Link></p></>);
+  if (!bike) {
+    return (<><Nav isAdmin={user.role === "ADMIN"} /><p className="alert">Bike não encontrada. <Link href="/bikes">Voltar</Link></p></>);
   }
-  const component = typeof componente === "string"
+  const categories = await pickerCategories();
+  const category = typeof categoria === "string"
+    ? await prisma.category.findFirst({ where: { id: categoria, active: true }, include: { plans: true } })
+    : null;
+  const component = category && typeof componente === "string" && componente
     ? await prisma.component.findFirst({ where: { id: componente, categoryId: category.id, active: true }, include: { plans: true } })
     : null;
+  // RF31: a part typed by hand (brand and model not in the catalog) has no catalog plans.
+  const manual = category && !component && str(sp.manualBrand) && str(sp.manualModel)
+    ? { id: "", code: null, brand: str(sp.manualBrand).slice(0, 60), model: str(sp.manualModel).slice(0, 80), details: null, priceMin: null, priceMax: null, plans: [] as Plan[] }
+    : null;
+  const chosen = component ?? manual;
 
   return (
     <>
       <Nav isAdmin={user.role === "ADMIN"} />
       <header>
-        <h1>Nova peça: {category.name}</h1>
+        <h1>Nova peça</h1>
         <p className="muted">Na bike <Link href={`/bikes/${bike.id}`}>{bike.name}</Link>.</p>
       </header>
       {typeof erro === "string" && <p className="alert" role="alert">{ERR[erro] ?? "Confira os dados."}</p>}
 
       <section className="card">
-        <h2>1. Componente</h2>
-        {category.components.length === 0 ? <p className="alert">Esta família ainda não tem componentes no catálogo.</p> : (
+        <h2>1. Componente, marca e modelo</h2>
+        {categories.length === 0 ? <p className="alert">O catálogo ainda está vazio.</p> : (
           <form method="get" className="row">
-            <input type="hidden" name="categoria" value={category.id} />
-            <label>Marca e modelo
-              <select name="componente" required defaultValue={component?.id ?? ""}>
-                <option value="" disabled>Escolha…</option>
-                {category.components.map((c) => (
-                  <option key={c.id} value={c.id}>{componentLabel(c)}{c.modality ? ` (${c.modality})` : ""}</option>
-                ))}
-              </select>
-            </label>
+            <ComponentPicker categories={categories} names={{ category: "categoria", component: "componente" }} defaultCategoryId={category?.id ?? ""} />
             <button className="button small" type="submit">Escolher</button>
           </form>
         )}
       </section>
 
-      {component && <PartForm bikeId={bike.id} category={category} component={component} />}
+      {category && chosen && (
+        <PartForm
+          bikeId={bike.id}
+          category={category}
+          component={chosen}
+          defaultDay={/^\d{4}-\d{2}-\d{2}$/.test(str(sp.data)) ? str(sp.data) : toLocalDay(new Date())}
+          manual={manual ? { brand: manual.brand, model: manual.model, requestAdd: sp.requestAdd === "on" } : null}
+        />
+      )}
     </>
   );
 }
 
 type Plan = { name: string; intervalKm: number | null; intervalHours: number | null; action: "REPLACE" | "SERVICE"; warnKm?: number | null; warnHours?: number | null };
 
-function PartForm({ bikeId, category, component }: {
+function PartForm({ bikeId, category, component, manual, defaultDay }: {
+  manual: { brand: string; model: string; requestAdd: boolean } | null;
+  defaultDay: string;
   bikeId: string;
   category: { id: string; plans: Plan[] };
   component: { id: string; code: string | null; brand: string; model: string; details: string | null; priceMin: number | null; priceMax: number | null; plans: Plan[] };
@@ -95,6 +104,13 @@ function PartForm({ bikeId, category, component }: {
         <input type="hidden" name="bikeId" value={bikeId} />
         <input type="hidden" name="categoryId" value={category.id} />
         <input type="hidden" name="componentId" value={component.id} />
+        {manual && (
+          <>
+            <input type="hidden" name="manualBrand" value={manual.brand} />
+            <input type="hidden" name="manualModel" value={manual.model} />
+            {manual.requestAdd && <input type="hidden" name="requestAdd" value="on" />}
+          </>
+        )}
         <div className="row">
           <label>Posição
             <select name="position" defaultValue="">
@@ -102,7 +118,7 @@ function PartForm({ bikeId, category, component }: {
               {POSITIONS.map((p) => <option key={p} value={p}>{p}</option>)}
             </select>
           </label>
-          <label>Data de instalação <input name="installedAt" type="date" required defaultValue={toLocalDay(new Date())} /></label>
+          <label>Data de instalação <input name="installedAt" type="date" required defaultValue={defaultDay} /></label>
           <label>Peça
             <select name="condition" defaultValue="NEW">
               <option value="NEW">Nova</option>

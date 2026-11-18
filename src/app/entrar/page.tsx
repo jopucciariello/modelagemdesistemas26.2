@@ -42,14 +42,17 @@ async function Forms({ searchParams }: { searchParams: PageProps<"/entrar">["sea
         </form>
       </section>
       <section className="card">
-        <h2>Criar conta de atleta</h2>
-        <form action="/auth/senha" method="post">
-          <input type="hidden" name="mode" value="cadastro" />
-          <label>Nome <input name="name" autoComplete="name" maxLength={80} /></label>
-          <label>Usuário <input name="username" autoComplete="username" required maxLength={30} /></label>
-          <label>Senha (mín. 8 caracteres) <input name="password" type="password" autoComplete="new-password" required minLength={8} maxLength={200} /></label>
-          <button className="button" type="submit">Criar conta</button>
-        </form>
+        <details className="signup" open={erro === "dados_invalidos" || erro === "usuario_existe"}>
+          <summary className="button">Criar conta</summary>
+          <h2>Criar conta de atleta</h2>
+          <form action="/auth/senha" method="post">
+            <input type="hidden" name="mode" value="cadastro" />
+            <label>Nome <input name="name" autoComplete="name" maxLength={80} /></label>
+            <label>Usuário <input name="username" autoComplete="username" required maxLength={30} /></label>
+            <label>Senha (mín. 8 caracteres) <input name="password" type="password" autoComplete="new-password" required minLength={8} maxLength={200} /></label>
+            <button className="button" type="submit">Criar conta</button>
+          </form>
+        </details>
       </section>
       <p><Link href="/">Voltar</Link></p>
     </>
