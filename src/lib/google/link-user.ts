@@ -1,11 +1,11 @@
 // RF04, ADR-005: every verified Google e-mail gets an account; admins are only the ones in ADMIN_EMAILS (RB17).
 import "server-only";
 import { prisma } from "@/lib/db";
-import { adminEmailsSetting } from "@/lib/env";
+import { allAdminEmailsSetting } from "@/lib/admin-emails";
 import { roleForEmail, type GoogleIdentity } from "@/lib/google/oidc";
 
 export async function linkGoogleAccount(identity: GoogleIdentity): Promise<string> {
-  const role = roleForEmail(identity.email, adminEmailsSetting());
+  const role = roleForEmail(identity.email, await allAdminEmailsSetting());
   const user = await prisma.user.upsert({
     where: { email: identity.email },
     // Re-evaluated on every login, so removing an e-mail from the list also demotes the role.

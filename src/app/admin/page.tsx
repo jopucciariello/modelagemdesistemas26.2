@@ -1,5 +1,6 @@
 // RF30 entry point: admin area, reachable only by allow-listed Google accounts (ADR-005, RB17).
 import { Suspense } from "react";
+import { AdminEmails } from "@/components/admin-emails";
 import { AdminCatalog } from "@/components/admin-catalog";
 import { AdminMarket } from "@/components/admin-market";
 import { AdminRequests } from "@/components/admin-requests";
@@ -18,6 +19,8 @@ const OK: Record<string, string> = {
   anuncio_removido: "Anúncio removido.",
   pedido_respondido: "Resposta ao pedido salva.",
   oficina: "Oficinas atualizadas.",
+  admin_incluido: "Administrador incluído.",
+  admin_removido: "Administrador removido.",
 };
 
 const ERROR_MESSAGES: Record<string, string> = {
@@ -26,6 +29,9 @@ const ERROR_MESSAGES: Record<string, string> = {
   plano_invalido: "O plano precisa de nome e de um intervalo em km ou em horas.",
   componente_invalido: "Informe a marca e o modelo.",
   oficina_invalida: "Informe o nome da oficina e um e-mail válido.",
+  admin_invalido: "Informe um e-mail válido.",
+  admin_raiz: "Esse administrador vem do Infisical (ADMIN_EMAILS) e não pode ser removido aqui.",
+  admin_proprio: "Você não pode remover o próprio acesso.",
   oficina_existe: "Já existe uma oficina com esse e-mail.",
   componente_existe: "Esse componente já está no catálogo.",
   lojista_invalido: "Informe um e-mail válido e o nome da loja.",
@@ -87,6 +93,7 @@ async function AdminArea({ searchParams }: { searchParams: PageProps<"/admin">["
               </button>
             </form>
           </section>
+          <AdminEmails />
           <AdminCatalog />
           <AdminMarket />
           <AdminRequests />

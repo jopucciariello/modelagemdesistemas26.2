@@ -63,9 +63,13 @@ async function SessionArea({ searchParams }: { searchParams: PageProps<"/">["sea
         </>
       ) : (
         <section className="card">
-          <p>Entre com sua conta Google. Depois você escolhe como lançar os pedais: à mão, pela API do Strava ou por um conector.</p>
+          <p>Entre com sua conta Google. Depois você escolhe como lançar os pedais: à mão, pelo Strava.</p>
           <a className="button" href="/auth/google">
             Entrar com Google
+          </a>
+          {" "}
+          <a className="button" href="/entrar">
+            Usuário e senha
           </a>
         </section>
       )}
