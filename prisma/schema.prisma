@@ -266,6 +266,13 @@ model Part {
   removedAt    DateTime?
   initialKm    Float              @default(0)
   initialHours Float              @default(0)
+  // RF02: new or used part; for a used one, the condition the athlete noted.
+  isUsed        Boolean           @default(false)
+  usedCondition String?
+  // RF39: removed from the bike but kept in stock; stockKm/stockHours is its usage when it left the bike.
+  inStock       Boolean           @default(false)
+  stockKm       Float             @default(0)
+  stockHours    Float             @default(0)
   plans        MaintenancePlan[]
   events       MaintenanceEvent[]
   createdAt    DateTime           @default(now())
@@ -302,6 +309,8 @@ model Ride {
   externalId   String?
   // Strava gear id as received, kept to re-associate after RF05.
   stravaGearId String?
+  // OPEN-20: the athlete picked the bike by hand because the source sent none; sync keeps it.
+  bikeChosen   Boolean        @default(false)
   sportType    String
   startDate    DateTime
   distanceKm   Float
@@ -570,6 +579,7 @@ model Listing {
   componentId   String?
   component     Component?       @relation(fields: [componentId], references: [id])
   reports       ListingReport[]
+  photos        ListingPhoto[]
   status        ListingStatus    @default(ACTIVE)
   removedReason String?
   removedAt     DateTime?
@@ -647,6 +657,19 @@ model BikePhoto {
   contentType String
   data        Bytes
   updatedAt   DateTime @updatedAt
+}
+
+// RF16: up to 3 uploaded photos per listing (bytes in the DB like BikePhoto; each <= 1 MB).
+model ListingPhoto {
+  id          String   @id @default(cuid())
+  listingId   String
+  listing     Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  position    Int
+  contentType String
+  data        Bytes
+  createdAt   DateTime @default(now())
+
+  @@index([listingId])
 }
 
 // RF37, ADR-005: admin e-mails added from /admin; ADMIN_EMAILS (Infisical) keeps the root admins.

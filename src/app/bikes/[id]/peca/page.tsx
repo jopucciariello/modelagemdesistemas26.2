@@ -102,6 +102,13 @@ function PartForm({ bikeId, category, component }: {
             </select>
           </label>
           <label>Data de instalação <input name="installedAt" type="date" required defaultValue={toLocalDay(new Date())} /></label>
+          <label>Peça
+            <select name="condition" defaultValue="NEW">
+              <option value="NEW">Nova</option>
+              <option value="USED">Usada</option>
+            </select>
+          </label>
+          <label>Condição, se usada <input name="usedCondition" maxLength={200} placeholder="ex.: boa, com 2.000 km de uso" /></label>
           <label>Uso inicial (km) <input name="initialKm" type="number" min={0} step="any" defaultValue={0} /></label>
           <label>Uso inicial (horas) <input name="initialHours" type="number" min={0} step="any" defaultValue={0} /></label>
         </div>
