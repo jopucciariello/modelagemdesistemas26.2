@@ -6,6 +6,7 @@ import { prisma } from "@/lib/db";
 import { text } from "@/lib/forms";
 import { requireAdmin, requireUser, requireWorkshop, requireWorkshopOwner } from "@/lib/guards";
 import { recordVisit } from "@/lib/visit-record";
+import { bookAt } from "@/lib/workshop-agenda";
 import { canBook, canDecideRequest, canInviteMechanic, cancellationNotice, cleanWorkshopRequest, isLateCancellation, parseIncludes, parseSlotStart } from "@/lib/workshop";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -206,4 +207,21 @@ export async function concludeAppointment(form: FormData) {
   if (result === null) redirect("/oficina?erro=atendimento_invalido");
   if (!result!.ok) redirect(`${back}?erro=${result!.error}`);
   redirect("/oficina?ok=concluido");
+}
+
+// ---- RF26, RF27: book on the weekly grid (duration-aware), athlete chooses to share history ----
+
+export async function bookOnGrid(form: FormData) {
+  const user = await requireUser();
+  await connection();
+  const workshopId = text(form, "workshopId", 40);
+  const startsAt = new Date(text(form, "startsAt", 30));
+  const back = `/oficinas/${workshopId}`;
+  if (Number.isNaN(startsAt.getTime())) redirect(`${back}?erro=dados_invalidos`);
+  const result = await bookAt({
+    userId: user.id, workshopId, serviceId: text(form, "serviceId", 40), bikeId: text(form, "bikeId", 40), startsAt,
+    shareHistory: form.get("shareHistory") === "on",
+  });
+  if (!result.ok) redirect(`${back}?erro=${result.error === "invalid" ? "dados_invalidos" : "horario_indisponivel"}`);
+  redirect("/agendamentos?ok=agendado");
 }
