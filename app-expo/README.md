@@ -19,6 +19,10 @@ EXPO_PUBLIC_API_URL=https://gearlog.jopucci.com npx expo start   # w = web, i = 
 ## Contrato com a API (issue #61)
 
 - `GET /auth/google/app?redirect=<deep link>`: faz o login Google e volta para `<redirect>?token=<token>`.
-- `GET /me` com `Authorization: Bearer <token>`: `{ id, name, email, role }`. `401` derruba a sessão.
+- `GET /api/me` com `Authorization: Bearer <token>`: `{ id, name, email, role }`. `401` derruba a sessão.
 
 Segredos nunca entram neste app: só `EXPO_PUBLIC_*` não sensíveis.
+
+## Onde a API roda hoje
+
+Enquanto as telas do Expo não cobrem a Fase 1 inteira (issue #68), a API fica no servidor atual, em `src/app/api/*` e `src/app/auth/google/*`, reaproveitando `src/lib` e a tabela `Session` (o token é guardado só como hash). Depois da troca de domínio, as páginas do Next saem e ficam só as rotas de API.
