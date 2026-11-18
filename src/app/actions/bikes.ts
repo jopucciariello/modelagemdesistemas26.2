@@ -5,9 +5,16 @@ import { prisma } from "@/lib/db";
 import { parseLocalDay, toLocalDay } from "@/lib/dates";
 import { bikeType, optInterval, optNumber, optYear, readPlans, text } from "@/lib/forms";
 import { requireUser } from "@/lib/guards";
-import { bikeTypeFromCategory, canResetPlan, plansFor } from "@/lib/catalog/rules";
+import { bikeTypeFromCategory, plansFor } from "@/lib/catalog/rules";
 import { checkPhoto } from "@/lib/bike-photo";
+import { addManualMaintenanceFor, replacePartFor, servicePlanFor, type MaintenanceResult } from "@/lib/maintenance";
 import { recordVisit } from "@/lib/visit-record";
+
+/** Sends the athlete back to the bike (or the start) with the result flag. */
+function finish(result: MaintenanceResult): never {
+  if (result.ok) redirect(`/bikes/${result.bikeId}?ok=${result.flash}`);
+  redirect(result.bikeId ? `/bikes/${result.bikeId}?erro=${result.error}` : `/?erro=${result.error}`);
+}
 
 /** Loads a bike only if it belongs to the user; otherwise back to the list. */
 async function ownBike(userId: string, bikeId: string) {
@@ -256,81 +263,19 @@ export async function updatePlan(form: FormData) {
  */
 export async function servicePlan(form: FormData) {
   const user = await requireUser();
-  const plan = await prisma.maintenancePlan.findFirst({
-    where: { id: text(form, "planId", 40), part: { removedAt: null, bike: { userId: user.id } } },
-    include: { part: { include: { component: { include: { category: true } }, _count: { select: { plans: true } } } } },
-  });
-  if (!plan) redirect("/?erro=peca_nao_encontrada");
-  if (!canResetPlan(plan!.action, plan!.part._count.plans)) redirect(`/bikes/${plan!.part.bikeId}?erro=plano_invalido`);
-  const date = parseLocalDay(text(form, "date", 10));
-  const bikeId = plan!.part.bikeId;
-  if (!date || date < plan!.part.installedAt) redirect(`/bikes/${bikeId}?erro=data`);
-  const c = plan!.part.component;
-  await prisma.$transaction([
-    prisma.maintenancePlan.update({ where: { id: plan!.id }, data: { lastServiceAt: date } }),
-    prisma.maintenanceEvent.create({
-      data: {
-        bikeId,
-        partId: plan!.partId,
-        type: plan!.action === "SERVICE" ? "SERVICE" : "REPLACEMENT",
-        date: date!,
-        note: `${plan!.name}: ${c.category.name} ${c.brand} ${c.model}`,
-      },
-    }),
-  ]);
-  redirect(`/bikes/${bikeId}?ok=${plan!.action === "SERVICE" ? "revisao" : "troca_item"}`);
+  finish(await servicePlanFor(user.id, text(form, "planId", 40), text(form, "date", 10)));
 }
 
 /** RF10, RB05, OPEN-16: close the old part and start a new one with the same plans, zeroed. */
 export async function replacePart(form: FormData) {
   const user = await requireUser();
-  const old = await ownPart(user.id, text(form, "partId", 40));
-  const bikeId = old.bikeId;
-  const date = parseLocalDay(text(form, "date", 10));
-  if (old.removedAt) redirect(`/bikes/${bikeId}?erro=peca_encerrada`);
-  if (!date || date < old.installedAt) redirect(`/bikes/${bikeId}?erro=data`);
-  const componentId = text(form, "componentId", 40) || old.componentId;
-  const component = await prisma.component.findFirst({
-    where: { id: componentId, categoryId: old.component.categoryId, OR: [{ active: true }, { id: old.componentId }] },
-    include: { category: true },
-  });
-  if (!component) redirect(`/bikes/${bikeId}?erro=componente`);
-  const note = text(form, "note", 200);
-  await prisma.$transaction(async (tx) => {
-    await tx.part.update({ where: { id: old.id }, data: { removedAt: date } });
-    await tx.maintenanceEvent.create({
-      data: {
-        bikeId,
-        partId: old.id,
-        type: "REPLACEMENT",
-        date: date!,
-        note: `${component!.category.name}: ${old.component.brand} ${old.component.model} → ${component!.brand} ${component!.model}${note ? ` (${note})` : ""}`,
-      },
-    });
-    await tx.part.create({
-      data: {
-        bikeId,
-        componentId: component!.id,
-        position: old.position,
-        installedAt: date!,
-        plans: { create: old.plans.map((p) => ({ name: p.name, intervalKm: p.intervalKm, intervalHours: p.intervalHours, warnKm: p.warnKm, warnHours: p.warnHours, action: p.action })) },
-      },
-    });
-  });
-  redirect(`/bikes/${bikeId}?ok=troca`);
+  finish(await replacePartFor(user.id, text(form, "partId", 40), text(form, "date", 10), text(form, "componentId", 40), text(form, "note", 200)));
 }
 
 /** RF12: manual maintenance without replacing a part (e.g. lubrication). */
 export async function addManualMaintenance(form: FormData) {
   const user = await requireUser();
-  const bike = await ownBike(user.id, text(form, "bikeId", 40));
-  const date = parseLocalDay(text(form, "date", 10));
-  const note = text(form, "note", 200);
-  if (!date || !note) redirect(`/bikes/${bike.id}?erro=manutencao_invalida`);
-  const partId = text(form, "partId", 40);
-  const part = partId ? await prisma.part.findFirst({ where: { id: partId, bikeId: bike.id } }) : null;
-  await prisma.maintenanceEvent.create({ data: { bikeId: bike.id, partId: part?.id ?? null, type: "MANUAL", date: date!, note } });
-  redirect(`/bikes/${bike.id}?ok=manutencao`);
+  finish(await addManualMaintenanceFor(user.id, text(form, "bikeId", 40), text(form, "date", 10), text(form, "note", 200), text(form, "partId", 40)));
 }
 
 /**
