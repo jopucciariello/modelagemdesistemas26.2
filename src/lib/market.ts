@@ -161,3 +161,19 @@ Object.assign(ERROR_TEXT, {
   motivo_invalido: "Explique a denúncia em pelo menos 5 caracteres.",
   anuncio_proprio: "Você não pode denunciar o próprio anúncio.",
 });
+
+// Admin catalog API (#65, RF30, RF31, RF37).
+Object.assign(ERROR_TEXT, {
+  categoria_invalida: "Informe o nome da família e planos válidos (nome e um intervalo).",
+  categoria_existe: "Já existe uma família com esse nome.",
+  categoria_nao_encontrado: "Família não encontrada.",
+  plano_invalido: "O plano precisa de nome e de um intervalo em km ou horas.",
+  componente_invalido: "Informe a família, a marca e o modelo.",
+  componente_existe: "Esse componente já existe (mesma marca e modelo ou mesmo código).",
+  componente_nao_encontrado: "Componente não encontrado.",
+  admin_invalido: "Informe um e-mail válido.",
+  admin_raiz: "Administradores raiz (Infisical) não podem ser removidos aqui.",
+  admin_proprio: "Você não pode remover o seu próprio acesso.",
+  resposta_invalida: "Para recusar, informe o motivo.",
+  pedido_nao_encontrado: "Pedido não encontrado.",
+});
