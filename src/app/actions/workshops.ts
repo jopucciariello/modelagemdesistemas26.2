@@ -26,15 +26,15 @@ export async function createWorkshop(form: FormData) {
 
 export async function requestWorkshop(form: FormData) {
   const user = await requireUser();
-  if (!user.email) redirect("/oficinas?erro=pedido_invalido");
+  if (!user.email) redirect("/oficina?erro=pedido_invalido");
   const input = cleanWorkshopRequest({ name: form.get("name"), contact: form.get("contact"), requestText: form.get("requestText") });
-  if (!input) redirect("/oficinas?erro=pedido_invalido");
+  if (!input) redirect("/oficina?erro=pedido_invalido");
   const ownerEmail = user.email!.toLowerCase();
   const existing = await prisma.workshop.findUnique({ where: { ownerEmail } });
-  if (existing && !canDecideRequest(existing.status, "reopen")) redirect("/oficinas?erro=pedido_existe");
+  if (existing && !canDecideRequest(existing.status, "reopen")) redirect("/oficina?erro=pedido_existe");
   if (existing) await prisma.workshop.update({ where: { id: existing.id }, data: { ...input!, status: "PENDING", active: false } });
   else await prisma.workshop.create({ data: { ...input!, ownerEmail, status: "PENDING", active: false } });
-  redirect("/oficinas?ok=pedido");
+  redirect("/oficina?ok=pedido");
 }
 
 export async function decideWorkshopRequest(form: FormData) {
