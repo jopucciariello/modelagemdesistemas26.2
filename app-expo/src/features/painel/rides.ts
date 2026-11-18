@@ -24,9 +24,14 @@ export async function addRide(input: { bikeId: string; date: string; distanceKm:
 }
 
 /** RF13: sincroniza com a fonte e devolve quantos pedais vieram. */
-export async function syncRides(): Promise<{ imported: number } | { error: string }> {
+export type RefreshRequest =
+  | { status: 'queued' | 'not_linked' | 'failed' }
+  | { status: 'rate_limited'; retryAfterSeconds: number | null }
+  | null;
+
+export async function syncRides(): Promise<{ imported: number; refresh: RefreshRequest } | { error: string }> {
   try {
-    return await api<{ imported: number }>('/api/rides/sync', { method: 'POST' });
+    return await api<{ imported: number; refresh: RefreshRequest }>('/api/rides/sync', { method: 'POST' });
   } catch (e) {
     return { error: message(e) };
   }
@@ -39,5 +44,22 @@ export async function chooseBike(rideId: string, bikeId: string) {
     return null;
   } catch (e) {
     return message(e);
+  }
+}
+
+/** RF06, RF34: aviso sobre o pedido de releitura ao conector (sem nova tentativa automática). */
+export function refreshNotice(refresh: RefreshRequest | undefined): string {
+  if (!refresh) return '';
+  switch (refresh.status) {
+    case 'queued':
+      return ' Pedimos ao conector para reler o Strava; atualize em instantes.';
+    case 'rate_limited': {
+      const min = refresh.retryAfterSeconds === null ? null : Math.max(1, Math.ceil(refresh.retryAfterSeconds / 60));
+      return ` O conector só relê o Strava uma vez por hora${min === null ? '' : `; peça de novo em ${min >= 60 ? 'cerca de 1 hora' : `${min} min`}`}.`;
+    }
+    case 'not_linked':
+      return ' A conta do Strava não está vinculada no conector.';
+    default:
+      return ' Não foi possível pedir a releitura ao conector agora.';
   }
 }
