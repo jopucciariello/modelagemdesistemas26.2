@@ -1,7 +1,7 @@
 // RF25, RF29, RB21: the workshop owner's area (profile, services, slots, appointments and notices).
 import Link from "next/link";
 import { Suspense } from "react";
-import { addWorkshopService, addWorkshopSlot, markNoticesRead, removeWorkshopService, removeWorkshopSlot, updateWorkshopProfile } from "@/app/actions/workshops";
+import { requestWorkshop, addWorkshopService, addWorkshopSlot, markNoticesRead, removeWorkshopService, removeWorkshopSlot, updateWorkshopProfile } from "@/app/actions/workshops";
 import { Flash, Nav } from "@/components/ui";
 import { prisma } from "@/lib/db";
 import { getCurrentUser, getCurrentWorkshop } from "@/lib/session";
@@ -15,6 +15,7 @@ const OK = {
   horario: "Horário cadastrado.",
   horario_removido: "Horário removido.",
   concluido: "Serviço concluído e registrado no histórico da bike.",
+  pedido: "Pedido enviado. O administrador do GearLog vai analisar.",
 };
 const ERR = {
   perfil_invalido: "Informe o nome da oficina.",
@@ -23,6 +24,8 @@ const ERR = {
   horario_existe: "Esse horário já está cadastrado.",
   horario_ocupado: "Esse horário tem um agendamento ativo e não pode ser removido.",
   atendimento_invalido: "Atendimento não encontrado ou já concluído.",
+  pedido_invalido: "Informe o nome (2+ letras), um contato (5+ caracteres) e uma descrição (10+ caracteres).",
+  pedido_existe: "Já existe um pedido ou uma oficina com o seu e-mail.",
 };
 
 export default function WorkshopPage(props: PageProps<"/oficina">) {
@@ -41,13 +44,31 @@ async function Area({ searchParams }: { searchParams: PageProps<"/oficina">["sea
   const owned = await getCurrentWorkshop();
   if (!owned) {
     const user = await getCurrentUser();
+    const request = user?.email ? await prisma.workshop.findUnique({ where: { ownerEmail: user.email.toLowerCase() }, select: { status: true, name: true } }) : null;
     return (
       <>
         <Nav isAdmin={user?.role === "ADMIN"} />
-        <p className="alert" role="alert">
-          {user ? "Este e-mail não está cadastrado como responsável por uma oficina. Peça ao administrador do GearLog para cadastrar a sua." : "Entre com o Google para acessar a área da oficina."}
-        </p>
-        {!user && <a className="button" href="/auth/google?next=/oficina">Entrar com Google</a>}
+        <Flash ok={ok} erro={erro} okText={OK} errText={ERR} />
+        {!user && (
+          <>
+            <p className="alert" role="alert">Entre com o Google para acessar a área da oficina.</p>
+            <a className="button" href="/auth/google?next=/oficina">Entrar com Google</a>
+          </>
+        )}
+        {user && request?.status === "PENDING" && <p className="muted">Seu pedido para “{request.name}” está em análise. Avisaremos quando o administrador decidir.</p>}
+        {user && (!request || request.status === "REJECTED") && (
+          <section className="card">
+            <h2>Cadastrar minha oficina</h2>
+            {request?.status === "REJECTED" && <p className="alert" role="alert">O pedido anterior foi recusado. Você pode enviar um novo.</p>}
+            <p className="muted">Envie o pedido; o administrador confere que a oficina existe e aprova. Quando aprovada, você cadastra serviços e horários aqui.</p>
+            <form action={requestWorkshop} className="stack">
+              <label>Nome da oficina <input name="name" required minLength={2} maxLength={80} /></label>
+              <label>Contato (telefone, e-mail ou Instagram) <input name="contact" required minLength={5} maxLength={120} /></label>
+              <label>Conte sobre a oficina <textarea name="requestText" required minLength={10} maxLength={500} rows={4} /></label>
+              <button className="button" type="submit">Enviar pedido</button>
+            </form>
+          </section>
+        )}
       </>
     );
   }
