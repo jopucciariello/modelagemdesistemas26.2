@@ -87,6 +87,7 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 - [x] T-74 Agendar com escolha de compartilhar histórico — RF26, RF27, RB09 — #31 #32
 - [x] T-75 Cancelamento com aviso por e-mail — RF29, RF38 — #34
 - [x] T-76 Concluir OS avança meta de revisão em etapas — RF28, RB23 — #33
+- [x] T-78 Concluir OS e ver o agendamento pela API; histórico só se o atleta compartilhou — RF27, RF28, RNF03, RB09 — #33 #71
 - [x] T-77b API do back-office da oficina (perfil, serviços, grade, mecânicos) e da fila do admin — RF25, RB21, RB17 — #70 #71
 - [x] T-77a API HTTP de oficinas e agenda com token (`/api/v1/oficinas`) — RF25–RF29 — #71
 - [ ] T-77 Telas Expo de oficina e agenda — RF25–RF29 — #71

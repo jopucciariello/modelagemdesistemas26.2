@@ -5,8 +5,7 @@ import { connection } from "next/server";
 import { prisma } from "@/lib/db";
 import { text } from "@/lib/forms";
 import { requireAdmin, requireUser, requireWorkshop, requireWorkshopOwner } from "@/lib/guards";
-import { recordVisit } from "@/lib/visit-record";
-import { bookAt, cancelFor } from "@/lib/workshop-agenda";
+import { bookAt, cancelFor, concludeFor } from "@/lib/workshop-agenda";
 import { canBook, canDecideRequest, canInviteMechanic, cleanWorkshopRequest, parseIncludes, parseSlotStart } from "@/lib/workshop";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -170,29 +169,10 @@ export async function cancelAppointment(form: FormData) {
 export async function concludeAppointment(form: FormData) {
   const { workshop } = await requireWorkshop();
   const id = text(form, "id", 40);
-  const back = `/oficina/atendimentos/${id}`;
-  const appt = await prisma.appointment.findFirst({ where: { id, workshopId: workshop.id } });
-  if (!appt || appt.status !== "SCHEDULED") redirect("/oficina?erro=atendimento_invalido");
-  let raced = false;
-  const result = await recordVisit({
-    bikeId: appt!.bikeId,
-    form,
-    shop: workshop.name,
-    inTransaction: async (tx, visitId) => {
-      // INV-066: concluding twice at once must write only one visit.
-      const res = await tx.appointment.updateMany({ where: { id: appt!.id, status: "SCHEDULED" }, data: { status: "COMPLETED", completedAt: new Date(), visitId } });
-      if (res.count !== 1) {
-        raced = true;
-        throw new Error("appointment_not_scheduled");
-      }
-    },
-  }).catch((e) => {
-    if (raced) return null;
-    throw e;
-  });
-  if (result === null) redirect("/oficina?erro=atendimento_invalido");
-  if (!result!.ok) redirect(`${back}?erro=${result!.error}`);
-  redirect("/oficina?ok=concluido");
+  const result = await concludeFor(workshop, id, form);
+  if (result.ok) redirect("/oficina?ok=concluido");
+  if (result.error === "not_found" || result.error === "not_scheduled") redirect("/oficina?erro=atendimento_invalido");
+  redirect(`/oficina/atendimentos/${id}?erro=${result.error}`);
 }
 
 // ---- RF26, RF27: book on the weekly grid (duration-aware), athlete chooses to share history ----

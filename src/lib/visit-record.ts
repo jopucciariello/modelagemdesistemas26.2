@@ -20,11 +20,13 @@ export async function recordVisit(input: {
   bikeId: string;
   form: FormData;
   shop: string | null;
+  /** RF27, RNF03: false when the athlete did not share the history; the workshop then records only free items. */
+  partsAllowed?: boolean;
   inTransaction?: (tx: Tx, visitId: string) => Promise<void>;
 }): Promise<RecordVisitResult> {
   const { bikeId, form, shop } = input;
   const date = parseLocalDay(text(form, "date", 10));
-  const parts = await prisma.part.findMany({
+  const parts = input.partsAllowed === false ? [] : await prisma.part.findMany({
     where: { bikeId, removedAt: null },
     include: { plans: true, component: { include: { category: true } } },
   });

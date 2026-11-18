@@ -62,3 +62,43 @@ export function parseHours(raw: unknown): GridHour[] | null {
   }
   return sorted;
 }
+
+export type ConcludeBody = {
+  date: string;
+  note: string;
+  items: { key: string; action?: string; condition?: string; note?: string }[];
+  free: { label: string; action?: string; condition?: string; note?: string }[];
+};
+
+/**
+ * RF28, RF36: JSON body of "conclude the service" -> the same form fields the web form sends, so
+ * `recordVisit` reads one format. `items` use the row keys of the visit rows (`plan_<id>`, `part_<id>`),
+ * `free` are items outside the catalog (at most 3).
+ */
+export function visitFormFromJson(raw: unknown): FormData | null {
+  if (typeof raw !== "object" || raw === null) return null;
+  const b = raw as Partial<ConcludeBody>;
+  if (typeof b.date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(b.date)) return null;
+  if (b.items !== undefined && !Array.isArray(b.items)) return null;
+  if (b.free !== undefined && !Array.isArray(b.free)) return null;
+  const items = b.items ?? [];
+  const free = b.free ?? [];
+  if (items.length > 100 || free.length > 3) return null;
+  const form = new FormData();
+  form.set("date", b.date);
+  form.set("note", typeof b.note === "string" ? b.note : "");
+  const put = (key: string, it: { action?: unknown; condition?: unknown; note?: unknown }) => {
+    if (typeof it.action === "string") form.set(`${key}_act`, it.action);
+    if (typeof it.condition === "string") form.set(`${key}_cond`, it.condition);
+    if (typeof it.note === "string") form.set(`${key}_note`, it.note);
+  };
+  for (const it of items) {
+    if (typeof it !== "object" || it === null || typeof it.key !== "string" || !/^(plan|part)_[A-Za-z0-9]+$/.test(it.key)) return null;
+    put(it.key, it);
+  }
+  free.forEach((it, i) => {
+    if (typeof it?.label === "string") form.set(`free_${i}_label`, it.label);
+    put(`free_${i}`, it ?? {});
+  });
+  return form;
+}
