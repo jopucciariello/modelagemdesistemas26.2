@@ -6,6 +6,7 @@ import { prisma } from "@/lib/db";
 import { text } from "@/lib/forms";
 import { requireAdmin, requireUser, requireWorkshop, requireWorkshopOwner } from "@/lib/guards";
 import { recordVisit } from "@/lib/visit-record";
+import { sendEmail } from "@/lib/email";
 import { bookAt } from "@/lib/workshop-agenda";
 import { canBook, canDecideRequest, canInviteMechanic, cancellationNotice, cleanWorkshopRequest, isLateCancellation, parseIncludes, parseSlotStart } from "@/lib/workshop";
 
@@ -163,7 +164,7 @@ export async function cancelAppointment(form: FormData) {
   await connection();
   const appt = await prisma.appointment.findFirst({
     where: { id: text(form, "id", 40), userId: user.id },
-    include: { slot: true, bike: { select: { name: true } } },
+    include: { slot: true, bike: { select: { name: true } }, workshop: { select: { name: true, ownerEmail: true, members: { select: { email: true } } } } },
   });
   if (!appt || appt.status !== "SCHEDULED") redirect("/agendamentos?erro=nao_cancelavel");
   const now = new Date();
@@ -176,6 +177,15 @@ export async function cancelAppointment(form: FormData) {
     });
     return true;
   });
+  if (changed) {
+    // RF29: the workshop is also told by e-mail (owner and mechanics); a failure never blocks the cancellation.
+    const to = [appt!.workshop.ownerEmail, ...appt!.workshop.members.map((m) => m.email)];
+    await sendEmail({
+      to,
+      subject: late ? "GearLog: cancelamento de última hora" : "GearLog: agendamento cancelado",
+      text: cancellationNotice(user.name, appt!.bike.name, appt!.slot.startsAt, late),
+    });
+  }
   redirect(changed ? "/agendamentos?ok=cancelado" : "/agendamentos?erro=nao_cancelavel");
 }
 
