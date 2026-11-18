@@ -1,3 +1,5 @@
+import * as Location from 'expo-location';
+
 import { api } from '@/lib/api';
 
 // Rotas da API de oficinas (#71, RF25–RF29): /api/v1/oficinas/*.
@@ -91,15 +93,17 @@ export function osmUrl(w: Pick<Workshop, 'latitude' | 'longitude'>): string | nu
   return `https://www.openstreetmap.org/?mlat=${w.latitude}&mlon=${w.longitude}#map=17/${w.latitude}/${w.longitude}`;
 }
 
-/** Posição atual onde o navegador oferece geolocalização (web). No app nativo falta o expo-location. */
-export function currentPosition(): Promise<Origin | null> {
-  const geo = typeof navigator !== 'undefined' ? navigator.geolocation : undefined;
-  if (!geo) return Promise.resolve(null);
-  return new Promise((resolve) =>
-    geo.getCurrentPosition(
-      (p) => resolve({ latitude: p.coords.latitude, longitude: p.coords.longitude }),
-      () => resolve(null),
-      { timeout: 8000 },
-    ),
-  );
+/**
+ * Posição atual (iOS, Android e web) pelo expo-location, só com a permissão "em uso". Devolve null
+ * se o usuário negar ou a localização falhar; a lista então vem em ordem alfabética (#69).
+ */
+export async function currentPosition(): Promise<Origin | null> {
+  try {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') return null;
+    const p = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
+    return { latitude: p.coords.latitude, longitude: p.coords.longitude };
+  } catch {
+    return null;
+  }
 }
