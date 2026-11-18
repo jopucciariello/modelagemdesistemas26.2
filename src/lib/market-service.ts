@@ -4,6 +4,7 @@ import "server-only";
 import { prisma } from "@/lib/db";
 import { brl } from "@/lib/dreams";
 import { sendWithResend } from "@/lib/email";
+import { pushToUser } from "@/lib/push-service";
 import {
   becameMatch, buildListingFilter, cleanReportReason, joinPhotos, matchesDreamByModel, normalizeWhatsapp,
   validateListing, validateMerchantRequest, type ListingInput, type MarketQuery, type MerchantRequestInput,
@@ -25,6 +26,8 @@ async function notifyOnce(userId: string, refKey: string, message: string, href:
   } catch {
     return false; // already notified
   }
+  // RF41: native push to the user's devices, if any (best effort).
+  await pushToUser(userId, "GearLog", message, href).catch((e) => console.error("push failed", e));
   const user = await prisma.user.findUnique({ where: { id: userId }, select: { email: true, emailAlerts: true } });
   if (user?.emailAlerts && user.email && emailSender) await emailSender(user.email, "GearLog", message).catch((e) => console.error("email failed", e));
   return true;

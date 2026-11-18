@@ -1,12 +1,16 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
+import { useEffect } from 'react';
 
 import { FontFamily } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { registerForPush } from '@/lib/push';
 
 /** Navegação principal. Oficinas (M2) e Mercado (M3) entram nas abas já existentes. */
 export default function AppLayout() {
   const theme = useTheme();
+  // RF41: register this device for native push once the user is inside the app.
+  useEffect(() => { void registerForPush(); }, []);
   return (
     <Tabs
       screenOptions={{

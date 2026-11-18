@@ -5,6 +5,7 @@ import { getApiUser, type ApiUser } from "@/lib/api/auth";
 import * as svc from "@/lib/market-service";
 import { ERROR_TEXT, whatsappLink } from "@/lib/market";
 import { parseAnswerBody, parseCategoryBody, parseComponentBody, parsePlan } from "@/lib/api/admin-catalog";
+import { parsePushTokenBody } from "@/lib/push";
 import { adminEmailsSetting } from "@/lib/env";
 import { isRootAdmin } from "@/lib/admin-list";
 import { isValidEmail, normalizeEmail } from "@/lib/merchants";
@@ -77,6 +78,18 @@ const routes: Array<[string, string, Handler]> = [
     if (typeof b.whatsapp === "string") { const r = await svc.setWhatsapp(c.user.id, b.whatsapp); if (!r.ok) return reply(r); }
     if (typeof b.emailAlerts === "boolean") await svc.setEmailAlerts(c.user.id, b.emailAlerts);
     return json(await prisma.user.findUnique({ where: { id: c.user.id }, select: { whatsapp: true, emailAlerts: true } }));
+  })],
+  // Push token of this device (RF41, #77): registering again moves the token to the current user.
+  ["POST", "me/push-token", need(async (c) => {
+    const b = parsePushTokenBody(await body(c.req));
+    if (!b) return err("token_invalido");
+    await prisma.pushToken.upsert({ where: { token: b.token }, update: { userId: c.user.id, platform: b.platform }, create: { userId: c.user.id, token: b.token, platform: b.platform } });
+    return json({ ok: true }, 201);
+  })],
+  ["DELETE", "me/push-token", need(async (c) => {
+    const b = parsePushTokenBody(await body(c.req));
+    if (b) await prisma.pushToken.deleteMany({ where: { token: b.token, userId: c.user.id } });
+    return json({ ok: true });
   })],
   // Merchant (RF18)
   ["POST", "merchant/request", need(async (c) => { const b = await body(c.req); return reply(await svc.requestMerchant(c.user.id, { storeName: str(b.storeName), message: str(b.message), contact: str(b.contact), shopUrl: str(b.shopUrl) || null }), 201); })],

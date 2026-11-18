@@ -52,6 +52,7 @@ model User {
   listings         Listing[]
   dreams           Dream[]
   notifications    Notification[]
+  pushTokens       PushToken[]
   appointments     Appointment[]
   // RF16: seller contact shown to buyers (digits only, with country code).
   whatsapp         String?
@@ -605,6 +606,18 @@ model Dream {
 }
 
 // RF21, RF22, RF23 (OPEN-34): in-app notifications. refKey makes each one idempotent per user.
+// RF41, #77: Expo push token of one device of the user (iOS or Android build). Removed with the account.
+model PushToken {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  platform  String
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
 model Notification {
   id        String    @id @default(cuid())
   userId    String
