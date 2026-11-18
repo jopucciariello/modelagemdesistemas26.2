@@ -1,6 +1,7 @@
 // RF06, RF13, RF14: recent rides, a refresh button (sync) and a + button (new ride by hand).
 import Link from "next/link";
 import { Suspense } from "react";
+import "@/app/portfolio-pages.css";
 import { chooseRideBike, createManualRide, deleteManualRide, syncNow } from "@/app/actions/rides";
 import { ConfirmSubmit } from "@/components/confirm-submit";
 import { Nav, km } from "@/components/ui";
@@ -28,7 +29,7 @@ const SOURCE_LABEL = { MANUAL: "manual", STRAVA: "Strava", CONNECTOR: "conector"
 
 export default function RidesPage(props: PageProps<"/pedais">) {
   return (
-    <main className="wide">
+    <main className="wide pf">
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <Rides searchParams={props.searchParams} />
       </Suspense>

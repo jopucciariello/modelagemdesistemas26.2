@@ -1,6 +1,7 @@
 // RF01, RF02, RF05, RF07-RF12, RB13, RB16: one bike with its parts, wear and history.
 import Link from "next/link";
 import { Suspense } from "react";
+import "@/app/portfolio-pages.css";
 import { removePart } from "@/app/actions/stock";
 import { addManualMaintenance, linkSourceBike, updatePart, recordShopVisit, replacePart, servicePlan, deleteBike, removeBikePhoto, setBikePhoto, toggleArchiveBike, updateBike, updatePlan } from "@/app/actions/bikes";
 import { BikeAvatar } from "@/components/bike-avatar";
@@ -55,7 +56,7 @@ const EVENT_LABEL = { REPLACEMENT: "Troca", SERVICE: "Revisão", MANUAL: "Manute
 
 export default function BikePage(props: PageProps<"/bikes/[id]">) {
   return (
-    <main className="wide">
+    <main className="wide pf">
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <Bike {...props} />
       </Suspense>

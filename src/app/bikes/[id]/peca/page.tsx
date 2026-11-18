@@ -2,6 +2,7 @@
 // plans or, without them, from the family defaults.
 import Link from "next/link";
 import { Suspense } from "react";
+import "@/app/portfolio-pages.css";
 import { createPart } from "@/app/actions/bikes";
 import { Nav } from "@/components/ui";
 import { POSITIONS, componentLabel, plansFor, priceRange } from "@/lib/catalog/rules";
@@ -17,7 +18,7 @@ const ERR: Record<string, string> = {
 
 export default function NewPartPage(props: PageProps<"/bikes/[id]/peca">) {
   return (
-    <main className="wide">
+    <main className="wide pf">
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <NewPart {...props} />
       </Suspense>
