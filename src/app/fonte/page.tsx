@@ -32,7 +32,7 @@ const OK: Record<string, string> = {
 
 export default function SourcePage(props: PageProps<"/fonte">) {
   return (
-    <main>
+    <main className="wide">
       <header>
         <h1>Fonte dos pedais</h1>
         <p className="muted">Escolha de onde vêm os km e as horas de uso (RF32). Você pode trocar quando quiser.</p>

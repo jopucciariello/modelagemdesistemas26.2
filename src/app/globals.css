@@ -132,7 +132,7 @@ form input {
 
 /* Tracker UI (RF01-RF15) */
 main.wide { max-width: 56rem; }
-.nav { display: flex; gap: 0.25rem; font-weight: 600; overflow-x: auto; padding: 0.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; box-shadow: var(--shadow); scrollbar-width: none; align-self: flex-start; max-width: 100%; }
+.nav { display: flex; flex-wrap: wrap; gap: 0.25rem; font-weight: 600; padding: 0.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: 1.4rem; box-shadow: var(--shadow); align-self: flex-start; max-width: 100%; }
 .nav a { color: var(--muted); text-decoration: none; padding: 0.4rem 0.95rem; border-radius: 999px; white-space: nowrap; font-size: 0.92rem; }
 .nav a:hover { color: var(--foreground); background: var(--background); }
 .nav a[aria-current="page"] { color: var(--accent); background: var(--accent-soft); }
@@ -265,3 +265,5 @@ details[open] > .bike-summary::after { transform: rotate(180deg); }
 .new-ride > summary::-webkit-details-marker { display: none; }
 .new-ride-card { display: none; }
 .new-ride-card:target, .new-ride-card.open { display: block; }
+
+body > footer { max-width: 56rem; margin: 0 auto; padding: 0 1rem 2rem; text-align: center; color: var(--muted); }
