@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 
 import { FontFamily } from '@/constants/theme';
@@ -15,11 +16,26 @@ export default function AppLayout() {
         tabBarStyle: { backgroundColor: theme.background, borderTopColor: theme.border },
         tabBarLabelStyle: { fontFamily: FontFamily.bodyMedium },
       }}>
-      <Tabs.Screen name="index" options={{ title: 'Painel' }} />
-      <Tabs.Screen name="pedais" options={{ title: 'Pedais' }} />
-      <Tabs.Screen name="oficinas" options={{ title: 'Oficinas' }} />
-      <Tabs.Screen name="mercado" options={{ title: 'Mercado' }} />
-      <Tabs.Screen name="configuracoes" options={{ title: 'Ajustes' }} />
+      <Tabs.Screen
+        name="index"
+        options={{ title: 'Painel', tabBarIcon: ({ color, size }) => <Ionicons name="speedometer" size={size} color={color as string} /> }}
+      />
+      <Tabs.Screen
+        name="pedais"
+        options={{ title: 'Pedais', tabBarIcon: ({ color, size }) => <Ionicons name="bicycle" size={size} color={color as string} /> }}
+      />
+      <Tabs.Screen
+        name="oficinas"
+        options={{ title: 'Oficinas', tabBarIcon: ({ color, size }) => <Ionicons name="construct" size={size} color={color as string} /> }}
+      />
+      <Tabs.Screen
+        name="mercado"
+        options={{ title: 'Mercado', tabBarIcon: ({ color, size }) => <Ionicons name="pricetag" size={size} color={color as string} /> }}
+      />
+      <Tabs.Screen
+        name="configuracoes"
+        options={{ title: 'Ajustes', tabBarIcon: ({ color, size }) => <Ionicons name="settings" size={size} color={color as string} /> }}
+      />
       <Tabs.Screen name="bike/[id]" options={{ href: null }} />
     </Tabs>
   );
