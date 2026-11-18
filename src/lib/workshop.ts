@@ -154,3 +154,38 @@ export function isWorkshopStaff(email: string | null | undefined, ownerEmail: st
   const e = email.toLowerCase();
   return e === ownerEmail.toLowerCase() || memberEmails.some((m) => m.toLowerCase() === e);
 }
+
+// ---- M2 (#30, RF25, RB21): registration request, approval and invitations ----
+
+export type WorkshopRequestState = "PENDING" | "ACTIVE" | "REJECTED";
+
+export type WorkshopRequestInput = { name: string; contact: string; requestText: string };
+
+/** RF25, OPEN-40: the shop asks for registration with a name, a contact and free text. */
+export function cleanWorkshopRequest(raw: { name?: unknown; contact?: unknown; requestText?: unknown }): WorkshopRequestInput | null {
+  const clean = (v: unknown, max: number) => (typeof v === "string" ? v.trim().replace(/\s+/g, " ").slice(0, max) : "");
+  const name = clean(raw.name, 80);
+  const contact = clean(raw.contact, 120);
+  const requestText = clean(raw.requestText, 500);
+  return name.length >= 2 && contact.length >= 5 && requestText.length >= 10 ? { name, contact, requestText } : null;
+}
+
+/** RF25: the admin decides only on pending requests; a rejected shop may ask again (back to PENDING). */
+export function canDecideRequest(state: WorkshopRequestState, decision: "approve" | "reject" | "reopen"): boolean {
+  if (decision === "reopen") return state === "REJECTED";
+  return state === "PENDING";
+}
+
+/** RB21: only the owner invites; a mechanic is invited once and never the owner themselves. */
+export function canInviteMechanic(
+  actorEmail: string | null | undefined,
+  ownerEmail: string,
+  inviteEmail: string,
+  existing: readonly string[],
+): "ok" | "not_owner" | "is_owner" | "duplicate" {
+  if (!actorEmail || actorEmail.toLowerCase() !== ownerEmail.toLowerCase()) return "not_owner";
+  const e = inviteEmail.trim().toLowerCase();
+  if (e === ownerEmail.toLowerCase()) return "is_owner";
+  if (existing.some((m) => m.toLowerCase() === e)) return "duplicate";
+  return "ok";
+}
