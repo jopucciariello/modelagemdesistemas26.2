@@ -12,7 +12,7 @@ Roteiro para testar no app Expo (web, Expo Go ou simulador) contra a produção 
 
 ## 2. Perfil, serviços e grade semanal (RF25, RF29)
 - [ ] **Sou uma oficina** (dono aprovado): salvar endereço, site e coordenadas. Esperado: a oficina passa a ter distância na lista.
-- [ ] Adicionar serviço com duração múltipla de 15 min, itens incluídos e preço opcional. Esperado: salvo; duração 20 min ou 0 é recusada; sem preço o app mostra "a combinar" ou nada.
+- [ ] Adicionar serviço com duração múltipla de 15 min, itens incluídos e preço opcional. Esperado: salvo; duração 20 min ou 0 é recusada; sem preço o app mostra "Valor a combinar".
 - [ ] Definir a grade semanal (ex.: seg a sex 09:00–18:00). Esperado: janelas sobrepostas no mesmo dia são recusadas.
 - [ ] Remover um serviço: some da lista dos atletas; agendamentos já feitos continuam.
 
