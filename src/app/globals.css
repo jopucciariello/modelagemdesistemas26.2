@@ -387,7 +387,8 @@ a { color: var(--accent); }
 .button-strava { background: var(--strava); border-color: var(--strava); color: #fff; }
 
 /* Navegação: barra fina com sublinhado laranja no item atual */
-.nav { background: transparent; border: 0; border-bottom: 1px solid var(--border); border-radius: 0; box-shadow: none; padding: 0; gap: 0.1rem; align-self: stretch; overflow-x: auto; flex-wrap: nowrap; }
+.nav { background: transparent; border: 0; border-bottom: 1px solid var(--border); border-radius: 0; box-shadow: none; padding: 0; gap: 0.1rem; align-self: stretch; overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; -ms-overflow-style: none; }
+.nav::-webkit-scrollbar { display: none; }
 .nav a { border-radius: 0; padding: 0.7rem 0.85rem; color: var(--muted); font-weight: 500; border-bottom: 2px solid transparent; margin-bottom: -1px; }
 .nav a:hover { background: transparent; color: var(--foreground); }
 .nav a[aria-current="page"] { background: transparent; color: var(--foreground); border-bottom-color: var(--accent); }
@@ -422,3 +423,6 @@ body > footer { border-top: 1px solid var(--border); max-width: none; padding: 1
 :root[data-theme="dark"] .theme-toggle .icon-sun { display: inline; }
 :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 @media (max-width: 40rem) { body { padding-top: 3.25rem; } .theme-toggle { top: 0.5rem; } }
+
+/* Formulários empilhados de largura total (ex.: /ajuda): campos alinhados e iguais */
+form.stack.fill input:not([type="checkbox"]), form.stack.fill select, form.stack.fill textarea { width: 100%; max-width: 100%; margin-top: 0; background: var(--background); border-color: var(--border); }
