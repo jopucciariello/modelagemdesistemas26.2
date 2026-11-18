@@ -2,7 +2,7 @@ import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 
-import { api, setApiToken, setUnauthorizedHandler, type Me } from '@/lib/api';
+import { api, ApiError, setApiToken, setUnauthorizedHandler, type Me } from '@/lib/api';
 import { API_URL } from '@/lib/config';
 import { getItem, removeItem, setItem } from '@/lib/storage';
 
@@ -16,6 +16,8 @@ type AuthState = {
   user: Me | null;
   error: string | null;
   signInWithGoogle: () => Promise<void>;
+  /** RF04: usuário e senha (entrar ou criar conta de atleta). */
+  signInWithPassword: (b: { mode: 'login' | 'cadastro'; username: string; password: string; name?: string }) => Promise<void>;
   signOut: () => Promise<void>;
 };
 
@@ -81,9 +83,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await loadSession(token);
   }, [loadSession]);
 
+  const signInWithPassword = useCallback(
+    async (b: { mode: 'login' | 'cadastro'; username: string; password: string; name?: string }) => {
+      setError(null);
+      try {
+        const { token } = await api<{ token: string }>('/api/auth/senha', { method: 'POST', body: JSON.stringify(b) });
+        await setItem(TOKEN_KEY, token);
+        await loadSession(token);
+      } catch (e) {
+        setError(e instanceof ApiError ? e.message : 'Não foi possível entrar. Tente de novo.');
+      }
+    },
+    [loadSession],
+  );
+
   const value = useMemo(
-    () => ({ status, user, error, signInWithGoogle, signOut }),
-    [status, user, error, signInWithGoogle, signOut],
+    () => ({ status, user, error, signInWithGoogle, signInWithPassword, signOut }),
+    [status, user, error, signInWithGoogle, signInWithPassword, signOut],
   );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
