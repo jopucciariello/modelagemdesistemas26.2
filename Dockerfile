@@ -14,5 +14,5 @@ ENV NODE_ENV=production \
     PORT=3000
 COPY --from=build /app ./
 EXPOSE 3000
-# Apply pending migrations to the volume database, then start the server.
-CMD ["sh", "-c", "npx prisma migrate deploy && npx next start -H 0.0.0.0 -p 3000"]
+# Apply pending migrations (recovering from a recorded failure), then start the server.
+CMD ["sh", "scripts/start.sh"]
