@@ -10,10 +10,16 @@ import { isAuthorizedAdmin } from "@/lib/google/oidc";
 export const SESSION_COOKIE = "gearlog_session";
 const SESSION_DAYS = 30;
 
-export async function createSession(userId: string): Promise<void> {
+/** Creates a session row and returns the raw token (only its hash is stored). */
+export async function createSessionToken(userId: string): Promise<{ token: string; expiresAt: Date }> {
   const token = randomToken();
   const expiresAt = new Date(Date.now() + SESSION_DAYS * 24 * 60 * 60 * 1000);
   await prisma.session.create({ data: { tokenHash: sha256(token), userId, expiresAt } });
+  return { token, expiresAt };
+}
+
+export async function createSession(userId: string): Promise<void> {
+  const { token, expiresAt } = await createSessionToken(userId);
   const store = await cookies();
   store.set(SESSION_COOKIE, token, {
     httpOnly: true,
