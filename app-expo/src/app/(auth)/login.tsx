@@ -1,15 +1,21 @@
-import { StyleSheet, View } from 'react-native';
+import { useState } from 'react';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useAuth } from '@/auth/auth-context';
 import { BrandLogo } from '@/components/brand-logo';
 import { Button } from '@/components/button';
+import { Field } from '@/components/market-ui';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useTheme } from '@/hooks/use-theme';
 
 export default function LoginScreen() {
-  const { signInWithGoogle, error } = useAuth();
+  const { signInWithGoogle, signInWithPassword, error } = useAuth();
+  const [signUp, setSignUp] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const theme = useTheme();
 
   return (
@@ -28,6 +34,16 @@ export default function LoginScreen() {
             Suas bikes, seus pedais do Strava e o desgaste de cada peça. Quando a revisão chegar, agende na oficina parceira.
           </ThemedText>
           <Button label="Entrar com Google" onPress={() => void signInWithGoogle()} />
+          <Field placeholder="Usuário" autoCapitalize="none" autoCorrect={false} value={username} onChangeText={setUsername} />
+          {signUp && <Field placeholder="Seu nome" value={name} onChangeText={setName} />}
+          <Field placeholder="Senha (mín. 8 caracteres)" secureTextEntry value={password} onChangeText={setPassword} />
+          <Button
+            label={signUp ? 'Criar conta' : 'Entrar com usuário e senha'}
+            onPress={() => void signInWithPassword({ mode: signUp ? 'cadastro' : 'login', username, password, name })}
+          />
+          <Pressable accessibilityRole="button" onPress={() => setSignUp((v) => !v)}>
+            <ThemedText type="link">{signUp ? 'Já tenho conta' : 'Criar conta com usuário e senha'}</ThemedText>
+          </Pressable>
           {error ? <ThemedText themeColor="textSecondary">{error}</ThemedText> : null}
         </View>
       </SafeAreaView>
