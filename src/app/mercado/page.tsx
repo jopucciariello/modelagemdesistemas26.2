@@ -5,15 +5,21 @@ import { Suspense } from "react";
 import { Nav } from "@/components/ui";
 import { prisma } from "@/lib/db";
 import { requireUser } from "@/lib/guards";
-import { buildListingFilter, formatBRL } from "@/lib/market";
+import { buildListingFilter, formatBRL, splitPhotos } from "@/lib/market";
+import s from "./mercado.module.css";
+import { Photo } from "./photo";
 
 const one = (v: string | string[] | undefined) => (typeof v === "string" ? v : undefined);
 
 export default function MarketPage(props: PageProps<"/mercado">) {
   return (
-    <main className="wide">
-      <header><h1>Mercado de peças</h1></header>
-      <Suspense fallback={<p className="muted">Carregando…</p>}>
+    <main className={`wide ${s.root}`}>
+      <header className={s.head}>
+        <span className={s.eyebrow}>GearLog · Marketplace</span>
+        <h1 className={s.title}>Mercado de peças</h1>
+        <p className={s.sub}>Peças novas e usadas de atletas e lojistas. Combine direto com o vendedor.</p>
+      </header>
+      <Suspense fallback={<p className={s.sub}>Carregando…</p>}>
         <Market searchParams={props.searchParams} />
       </Suspense>
     </main>
@@ -36,10 +42,12 @@ async function Market({ searchParams }: { searchParams: PageProps<"/mercado">["s
   return (
     <>
       <Nav isAdmin={user.role === "ADMIN"} />
-      <p><Link className="button small" href="/mercado/novo">Anunciar uma peça</Link> <Link href="/mercado/meus">Meus anúncios</Link></p>
-      <section className="card">
-        <h2>Filtros</h2>
-        <form method="get" className="row">
+      <div className={s.actions}>
+        <Link className="button" href="/mercado/novo">Anunciar uma peça</Link>
+        <Link className={s.back} href="/mercado/meus">Meus anúncios</Link>
+      </div>
+      <section className={s.filters} aria-label="Filtros">
+        <form method="get">
           <label>Família
             <select name="categoria" defaultValue={q.categoria ?? ""}>
               <option value="">Todas</option>
@@ -63,21 +71,27 @@ async function Market({ searchParams }: { searchParams: PageProps<"/mercado">["s
             </select>
           </label>
           <button className="button" type="submit">Filtrar</button>
-          <Link href="/mercado">Limpar</Link>
+          <Link className={s.clear} href="/mercado">Limpar</Link>
         </form>
       </section>
-      <section className="card">
-        <h2>Anúncios</h2>
-        {listings.length === 0 ? <p className="muted">Nenhum anúncio ativo com esses filtros.</p> : (
-          <ul className="list">
+      <section aria-label="Anúncios">
+        {listings.length === 0 ? <p className={s.empty}>Nenhum anúncio ativo com esses filtros.</p> : (
+          <ul className={s.grid}>
             {listings.map((l) => (
               <li key={l.id}>
-                <Link href={`/mercado/${l.id}`}><strong>{l.title}</strong></Link>
-                <span><strong>{formatBRL(l.priceCents)}</strong></span>
-                <span className="muted">
-                  {l.category.name} · {l.condition === "NEW" ? "Nova" : `Usada${l.usedKm !== null ? `, ${l.usedKm.toLocaleString("pt-BR")} km` : ""}`}
-                  {" · "}{l.seller.merchant ? <SellerBadge merchant={l.seller.merchant} /> : "Atleta"}
-                </span>
+                <Link href={`/mercado/${l.id}`} className={s.product}>
+                  <Photo url={splitPhotos(l.photoUrls)[0]} alt={`Foto de ${l.title}`}>
+                    <span className={`${s.tag} ${l.condition === "NEW" ? s.tagNew : ""}`}>
+                      {l.condition === "NEW" ? "Nova" : `Usada${l.usedKm !== null ? ` · ${l.usedKm.toLocaleString("pt-BR")} km` : ""}`}
+                    </span>
+                  </Photo>
+                  <span className={s.body}>
+                    <span className={s.cat}>{l.category.name}</span>
+                    <strong className={s.name}>{l.title}</strong>
+                    <span className={s.seller}>{l.seller.merchant ? <SellerBadge merchant={l.seller.merchant} /> : "Atleta"}</span>
+                    <span className={s.price}>{formatBRL(l.priceCents)}</span>
+                  </span>
+                </Link>
               </li>
             ))}
           </ul>
