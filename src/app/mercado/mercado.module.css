@@ -69,3 +69,5 @@
 .edit { grid-column: 1 / -1; border-top: 1px solid var(--border); padding-top: 0.9rem; }
 .formWrap { border: 1px solid var(--border); border-radius: 6px; background: var(--surface); padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; max-width: 40rem !important; }
 .formWrap textarea, .formWrap input, .formWrap select { width: 100%; max-width: none; }
+.root > :global(.nav) { align-self: center; }
+.mineItem .noPhoto { font-size: 1rem; text-align: center; }
