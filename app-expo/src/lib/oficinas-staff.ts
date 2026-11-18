@@ -100,3 +100,39 @@ export function parsePriceCents(raw: string): number | null {
   const n = Number(t);
   return Number.isFinite(n) && n >= 0 ? Math.round(n * 100) : null;
 }
+
+export type VisitRowView = { key: string; label: string; canReset: boolean; resetLabel: string };
+
+export type StaffAppointment = {
+  id: string;
+  status: 'SCHEDULED' | 'COMPLETED';
+  startsAt: string;
+  athlete: string;
+  bike: { name: string; brand: string | null; model: string | null; year: number | null };
+  service: { name: string; includes: string } | null;
+  /** RF27: sem compartilhamento do atleta, vêm vazios `rows`, `parts` e `history`. */
+  shareHistory: boolean;
+  rows: VisitRowView[];
+  parts: { id: string; name: string; component: string; installedAt: string }[];
+  history: { id: string; date: string; note: string }[];
+};
+
+export type VisitAction = 'check' | 'reset' | 'replace';
+export type Condition = 'GOOD' | 'WATCH' | 'REPLACE_SOON';
+
+export type ConcludeBody = {
+  date: string;
+  note: string;
+  items: { key: string; action: VisitAction; condition?: Condition; note?: string }[];
+  free: { label: string; action: 'check' | 'replace'; condition?: Condition; note?: string }[];
+};
+
+export const getStaffAppointment = (id: string) => api<StaffAppointment>(`${BASE}/staff/appointments/${id}`);
+export const concludeAppointment = (id: string, body: ConcludeBody) => send('POST', `/staff/appointments/${id}/conclude`, body);
+
+/** Hoje em São Paulo, AAAA-MM-DD (o campo de data da OS, RF28). */
+export function todayInSaoPaulo(now = new Date()): string {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo' }).format(now);
+}
+
+export const CONDITION_LABEL: Record<Condition, string> = { GOOD: 'Boa', WATCH: 'Atenção', REPLACE_SOON: 'Trocar em breve' };
