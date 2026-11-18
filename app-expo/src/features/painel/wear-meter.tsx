@@ -1,10 +1,10 @@
 import { StyleSheet, View } from 'react-native';
 
 import { ThemedText } from '@/components/themed-text';
+import { StatusColors } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import type { PlanDto } from '@/features/painel/types';
 
-const STATUS_COLOR = { ok: '#2e9e5b', near: '#d9a400', due: '#d64545' } as const;
 
 /** RF07/RF08: barra de desgaste (verde, amarela a partir do aviso, vermelha no limite). */
 export function WearMeter({ plan }: { plan: PlanDto }) {
@@ -13,7 +13,7 @@ export function WearMeter({ plan }: { plan: PlanDto }) {
   return (
     <View style={styles.wrap} accessibilityLabel={`Desgaste ${pct}%`}>
       <View style={[styles.track, { backgroundColor: theme.backgroundSelected }]}>
-        <View style={[styles.fill, { width: `${Math.min(pct, 100)}%`, backgroundColor: STATUS_COLOR[plan.status] }]} />
+        <View style={[styles.fill, { width: `${Math.min(pct, 100)}%`, backgroundColor: StatusColors[plan.status] }]} />
       </View>
       <ThemedText type="small" style={styles.pct}>
         {pct}%

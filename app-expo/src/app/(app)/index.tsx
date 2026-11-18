@@ -3,7 +3,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { StatCard } from '@/components/stat-card';
 import { ThemedText } from '@/components/themed-text';
+import { StatusColors } from '@/constants/theme';
 import { ThemedView } from '@/components/themed-view';
 import { useAuth } from '@/auth/auth-context';
 import type { DashboardDto } from '@/features/painel/types';
@@ -53,10 +55,10 @@ export default function PainelScreen() {
 
           {data ? (
             <>
-              <View style={styles.counts}>
-                <Count label="pedem troca/revisão" value={data.counts.due} color="#d64545" />
-                <Count label="perto do limite" value={data.counts.near} color="#d9a400" />
-                <Count label="em dia" value={data.counts.ok} color="#2e9e5b" />
+              <View style={[styles.counts, { borderTopColor: theme.accent }]}>
+                <StatCard label="pedem troca" value={data.counts.due} color={StatusColors.due} />
+                <StatCard label="perto do limite" value={data.counts.near} color={StatusColors.near} />
+                <StatCard label="em dia" value={data.counts.ok} color={StatusColors.ok} />
               </View>
 
               {data.bikes.length === 0 ? (
@@ -66,7 +68,7 @@ export default function PainelScreen() {
               ) : null}
 
               {data.bikes.map((bike) => (
-                <View key={bike.id} style={[styles.card, { backgroundColor: theme.backgroundElement }]}>
+                <View key={bike.id} style={[styles.card, { borderColor: theme.border }]}>
                   <Link href={{ pathname: '/bike/[id]', params: { id: bike.id } }}>
                     <ThemedText type="subtitle">{bike.name}</ThemedText>
                   </Link>
@@ -98,24 +100,10 @@ export default function PainelScreen() {
   );
 }
 
-function Count({ label, value, color }: { label: string; value: number; color: string }) {
-  return (
-    <View style={styles.count}>
-      <ThemedText type="title" style={{ color }}>
-        {value}
-      </ThemedText>
-      <ThemedText type="small" themeColor="textSecondary">
-        {label}
-      </ThemedText>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   content: { padding: 24, gap: 16 },
-  counts: { flexDirection: 'row', gap: 16 },
-  count: { flex: 1 },
-  card: { borderRadius: 16, padding: 16, gap: 12 },
+  counts: { flexDirection: 'row', flexWrap: 'wrap', borderTopWidth: 2 },
+  card: { borderWidth: 1, padding: 16, gap: 12 },
   plan: { flexDirection: 'row', alignItems: 'center', gap: 12 },
 });
