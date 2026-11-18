@@ -34,6 +34,17 @@ CREATE TABLE "ListingReport" (
     CONSTRAINT "ListingReport_reporterId_fkey" FOREIGN KEY ("reporterId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+-- CreateTable
+CREATE TABLE "ListingPhoto" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "listingId" TEXT NOT NULL,
+    "position" INTEGER NOT NULL,
+    "contentType" TEXT NOT NULL,
+    "data" BLOB NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "ListingPhoto_listingId_fkey" FOREIGN KEY ("listingId") REFERENCES "Listing" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 -- RedefineTables
 PRAGMA defer_foreign_keys=ON;
 PRAGMA foreign_keys=OFF;
@@ -117,4 +128,7 @@ CREATE INDEX "MerchantRequest_status_idx" ON "MerchantRequest"("status");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "ListingReport_listingId_reporterId_key" ON "ListingReport"("listingId", "reporterId");
+
+-- CreateIndex
+CREATE INDEX "ListingPhoto_listingId_idx" ON "ListingPhoto"("listingId");
 

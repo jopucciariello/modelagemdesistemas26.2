@@ -181,7 +181,8 @@ Atualizado em 12/11/2026. Código em `src/`, testes em `tests/unit/`.
 | RF31 | Feito | `src/app/ajuda/`, `src/app/actions/help.ts`, `src/components/admin-requests.tsx`, `src/lib/help.ts` | `model-request.test.ts` |
 | RF16, RF17 | Feito (Fase 2) | `src/app/mercado/`, `src/app/actions/market.ts`, `src/lib/market.ts` | `market.test.ts` |
 | RF18, RF19, RF24 | Feito (Fase 2) | `src/app/actions/merchants.ts`, `src/components/admin-market.tsx`, `src/components/seller-badge.tsx` | `merchants.test.ts` |
-| RF20, RF21, RF22, RF23 | Feito (Fase 2); funções com banco sem teste automatizado | `src/app/sonhos/`, `src/app/notificacoes/`, `src/lib/dreams.ts`, `createListing` | `dreams.test.ts` (`matchesDream`) |
+| RF16–RF24, RF38 (decisões de 17/11/2026) | Feito no backend e nas telas Expo (M3): sonho por modelo do catálogo, alerta ao publicar e editar, WhatsApp, até 3 fotos, pedido de lojista, denúncia, e-mail opt-in; funções com banco testadas só por fluxo manual | `src/lib/market-service.ts`, `src/lib/api/`, `src/app/api/v1/`, `app-expo/src/app/(app)/mercado.tsx` | `market-m3.test.ts` |
+| RF20, RF21, RF22, RF23 (versão Next.js) | Feito (Fase 2); funções com banco sem teste automatizado | `src/app/sonhos/`, `src/app/notificacoes/`, `src/lib/dreams.ts`, `createListing` | `dreams.test.ts` (`matchesDream`) |
 | RF32, RF34 | Feito (RF33 removido em 17/11/2026) | `src/app/fonte/`, `src/lib/strava/`, `src/lib/connector/` | `strava-oauth.test.ts`, `activity-sources.test.ts` |
 | RF25–RF29, RNF03, RB09 | Feito em 16/11/2026; decisões aprovadas em 17/11/2026, ajustes de código nas tasks T-70+ | `src/app/oficina/`, `src/app/oficinas/`, `src/app/agendamentos/`, `src/app/actions/workshops.ts`, `src/lib/workshop.ts` | `workshop.test.ts` |
 | RB02, RB03, RB04, RB11–RB14, RB16 | Feito | `src/lib/wear.ts` | `wear.test.ts` |

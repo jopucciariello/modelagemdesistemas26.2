@@ -570,6 +570,7 @@ model Listing {
   componentId   String?
   component     Component?       @relation(fields: [componentId], references: [id])
   reports       ListingReport[]
+  photos        ListingPhoto[]
   status        ListingStatus    @default(ACTIVE)
   removedReason String?
   removedAt     DateTime?
@@ -654,4 +655,17 @@ model AdminEmail {
   email     String   @id
   addedBy   String?
   createdAt DateTime @default(now())
+}
+
+// RF16: up to 3 uploaded photos per listing (bytes in the DB like BikePhoto; each <= 1 MB).
+model ListingPhoto {
+  id          String   @id @default(cuid())
+  listingId   String
+  listing     Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  position    Int
+  contentType String
+  data        Bytes
+  createdAt   DateTime @default(now())
+
+  @@index([listingId])
 }
