@@ -1,3 +1,4 @@
+import { BrandGear } from "./brand-gear";
 import { BikeAvatar } from "@/components/bike-avatar";
 import { Suspense } from "react";
 import Link from "next/link";
@@ -24,7 +25,7 @@ export default function Home(props: PageProps<"/">) {
   return (
     <main className="wide">
       <header className="app-header">
-        <div className="brand"><span className="brand-mark" aria-hidden="true">⚙</span>GearLog</div>
+        <div className="brand"><BrandGear size={32} />GearLog</div>
       </header>
       {/* The session is read at request time, so it streams in behind Suspense. */}
       <Suspense fallback={<p className="muted">Carregando…</p>}>

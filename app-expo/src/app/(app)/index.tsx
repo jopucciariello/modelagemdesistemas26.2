@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { BrandLogo } from '@/components/brand-logo';
 import { StatCard } from '@/components/stat-card';
 import { ThemedText } from '@/components/themed-text';
 import { StatusColors } from '@/constants/theme';
@@ -49,6 +50,7 @@ export default function PainelScreen() {
               }}
             />
           }>
+          <BrandLogo size={32} />
           <ThemedText type="title">Olá, {user?.name.split(' ')[0]}</ThemedText>
           {error ? <ThemedText themeColor="textSecondary">{error}</ThemedText> : null}
           {!data && !error ? <ThemedText themeColor="textSecondary">Carregando…</ThemedText> : null}

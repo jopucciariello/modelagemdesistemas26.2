@@ -2,6 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useAuth } from '@/auth/auth-context';
+import { BrandLogo } from '@/components/brand-logo';
 import { Button } from '@/components/button';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
@@ -15,6 +16,7 @@ export default function LoginScreen() {
     <ThemedView style={styles.flex}>
       <SafeAreaView style={styles.flex}>
         <View style={styles.container}>
+          <BrandLogo size={56} showName={false} />
           <ThemedText type="small" themeColor="textSecondary">
             Ciclismo · desgaste · oficina
           </ThemedText>
