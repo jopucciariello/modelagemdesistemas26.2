@@ -570,6 +570,7 @@ model Listing {
   componentId   String?
   component     Component?       @relation(fields: [componentId], references: [id])
   reports       ListingReport[]
+  photos        ListingPhoto[]
   status        ListingStatus    @default(ACTIVE)
   removedReason String?
   removedAt     DateTime?
@@ -647,6 +648,19 @@ model BikePhoto {
   contentType String
   data        Bytes
   updatedAt   DateTime @updatedAt
+}
+
+// RF16: up to 3 uploaded photos per listing (bytes in the DB like BikePhoto; each <= 1 MB).
+model ListingPhoto {
+  id          String   @id @default(cuid())
+  listingId   String
+  listing     Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  position    Int
+  contentType String
+  data        Bytes
+  createdAt   DateTime @default(now())
+
+  @@index([listingId])
 }
 
 // RF37, ADR-005: admin e-mails added from /admin; ADMIN_EMAILS (Infisical) keeps the root admins.
