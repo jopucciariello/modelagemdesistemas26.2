@@ -1,4 +1,5 @@
 import { BrandGear } from "./brand-gear";
+import s from "./home.module.css";
 import { BikeAvatar } from "@/components/bike-avatar";
 import { Suspense } from "react";
 import Link from "next/link";
@@ -23,7 +24,7 @@ const SOURCE_LABELS = { MANUAL: "lançamento manual", STRAVA: "API do Strava", C
 
 export default function Home(props: PageProps<"/">) {
   return (
-    <main className="wide">
+    <main className={`wide ${s.pf}`}>
       <header className="app-header">
         <div className="brand"><BrandGear size={32} />GearLog</div>
       </header>
