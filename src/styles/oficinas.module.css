@@ -1,0 +1,79 @@
+/* Portfolio look for the workshop routes only. Colors and fonts come from the global theme (PR #113);
+   the fallbacks only apply until that lands. Works in light and dark via the global variables. */
+.root {
+  --of-bg: var(--background, #f6f4f1);
+  --of-surface: var(--surface, #ffffff);
+  --of-line: var(--border, #dcd8d2);
+  --of-text: var(--foreground, #141414);
+  --of-muted: var(--muted, #6b6760);
+  --of-accent: var(--accent, #e84a0c);
+  --of-on-accent: var(--accent-ink, #ffffff);
+  --of-radius: 12px;
+  --of-display: var(--font-display, Anton, Impact, "Arial Narrow", sans-serif);
+  --of-body: var(--font-body, Inter, system-ui, sans-serif);
+  font-family: var(--of-body);
+}
+.root :global(.muted), .root :global(.card) :global(.muted) { color: var(--of-muted); }
+.root h1, .root h2 {
+  font-family: var(--of-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+}
+.root h1 { font-size: clamp(2.4rem, 8vw, 4rem); }
+.root h2 { font-size: 1.35rem; color: var(--of-text); }
+.root h2::before { content: ""; display: inline-block; width: 0.5rem; height: 0.5rem; background: var(--of-accent); margin-right: 0.6rem; vertical-align: middle; }
+.root a { color: var(--of-accent); text-decoration: none; }
+.root a:hover { text-decoration: underline; }
+
+.root :global(.card) {
+  background: var(--of-surface);
+  border: 1px solid var(--of-line);
+  border-radius: var(--of-radius);
+  box-shadow: none;
+}
+.root :global(.nav) { background: var(--of-surface); border-color: var(--of-line); border-radius: 999px; box-shadow: none; }
+.root :global(.alert) { background: transparent; color: var(--of-accent); border: 1px solid var(--of-accent); border-radius: var(--of-radius); }
+.root :global(.badge) { background: transparent; color: var(--of-accent); border: 1px solid var(--of-accent); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.68rem; }
+
+.root :global(.button) {
+  background: var(--of-accent);
+  color: var(--of-on-accent);
+  border: 0;
+  border-radius: 999px;
+  font-family: var(--of-display);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 400;
+}
+.root :global(.button.small) { font-size: 0.85rem; }
+
+.root input, .root select, .root textarea {
+  background: var(--of-bg);
+  color: var(--of-text);
+  border: 1px solid var(--of-line);
+  border-radius: 8px;
+  font-family: var(--of-body);
+}
+.root input:focus, .root select:focus, .root textarea:focus { outline: 2px solid var(--of-accent); outline-offset: 1px; }
+.root input[type="checkbox"] { accent-color: var(--of-accent); }
+
+.root table { border-collapse: collapse; width: 100%; }
+.root th { font-family: var(--of-display); font-weight: 400; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.8rem; color: var(--of-muted); text-align: left; }
+.root th, .root td { border-bottom: 1px solid var(--of-line); padding: 0.6rem 0.5rem; }
+.root li { color: var(--of-text); }
+
+/* Listing rows: whole row is a link, arrow on the right. */
+.rows { list-style: none; display: flex; flex-direction: column; border-top: 1px solid var(--of-line); padding: 0; }
+.row {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 1.1rem 0.25rem; border-bottom: 1px solid var(--of-line); color: var(--of-text) !important; text-decoration: none !important;
+}
+.row:hover { background: var(--of-surface); }
+.row:hover .arrow { transform: translateX(4px); }
+.rowTitle { font-family: var(--of-display); text-transform: uppercase; font-size: 1.5rem; letter-spacing: 0.02em; display: block; }
+.rowMeta { color: var(--of-muted); font-size: 0.9rem; display: block; margin-top: 0.2rem; }
+.rowStats { color: var(--of-accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-top: 0.35rem; }
+.arrow { color: var(--of-accent); font-size: 1.6rem; transition: transform 0.15s; flex: none; }
+.links { display: flex; gap: 1.25rem; flex-wrap: wrap; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; }
