@@ -12,6 +12,14 @@ describe("safeAppRedirect", () => {
     expect(safeAppRedirect("https://gearlog.jopucci.com/auth", APP)).toBe("https://gearlog.jopucci.com/auth");
   });
 
+  it("accepts the Expo web dev server on localhost only on its own ports", () => {
+    expect(safeAppRedirect("http://localhost:8081/auth", APP)).toBe("http://localhost:8081/auth");
+    expect(safeAppRedirect("http://localhost:19006/auth", APP)).toBe("http://localhost:19006/auth");
+    expect(safeAppRedirect("http://localhost:9999/auth", APP)).toBeNull();
+    expect(safeAppRedirect("http://localhost:8081.evil.com/auth", APP)).toBeNull();
+    expect(safeAppRedirect("https://localhost:8081/auth", APP)).toBeNull();
+  });
+
   it("refuses other hosts, odd schemes, credentials and garbage", () => {
     expect(safeAppRedirect("https://evil.example/auth", APP)).toBeNull();
     expect(safeAppRedirect("javascript:alert(1)", APP)).toBeNull();
