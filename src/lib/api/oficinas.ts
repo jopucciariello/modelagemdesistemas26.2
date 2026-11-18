@@ -3,7 +3,13 @@
 // separate Node API later. Authentication is injected; routes are relative to `/oficinas`.
 import { prisma } from "@/lib/db";
 import { isValidCoords } from "@/lib/geo";
+import { allAdminEmailsSetting } from "@/lib/admin-emails";
+import { isAuthorizedAdmin } from "@/lib/google/oidc";
+import { parseHours, parseProfile, parseService } from "@/lib/workshop-input";
 import { bookAt, cancelFor, freeStarts, listAppointments, listNearbyWorkshops } from "@/lib/workshop-agenda";
+import {
+  addService, adminDecide, adminRequests, inviteMember, myWorkshopView, removeMember, removeService, replaceHours, requestRegistration, staffWorkshop, updateProfile,
+} from "@/lib/workshop-staff";
 import type { ApiUser } from "@/lib/api-auth";
 
 const json = (body: unknown, status = 200) => Response.json(body, { status });
@@ -40,6 +46,18 @@ export function parseOrigin(url: URL): { latitude: number; longitude: number } |
  * GET  /appointments               the athlete's appointments
  * POST /appointments               { workshopId, serviceId, bikeId, startsAt, shareHistory }
  * POST /appointments/:id/cancel    cancel (workshop is told in the app and by e-mail)
+ *
+ * Back-office (RB21: owner or invited mechanic, checked on every call; only the owner invites):
+ * GET  /staff/workshop             my workshop (grid, services, mechanics, appointments, notices) or the request status
+ * POST /staff/request              { name, contact, requestText } asks for registration
+ * PUT  /staff/profile              { name, description, address, phone, website, latitude, longitude }
+ * POST /staff/services             { name, description, includes, durationMin, priceCents }
+ * DELETE /staff/services/:id
+ * PUT  /staff/hours                [{ weekday, startMin, endMin }] replaces the weekly grid
+ * POST /staff/members              { email } (owner) / DELETE /staff/members/:id (owner)
+ * Admin (RB17):
+ * GET  /admin/requests             pending and rejected requests
+ * POST /admin/requests/:id/approve | /reject
  */
 export async function handleOficinas(req: Request, path: string[], auth: (req: Request) => Promise<ApiUser | null>): Promise<Response> {
   const user = await auth(req);
@@ -72,6 +90,70 @@ export async function handleOficinas(req: Request, path: string[], auth: (req: R
   if (req.method === "POST" && a === "appointments" && b && c === "cancel") {
     const result = await cancelFor(user.id, user.name, b);
     return result.ok ? json({ ok: true, late: result.late }) : fail(409, "Agendamento não pode ser cancelado");
+  }
+  if (a === "staff") return handleStaff(req, user, path.slice(1));
+  if (a === "admin") return handleAdmin(req, user, path.slice(1));
+  return fail(404, "Rota não encontrada");
+}
+
+async function handleStaff(req: Request, user: ApiUser, path: string[]): Promise<Response> {
+  const [a, b] = path;
+  if (req.method === "GET" && a === "workshop") return json(await myWorkshopView(user));
+  if (req.method === "POST" && a === "request") {
+    const result = await requestRegistration(user, await req.json().catch(() => null));
+    if (result.ok) return json({ ok: true }, 201);
+    return result.error === "exists" ? fail(409, "Já existe um pedido ou oficina com este e-mail") : fail(400, "Dados do pedido inválidos");
+  }
+  const staff = await staffWorkshop(user);
+  if (!staff) return fail(403, "Sem oficina aprovada");
+  const { workshop, isOwner } = staff;
+  const body = async () => req.json().catch(() => null);
+
+  if (req.method === "PUT" && a === "profile") {
+    const profile = parseProfile(await body());
+    if (!profile) return fail(400, "Perfil inválido");
+    await updateProfile(workshop.id, profile);
+    return json({ ok: true });
+  }
+  if (req.method === "POST" && a === "services" && !b) {
+    const service = parseService(await body());
+    if (!service) return fail(400, "Serviço inválido");
+    const created = await addService(workshop.id, service);
+    return json({ id: created.id }, 201);
+  }
+  if (req.method === "DELETE" && a === "services" && b) {
+    await removeService(workshop.id, b);
+    return json({ ok: true });
+  }
+  if (req.method === "PUT" && a === "hours") {
+    const hours = parseHours(await body());
+    if (!hours) return fail(400, "Grade inválida");
+    await replaceHours(workshop.id, hours);
+    return json({ ok: true });
+  }
+  if (a === "members") {
+    if (!isOwner) return fail(403, "Só o responsável convida mecânicos");
+    if (req.method === "POST" && !b) {
+      const raw = (await body()) as { email?: unknown } | null;
+      const result = await inviteMember(workshop, user, raw?.email);
+      if (result.ok) return json({ ok: true }, 201);
+      return result.error === "duplicate" ? fail(409, "Mecânico já convidado") : fail(400, "E-mail inválido");
+    }
+    if (req.method === "DELETE" && b) {
+      await removeMember(workshop.id, b);
+      return json({ ok: true });
+    }
+  }
+  return fail(404, "Rota não encontrada");
+}
+
+async function handleAdmin(req: Request, user: ApiUser, path: string[]): Promise<Response> {
+  // RB17: admin rights are re-checked on every request against the current admin list.
+  if (user.role !== "ADMIN" || !isAuthorizedAdmin(user.email, await allAdminEmailsSetting())) return fail(403, "Acesso restrito ao administrador");
+  const [a, id, action] = path;
+  if (req.method === "GET" && a === "requests" && !id) return json({ requests: await adminRequests() });
+  if (req.method === "POST" && a === "requests" && id && (action === "approve" || action === "reject")) {
+    return (await adminDecide(id, action)) ? json({ ok: true }) : fail(409, "Pedido não está pendente");
   }
   return fail(404, "Rota não encontrada");
 }
