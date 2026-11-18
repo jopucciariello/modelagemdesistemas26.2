@@ -1,6 +1,7 @@
 // RF25, RF29, RB21: the workshop owner's area (profile, services, slots, appointments and notices).
 import Link from "next/link";
 import { Suspense } from "react";
+import s from "@/styles/oficinas.module.css";
 import { requestWorkshop, addWorkshopService, addWorkshopSlot, markNoticesRead, removeWorkshopService, removeWorkshopSlot, updateWorkshopProfile } from "@/app/actions/workshops";
 import { Flash, Nav } from "@/components/ui";
 import { prisma } from "@/lib/db";
@@ -30,7 +31,7 @@ const ERR = {
 
 export default function WorkshopPage(props: PageProps<"/oficina">) {
   return (
-    <main className="wide">
+    <main className={`wide ${s.root}`}>
       <header><h1>Minha oficina</h1></header>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <Area searchParams={props.searchParams} />

@@ -1,6 +1,7 @@
 // RF26, RF27: workshop details and booking (booking authorizes sharing the bike history).
 import Link from "next/link";
 import { Suspense } from "react";
+import s from "@/styles/oficinas.module.css";
 import { connection } from "next/server";
 import { bookAppointment } from "@/app/actions/workshops";
 import { Flash, Nav } from "@/components/ui";
@@ -16,7 +17,7 @@ const ERR = {
 
 export default function WorkshopPage(props: PageProps<"/oficinas/[id]">) {
   return (
-    <main className="wide">
+    <main className={`wide ${s.root}`}>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <Detail {...props} />
       </Suspense>

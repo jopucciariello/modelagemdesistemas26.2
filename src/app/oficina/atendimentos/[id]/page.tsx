@@ -1,6 +1,7 @@
 // RF27, RF28, RNF03, RB09: the workshop reads the booked bike (read-only) and concludes the service.
 import Link from "next/link";
 import { Suspense } from "react";
+import s from "@/styles/oficinas.module.css";
 import { concludeAppointment } from "@/app/actions/workshops";
 import { Flash, Nav } from "@/components/ui";
 import { prisma } from "@/lib/db";
@@ -27,7 +28,7 @@ function ConditionSelect({ name }: { name: string }) {
 
 export default function VisitPage(props: PageProps<"/oficina/atendimentos/[id]">) {
   return (
-    <main className="wide">
+    <main className={`wide ${s.root}`}>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <Detail {...props} />
       </Suspense>
