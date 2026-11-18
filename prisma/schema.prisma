@@ -38,18 +38,24 @@ model User {
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 
-  bikes         Bike[]
-  rides         Ride[]
-  strava        StravaConnection?
-  connector     ConnectorConnection?
-  sessions      Session[]
-  modelRequests ModelRequest[]
+  bikes            Bike[]
+  rides            Ride[]
+  strava           StravaConnection?
+  connector        ConnectorConnection?
+  sessions         Session[]
+  modelRequests    ModelRequest[]
   // Fase 2 (ADR-008)
-  merchant      Merchant?
-  listings      Listing[]
-  dreams        Dream[]
-  notifications Notification[]
-  appointments  Appointment[]
+  merchant         Merchant?
+  listings         Listing[]
+  dreams           Dream[]
+  notifications    Notification[]
+  appointments     Appointment[]
+  // RF16: seller contact shown to buyers (digits only, with country code).
+  whatsapp         String?
+  // RF38: e-mail copy of notifications is opt-in; the in-app notice is always created.
+  emailAlerts      Boolean              @default(false)
+  merchantRequests MerchantRequest[]
+  listingReports   ListingReport[]
 }
 
 // RF33, RNF01: the athlete's own Strava app (ADR-006). The client secret and the tokens are
@@ -124,16 +130,17 @@ enum ItemCondition {
 
 // RF30: part category, maintained by the admin. RB14: wearsOnTrainer.
 model Category {
-  id             String         @id @default(cuid())
-  name           String         @unique
-  wearsOnTrainer Boolean        @default(false)
-  active         Boolean        @default(true)
-  plans          CategoryPlan[]
-  components     Component[]
-  listings       Listing[]
-  dreams         Dream[]
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+  id               String           @id @default(cuid())
+  name             String           @unique
+  wearsOnTrainer   Boolean          @default(false)
+  active           Boolean          @default(true)
+  plans            CategoryPlan[]
+  components       Component[]
+  listings         Listing[]
+  dreams           Dream[]
+  merchantFamilies MerchantFamily[]
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
 }
 
 // RF30, RF03, RB10: default maintenance plan of a category (km, hours or both).
@@ -168,6 +175,8 @@ model Component {
   plans       ComponentPlan[]
   parts       Part[]
   bikeModels  BikeModelPart[]
+  listings    Listing[]
+  dreams      Dream[]
   createdAt   DateTime        @default(now())
 
   @@unique([categoryId, brand, model])
@@ -479,14 +488,65 @@ enum ListingStatus {
 
 // RF18, RF19, RB06: store profile created by the admin for a user; only the admin sets `verified`.
 model Merchant {
-  id          String    @id @default(cuid())
-  userId      String    @unique
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String           @id @default(cuid())
+  userId      String           @unique
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   name        String
   description String?
-  verified    Boolean   @default(false)
+  verified    Boolean          @default(false)
   verifiedAt  DateTime?
-  createdAt   DateTime  @default(now())
+  // RF18: link of the shop, offered to buyers as a button on the merchant's listings.
+  shopUrl     String?
+  // RF22: paid add-on ("informação privilegiada"); only the admin flips it.
+  dreamAlerts Boolean          @default(false)
+  families    MerchantFamily[]
+  createdAt   DateTime         @default(now())
+}
+
+// RF18: families (categories) the merchant says they sell; RF22 notifies only these.
+model MerchantFamily {
+  merchantId String
+  merchant   Merchant @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([merchantId, categoryId])
+}
+
+enum MerchantRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// RF18: a user asks to become a merchant with free text and a contact; the admin approves or rejects.
+model MerchantRequest {
+  id        String                @id @default(cuid())
+  userId    String
+  user      User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  storeName String
+  message   String
+  contact   String
+  shopUrl   String?
+  status    MerchantRequestStatus @default(PENDING)
+  decidedAt DateTime?
+  createdAt DateTime              @default(now())
+
+  @@index([status])
+}
+
+// RF24: a user reports a listing; one report per user and listing. The admin reviews and removes.
+model ListingReport {
+  id         String    @id @default(cuid())
+  listingId  String
+  listing    Listing   @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  reporterId String
+  reporter   User      @relation(fields: [reporterId], references: [id], onDelete: Cascade)
+  reason     String
+  resolvedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@unique([listingId, reporterId])
 }
 
 // RF16, RF24, RB07, RB19: part for sale. Price in cents (BRL). usedKm is typed by the seller (RB07).
@@ -503,6 +563,10 @@ model Listing {
   usedKm        Float?
   // RF16: up to 3 image URLs, newline-separated (OPEN-31).
   photoUrls     String           @default("")
+  // RF16 (17/11): catalog model of the part; matches dreams (RF21). Null for free-form listings.
+  componentId   String?
+  component     Component?       @relation(fields: [componentId], references: [id])
+  reports       ListingReport[]
   status        ListingStatus    @default(ACTIVE)
   removedReason String?
   removedAt     DateTime?
@@ -514,14 +578,17 @@ model Listing {
 
 // RF20: wished part with a maximum price (OPEN-32: category + optional keywords).
 model Dream {
-  id            String   @id @default(cuid())
+  id            String     @id @default(cuid())
   userId        String
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   categoryId    String
-  category      Category @relation(fields: [categoryId], references: [id])
+  category      Category   @relation(fields: [categoryId], references: [id])
   keywords      String?
+  // RF20 (17/11): the wished part is a catalog model; null only for dreams created before the change.
+  componentId   String?
+  component     Component? @relation(fields: [componentId], references: [id])
   maxPriceCents Int
-  createdAt     DateTime @default(now())
+  createdAt     DateTime   @default(now())
 }
 
 // RF21, RF22, RF23 (OPEN-34): in-app notifications. refKey makes each one idempotent per user.
