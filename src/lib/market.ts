@@ -177,3 +177,5 @@ Object.assign(ERROR_TEXT, {
   resposta_invalida: "Para recusar, informe o motivo.",
   pedido_nao_encontrado: "Pedido não encontrado.",
 });
+
+Object.assign(ERROR_TEXT, { token_invalido: "Token de notificação inválido." });
