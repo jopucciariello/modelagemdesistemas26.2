@@ -1,4 +1,3 @@
-import { Anton, Inter } from "next/font/google";
 import { BrandGear } from "./brand-gear";
 import s from "./home.module.css";
 import { BikeAvatar } from "@/components/bike-avatar";
@@ -8,9 +7,6 @@ import { Nav, WearMeter, hours, km } from "@/components/ui";
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 import { loadDashboard } from "@/lib/tracker";
-
-const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton" });
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 const ERROR_MESSAGES: Record<string, string> = {
   email_not_verified: "O e-mail da conta Google não está verificado.",
@@ -28,7 +24,7 @@ const SOURCE_LABELS = { MANUAL: "lançamento manual", STRAVA: "API do Strava", C
 
 export default function Home(props: PageProps<"/">) {
   return (
-    <main className={`wide ${s.pf} ${anton.variable} ${inter.variable}`}>
+    <main className={`wide ${s.pf}`}>
       <header className="app-header">
         <div className="brand"><BrandGear size={32} />GearLog</div>
       </header>
