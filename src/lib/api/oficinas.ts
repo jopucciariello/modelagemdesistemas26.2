@@ -4,7 +4,7 @@
 import { prisma } from "@/lib/db";
 import { isValidCoords } from "@/lib/geo";
 import { bookAt, cancelFor, freeStarts, listAppointments, listNearbyWorkshops } from "@/lib/workshop-agenda";
-import type { ApiUser } from "@/lib/api/bearer";
+import type { ApiUser } from "@/lib/api-auth";
 
 const json = (body: unknown, status = 200) => Response.json(body, { status });
 const fail = (status: number, error: string) => json({ error }, status);

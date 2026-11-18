@@ -1,16 +1,6 @@
 // #71, RF26, RF27, #69: request parsing of the workshop API (no database).
 import { describe, expect, it } from "vitest";
-import { bearerToken } from "@/lib/api/bearer";
 import { parseBookBody, parseOrigin } from "@/lib/api/oficinas";
-
-describe("bearerToken", () => {
-  const req = (h?: string) => new Request("http://x/", { headers: h ? { authorization: h } : {} });
-  it("reads a bearer token", () => expect(bearerToken(req("Bearer abc123"))).toBe("abc123"));
-  it("rejects other schemes and a missing header", () => {
-    expect(bearerToken(req("Basic abc"))).toBeNull();
-    expect(bearerToken(req())).toBeNull();
-  });
-});
 
 describe("parseBookBody", () => {
   const ok = { workshopId: "w", serviceId: "s", bikeId: "b", startsAt: "2026-11-20T12:00:00.000Z", shareHistory: true };
