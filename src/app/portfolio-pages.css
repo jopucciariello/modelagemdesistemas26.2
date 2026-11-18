@@ -1,0 +1,35 @@
+/* Bike detail, parts, rides and stock pages in the portfolio look (visual only).
+   Uses only the global theme variables, so light and dark both work. */
+
+/* Page titles: big condensed display, accent rule under the header */
+.pf > header:not(.app-header) { border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+.pf h1 { font-size: clamp(2.2rem, 7vw, 3.6rem); line-height: 1.02; }
+.pf .rides-head h1 { font-size: clamp(2.2rem, 7vw, 3.6rem); }
+.pf .card > h2:first-child { font-size: 1.35rem; }
+.pf .card:hover { border-color: var(--accent); }
+
+/* Labels as small caps, thin-bordered fields */
+.pf label { text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.7rem; }
+.pf label.check { text-transform: none; letter-spacing: 0; font-size: 0.9rem; }
+
+/* Tables and ride rows */
+.pf th { letter-spacing: 0.1em; border-bottom: 1px solid var(--border); }
+.pf tbody tr:hover td { background: var(--accent-soft); }
+
+/* Wear: condensed percentage, thin bar */
+.pf .wear strong { font-family: var(--font-display); font-weight: 400; letter-spacing: 0.04em; font-size: 1.05rem; }
+.pf .badge { text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.65rem; }
+
+/* Bike header photo */
+.pf .bike-head { gap: 1.1rem; }
+.pf .bike-avatar { border-radius: 2px; border: 1px solid var(--border); }
+
+/* Stock: part rows with an accent edge and an arrow */
+.pf .stock-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+.pf .stock-item { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 2px; padding: 1.1rem 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.pf .stock-item strong { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.2rem; }
+.pf .stock-item .muted { font-size: 0.88rem; }
+
+@media (max-width: 40rem) {
+  .pf .rides-table td:first-child { font-family: var(--font-display); font-weight: 400; font-size: 1.4rem; letter-spacing: 0.03em; }
+}

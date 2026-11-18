@@ -1,6 +1,7 @@
 // RF39: parts kept in stock after removal from a bike; the athlete can install them again.
 import Link from "next/link";
 import { Suspense } from "react";
+import "@/app/portfolio-pages.css";
 import { installFromStock } from "@/app/actions/stock";
 import { Nav } from "@/components/ui";
 import { prisma } from "@/lib/db";
@@ -9,7 +10,7 @@ import { getCurrentUser } from "@/lib/session";
 
 export default function StockPage() {
   return (
-    <main>
+    <main className="pf">
       <header>
         <h1>Estoque de peças</h1>
         <p className="muted">Peças que você tirou da bike e guardou (RF39).</p>
@@ -37,9 +38,9 @@ async function StockArea() {
     <>
       <Nav isAdmin={user.role === "ADMIN"} />
       {parts.length === 0 && <p className="muted">Nenhuma peça no estoque. Ao tirar uma peça da bike, escolha “guardar no estoque”.</p>}
-      <ul className="list">
+      <ul className="stock-list">
         {parts.map((p) => (
-          <li key={p.id} className="card">
+          <li key={p.id} className="stock-item">
             <strong>{p.component.category.name} · {p.component.brand} {p.component.model}</strong>
             <br />
             <span className="muted">
