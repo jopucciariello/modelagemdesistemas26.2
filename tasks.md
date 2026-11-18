@@ -15,7 +15,7 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 - [x] T-06 Criar, editar e arquivar bike; criar a partir de bike-modelo — RF01, RF35 — #6 (PR #43)
 - [x] T-07 Instalar peça do catálogo com planos sugeridos e editáveis — RF02, RF03, RB15, RB16 — #7, #8 (PR #41)
 - [x] T-08 Editar instalação de peça e data de montagem — RF01 — #6 (PR #43, #44)
-- [ ] T-09 Remover peça cadastrada por engano (sem histórico) — RF02 — #7 [PROPOSTO]
+- [x] T-09 Remover peça cadastrada por engano (sem histórico) — RF02 — #7 [PROPOSTO]
 
 ## SPEC-004 — Pedais e fontes
 - [x] T-10 Escolher a fonte de pedais — RF32 — #3

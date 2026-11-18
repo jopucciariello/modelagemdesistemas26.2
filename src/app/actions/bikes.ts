@@ -228,6 +228,8 @@ export async function createPart(form: FormData) {
       installedAt: installedAt!,
       initialKm: optNumber(form, "initialKm") ?? 0,
       initialHours: optNumber(form, "initialHours") ?? 0,
+      isUsed: text(form, "condition", 10) === "USED",
+      usedCondition: text(form, "condition", 10) === "USED" ? text(form, "usedCondition", 200) || null : null,
       plans: { create: plans },
     },
   });

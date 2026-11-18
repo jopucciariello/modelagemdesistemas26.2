@@ -1,7 +1,7 @@
 // RF06, RF13, RF14: recent rides, a refresh button (sync) and a + button (new ride by hand).
 import Link from "next/link";
 import { Suspense } from "react";
-import { createManualRide, deleteManualRide, syncNow } from "@/app/actions/rides";
+import { chooseRideBike, createManualRide, deleteManualRide, syncNow } from "@/app/actions/rides";
 import { ConfirmSubmit } from "@/components/confirm-submit";
 import { Nav, km } from "@/components/ui";
 import { prisma } from "@/lib/db";
@@ -73,8 +73,9 @@ async function Rides({ searchParams }: { searchParams: PageProps<"/pedais">["sea
       {user.activitySource !== "MANUAL" && status?.lastSyncError && !syncError && <p className="alert" role="alert">A última atualização falhou; os dados anteriores foram mantidos.</p>}
       {ok === "pedal" && <p className="ok" role="status">Pedal lançado.</p>}
       {ok === "removido" && <p className="ok" role="status">Pedal excluído.</p>}
+      {ok === "bike_escolhida" && <p className="ok" role="status">Bike do pedal atualizada.</p>}
       {ok === "sync" && <p className="ok" role="status">Atualizado: {typeof n === "string" ? n : 0} pedais lidos da fonte.</p>}
-      {unassigned > 0 && <p className="muted">{unassigned} pedais ainda sem bike. Associe as bikes da fonte na página de cada bike (RF05).</p>}
+      {unassigned > 0 && <p className="muted">{unassigned} pedais ainda sem bike. Escolha a bike na própria linha do pedal ou associe as bikes da fonte na página de cada bike (RF05).</p>}
 
       <section className="card">
         {rides.length === 0 ? <p className="muted">Nenhum pedal ainda. Use o + para lançar um{user.activitySource !== "MANUAL" ? " ou ↻ para buscar da fonte" : ""}.</p> : (
@@ -87,7 +88,18 @@ async function Rides({ searchParams }: { searchParams: PageProps<"/pedais">["sea
                     <td>{km(r.distanceKm)}</td>
                     <td>{formatDuration(r.movingHours)}</td>
                     <td>{SPORTS[r.sportType] ?? r.sportType}</td>
-                    <td>{r.bike?.name ?? <span className="muted">sem bike</span>}</td>
+                    <td>
+                      {r.source !== "MANUAL" && !r.stravaGearId ? (
+                        <form action={chooseRideBike} className="inline">
+                          <input type="hidden" name="rideId" value={r.id} />
+                          <select name="bikeId" defaultValue={r.bikeId ?? ""} aria-label="Bike deste pedal">
+                            <option value="">sem bike</option>
+                            {bikes.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
+                          </select>{" "}
+                          <button className="button small" type="submit">Salvar</button>
+                        </form>
+                      ) : (r.bike?.name ?? <span className="muted">sem bike</span>)}
+                    </td>
                     <td>{formatDay(r.startDate)}</td>
                     <td>
                       {r.source === "MANUAL" ? (

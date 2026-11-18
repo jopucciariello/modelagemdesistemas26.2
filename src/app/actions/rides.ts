@@ -26,6 +26,18 @@ export async function createManualRide(form: FormData) {
   redirect("/pedais?ok=pedal");
 }
 
+/** OPEN-20: the athlete picks (or clears) the bike of a ride the source sent without one. No default bike. */
+export async function chooseRideBike(form: FormData) {
+  const user = await requireUser();
+  const ride = await prisma.ride.findFirst({ where: { id: text(form, "rideId", 40), userId: user.id, stravaGearId: null } });
+  if (!ride) redirect("/pedais?erro=pedal_invalido");
+  const bikeId = text(form, "bikeId", 40);
+  const bike = bikeId ? await prisma.bike.findFirst({ where: { id: bikeId, userId: user.id, archivedAt: null } }) : null;
+  if (bikeId && !bike) redirect("/pedais?erro=pedal_invalido");
+  await prisma.ride.update({ where: { id: ride!.id }, data: { bikeId: bike?.id ?? null, bikeChosen: Boolean(bike) } });
+  redirect("/pedais?ok=bike_escolhida");
+}
+
 /** Only rides typed by hand can be deleted here; imported ones follow the source. */
 export async function deleteManualRide(form: FormData) {
   const user = await requireUser();
