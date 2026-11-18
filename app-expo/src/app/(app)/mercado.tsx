@@ -1,32 +1,20 @@
 import * as ImagePicker from 'expo-image-picker';
 import { useCallback, useEffect, useState } from 'react';
-import { Alert, Linking, Pressable, ScrollView, TextInput, View } from 'react-native';
+import { Alert, Linking, Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { Btn, Field } from '@/components/market-ui';
+import { LojaTab } from '@/components/market-loja';
+import { AdminTab } from '@/components/market-admin';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { useTheme } from '@/hooks/use-theme';
 import { ApiError } from '@/lib/api';
 import { brl, market, type Component, type Dream, type Listing, type Notice } from '@/lib/market';
 
-type Tab = 'vitrine' | 'vender' | 'sonhos' | 'avisos';
-const TABS: [Tab, string][] = [['vitrine', 'Vitrine'], ['vender', 'Vender'], ['sonhos', 'Sonhos'], ['avisos', 'Avisos']];
+type Tab = 'vitrine' | 'vender' | 'sonhos' | 'avisos' | 'loja' | 'admin';
+const TABS: [Tab, string][] = [['vitrine', 'Vitrine'], ['vender', 'Vender'], ['sonhos', 'Sonhos'], ['avisos', 'Avisos'], ['loja', 'Minha loja']];
 const msg = (e: unknown) => (e instanceof ApiError ? e.message : 'Algo deu errado.');
 const toCents = (s: string) => Math.round(Number(s.replace(/\./g, '').replace(',', '.')) * 100);
-
-function Btn({ label, onPress }: { label: string; onPress: () => void }) {
-  const t = useTheme();
-  return (
-    <Pressable onPress={onPress} style={{ backgroundColor: t.text, borderRadius: 8, paddingVertical: 10, paddingHorizontal: 14, alignSelf: 'flex-start' }}>
-      <ThemedText type="smallBold" style={{ color: t.background }}>{label}</ThemedText>
-    </Pressable>
-  );
-}
-
-function Field(props: React.ComponentProps<typeof TextInput>) {
-  const t = useTheme();
-  return <TextInput placeholderTextColor={t.textSecondary} {...props} style={[{ borderWidth: 1, borderColor: t.textSecondary, borderRadius: 8, padding: 10, color: t.text }, props.style]} />;
-}
 
 /** RF21: picks a catalog model by searching brand or model. */
 function ModelPicker({ onPick, picked }: { onPick: (c: Component) => void; picked: Component | null }) {
@@ -171,13 +159,15 @@ function Avisos() {
 
 export default function MercadoScreen() {
   const [tab, setTab] = useState<Tab>('vitrine');
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => { market.merchantMe().then((m) => setIsAdmin(m.isAdmin)).catch(() => {}); }, []);
   return (
     <ThemedView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={{ padding: 24, gap: 16 }} keyboardShouldPersistTaps="handled">
           <ThemedText type="title">Mercado</ThemedText>
           <View style={{ flexDirection: 'row', gap: 16 }}>
-            {TABS.map(([k, label]) => (
+            {[...TABS, ...(isAdmin ? ([['admin', 'Admin']] as [Tab, string][]) : [])].map(([k, label]) => (
               <Pressable key={k} onPress={() => setTab(k)}><ThemedText type={tab === k ? 'smallBold' : 'small'} themeColor={tab === k ? 'text' : 'textSecondary'}>{label}</ThemedText></Pressable>
             ))}
           </View>
@@ -185,6 +175,8 @@ export default function MercadoScreen() {
           {tab === 'vender' && <Vender />}
           {tab === 'sonhos' && <Sonhos />}
           {tab === 'avisos' && <Avisos />}
+          {tab === 'loja' && <LojaTab />}
+          {tab === 'admin' && isAdmin && <AdminTab />}
         </ScrollView>
       </SafeAreaView>
     </ThemedView>

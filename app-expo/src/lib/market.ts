@@ -33,4 +33,17 @@ export const market = {
   contact: () => api<{ whatsapp: string | null; emailAlerts: boolean }>('/api/v1/me/contact'),
   saveContact: (b: { whatsapp?: string; emailAlerts?: boolean }) => api('/api/v1/me/contact', { method: 'PUT', ...json(b) }),
   requestMerchant: (b: { storeName: string; message: string; contact: string; shopUrl?: string }) => api('/api/v1/merchant/request', { method: 'POST', ...json(b) }),
+  merchantMe: () => api<{ isAdmin: boolean; merchant: { id: string; name: string; verified: boolean; shopUrl: string | null; families: { categoryId: string }[] } | null; pendingRequest: { id: string } | null }>('/api/v1/merchant/me'),
+  categories: () => api<{ id: string; name: string }[]>('/api/v1/catalog/categories'),
+  saveMerchantProfile: (b: { categoryIds: string[]; shopUrl?: string }) => api('/api/v1/merchant/profile', { method: 'PUT', ...json(b) }),
+  adminOverview: () => api<AdminOverview>('/api/v1/admin/market'),
+  decideRequest: (id: string, approve: boolean) => api(`/api/v1/admin/merchant-requests/${id}`, { method: 'POST', ...json({ approve }) }),
+  setMerchantFlags: (id: string, b: { verified?: boolean; dreamAlerts?: boolean }) => api(`/api/v1/admin/merchants/${id}`, { method: 'PATCH', ...json(b) }),
+  resolveListing: (id: string, removalReason: string | null) => api(`/api/v1/admin/listings/${id}/resolve`, { method: 'POST', ...json({ removalReason }) }),
+};
+
+export type AdminOverview = {
+  requests: { id: string; storeName: string; message: string; contact: string; shopUrl: string | null; user: { name: string; email: string | null } }[];
+  reports: { id: string; reason: string; listing: { id: string; title: string } }[];
+  merchants: { id: string; name: string; verified: boolean; dreamAlerts: boolean; user: { email: string | null } }[];
 };

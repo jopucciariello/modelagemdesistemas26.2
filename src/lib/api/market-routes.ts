@@ -77,6 +77,7 @@ const routes: Array<[string, string, Handler]> = [
   // Merchant (RF18)
   ["POST", "merchant/request", need(async (c) => { const b = await body(c.req); return reply(await svc.requestMerchant(c.user.id, { storeName: str(b.storeName), message: str(b.message), contact: str(b.contact), shopUrl: str(b.shopUrl) || null }), 201); })],
   ["GET", "merchant/me", need(async (c) => json({
+    isAdmin: c.user.isAdmin,
     merchant: await prisma.merchant.findUnique({ where: { userId: c.user.id }, include: { families: true } }),
     pendingRequest: await prisma.merchantRequest.findFirst({ where: { userId: c.user.id, status: "PENDING" } }),
   }))],
