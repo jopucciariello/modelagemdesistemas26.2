@@ -27,7 +27,7 @@ export default function PrivacidadePage() {
         <li>Não vendemos dados e não usamos publicidade nem rastreadores de terceiros.</li>
       </ul>
       <h2>Como apagar</h2>
-      <p>Você pode desconectar o Strava na página Fonte dos pedais, excluir bikes e anúncios pelo app e pedir a exclusão da conta e de todos os dados pelo e-mail do administrador do projeto. Também pode revogar o acesso em strava.com/settings/apps. Atendemos ao pedido em até 30 dias, conforme a LGPD.</p>
+      <p>Você pode desconectar o Strava na página Fonte dos pedais, excluir bikes e anúncios pelo app, excluir a conta e todos os dados em Configurações > Excluir minha conta, ou pedir a exclusão pelo e-mail do administrador do projeto. Também pode revogar o acesso em strava.com/settings/apps. Atendemos ao pedido em até 30 dias, conforme a LGPD.</p>
       <h2>Crianças</h2>
       <p>O GearLog não é dirigido a menores de 13 anos.</p>
       <p>GearLog é um projeto acadêmico, independente e não afiliado ao Strava. Veja também os <a href="/termos">termos de uso</a>.</p>

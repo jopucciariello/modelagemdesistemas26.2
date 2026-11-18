@@ -57,7 +57,7 @@ Para o "App Privacy" da Apple e a "Segurança dos dados" do Google. Base: [polí
 | Token de push (quando houver, #77) | Sim | Sim | Avisos | Apple/Google (entrega) |
 
 - Sem publicidade, sem rastreamento entre apps e sem SDKs de análise de terceiros: marcar "não rastreia".
-- Dados criptografados em trânsito (HTTPS). Exclusão de conta: por pedido ao administrador (ver privacidade). **[VOCÊ]** a Apple exige exclusão de conta dentro do app para apps com criação de conta: hoje não existe essa tela no app (ver pendência abaixo).
+- Dados criptografados em trânsito (HTTPS). Exclusão de conta: dentro do app, em Configurações > Excluir minha conta (RF40, PR de exclusão), e por pedido ao administrador (ver privacidade).
 - Sobre o Strava: dados lidos só para o próprio atleta, nunca exibidos a terceiros, nem usados em IA.
 
 ## 6. Classificação etária
@@ -66,6 +66,5 @@ Sem violência, conteúdo adulto, jogos de azar ou compras no app. Há conteúdo
 
 ## 7. Pendências levantadas
 
-1. **Exclusão de conta no app** (exigência da Apple): ainda não há tela nem rota. Proposta **[PROPOSTO]**: `DELETE /api/me` + botão em Configurações com confirmação; é uma funcionalidade nova, então depende de requisito aprovado antes de implementar.
-2. Capturas finais e o ícone 512×512 do Google (ver seção 3).
-3. Contas de desenvolvedor Apple e Google, bundle id e package (#75).
+1. Capturas finais e o ícone 512×512 do Google (ver seção 3).
+2. Contas de desenvolvedor Apple e Google, bundle id e package (#75).
