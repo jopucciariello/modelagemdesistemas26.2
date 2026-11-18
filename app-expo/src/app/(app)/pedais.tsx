@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { Button } from '@/components/button';
+import { Field } from '@/components/field';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { today } from '@/features/painel/maintenance';
@@ -36,8 +38,6 @@ export default function PedaisScreen() {
     void load();
   }, [load]);
 
-  const input = [styles.input, { color: theme.text, backgroundColor: theme.backgroundElement }];
-
   return (
     <ThemedView style={styles.flex}>
       <SafeAreaView style={styles.flex}>
@@ -49,32 +49,36 @@ export default function PedaisScreen() {
           {message ? <ThemedText themeColor="textSecondary">{message}</ThemedText> : null}
 
           {data && data.source !== 'MANUAL' ? (
-            <Pressable
-              accessibilityRole="button"
+            <Button
+              label="Sincronizar agora"
+              variant="outline"
               onPress={async () => {
                 const result = await syncRides();
                 setMessage('error' in result ? result.error : `${result.imported} pedais novos.`);
                 await load();
-              }}>
-              <ThemedText type="link">Sincronizar agora</ThemedText>
-            </Pressable>
+              }}
+            />
           ) : null}
 
           <ThemedText type="subtitle">Lançar pedal</ThemedText>
           <View style={styles.row}>
             {data?.bikes.map((b) => (
-              <Pressable key={b.id} onPress={() => setBikeId(b.id)} accessibilityRole="button">
+              <Pressable
+                key={b.id}
+                onPress={() => setBikeId(b.id)}
+                accessibilityRole="button"
+                style={[styles.chip, { borderColor: bikeId === b.id ? theme.accent : theme.border }]}>
                 <ThemedText type={bikeId === b.id ? 'smallBold' : 'small'} themeColor={bikeId === b.id ? 'text' : 'textSecondary'}>
                   {b.name}
                 </ThemedText>
               </Pressable>
             ))}
           </View>
-          <TextInput value={date} onChangeText={setDate} autoCapitalize="none" placeholder="AAAA-MM-DD" placeholderTextColor={theme.textSecondary} style={input} />
-          <TextInput value={km} onChangeText={setKm} keyboardType="decimal-pad" placeholder="Distância (km)" placeholderTextColor={theme.textSecondary} style={input} />
-          <TextInput value={hours} onChangeText={setHours} keyboardType="decimal-pad" placeholder="Tempo em movimento (h)" placeholderTextColor={theme.textSecondary} style={input} />
-          <Pressable
-            accessibilityRole="button"
+          <Field value={date} onChangeText={setDate} autoCapitalize="none" placeholder="AAAA-MM-DD" />
+          <Field value={km} onChangeText={setKm} keyboardType="decimal-pad" placeholder="Distância (km)" />
+          <Field value={hours} onChangeText={setHours} keyboardType="decimal-pad" placeholder="Tempo em movimento (h)" />
+          <Button
+            label="Salvar pedal"
             onPress={async () => {
               const failure = await addRide({ bikeId, date, distanceKm: km, movingHours: hours });
               setMessage(failure ?? 'Pedal salvo.');
@@ -83,14 +87,13 @@ export default function PedaisScreen() {
                 setHours('');
                 await load();
               }
-            }}>
-            <ThemedText type="link">Salvar pedal</ThemedText>
-          </Pressable>
+            }}
+          />
 
           <ThemedText type="subtitle">Recentes</ThemedText>
           {data?.rides.length === 0 ? <ThemedText themeColor="textSecondary">Nenhum pedal ainda.</ThemedText> : null}
           {data?.rides.map((r) => (
-            <View key={r.id} style={[styles.card, { backgroundColor: theme.backgroundElement }]}>
+            <View key={r.id} style={[styles.card, { borderColor: theme.border }]}>
               <ThemedText type="smallBold">
                 {new Date(r.date).toLocaleDateString('pt-BR')} · {r.distanceKm.toFixed(1)} km · {r.movingHours.toFixed(1)} h
               </ThemedText>
@@ -125,6 +128,6 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   content: { padding: 24, gap: 12 },
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
-  input: { borderRadius: 12, padding: 12, fontSize: 16 },
-  card: { borderRadius: 16, padding: 16, gap: 6 },
+  chip: { borderWidth: 1, borderRadius: 999, paddingVertical: 8, paddingHorizontal: 14 },
+  card: { borderWidth: 1, padding: 16, gap: 6 },
 });

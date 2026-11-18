@@ -1,7 +1,9 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
+import { Button } from '@/components/button';
+import { Field } from '@/components/field';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import type { BikeDetailDto } from '@/features/painel/types';
@@ -57,36 +59,24 @@ export default function BikeScreen() {
             <ThemedText type="small" themeColor="textSecondary">
               Data do registro (AAAA-MM-DD)
             </ThemedText>
-            <TextInput
-              value={date}
-              onChangeText={setDate}
-              autoCapitalize="none"
-              style={[styles.input, { color: theme.text, backgroundColor: theme.backgroundElement }]}
-            />
-            <TextInput
-              value={note}
-              onChangeText={setNote}
-              placeholder="Manutenção manual (ex.: lubrifiquei a corrente)"
-              placeholderTextColor={theme.textSecondary}
-              style={[styles.input, { color: theme.text, backgroundColor: theme.backgroundElement }]}
-            />
-            <Pressable
-              accessibilityRole="button"
+            <Field value={date} onChangeText={setDate} autoCapitalize="none" />
+            <Field value={note} onChangeText={setNote} placeholder="Manutenção manual (ex.: lubrifiquei a corrente)" />
+            <Button
+              label="Registrar manutenção"
               onPress={() =>
                 void run(async () => {
                   const failure = await addMaintenance(bike.id, date, note);
                   if (!failure) setNote('');
                   return failure;
                 }, 'Manutenção registrada no histórico.')
-              }>
-              <ThemedText type="link">Registrar manutenção</ThemedText>
-            </Pressable>
+              }
+            />
             {message ? <ThemedText themeColor="textSecondary">{message}</ThemedText> : null}
 
             <ThemedText type="subtitle">Peças</ThemedText>
             {bike.parts.length === 0 ? <ThemedText themeColor="textSecondary">Nenhuma peça instalada.</ThemedText> : null}
             {bike.parts.map((part) => (
-              <View key={part.id} style={[styles.card, { backgroundColor: theme.backgroundElement }]}>
+              <View key={part.id} style={[styles.card, { borderColor: theme.border }]}>
                 <ThemedText type="smallBold">{part.label}</ThemedText>
                 <ThemedText type="small" themeColor="textSecondary">
                   {part.componentLabel}
@@ -97,23 +87,24 @@ export default function BikeScreen() {
                       {plan.planName}
                     </ThemedText>
                     <WearMeter plan={plan} />
-                    <Pressable
-                      accessibilityRole="button"
+                    <Button
+                      label={plan.action === 'SERVICE' ? 'Revisei' : 'Troquei'}
+                      variant="outline"
+                      style={styles.small}
                       onPress={() =>
                         void run(
                           () => servicePlan(plan.planId, date),
                           plan.action === 'SERVICE' ? 'Revisão registrada: o contador recomeçou.' : 'Troca do item registrada.',
                         )
-                      }>
-                      <ThemedText type="link">{plan.action === 'SERVICE' ? 'Revisei' : 'Troquei'}</ThemedText>
-                    </Pressable>
+                      }
+                    />
                   </View>
                 ))}
-                <Pressable
-                  accessibilityRole="button"
-                  onPress={() => void run(() => replacePart(part.id, date), 'Peça trocada: a nova começa do zero.')}>
-                  <ThemedText type="link">Trocar a peça inteira (mesmo modelo)</ThemedText>
-                </Pressable>
+                <Button
+                  label="Trocar a peça inteira (mesmo modelo)"
+                  variant="outline"
+                  onPress={() => void run(() => replacePart(part.id, date), 'Peça trocada: a nova começa do zero.')}
+                />
               </View>
             ))}
             {bike.removedCount > 0 ? (
@@ -145,8 +136,8 @@ export default function BikeScreen() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   content: { padding: 24, gap: 12 },
-  card: { borderRadius: 16, padding: 16, gap: 8 },
+  card: { borderWidth: 1, padding: 16, gap: 10 },
+  small: { paddingVertical: 8, paddingHorizontal: 14, minHeight: 36 },
   plan: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   event: { gap: 2 },
-  input: { borderRadius: 12, padding: 12, fontSize: 16 },
 });
