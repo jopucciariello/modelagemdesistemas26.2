@@ -50,7 +50,7 @@ export default function AgendamentosScreen() {
         data={items}
         keyExtractor={(a) => a.id}
         contentContainerStyle={{ padding: 16, gap: 12 }}
-        ListHeaderComponent={error ? <ThemedText style={{ color: '#d33' }}>{error}</ThemedText> : null}
+        ListHeaderComponent={error ? <ThemedText style={{ color: '#d33' }}>{error}</ThemedText> : undefined}
         ListEmptyComponent={<ThemedText themeColor="textSecondary">Você ainda não agendou nenhuma revisão.</ThemedText>}
         renderItem={({ item: a }) => (
           <ThemedView style={[styles.card, { backgroundColor: theme.backgroundElement }]}>
