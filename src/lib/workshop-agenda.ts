@@ -2,7 +2,8 @@
 // Framework-agnostic (no Next imports) so the Expo API layer can reuse it.
 import { prisma } from "@/lib/db";
 import { type Coords, sortByDistance } from "@/lib/geo";
-import { availableStarts, canBook } from "@/lib/workshop";
+import { sendEmail } from "@/lib/email";
+import { availableStarts, canBook, cancellationNotice, isLateCancellation } from "@/lib/workshop";
 
 export const AGENDA_DAYS = 14;
 
@@ -73,4 +74,46 @@ export async function bookAt(input: {
   } catch {
     return { ok: false, error: "unavailable" };
   }
+}
+
+export type CancelResult = { ok: true; late: boolean } | { ok: false; error: "not_cancellable" };
+
+/**
+ * RF29: the athlete cancels a scheduled appointment of their own. The workshop gets an in-app notice
+ * (urgent under 24 h) and an e-mail; an e-mail failure never blocks the cancellation.
+ */
+export async function cancelFor(userId: string, userName: string, appointmentId: string, now = new Date()): Promise<CancelResult> {
+  const appt = await prisma.appointment.findFirst({
+    where: { id: appointmentId, userId },
+    include: { slot: true, bike: { select: { name: true } }, workshop: { select: { ownerEmail: true, members: { select: { email: true } } } } },
+  });
+  if (!appt || appt.status !== "SCHEDULED") return { ok: false, error: "not_cancellable" };
+  const late = isLateCancellation(appt.slot.startsAt, now);
+  const message = cancellationNotice(userName, appt.bike.name, appt.slot.startsAt, late);
+  const changed = await prisma.$transaction(async (tx) => {
+    const res = await tx.appointment.updateMany({ where: { id: appt.id, status: "SCHEDULED" }, data: { status: "CANCELLED", cancelledAt: now } });
+    if (res.count !== 1) return false;
+    await tx.workshopNotice.create({ data: { workshopId: appt.workshopId, appointmentId: appt.id, urgent: late, message } });
+    return true;
+  });
+  if (!changed) return { ok: false, error: "not_cancellable" };
+  await sendEmail({
+    to: [appt.workshop.ownerEmail, ...appt.workshop.members.map((m) => m.email)],
+    subject: late ? "GearLog: cancelamento de última hora" : "GearLog: agendamento cancelado",
+    text: message,
+  });
+  return { ok: true, late };
+}
+
+/** The athlete's appointments, soonest first (#71). */
+export async function listAppointments(userId: string) {
+  const rows = await prisma.appointment.findMany({
+    where: { userId },
+    include: { slot: { select: { startsAt: true } }, workshop: { select: { id: true, name: true, phone: true } }, service: { select: { name: true, durationMin: true } }, bike: { select: { name: true } } },
+    orderBy: { slot: { startsAt: "desc" } },
+  });
+  return rows.map((a) => ({
+    id: a.id, status: a.status, startsAt: a.slot.startsAt.toISOString(), endsAt: a.endsAt?.toISOString() ?? null, shareHistory: a.shareHistory,
+    workshop: a.workshop, service: a.service, bike: a.bike.name,
+  }));
 }

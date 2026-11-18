@@ -6,8 +6,8 @@ import { prisma } from "@/lib/db";
 import { text } from "@/lib/forms";
 import { requireAdmin, requireUser, requireWorkshop, requireWorkshopOwner } from "@/lib/guards";
 import { recordVisit } from "@/lib/visit-record";
-import { bookAt } from "@/lib/workshop-agenda";
-import { canBook, canDecideRequest, canInviteMechanic, cancellationNotice, cleanWorkshopRequest, isLateCancellation, parseIncludes, parseSlotStart } from "@/lib/workshop";
+import { bookAt, cancelFor } from "@/lib/workshop-agenda";
+import { canBook, canDecideRequest, canInviteMechanic, cleanWorkshopRequest, parseIncludes, parseSlotStart } from "@/lib/workshop";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -161,22 +161,8 @@ export async function bookAppointment(form: FormData) {
 export async function cancelAppointment(form: FormData) {
   const user = await requireUser();
   await connection();
-  const appt = await prisma.appointment.findFirst({
-    where: { id: text(form, "id", 40), userId: user.id },
-    include: { slot: true, bike: { select: { name: true } } },
-  });
-  if (!appt || appt.status !== "SCHEDULED") redirect("/agendamentos?erro=nao_cancelavel");
-  const now = new Date();
-  const late = isLateCancellation(appt!.slot.startsAt, now);
-  const changed = await prisma.$transaction(async (tx) => {
-    const res = await tx.appointment.updateMany({ where: { id: appt!.id, status: "SCHEDULED" }, data: { status: "CANCELLED", cancelledAt: now } });
-    if (res.count !== 1) return false;
-    await tx.workshopNotice.create({
-      data: { workshopId: appt!.workshopId, appointmentId: appt!.id, urgent: late, message: cancellationNotice(user.name, appt!.bike.name, appt!.slot.startsAt, late) },
-    });
-    return true;
-  });
-  redirect(changed ? "/agendamentos?ok=cancelado" : "/agendamentos?erro=nao_cancelavel");
+  const result = await cancelFor(user.id, user.name, text(form, "id", 40));
+  redirect(result.ok ? "/agendamentos?ok=cancelado" : "/agendamentos?erro=nao_cancelavel");
 }
 
 // ---- RF28: the workshop concludes the service ----

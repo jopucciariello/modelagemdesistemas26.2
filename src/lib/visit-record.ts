@@ -5,6 +5,7 @@ import { parseLocalDay } from "@/lib/dates";
 import { prisma } from "@/lib/db";
 import { text } from "@/lib/forms";
 import { readVisitItems, visitItemNote, visitRows } from "@/lib/visit";
+import { advanceStage, parseStages } from "@/lib/workshop";
 
 type Tx = Parameters<Parameters<typeof prisma.$transaction>[0]>[0];
 
@@ -53,13 +54,24 @@ export async function recordVisit(input: {
             componentId: part.componentId,
             position: part.position,
             installedAt: date,
-            plans: { create: part.plans.map((p) => ({ name: p.name, intervalKm: p.intervalKm, intervalHours: p.intervalHours, warnKm: p.warnKm, warnHours: p.warnHours, action: p.action })) },
+            plans: {
+              create: part.plans.map((p) => {
+                // RB23: a new part restarts at the first revision stage.
+                const first = parseStages(p.stageHours)[0];
+                return { name: p.name, intervalKm: p.intervalKm, intervalHours: first ?? p.intervalHours, warnKm: p.warnKm, warnHours: p.warnHours, action: p.action, stageHours: p.stageHours };
+              }),
+            },
           },
         });
         await tx.maintenanceEvent.create({ data: { ...base, type: "REPLACEMENT", note: visitItemNote({ ...item, label: part.position ?? part.component.category.name }, "peça trocada") } });
       } else if (item.action === "reset" && part && !replaced.has(part.id)) {
         const plan = part.plans.find((p) => p.id === item.planId)!;
-        await tx.maintenancePlan.update({ where: { id: plan.id }, data: { lastServiceAt: date } });
+        // RB23: a staged revision moves the wear target to the next stage (the last one repeats).
+        const next = advanceStage(parseStages(plan.stageHours), plan.stageIndex);
+        await tx.maintenancePlan.update({
+          where: { id: plan.id },
+          data: { lastServiceAt: date, ...(next ? { stageIndex: next.index, intervalHours: next.target } : {}) },
+        });
         await tx.maintenanceEvent.create({ data: { ...base, type: plan.action === "SERVICE" ? "SERVICE" : "REPLACEMENT", note: visitItemNote(item, plan.action === "SERVICE" ? "revisado" : "trocado") } });
       } else if (!part || !replaced.has(part.id)) {
         await tx.maintenanceEvent.create({ data: { ...base, type: "MANUAL", note: visitItemNote(item, item.action === "replace" ? "trocado" : "verificado") } });
