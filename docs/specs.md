@@ -297,7 +297,7 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 
 ---
 
-## SPEC-008 — Anúncios e vitrine (Fase 2, a implementar)
+## SPEC-008 — Anúncios e vitrine (Fase 2, implementada)
 
 **1. Identificação.** Objetivo: atletas e lojistas anunciam peças e qualquer usuário logado as encontra. Valor: é a parte do mercado visível na demo.
 
@@ -333,7 +333,7 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 
 ---
 
-## SPEC-009 — Sonhos e notificações (Fase 2, a implementar)
+## SPEC-009 — Sonhos e notificações (Fase 2, implementada)
 
 **1. Identificação.** Objetivo: o atleta diz o que quer e quanto paga, e o GearLog avisa. Valor: liga o mercado ao desgaste (RF23).
 
@@ -424,7 +424,7 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 
 ---
 
-## SPEC-010 — Lojistas, selo e moderação (Fase 2, a implementar)
+## SPEC-010 — Lojistas, selo e moderação (Fase 2, implementada)
 
 **1. Identificação.** Objetivo: dar confiança ao mercado. O admin cadastra lojistas, concede o selo e remove anúncios irregulares.
 

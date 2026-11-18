@@ -77,7 +77,7 @@ flowchart LR
 |---|---|---|---|
 | UC01 Entrar com Google | RF04, RNF02 | RB17 | Feito |
 | UC02 Escolher fonte de pedais | RF32 | RB08 | Feito |
-| UC02a Vincular Strava com app próprio | RF33, RNF01, RNF05 | RB08 | Feito |
+| UC02a Vincular Strava com app próprio | RF33, RNF01, RNF05 | RB08 | Removido (17/11/2026, OPEN-23) |
 | UC02b Configurar conector | RF34, RNF01 | RB08 | Feito |
 | UC03 Cadastrar bike | RF01 | — | Feito |
 | UC03a Criar bike a partir de modelo | RF35 | RB15, RB16 | Feito |

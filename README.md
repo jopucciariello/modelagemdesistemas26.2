@@ -40,7 +40,7 @@ Toda a documentação técnica e de engenharia de requisitos do projeto está ce
 > Decidido em 06/11/2026 (OPEN-03); o registro completo fica no [ADR-001](docs/adr/ADR-001-stack.md).
 
 * **Linguagem:** TypeScript (frontend e backend)
-* **Framework:** Next.js 16 (App Router)
+* **Framework:** Next.js 16 (App Router); app Expo universal em migração ([ADR-010](docs/adr/ADR-010-expo-universal.md))
 * **Banco de Dados:** SQLite, com Prisma 7
 * **Testes:** Vitest
 * **Metodologia:** Spec-Driven Development (SDD)

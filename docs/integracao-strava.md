@@ -203,10 +203,10 @@ Para isso, o GearLog **guarda as atividades importadas**, não só os totais. Os
 
 ## 9. Configuração
 
-`STRAVA_API_BASE_URL`, `STRAVA_OAUTH_BASE_URL` (padrão `https://www.strava.com/oauth`; trocado só em testes), `STRAVA_CALLBACK_URL` (padrão `APP_URL` + `/auth/strava/callback`) e `TOKEN_ENCRYPTION_KEY` (RNF01) ficam no Infisical (ambiente `dev`) e são injetados no processo por `infisical run` ([ADR-003](adr/ADR-003-segredos-infisical.md)). No repositório entra só o `.env.example`, com os nomes das variáveis e sem valores.
+`STRAVA_API_BASE_URL`, `STRAVA_OAUTH_BASE_URL` (padrão `https://www.strava.com/oauth`; trocado só em testes), `STRAVA_CALLBACK_URL` (padrão `APP_URL` + `/auth/strava/callback`) e `TOKEN_ENCRYPTION_KEY` (RNF01) ficam no Infisical (ambiente `dev`) e são injetados no processo por `infisical run` ([ADR-004](adr/ADR-004-deploy-fly.md)). No repositório entra só o `.env.example`, com os nomes das variáveis e sem valores.
 
-> **[PROPOSTO] (12/11/2026, ADR-006):** não há app do Strava global. Cada atleta cadastra o próprio app (`Client ID` e `Client Secret` guardados criptografados no banco, RF33) ou usa o próprio conector (RF34). Por isso `STRAVA_CLIENT_ID` e `STRAVA_CLIENT_SECRET` não existem mais como variáveis de ambiente.
+> **Decidido (17/11/2026, ADR-006, OPEN-22/OPEN-23):** não há app do Strava por atleta (RF33 removido). A fonte em uso é o conector do atleta (RF34); o app central do GearLog é o destino final e só aparece quando `STRAVA_CLIENT_ID` e `STRAVA_CLIENT_SECRET` existirem no Infisical.
 
-## Atualização forçada do conector (ponte temporária) — RF06, RF34 [PROPOSTO]
+## Atualização forçada do conector (ponte temporária) — RF06, RF34 *(aprovado e implementado em 18/11/2026)*
 
 Enquanto o app central do GearLog no Strava não é aprovado, o botão "Sincronizar" (site e app Expo) pede ao conector `POST /v1/gearlog/sync` com a chave do próprio atleta (a mesma das demais chamadas `/v1/gearlog/*`; a `ADMIN_API_KEY` do conector não é usada) e corpo opcional `{ "since": "<ISO>" }` (hoje − 90 dias). Respostas: `202` enfileirado; `429` com `retryAfterSeconds` (limite de uma chamada por hora; o atleta vê o tempo e não há nova tentativa automática); `409` conta não vinculada. O resultado chega pelo feed `/v1/gearlog/events`. É melhor esforço: se falhar, a leitura normal segue (RNF06). Remover quando o app central entrar.

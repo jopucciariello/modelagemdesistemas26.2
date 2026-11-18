@@ -8,10 +8,11 @@ Como o [spec.md](spec.md) é implementado. Decisões detalhadas em [docs/arquite
 |---|---|---|
 | Linguagem | TypeScript | ADR-001 |
 | Web | Next.js 16 (App Router, server actions, formulários HTML) | ADR-001 |
+| App | Expo universal (web, iOS e Android) sobre API em Node, em migração; o Next segue no ar até a paridade | ADR-010 |
 | Dados | Prisma 7 + SQLite (`better-sqlite3`), migrações versionadas | ADR-001 |
 | Testes | Vitest (unidade, regras puras e integrações com `fetch` simulado) | ADR-001 |
 | Login | Google OpenID Connect com PKCE; admin por lista de e-mails | ADR-005 |
-| Pedais | Manual, API do Strava com app do atleta ou conector do atleta | ADR-006 |
+| Pedais | Manual ou Strava (conector do atleta hoje; app central do GearLog depois) | ADR-006 |
 | Desgaste | Calculado na leitura a partir dos pedais guardados | ADR-007 |
 | Segredos | Infisical (OIDC no deploy); dados de terceiros criptografados (AES-256-GCM) | ADR-004 |
 | Deploy | Fly.io, uma máquina em `gru`, volume para o SQLite, GitHub Actions | ADR-004 |
@@ -47,7 +48,7 @@ Regras de negócio em módulos puros testados sem banco; integrações com Googl
 
 | Risco | Mitigação |
 |---|---|
-| Limite de leituras do Strava | Cada atleta usa o próprio app ou o conector (ADR-006); paginação limitada |
+| Limite de leituras do Strava | Conector por atleta hoje e app central depois (ADR-006); paginação limitada |
 | Perda do volume do SQLite | Backup diário do volume (tarefa T-21) |
 | Regras de desgaste simplificadas | Valores são recomendações; recalibração pela medição real (issue #38) |
 | Prazo (26/11) | Fase 1 primeiro; Fases 2 e 3 são tentativa (decisão de 16/11/2026) e não podem quebrar a Fase 1 |
