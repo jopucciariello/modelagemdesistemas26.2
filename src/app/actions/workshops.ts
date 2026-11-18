@@ -4,9 +4,9 @@ import { redirect } from "next/navigation";
 import { connection } from "next/server";
 import { prisma } from "@/lib/db";
 import { text } from "@/lib/forms";
-import { requireAdmin, requireUser, requireWorkshop } from "@/lib/guards";
+import { requireAdmin, requireUser, requireWorkshop, requireWorkshopOwner } from "@/lib/guards";
 import { recordVisit } from "@/lib/visit-record";
-import { canBook, cancellationNotice, isLateCancellation, parseIncludes, parseSlotStart } from "@/lib/workshop";
+import { canBook, canDecideRequest, canInviteMechanic, cancellationNotice, cleanWorkshopRequest, isLateCancellation, parseIncludes, parseSlotStart } from "@/lib/workshop";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -22,10 +22,55 @@ export async function createWorkshop(form: FormData) {
   redirect("/admin?ok=oficina");
 }
 
+// ---- RF25, OPEN-40: the shop asks for registration; the admin approves ----
+
+export async function requestWorkshop(form: FormData) {
+  const user = await requireUser();
+  if (!user.email) redirect("/oficinas?erro=pedido_invalido");
+  const input = cleanWorkshopRequest({ name: form.get("name"), contact: form.get("contact"), requestText: form.get("requestText") });
+  if (!input) redirect("/oficinas?erro=pedido_invalido");
+  const ownerEmail = user.email!.toLowerCase();
+  const existing = await prisma.workshop.findUnique({ where: { ownerEmail } });
+  if (existing && !canDecideRequest(existing.status, "reopen")) redirect("/oficinas?erro=pedido_existe");
+  if (existing) await prisma.workshop.update({ where: { id: existing.id }, data: { ...input!, status: "PENDING", active: false } });
+  else await prisma.workshop.create({ data: { ...input!, ownerEmail, status: "PENDING", active: false } });
+  redirect("/oficinas?ok=pedido");
+}
+
+export async function decideWorkshopRequest(form: FormData) {
+  await requireAdmin();
+  const decision = text(form, "decision", 10) === "approve" ? "approve" : "reject";
+  const workshop = await prisma.workshop.findUnique({ where: { id: text(form, "id", 40) } });
+  if (!workshop || !canDecideRequest(workshop.status, decision)) redirect("/admin?erro=oficina_invalida");
+  const approved = decision === "approve";
+  await prisma.workshop.update({ where: { id: workshop!.id }, data: { status: approved ? "ACTIVE" : "REJECTED", active: approved } });
+  redirect("/admin?ok=oficina");
+}
+
+// ---- RF25, RB21: the owner invites mechanics by e-mail ----
+
+export async function inviteMechanic(form: FormData) {
+  const { workshop, user } = await requireWorkshopOwner();
+  const email = text(form, "email", 120).toLowerCase();
+  if (!EMAIL.test(email)) redirect("/oficina?erro=convite_invalido");
+  const members = await prisma.workshopMember.findMany({ where: { workshopId: workshop.id }, select: { email: true } });
+  const check = canInviteMechanic(user.email, workshop.ownerEmail, email, members.map((m) => m.email));
+  if (check !== "ok") redirect(`/oficina?erro=convite_${check}`);
+  await prisma.workshopMember.create({ data: { workshopId: workshop.id, email } });
+  redirect("/oficina?ok=convite");
+}
+
+export async function removeMechanic(form: FormData) {
+  const { workshop } = await requireWorkshopOwner();
+  await prisma.workshopMember.deleteMany({ where: { id: text(form, "id", 40), workshopId: workshop.id } });
+  redirect("/oficina?ok=convite_removido");
+}
+
 export async function toggleWorkshop(form: FormData) {
   await requireAdmin();
   const workshop = await prisma.workshop.findUnique({ where: { id: text(form, "id", 40) } });
-  if (!workshop) redirect("/admin?erro=oficina_invalida");
+  // Pending or rejected requests change state only through decideWorkshopRequest.
+  if (!workshop || workshop.status !== "ACTIVE") redirect("/admin?erro=oficina_invalida");
   await prisma.workshop.update({ where: { id: workshop!.id }, data: { active: !workshop!.active } });
   redirect("/admin?ok=oficina");
 }
