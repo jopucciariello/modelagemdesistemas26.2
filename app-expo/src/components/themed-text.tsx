@@ -1,6 +1,6 @@
 import { Platform, StyleSheet, Text, type TextProps } from 'react-native';
 
-import { Fonts, ThemeColor } from '@/constants/theme';
+import { FontFamily, Fonts, ThemeColor } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 
 export type ThemedTextProps = TextProps & {
@@ -11,47 +11,18 @@ export type ThemedTextProps = TextProps & {
 export function ThemedText({ style, type = 'default', themeColor, ...rest }: ThemedTextProps) {
   const theme = useTheme();
 
-  return <Text style={[{ color: theme[themeColor ?? 'text'] }, styles[type], style]} {...rest} />;
+  const color = themeColor ?? (type === 'link' || type === 'linkPrimary' ? 'accent' : 'text');
+  return <Text style={[{ color: theme[color] }, styles[type], style]} {...rest} />;
 }
 
 const styles = StyleSheet.create({
-  small: {
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: 500,
-  },
-  smallBold: {
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: 700,
-  },
-  default: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: 500,
-  },
-  title: {
-    fontSize: 48,
-    fontWeight: 600,
-    lineHeight: 52,
-  },
-  subtitle: {
-    fontSize: 32,
-    lineHeight: 44,
-    fontWeight: 600,
-  },
-  link: {
-    lineHeight: 30,
-    fontSize: 14,
-  },
-  linkPrimary: {
-    lineHeight: 30,
-    fontSize: 14,
-    color: '#3c87f7',
-  },
-  code: {
-    fontFamily: Fonts.mono,
-    fontWeight: Platform.select({ android: 700 }) ?? 500,
-    fontSize: 12,
-  },
+  small: { fontSize: 14, lineHeight: 20, fontFamily: FontFamily.bodyMedium },
+  smallBold: { fontSize: 14, lineHeight: 20, fontFamily: FontFamily.bodyBold },
+  default: { fontSize: 16, lineHeight: 24, fontFamily: FontFamily.body },
+  /** Título de seção: condensado, pesado e em caixa alta, como no portfólio. */
+  title: { fontSize: 44, lineHeight: 48, fontFamily: FontFamily.display, textTransform: 'uppercase', letterSpacing: -0.5 },
+  subtitle: { fontSize: 24, lineHeight: 30, fontFamily: FontFamily.display, textTransform: 'uppercase' },
+  link: { lineHeight: 30, fontSize: 14, fontFamily: FontFamily.bodyBold },
+  linkPrimary: { lineHeight: 30, fontSize: 14, fontFamily: FontFamily.bodyBold },
+  code: { fontFamily: Fonts.mono, fontWeight: Platform.select({ android: 700 }) ?? 500, fontSize: 12 },
 });

@@ -7,21 +7,41 @@ import '@/global.css';
 
 import { Platform } from 'react-native';
 
+/** Identidade do GearLog, inspirada no portfólio do João: fundo quase preto, laranja de destaque, linhas finas. */
+export const ACCENT = '#FF5A1F';
+
 export const Colors = {
   light: {
-    text: '#000000',
-    background: '#ffffff',
-    backgroundElement: '#F0F0F3',
-    backgroundSelected: '#E0E1E6',
-    textSecondary: '#60646C',
+    text: '#0B0C0E',
+    background: '#FFFFFF',
+    backgroundElement: '#F3F3F1',
+    backgroundSelected: '#E4E4E0',
+    textSecondary: '#5B5F66',
+    accent: ACCENT,
+    onAccent: '#0B0C0E',
+    border: '#D9D9D4',
   },
   dark: {
-    text: '#ffffff',
-    background: '#000000',
-    backgroundElement: '#212225',
-    backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
+    text: '#FFFFFF',
+    background: '#08090B',
+    backgroundElement: '#101216',
+    backgroundSelected: '#1C1F25',
+    textSecondary: '#A3A8B0',
+    accent: ACCENT,
+    onAccent: '#0B0C0E',
+    border: '#262A31',
   },
+} as const;
+
+/** Cores de estado do desgaste (RF08/RF09), iguais nos dois temas. */
+export const StatusColors = { ok: '#2E9E5B', near: '#E0A800', due: '#E5484D' } as const;
+
+/** Famílias carregadas em `_layout.tsx` (Anton para títulos, Inter para o texto). */
+export const FontFamily = {
+  display: 'Anton_400Regular',
+  body: 'Inter_400Regular',
+  bodyMedium: 'Inter_500Medium',
+  bodyBold: 'Inter_700Bold',
 } as const;
 
 export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
