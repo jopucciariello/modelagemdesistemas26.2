@@ -1,43 +1,51 @@
+/* Tema do portfólio (mesmos tokens do app Expo): quase preto, laranja de destaque, linhas finas. */
 :root {
-  --background: #f4f6f8;
-  --surface: #ffffff;
-  --foreground: #14181f;
-  --muted: #5b6573;
-  --border: #e2e6ea;
-  --accent: #0b7a5b;
-  --accent-soft: #e3f4ee;
+  --background: #ffffff;
+  --surface: #f3f3f1;
+  --foreground: #0b0c0e;
+  --muted: #5b5f66;
+  --border: #d9d9d4;
+  --accent: #ff5a1f;
+  --accent-ink: #0b0c0e;
+  --accent-soft: rgb(255 90 31 / 12%);
   --strava: #fc4c02;
   --danger: #c0291f;
-  --danger-soft: #fdecea;
-  --warn: #b36b00;
-  --warn-soft: #fff3dc;
+  --danger-soft: rgb(229 72 77 / 12%);
+  --warn: #9a6a00;
+  --warn-soft: rgb(224 168 0 / 16%);
   --good: #1e7b34;
-  --good-soft: #e6f4ea;
+  --good-soft: rgb(46 158 91 / 14%);
   --bar-ok: #2e9e5b;
-  --bar-near: #f0a000;
-  --bar-due: #d93025;
-  --shadow: 0 1px 2px rgb(16 24 40 / 6%), 0 2px 8px rgb(16 24 40 / 4%);
+  --bar-near: #e0a800;
+  --bar-due: #e5484d;
+  --shadow: none;
+  --font-display: var(--font-anton), "Anton", "Impact", "Arial Narrow", sans-serif;
+  --font-body: var(--font-inter), "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
+:root, :root[data-theme="dark"] { color-scheme: light; }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #08090b;
+  --surface: #101216;
+  --foreground: #ffffff;
+  --muted: #a3a8b0;
+  --border: #262a31;
+  --danger: #ff8a80;
+  --warn: #e0a800;
+  --good: #6fd68a;
+}
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0d1117;
-    --surface: #161b22;
-    --foreground: #e8ecf1;
-    --muted: #9aa5b1;
-    --border: #2a313b;
-    --accent: #3ecf9a;
-    --accent-soft: #12332a;
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --background: #08090b;
+    --surface: #101216;
+    --foreground: #ffffff;
+    --muted: #a3a8b0;
+    --border: #262a31;
     --danger: #ff8a80;
-    --danger-soft: #3a1b19;
-    --warn: #ffc14d;
-    --warn-soft: #3a2c0e;
+    --warn: #e0a800;
     --good: #6fd68a;
-    --good-soft: #14301d;
-    --bar-ok: #3cb371;
-    --bar-near: #f5b02e;
-    --bar-due: #ef5350;
-    --shadow: none;
   }
 }
 
@@ -52,7 +60,7 @@ body {
   color: var(--foreground);
   background: var(--background);
   -webkit-font-smoothing: antialiased;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-body);
   line-height: 1.5;
 }
 
@@ -269,8 +277,7 @@ details[open] > .bike-summary::after { transform: rotate(180deg); }
 body > footer { max-width: 56rem; margin: 0 auto; padding: 0 1rem 2rem; text-align: center; color: var(--muted); }
 
 /* ===== Polish pass (visual only) ===== */
-:root { --radius: 14px; --ring: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent); --accent-ink: #fff; }
-@media (prefers-color-scheme: dark) { :root { --accent-ink: #06231a; } }
+:root { --radius: 14px; --ring: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent); }
 ::selection { background: var(--accent-soft); }
 :focus-visible { outline: none; box-shadow: var(--ring); border-radius: 8px; }
 a { text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
@@ -355,3 +362,63 @@ p.muted, .muted { color: var(--muted); }
   .nav { gap: 0.1rem; padding: 0.2rem; }
   .nav a { padding: 0.4rem 0.6rem; font-size: 0.86rem; }
 }
+
+/* ===== Portfólio theme (camada global): títulos Anton, pílulas laranja, linhas finas ===== */
+h1, h2, h3, .brand, .stat b { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; letter-spacing: 0.01em; }
+h1 { font-size: 2.4rem; line-height: 1.05; }
+h2 { font-size: 1.5rem; line-height: 1.1; }
+h3 { font-size: 1.2rem; line-height: 1.15; }
+.card > h2:first-child { font-size: 1.4rem; }
+@media (min-width: 40rem) { main > header h1, h1 { font-size: 3rem; } }
+a { color: var(--accent); }
+.card, .stat, .bike-card, .icon-button, .empty { border-radius: 2px; box-shadow: none; background: var(--surface); }
+.card { border-radius: 2px; }
+.stats { gap: 0; border-top: 2px solid var(--accent); }
+.stat { border-radius: 0; margin-left: -1px; }
+.stat b { font-size: 2.6rem; }
+.page-title { border-bottom: 2px solid var(--accent); padding-bottom: 0.75rem; }
+
+/* Botões em pílula */
+.button { border-radius: 999px; background: var(--accent); border: 1px solid var(--accent); color: var(--accent-ink); font-weight: 600; padding: 0.7rem 1.4rem; box-shadow: none; }
+.button.small { background: transparent; color: var(--foreground); border: 1px solid var(--border); border-radius: 999px; padding: 0.4rem 0.95rem; }
+.button.small:hover { border-color: var(--accent); color: var(--accent); }
+.button.danger, .button.small.danger { background: transparent; color: var(--danger); border: 1px solid var(--danger); }
+.button.danger:hover { background: var(--danger); color: #fff; }
+.button-strava { background: var(--strava); border-color: var(--strava); color: #fff; }
+
+/* Navegação: barra fina com sublinhado laranja no item atual */
+.nav { background: transparent; border: 0; border-bottom: 1px solid var(--border); border-radius: 0; box-shadow: none; padding: 0; gap: 0.1rem; align-self: stretch; overflow-x: auto; flex-wrap: nowrap; }
+.nav a { border-radius: 0; padding: 0.7rem 0.85rem; color: var(--muted); font-weight: 500; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.nav a:hover { background: transparent; color: var(--foreground); }
+.nav a[aria-current="page"] { background: transparent; color: var(--foreground); border-bottom-color: var(--accent); }
+
+/* Cabeçalho com a logo Coroa e alternador de tema */
+.app-header { padding-bottom: 0.25rem; }
+.brand { font-size: 1.5rem; }
+.brand-mark { border-radius: 2px; }
+.avatar { background: var(--accent-soft); color: var(--accent); }
+.theme-toggle { position: fixed; top: 0.75rem; right: 0.75rem; z-index: 50; width: 2.4rem; height: 2.4rem; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--border); background: var(--background); color: var(--foreground); cursor: pointer; font-size: 1.05rem; line-height: 1; padding: 0; min-height: 0; }
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Campos */
+input, select, textarea { background: var(--background); border-radius: 8px; border-color: var(--border); }
+input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+::selection { background: var(--accent); color: var(--accent-ink); }
+select option { color: #0b0c0e; }
+
+/* Listas com linhas finas, tabelas e cartões planos */
+.list > li { border-top: 1px solid var(--border); }
+th { font-family: var(--font-body); }
+tbody tr:hover td { background: var(--accent-soft); }
+.plan-item { border-left-width: 3px; }
+.wear-bar { height: 0.45rem; border-radius: 99px; background: var(--border); }
+.badge { border-radius: 99px; }
+.alert, .ok { border-radius: 2px; border: 1px solid currentColor; background: transparent; }
+details.card > summary, .card details > summary { color: var(--foreground); }
+.bike-avatar { border-radius: 2px; }
+body > footer { border-top: 1px solid var(--border); max-width: none; padding: 1.25rem 1rem 2rem; }
+@media (hover: hover) { .bike-card:hover, .card:has(h2 a):hover { border-color: var(--accent); } }
+.theme-toggle .icon-sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-sun { display: inline; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+@media (max-width: 40rem) { body { padding-top: 3.25rem; } .theme-toggle { top: 0.5rem; } }
