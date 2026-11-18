@@ -4,6 +4,7 @@ Termos do domínio da Fase 1, em ordem alfabética. Entre parênteses, o nome no
 
 | Termo | Definição |
 |---|---|
+| Papéis acumulados | Uma conta pode ser Atleta, Administrador, Oficina e Lojista ao mesmo tempo; Atleta é a base de toda conta (RB24, `src/lib/roles.ts`). |
 | Administrador (`Role.ADMIN`) | Usuário cujo e-mail verificado do Google está em `ADMIN_EMAILS`. Mantém o catálogo e pode ter bikes como qualquer atleta (RB17). |
 | Alerta | Aviso de um plano: "troca/revisão próxima" (amarelo) ou "troca/revisão necessária" (vermelho). Aparece no painel e na página da bike; não há notificação por push na Fase 1 (OPEN-14). |
 | Amarelo a partir de (`warnKm`, `warnHours`) | Uso em que a barra fica amarela. Vem do mínimo da faixa de durabilidade da planilha; sem ele, vale 80% do intervalo (RB04, OPEN-17). |

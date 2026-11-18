@@ -11,7 +11,7 @@ classDiagram
   class Usuario["Usuário (User)"] {
     nome
     email
-    perfil: ATLETA | ADMIN
+    perfil: ATLETA | ADMIN (oficina e lojista vêm de vínculos; papéis acumulam, RB24)
     fonteDePedais: MANUAL | STRAVA | CONECTOR
     ultimaSincronizacao
     ultimoErroDeSincronizacao

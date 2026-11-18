@@ -1,6 +1,6 @@
 # Personas — GearLog
 
-Na entrega da disciplina, o sistema tem dois perfis de acesso: **Atleta** e **Administrador**. Cada persona abaixo representa um perfil. Os perfis **Lojista** e **Mecânico/Oficina** pertencem ao [segundo estágio](segundo-estagio.md).
+Na entrega da disciplina, o sistema tem dois perfis de acesso: **Atleta** e **Administrador**. Cada persona abaixo representa um perfil. **Os perfis não são excludentes (RB24):** uma mesma conta pode ser Atleta, Administrador, Oficina e Lojista ao mesmo tempo. Toda conta é Atleta; os demais papéis são acrescentados. Os perfis **Lojista** e **Mecânico/Oficina** pertencem ao [segundo estágio](segundo-estagio.md).
 
 ---
 
@@ -23,6 +23,12 @@ Na entrega da disciplina, o sistema tem dois perfis de acesso: **Atleta** e **Ad
 - **Fases:** 1, 2 e 3
 
 ---
+
+## Papéis acumulados (RB24)
+
+- **Rafael** pode ser também dono de uma oficina e, se quiser, vender peças como lojista: usa o mesmo login, vê as suas bikes e a área da oficina no mesmo app.
+- **Beatriz** pode ter bikes e pedais como qualquer atleta.
+- Quem não é Administrador não vê `/admin`; quem não tem oficina aprovada não vê a área da oficina. Os pedidos de oficina e de lojista continuam sendo aprovados pelo administrador.
 
 ## Matriz persona × funcionalidade (entrega)
 

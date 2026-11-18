@@ -128,6 +128,7 @@ Os RNFs também seguem o padrão EARS.
 | RB15 | O atleta só cadastra peças com categoria e componente existentes no catálogo. Apenas o administrador inclui, edita ou desativa categorias e componentes. |
 | RB16 | Uma peça tem planos de manutenção, herdados do componente (ou, se ele não tiver, da família) e editáveis pelo atleta. Cada plano tem métrica, intervalo e ação (troca ou revisão). O desgaste, os alertas (RB04) e a revisão (RB13) valem por plano; a troca da peça inteira (RF10) encerra a peça e todos os seus planos. Peça sem desgaste regular (ex.: selim, canote rígido) pode não ter plano. *(Alterado em 12/11/2026.)* |
 | RB18 | Quando a peça tem mais de um plano, a troca de um item consumível dela (ex.: corrente ou cassete do grupo de transmissão) zera só o plano desse item e fica no histórico como troca, sem encerrar a peça. Para trocar dois itens (ex.: corrente e cassete), o atleta lança a troca de cada um (OPEN-18). |
+| RB24 | **Uma conta pode acumular papéis.** Toda conta é Atleta; os papéis de Administrador (RB17), Oficina (responsável ou mecânico, RB21) e Lojista (RF18) são acrescentados à mesma conta e nunca substituem o de Atleta. Uma mesma pessoa pode ser atleta, administradora, dona de oficina e lojista ao mesmo tempo, com as bikes, os anúncios e a oficina ligados à mesma conta. Cada área confere só o seu papel a cada acesso, e o app mostra os menus de todos os papéis que a conta tem. *(Decidido em 18/11/2026.)* |
 | RB23 | Uma peça com revisões em etapas (ex.: suspensão com revisão aos 100 h e depois aos 150 h) tem uma **meta de desgaste** atual. Concluir a revisão (pelo atleta ou por uma OS, RF28) zera o contador e avança a meta para a etapa seguinte; na última etapa, a meta se repete. *(Decidido em 17/11/2026.)* |
 | RB17 | Só acessa a área administrativa (`/admin`) quem entra com e-mail verificado que está na lista de administradores autorizados (`ADMIN_EMAILS`, guardada no Infisical, RF37). A permissão é conferida a cada acesso ([ADR-005](adr/ADR-005-login.md)). |
 
@@ -189,6 +190,7 @@ Atualizado em 12/11/2026. Código em `src/`, testes em `tests/unit/`.
 | RF25–RF29, RNF03, RB09 | Feito em 16/11/2026; decisões aprovadas em 17/11/2026, ajustes de código nas tasks T-70+ | `src/app/oficina/`, `src/app/oficinas/`, `src/app/agendamentos/`, `src/app/actions/workshops.ts`, `src/lib/workshop.ts` | `workshop.test.ts` |
 | RB02, RB03, RB04, RB11–RB14, RB16 | Feito | `src/lib/wear.ts` | `wear.test.ts` |
 | RB18 | Feito | `servicePlan`, `canResetPlan` | `catalog.test.ts` |
+| RB24 | Feito | `src/lib/roles.ts`, `/api/me` (`roles`) | `roles.test.ts` |
 | RB17 | Feito | `src/lib/session.ts` (`getCurrentAdmin`) | `google-admin-login.test.ts` |
 | RNF01 | Feito | `src/lib/crypto.ts` | `crypto.test.ts` |
 | RNF05 | Parcial: no máximo 10 páginas por sincronização manual; webhook pendente | `src/lib/rides/sync.ts` | — |
