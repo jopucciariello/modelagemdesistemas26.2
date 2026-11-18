@@ -1,6 +1,7 @@
 // RF04, ADR-005: sign in or sign up with Google, or with username and password.
 import Link from "next/link";
 import { Suspense } from "react";
+import "@/app/portfolio.css";
 
 const ERRORS: Record<string, string> = {
   dados_invalidos: "Usuário: 3 a 30 letras, números, ponto, hífen ou sublinhado. Senha: ao menos 8 caracteres.",
@@ -11,7 +12,7 @@ const ERRORS: Record<string, string> = {
 
 export default function EnterPage(props: PageProps<"/entrar">) {
   return (
-    <main>
+    <main className="pf">
       <header>
         <h1>Entrar no GearLog</h1>
       </header>

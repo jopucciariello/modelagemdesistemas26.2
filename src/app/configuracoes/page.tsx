@@ -1,5 +1,6 @@
 // User settings: where the pedals come from (Fonte) and adding bikes (RF01, RF35).
 import { Suspense } from "react";
+import "@/app/portfolio.css";
 import { createBike } from "@/app/actions/bikes";
 import { BikeFields } from "@/components/bike-fields";
 import { Flash, Nav } from "@/components/ui";
@@ -14,7 +15,7 @@ const ERR = { modelo_invalido: "Escolha um modelo do catálogo e a data em que a
 
 export default function SettingsPage(props: PageProps<"/configuracoes">) {
   return (
-    <main className="wide">
+    <main className="wide pf">
       <header><h1>Configurações</h1></header>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <Settings searchParams={props.searchParams} />
