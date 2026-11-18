@@ -1,6 +1,6 @@
 # ADR-010 — Interface em Expo universal (web, iOS e Android) e backend como API
 
-- **Status:** Proposto (decidido por João em 17/11/2026; aguarda registro de aprovação do ADR)
+- **Status:** Aceito (17/11/2026, confirmado por João)
 - **Data:** 17/11/2026
 - **Decisor:** João Pucciariello
 - **Resolve:** OPEN-46
