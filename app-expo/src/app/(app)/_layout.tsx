@@ -41,6 +41,7 @@ export default function AppLayout() {
         options={{ title: 'Ajustes', tabBarIcon: ({ color, size }) => <Ionicons name="settings" size={size} color={color as string} /> }}
       />
       <Tabs.Screen name="bike/[id]" options={{ href: null }} />
+      <Tabs.Screen name="admin" options={{ href: null }} />
     </Tabs>
   );
 }
