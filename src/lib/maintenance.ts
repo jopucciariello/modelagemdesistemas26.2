@@ -41,6 +41,8 @@ export async function replacePartFor(
   day: string,
   componentId: string,
   note: string,
+  /** The component was just resolved from the picker (it may be a hidden, hand-typed one, RF31). */
+  resolved = false,
 ): Promise<MaintenanceResult> {
   const old = await prisma.part.findFirst({ where: { id: partId, bike: { userId } }, include: { plans: true, component: true } });
   if (!old) return { ok: false, error: "peca_nao_encontrada" };
@@ -49,7 +51,7 @@ export async function replacePartFor(
   if (old.removedAt) return { ok: false, error: "peca_encerrada", bikeId };
   if (!date || date < old.installedAt) return { ok: false, error: "data", bikeId };
   const component = await prisma.component.findFirst({
-    where: { id: componentId || old.componentId, categoryId: old.component.categoryId, OR: [{ active: true }, { id: old.componentId }] },
+    where: { id: componentId || old.componentId, categoryId: old.component.categoryId, OR: [{ active: true }, { id: old.componentId }, ...(resolved && componentId ? [{ id: componentId }] : [])] },
     include: { category: true },
   });
   if (!component) return { ok: false, error: "componente", bikeId };

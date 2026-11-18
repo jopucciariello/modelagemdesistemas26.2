@@ -1,13 +1,15 @@
 // RF20: the athlete's dreams (wanted parts with a maximum price).
 import { Suspense } from "react";
 import { createDream, deleteDream, updateDream } from "@/app/actions/dreams";
+import { ComponentPicker } from "@/components/component-picker";
+import { pickerCategories } from "@/lib/catalog/pick";
 import { Flash, Nav } from "@/components/ui";
 import { prisma } from "@/lib/db";
 import { brl } from "@/lib/dreams";
 import { requireUser } from "@/lib/guards";
 
 const OK = { criado: "Sonho cadastrado.", atualizado: "Sonho atualizado.", removido: "Sonho removido." };
-const ERR = { sonho_invalido: "Escolha a família e informe um preço máximo maior que zero.", sonho_nao_encontrado: "Sonho não encontrado." };
+const ERR = { sonho_invalido: "Escolha o componente, a marca e o modelo e informe um preço máximo maior que zero.", sonho_nao_encontrado: "Sonho não encontrado." };
 
 export default function DreamsPage(props: PageProps<"/sonhos">) {
   return (
@@ -25,16 +27,11 @@ async function Dreams({ searchParams }: { searchParams: PageProps<"/sonhos">["se
   const { ok, erro } = await searchParams;
   const [dreams, categories] = await Promise.all([
     prisma.dream.findMany({ where: { userId: user.id }, include: { category: true }, orderBy: { createdAt: "desc" } }),
-    prisma.category.findMany({ where: { active: true }, orderBy: { name: "asc" } }),
+    pickerCategories(),
   ]);
   const fields = (d?: (typeof dreams)[number]) => (
     <>
-      <label>Família
-        <select name="categoryId" required defaultValue={d?.categoryId ?? ""}>
-          <option value="" disabled>Escolha…</option>
-          {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
-        </select>
-      </label>
+      <ComponentPicker categories={categories} defaultCategoryId={d?.categoryId} defaultComponentId={d?.componentId ?? ""} />
       <label>Palavras-chave (opcional)
         <input name="keywords" maxLength={120} defaultValue={d?.keywords ?? ""} placeholder="ex.: 700x28 tubeless" />
       </label>

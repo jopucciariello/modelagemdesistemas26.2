@@ -156,7 +156,7 @@ input, select, textarea {
   border: 1px solid var(--border); border-radius: 8px; padding: 0.45rem 0.55rem; min-width: 0;
 }
 input[type="number"] { width: 7rem; }
-select option { color: #171717; }
+select option { background-color: var(--background); color: var(--foreground); }
 .button.small { padding: 0.35rem 0.7rem; font-size: 0.85rem; }
 .list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
 .list > li { border-top: 1px solid var(--border); padding-top: 0.75rem; display: flex; flex-direction: column; gap: 0.4rem; }
@@ -405,7 +405,12 @@ a { color: var(--accent); }
 input, select, textarea { background: var(--background); border-radius: 8px; border-color: var(--border); }
 input:focus, select:focus, textarea:focus { border-color: var(--accent); }
 ::selection { background: var(--accent); color: var(--accent-ink); }
-select option { color: #0b0c0e; }
+select option, select optgroup { background-color: var(--background); color: var(--foreground); }
+select option:disabled { color: var(--muted); }
+/* Criar conta: só aparece quando a pessoa aperta o botão (details nativo). */
+details.signup > summary { list-style: none; cursor: pointer; display: inline-flex; }
+details.signup > summary::-webkit-details-marker { display: none; }
+details.signup[open] > summary { margin-bottom: 1rem; }
 
 /* Listas com linhas finas, tabelas e cartões planos */
 .list > li { border-top: 1px solid var(--border); }
@@ -426,3 +431,20 @@ body > footer { border-top: 1px solid var(--border); max-width: none; padding: 1
 
 /* Formulários empilhados de largura total (ex.: /ajuda): campos alinhados e iguais */
 form.stack.fill input:not([type="checkbox"]), form.stack.fill select, form.stack.fill textarea { width: 100%; max-width: 100%; margin-top: 0; background: var(--background); border-color: var(--border); }
+
+/* Movimento suave: entrada de página, abertura de seções, campos e tema (respeita "reduzir movimento"). */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes gl-fade-up { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @keyframes gl-fade { from { opacity: 0; } to { opacity: 1; } }
+  main > * { animation: gl-fade-up 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  main > *:nth-child(2) { animation-delay: 0.04s; }
+  main > *:nth-child(3) { animation-delay: 0.08s; }
+  main > *:nth-child(n + 4) { animation-delay: 0.12s; }
+  details[open] > :not(summary) { animation: gl-fade 0.25s ease both; }
+  .alert, .ok { animation: gl-fade-up 0.3s ease both; }
+  body, .card, input, select, textarea, .theme-toggle { transition: background-color 0.25s ease, color 0.25s ease, border-color 0.2s ease, box-shadow 0.2s ease; }
+  .button, .nav a, .stat, .card, .list > li { transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; }
+  .button:active { transform: scale(0.98); }
+  .wear-bar > span { transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+  html { scroll-behavior: smooth; }
+}

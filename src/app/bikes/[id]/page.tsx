@@ -4,6 +4,8 @@ import { Suspense } from "react";
 import "@/app/portfolio-pages.css";
 import { removePart } from "@/app/actions/stock";
 import { addManualMaintenance, linkSourceBike, updatePart, recordShopVisit, replacePart, servicePlan, deleteBike, removeBikePhoto, setBikePhoto, toggleArchiveBike, updateBike, updatePlan } from "@/app/actions/bikes";
+import { ComponentPicker } from "@/components/component-picker";
+import { pickerCategories } from "@/lib/catalog/pick";
 import { BikeAvatar } from "@/components/bike-avatar";
 import { BikeFields } from "@/components/bike-fields";
 import { Flash, Nav, WearMeter, hours, interval, km } from "@/components/ui";
@@ -18,6 +20,8 @@ import { CONDITION_LABEL, FREE_ROWS, visitRows } from "@/lib/visit";
 
 const OK: Record<string, string> = {
   bike: "Bike salva.",
+  bike_manual: "Bike criada.",
+  verificada: "Peças confirmadas.",
   bike_modelo: "Bike criada com as peças de fábrica. Confira as datas e os planos.",
   troca_item: "Troca registrada: o contador desse item recomeçou.",
   desarquivada: "Bike reativada.",
@@ -73,10 +77,8 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
     return (<><Nav isAdmin={user.role === "ADMIN"} /><p className="alert">Bike não encontrada. <Link href="/bikes">Voltar</Link></p></>);
   }
   const { bike, parts, removed, events, totals, rideCount } = detail;
-  const categoryIds = [...new Set(parts.map((p) => p.component.categoryId))];
-  const [components, categories, sourceBikes, photo] = await Promise.all([
-    prisma.component.findMany({ where: { categoryId: { in: categoryIds }, active: true }, orderBy: [{ code: "asc" }, { brand: "asc" }] }),
-    prisma.category.findMany({ where: { active: true }, orderBy: { name: "asc" } }),
+  const [pickerCats, sourceBikes, photo] = await Promise.all([
+    pickerCategories(),
     listSourceBikes(user.id, user.activitySource),
     prisma.bikePhoto.findUnique({ where: { bikeId: bike.id }, select: { updatedAt: true } }),
   ]);
@@ -137,15 +139,10 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
         <div className="row" style={{ justifyContent: "space-between" }}>
           <h2>Peças instaladas</h2>
           {!bike.archivedAt && (
-            <nav className="row" aria-label="Adicionar peça">
-              <span className="muted">Adicionar peça:</span>
-              {categories.map((c) => (
-                <Link key={c.id} className="button small" href={`/bikes/${bike.id}/peca?categoria=${c.id}`}>{c.name}</Link>
-              ))}
-            </nav>
+            <Link className="button small" href={`/bikes/${bike.id}/peca`}>Adicionar peça</Link>
           )}
         </div>
-        {categories.length === 0 && <p className="muted">O catálogo ainda está vazio. Peça ao administrador para carregá-lo.</p>}
+        {pickerCats.length === 0 && <p className="muted">O catálogo ainda está vazio. Peça ao administrador para carregá-lo.</p>}
         {parts.length === 0 ? <p className="muted">Nenhuma peça instalada.</p> : (
           <ul className="list">
             {parts.map((part) => (
@@ -195,12 +192,7 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
                   <form action={replacePart} className="row">
                     <input type="hidden" name="partId" value={part.id} />
                     <label>Data <input name="date" type="date" required defaultValue={today} /></label>
-                    <label>Nova peça
-                      <select name="componentId" defaultValue={part.componentId}>
-                        {!components.some((c) => c.id === part.componentId) && <option value={part.componentId}>{part.component.brand} {part.component.model}</option>}
-                        {components.filter((c) => c.categoryId === part.component.categoryId).map((c) => <option key={c.id} value={c.id}>{componentLabel(c)}</option>)}
-                      </select>
-                    </label>
+                    <ComponentPicker categories={pickerCats.filter((c) => c.id === part.component.categoryId)} defaultCategoryId={part.component.categoryId} lockCategory />
                     <label>Observação <input name="note" maxLength={200} /></label>
                     <button className="button small" type="submit">Trocar peça</button>
                   </form>

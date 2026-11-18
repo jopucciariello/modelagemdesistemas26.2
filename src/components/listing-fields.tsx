@@ -1,9 +1,11 @@
 // RF16, RB07: listing form fields, shared by create and edit.
+import { ComponentPicker, type PickerCategory } from "@/components/component-picker";
 import { formatBRL, splitPhotos } from "@/lib/market";
 
 type Listing = {
   title: string;
   categoryId: string;
+  componentId?: string | null;
   condition: string;
   priceCents: number;
   description: string | null;
@@ -11,16 +13,11 @@ type Listing = {
   photoUrls: string;
 };
 
-export function ListingFields({ categories, listing }: { categories: { id: string; name: string }[]; listing?: Listing }) {
+export function ListingFields({ categories, listing }: { categories: PickerCategory[]; listing?: Listing }) {
   return (
     <>
-      <label>Título <input name="title" required maxLength={120} defaultValue={listing?.title} placeholder="Ex.: Cassete Shimano 11-34, 11v" /></label>
-      <label>Família da peça
-        <select name="categoryId" required defaultValue={listing?.categoryId ?? ""}>
-          <option value="" disabled>Escolha…</option>
-          {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
-        </select>
-      </label>
+      <ComponentPicker categories={categories} defaultCategoryId={listing?.categoryId} defaultComponentId={listing?.componentId ?? ""} />
+      <label>Título (opcional, por padrão usa marca e modelo) <input name="title" maxLength={120} defaultValue={listing?.title} placeholder="Ex.: Cassete Shimano 11-34, 11v" /></label>
       <label>Condição
         <select name="condition" required defaultValue={listing?.condition ?? "USED"}>
           <option value="NEW">Nova</option>

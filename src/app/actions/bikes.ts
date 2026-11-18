@@ -8,6 +8,8 @@ import { requireUser } from "@/lib/guards";
 import { bikeTypeFromCategory, plansFor } from "@/lib/catalog/rules";
 import { checkPhoto } from "@/lib/bike-photo";
 import { addManualMaintenanceFor, replacePartFor, servicePlanFor, type MaintenanceResult } from "@/lib/maintenance";
+import { requestCatalogAddition, resolvePicked } from "@/lib/catalog/pick";
+import { readPicked } from "@/lib/picker";
 import { recordVisit } from "@/lib/visit-record";
 
 /** Sends the athlete back to the bike (or the start) with the result flag. */
@@ -67,11 +69,17 @@ export async function createBike(form: FormData) {
   const f = bikeFields(form);
   const gearId = text(form, "stravaGearId", 40) || null;
   const modelId = text(form, "bikeModelId", 40);
+  const day = text(form, "installedAt", 10);
+  const verify = (id: string, flash: string) => redirect(`/bikes/${id}/verificar?ok=${flash}&data=${day}`);
   if (!modelId) {
-    if (!f.name || !f.type) redirect("/configuracoes?erro=bike_invalida");
+    // RF31: brand and model typed by hand (not in the catalog); no factory parts to install.
+    if (!f.name || !f.type || !f.brand || !f.model) redirect("/configuracoes?erro=bike_invalida");
     const bike = await prisma.bike.create({ data: { ...f, type: f.type!, userId: user.id } });
+    if (form.get("requestAdd") === "on") {
+      await requestCatalogAddition(user.id, { kind: "BIKE", family: null, text: `Bike: ${f.brand} ${f.model}${f.year ? ` (${f.year})` : ""}. Pedido feito ao cadastrar uma bike.` });
+    }
     await linkNewBike(user.id, bike.id, gearId);
-    redirect(`/bikes/${bike.id}?ok=bike`);
+    verify(bike.id, "bike_manual");
   }
   const model = await prisma.bikeModel.findFirst({
     where: { id: modelId, active: true },
@@ -79,7 +87,7 @@ export async function createBike(form: FormData) {
   });
   // RF05: "start at the first ride" makes the original parts count the whole history of the source bike.
   const firstRide = gearId && form.get("startAtFirstRide") ? await firstRideDay(user.id, gearId) : null;
-  const installedAt = firstRide ?? parseLocalDay(text(form, "installedAt", 10));
+  const installedAt = firstRide ?? parseLocalDay(day);
   if (!model || !installedAt) redirect("/configuracoes?erro=modelo_invalido");
   const bike = await prisma.bike.create({
     data: {
@@ -101,7 +109,30 @@ export async function createBike(form: FormData) {
     },
   });
   await linkNewBike(user.id, bike.id, gearId);
-  redirect(`/bikes/${bike.id}?ok=bike_modelo`);
+  verify(bike.id, "bike_modelo");
+}
+
+/**
+ * RF02, RF35: after creating a bike the athlete checks each installed part and swaps the ones that
+ * are not the real ones. The part keeps its installation date; its plans start again from the new
+ * component. Refused once the part has history.
+ */
+export async function fixPart(form: FormData) {
+  const user = await requireUser();
+  const part = await ownPart(user.id, text(form, "partId", 40));
+  const back = `/bikes/${part.bikeId}/verificar`;
+  const picked = readPicked(form);
+  const resolved = picked ? await resolvePicked(user.id, picked) : null;
+  if (!resolved || part.removedAt) redirect(`${back}?erro=componente`);
+  if (resolved!.componentId !== part.componentId) {
+    if (await prisma.maintenanceEvent.findFirst({ where: { partId: part.id } })) redirect(`${back}?erro=peca_com_historico`);
+    const next = await prisma.component.findFirst({ where: { id: resolved!.componentId }, include: { plans: true, category: { include: { plans: true } } } });
+    await prisma.$transaction([
+      prisma.maintenancePlan.deleteMany({ where: { partId: part.id } }),
+      prisma.part.update({ where: { id: part.id }, data: { componentId: next!.id, plans: { create: plansFor(next!.plans, next!.category.plans) } } }),
+    ]);
+  }
+  redirect(`${back}?ok=peca_corrigida`);
 }
 
 /** RF01 */
@@ -216,13 +247,16 @@ export async function linkSourceBike(form: FormData) {
 export async function createPart(form: FormData) {
   const user = await requireUser();
   const bike = await ownBike(user.id, text(form, "bikeId", 40));
-  const component = await prisma.component.findFirst({
-    where: { id: text(form, "componentId", 40), active: true, category: { active: true } },
-    include: { plans: true, category: { include: { plans: true } } },
-  });
+  const picked = readPicked(form);
+  const q = new URLSearchParams({ categoria: text(form, "categoryId", 40), componente: text(form, "componentId", 40) });
+  for (const k of ["manualBrand", "manualModel", "requestAdd"]) if (form.get(k)) q.set(k, text(form, k, 80));
+  const back = `/bikes/${bike.id}/peca?${q}`;
+  const resolved = picked ? await resolvePicked(user.id, picked) : null;
+  const component = resolved
+    ? await prisma.component.findFirst({ where: { id: resolved.componentId }, include: { plans: true, category: { include: { plans: true } } } })
+    : null;
   const installedAt = parseLocalDay(text(form, "installedAt", 10));
   const plans = readPlans(form);
-  const back = `/bikes/${bike.id}/peca?categoria=${text(form, "categoryId", 40)}&componente=${text(form, "componentId", 40)}`;
   if (!component) redirect(`${back}&erro=componente`);
   if (!installedAt) redirect(`${back}&erro=data`);
   // RB16: a part has plans unless its catalog entry has none (no regular wear).
@@ -269,7 +303,9 @@ export async function servicePlan(form: FormData) {
 /** RF10, RB05, OPEN-16: close the old part and start a new one with the same plans, zeroed. */
 export async function replacePart(form: FormData) {
   const user = await requireUser();
-  finish(await replacePartFor(user.id, text(form, "partId", 40), text(form, "date", 10), text(form, "componentId", 40), text(form, "note", 200)));
+  const picked = readPicked(form);
+  const resolved = picked ? await resolvePicked(user.id, picked) : null;
+  finish(await replacePartFor(user.id, text(form, "partId", 40), text(form, "date", 10), resolved?.componentId ?? "", text(form, "note", 200), !!resolved));
 }
 
 /** RF12: manual maintenance without replacing a part (e.g. lubrication). */
