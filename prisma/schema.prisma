@@ -41,18 +41,24 @@ model User {
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 
-  bikes         Bike[]
-  rides         Ride[]
-  strava        StravaConnection?
-  connector     ConnectorConnection?
-  sessions      Session[]
-  modelRequests ModelRequest[]
+  bikes            Bike[]
+  rides            Ride[]
+  strava           StravaConnection?
+  connector        ConnectorConnection?
+  sessions         Session[]
+  modelRequests    ModelRequest[]
   // Fase 2 (ADR-008)
-  merchant      Merchant?
-  listings      Listing[]
-  dreams        Dream[]
-  notifications Notification[]
-  appointments  Appointment[]
+  merchant         Merchant?
+  listings         Listing[]
+  dreams           Dream[]
+  notifications    Notification[]
+  appointments     Appointment[]
+  // RF16: seller contact shown to buyers (digits only, with country code).
+  whatsapp         String?
+  // RF38: e-mail copy of notifications is opt-in; the in-app notice is always created.
+  emailAlerts      Boolean              @default(false)
+  merchantRequests MerchantRequest[]
+  listingReports   ListingReport[]
 }
 
 // RF33, RNF01: the athlete's own Strava app (ADR-006). The client secret and the tokens are
@@ -127,16 +133,17 @@ enum ItemCondition {
 
 // RF30: part category, maintained by the admin. RB14: wearsOnTrainer.
 model Category {
-  id             String         @id @default(cuid())
-  name           String         @unique
-  wearsOnTrainer Boolean        @default(false)
-  active         Boolean        @default(true)
-  plans          CategoryPlan[]
-  components     Component[]
-  listings       Listing[]
-  dreams         Dream[]
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+  id               String           @id @default(cuid())
+  name             String           @unique
+  wearsOnTrainer   Boolean          @default(false)
+  active           Boolean          @default(true)
+  plans            CategoryPlan[]
+  components       Component[]
+  listings         Listing[]
+  dreams           Dream[]
+  merchantFamilies MerchantFamily[]
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
 }
 
 // RF30, RF03, RB10: default maintenance plan of a category (km, hours or both).
@@ -171,6 +178,8 @@ model Component {
   plans       ComponentPlan[]
   parts       Part[]
   bikeModels  BikeModelPart[]
+  listings    Listing[]
+  dreams      Dream[]
   createdAt   DateTime        @default(now())
 
   @@unique([categoryId, brand, model])
@@ -276,6 +285,9 @@ model MaintenancePlan {
   warnHours     Float?
   action        PlanAction
   lastServiceAt DateTime?
+  // RB23: staged revisions (e.g. "100,150" hours); stageIndex is the current target.
+  stageHours    String?
+  stageIndex    Int        @default(0)
 }
 
 // RF06, RF14, ADR-007: every ride is stored; wear is computed from them.
@@ -332,6 +344,12 @@ model ServiceVisit {
 }
 
 // RF26, RF28: lifecycle of an appointment.
+enum WorkshopStatus {
+  PENDING
+  ACTIVE
+  REJECTED
+}
+
 enum AppointmentStatus {
   SCHEDULED
   COMPLETED
@@ -346,9 +364,19 @@ model Workshop {
   description  String?
   address      String?
   phone        String?
+  // RF25, #69: site and coordinates (nearby list by distance, OpenStreetMap map).
+  website      String?
+  latitude     Float?
+  longitude    Float?
+  // RF25, OPEN-40: the shop asks for registration (free text + contact); the admin approves.
+  status       WorkshopStatus    @default(ACTIVE)
+  requestText  String?
+  contact      String?
   active       Boolean           @default(true)
   services     WorkshopService[]
   slots        WorkshopSlot[]
+  hours        WorkshopHour[]
+  members      WorkshopMember[]
   appointments Appointment[]
   notices      WorkshopNotice[]
   createdAt    DateTime          @default(now())
@@ -363,8 +391,35 @@ model WorkshopService {
   name         String
   description  String?
   includes     String        @default("")
+  // RF25, RF26: estimated duration that occupies the agenda; optional price [PROPOSTO] (#69).
+  durationMin  Int           @default(60)
+  priceCents   Int?
   active       Boolean       @default(true)
   appointments Appointment[]
+}
+
+// RF25, OPEN-41: weekly grid (0 = Sunday .. 6 = Saturday), minutes since 00:00 São Paulo time.
+model WorkshopHour {
+  id         String   @id @default(cuid())
+  workshopId String
+  workshop   Workshop @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  weekday    Int
+  startMin   Int
+  endMin     Int
+
+  @@index([workshopId])
+}
+
+// RF25, RB21: a mechanic invited by the owner by e-mail.
+model WorkshopMember {
+  id         String   @id @default(cuid())
+  workshopId String
+  workshop   Workshop @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  email      String
+  createdAt  DateTime @default(now())
+
+  @@unique([workshopId, email])
+  @@index([email])
 }
 
 // RF25, RB22, OPEN-41: an available time (UTC) offered by the workshop.
@@ -380,25 +435,29 @@ model WorkshopSlot {
 
 // RF26, RF27, RF28, RB09: booking = the athlete's authorization to share the bike history.
 model Appointment {
-  id          String            @id @default(cuid())
-  workshopId  String
-  workshop    Workshop          @relation(fields: [workshopId], references: [id], onDelete: Cascade)
-  slotId      String
-  slot        WorkshopSlot      @relation(fields: [slotId], references: [id], onDelete: Cascade)
-  userId      String
-  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  bikeId      String
-  bike        Bike              @relation(fields: [bikeId], references: [id], onDelete: Cascade)
-  serviceId   String?
-  service     WorkshopService?  @relation(fields: [serviceId], references: [id], onDelete: SetNull)
-  status      AppointmentStatus @default(SCHEDULED)
-  cancelledAt DateTime?
-  completedAt DateTime?
+  id           String            @id @default(cuid())
+  workshopId   String
+  workshop     Workshop          @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  slotId       String
+  slot         WorkshopSlot      @relation(fields: [slotId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bikeId       String
+  bike         Bike              @relation(fields: [bikeId], references: [id], onDelete: Cascade)
+  serviceId    String?
+  service      WorkshopService?  @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  status       AppointmentStatus @default(SCHEDULED)
+  // RF26: end = start + service duration (overlap check).
+  endsAt       DateTime?
+  // RF27, OPEN-42: the athlete chose to share the bike history with the shop.
+  shareHistory Boolean           @default(false)
+  cancelledAt  DateTime?
+  completedAt  DateTime?
   // RF28: the visit written to the bike history when the workshop concludes.
-  visitId     String?           @unique
-  visit       ServiceVisit?     @relation(fields: [visitId], references: [id], onDelete: SetNull)
-  notices     WorkshopNotice[]
-  createdAt   DateTime          @default(now())
+  visitId      String?           @unique
+  visit        ServiceVisit?     @relation(fields: [visitId], references: [id], onDelete: SetNull)
+  notices      WorkshopNotice[]
+  createdAt    DateTime          @default(now())
 
   @@index([workshopId, status])
   @@index([userId])
@@ -432,14 +491,65 @@ enum ListingStatus {
 
 // RF18, RF19, RB06: store profile created by the admin for a user; only the admin sets `verified`.
 model Merchant {
-  id          String    @id @default(cuid())
-  userId      String    @unique
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String           @id @default(cuid())
+  userId      String           @unique
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   name        String
   description String?
-  verified    Boolean   @default(false)
+  verified    Boolean          @default(false)
   verifiedAt  DateTime?
-  createdAt   DateTime  @default(now())
+  // RF18: link of the shop, offered to buyers as a button on the merchant's listings.
+  shopUrl     String?
+  // RF22: paid add-on ("informação privilegiada"); only the admin flips it.
+  dreamAlerts Boolean          @default(false)
+  families    MerchantFamily[]
+  createdAt   DateTime         @default(now())
+}
+
+// RF18: families (categories) the merchant says they sell; RF22 notifies only these.
+model MerchantFamily {
+  merchantId String
+  merchant   Merchant @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([merchantId, categoryId])
+}
+
+enum MerchantRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// RF18: a user asks to become a merchant with free text and a contact; the admin approves or rejects.
+model MerchantRequest {
+  id        String                @id @default(cuid())
+  userId    String
+  user      User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  storeName String
+  message   String
+  contact   String
+  shopUrl   String?
+  status    MerchantRequestStatus @default(PENDING)
+  decidedAt DateTime?
+  createdAt DateTime              @default(now())
+
+  @@index([status])
+}
+
+// RF24: a user reports a listing; one report per user and listing. The admin reviews and removes.
+model ListingReport {
+  id         String    @id @default(cuid())
+  listingId  String
+  listing    Listing   @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  reporterId String
+  reporter   User      @relation(fields: [reporterId], references: [id], onDelete: Cascade)
+  reason     String
+  resolvedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@unique([listingId, reporterId])
 }
 
 // RF16, RF24, RB07, RB19: part for sale. Price in cents (BRL). usedKm is typed by the seller (RB07).
@@ -456,6 +566,10 @@ model Listing {
   usedKm        Float?
   // RF16: up to 3 image URLs, newline-separated (OPEN-31).
   photoUrls     String           @default("")
+  // RF16 (17/11): catalog model of the part; matches dreams (RF21). Null for free-form listings.
+  componentId   String?
+  component     Component?       @relation(fields: [componentId], references: [id])
+  reports       ListingReport[]
   status        ListingStatus    @default(ACTIVE)
   removedReason String?
   removedAt     DateTime?
@@ -467,14 +581,17 @@ model Listing {
 
 // RF20: wished part with a maximum price (OPEN-32: category + optional keywords).
 model Dream {
-  id            String   @id @default(cuid())
+  id            String     @id @default(cuid())
   userId        String
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   categoryId    String
-  category      Category @relation(fields: [categoryId], references: [id])
+  category      Category   @relation(fields: [categoryId], references: [id])
   keywords      String?
+  // RF20 (17/11): the wished part is a catalog model; null only for dreams created before the change.
+  componentId   String?
+  component     Component? @relation(fields: [componentId], references: [id])
   maxPriceCents Int
-  createdAt     DateTime @default(now())
+  createdAt     DateTime   @default(now())
 }
 
 // RF21, RF22, RF23 (OPEN-34): in-app notifications. refKey makes each one idempotent per user.

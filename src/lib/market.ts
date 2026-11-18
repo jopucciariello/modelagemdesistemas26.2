@@ -1,4 +1,4 @@
-// RF16, RF17, RB07: pure rules of the parts market (no DB, no UI).
+// RF16, RF17, RB07: pure rules of the parts market (no DB, no UI). M3: contact, reports, dream-by-model.
 
 export const MAX_PHOTOS = 3;
 
@@ -104,3 +104,60 @@ export const ERROR_TEXT: Record<string, string> = {
   km_invalida: "Informe a km de uso como um número válido.",
   anuncio_nao_encontrado: "Anúncio não encontrado ou não é seu.",
 };
+
+// ---- M3 (17/11/2026): contact, dream-by-model, merchant request, reports --------------------
+
+/** RF16: seller WhatsApp kept as digits with country code; Brazilian numbers without it get 55. Null when invalid. */
+export function normalizeWhatsapp(raw: string): string | null {
+  let digits = raw.replace(/\D/g, "");
+  if (digits.startsWith("00")) digits = digits.slice(2);
+  if (digits.length === 10 || digits.length === 11) digits = `55${digits}`;
+  return digits.length >= 12 && digits.length <= 15 ? digits : null;
+}
+
+/** RF16: wa.me link the buyer opens to talk to the seller (title in the pre-filled message). */
+export function whatsappLink(whatsapp: string, title: string): string {
+  return `https://wa.me/${whatsapp}?text=${encodeURIComponent(`Olá! Vi seu anúncio no GearLog: ${title}`)}`;
+}
+
+/** RF18: request to become a merchant needs a store name, a message and a contact. */
+export type MerchantRequestInput = { storeName: string; message: string; contact: string; shopUrl?: string | null };
+
+export function validateMerchantRequest(input: MerchantRequestInput): ListingCheck {
+  if (input.storeName.trim().length < 2) return { ok: false, error: "loja_sem_nome" };
+  if (input.message.trim().length < 10) return { ok: false, error: "pedido_curto" };
+  if (input.contact.trim().length < 5) return { ok: false, error: "contato_invalido" };
+  if (input.shopUrl && !isHttpUrl(input.shopUrl)) return { ok: false, error: "loja_url_invalida" };
+  return { ok: true };
+}
+
+/** RF24: a report needs a reason of at least 5 characters; at most 300. */
+export function cleanReportReason(raw: string): string | null {
+  const reason = raw.trim().replace(/\s+/g, " ").slice(0, 300);
+  return reason.length >= 5 ? reason : null;
+}
+
+/** RF21 (17/11): a dream matches by catalog model (same component) and price <= max. Never the author. */
+export type ModelDream = { userId: string; componentId: string | null; maxPriceCents: number };
+export type ModelListing = { sellerId: string; componentId: string | null; priceCents: number; status: string };
+
+export function matchesDreamByModel(dream: ModelDream, listing: ModelListing): boolean {
+  if (listing.status !== "ACTIVE" || !dream.componentId || !listing.componentId) return false;
+  if (dream.userId === listing.sellerId) return false;
+  return dream.componentId === listing.componentId && listing.priceCents <= dream.maxPriceCents;
+}
+
+/** RF21: a edit only re-alerts when the match was not true before (new model or price dropped into range). */
+export function becameMatch(dream: ModelDream, before: ModelListing, after: ModelListing): boolean {
+  return !matchesDreamByModel(dream, before) && matchesDreamByModel(dream, after);
+}
+
+Object.assign(ERROR_TEXT, {
+  loja_sem_nome: "Informe o nome da loja.",
+  pedido_curto: "Conte em pelo menos 10 caracteres quem é a loja.",
+  contato_invalido: "Informe um contato (telefone, e-mail ou Instagram).",
+  loja_url_invalida: "O link da loja precisa ser http ou https.",
+  whatsapp_invalido: "Informe o WhatsApp com DDD, por exemplo (11) 91234-5678.",
+  motivo_invalido: "Explique a denúncia em pelo menos 5 caracteres.",
+  anuncio_proprio: "Você não pode denunciar o próprio anúncio.",
+});

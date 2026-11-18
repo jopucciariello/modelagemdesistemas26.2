@@ -267,3 +267,91 @@ details[open] > .bike-summary::after { transform: rotate(180deg); }
 .new-ride-card:target, .new-ride-card.open { display: block; }
 
 body > footer { max-width: 56rem; margin: 0 auto; padding: 0 1rem 2rem; text-align: center; color: var(--muted); }
+
+/* ===== Polish pass (visual only) ===== */
+:root { --radius: 14px; --ring: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent); --accent-ink: #fff; }
+@media (prefers-color-scheme: dark) { :root { --accent-ink: #06231a; } }
+::selection { background: var(--accent-soft); }
+:focus-visible { outline: none; box-shadow: var(--ring); border-radius: 8px; }
+a { text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+
+/* Page skeleton: nav first, then the title, then content, on every screen. */
+.app-header { order: -2; }
+.nav { order: -1; }
+main > header:not(.app-header):not(.rides-head) { display: flex; flex-direction: column; gap: 0.25rem; }
+main > header h1 + p, .page-title p { max-width: 42rem; }
+h1 { font-size: 1.6rem; }
+h2 { letter-spacing: -0.01em; }
+.nav a { padding: 0.5rem 0.95rem; }
+.nav a:hover { text-decoration: none; }
+body > footer { margin-top: 1rem; font-size: 0.85rem; line-height: 1.6; }
+body > footer a { color: var(--muted); }
+
+/* Buttons: one primary style, quiet secondary for small actions. */
+.button { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); text-align: center; box-shadow: var(--shadow); line-height: 1.2; }
+.button:hover { filter: brightness(1.07); text-decoration: none; }
+.button:active { transform: translateY(1px); }
+.button.small { background: var(--surface); border-color: var(--border); color: var(--foreground); box-shadow: none; padding: 0.45rem 0.8rem; }
+.button.small:hover { border-color: var(--accent); color: var(--accent); filter: none; }
+.button.danger, .button.small.danger { background: var(--danger-soft); color: var(--danger); border-color: transparent; }
+.button.danger:hover { background: var(--danger); color: #fff; }
+.button-strava { color: #fff; }
+.new-ride-card .rides-head .muted, .rides-head a.muted { font-size: 0.9rem; }
+
+/* Forms */
+label { color: var(--muted); font-weight: 600; font-size: 0.82rem; }
+label.check { color: var(--foreground); font-weight: 400; font-size: 0.9rem; }
+input, select, textarea { min-height: 2.5rem; padding: 0.5rem 0.7rem; border-radius: 10px; color: var(--foreground); font-weight: 400; font-size: 0.95rem; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: var(--ring); }
+input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.7; }
+input[type="checkbox"] { min-height: 0; accent-color: var(--accent); width: 1.05rem; height: 1.05rem; }
+form.stack { gap: 0.85rem; }
+form.stack input, form.stack select, form.stack textarea { max-width: 100%; }
+form.row { gap: 0.75rem; }
+.card form.row > .button { align-self: end; }
+
+/* Cards, lists, tables */
+.card { border-radius: 16px; padding: 1.25rem; gap: 0.9rem; }
+.card > h2:first-child { font-size: 1.1rem; }
+.list > li { padding-top: 0.9rem; }
+.card .list > li:hover { background: transparent; }
+table { font-size: 0.92rem; }
+th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 700; white-space: nowrap; }
+tbody tr:hover td { background: color-mix(in srgb, var(--accent-soft) 45%, transparent); }
+tbody tr:last-child td { border-bottom: 0; }
+td, th { padding: 0.65rem 0.6rem; }
+details > summary { padding: 0.15rem 0; list-style-position: inside; }
+details.card > summary { font-size: 1rem; }
+.alert { background: var(--danger-soft); border-radius: 10px; padding: 0.7rem 0.9rem; font-weight: 600; font-size: 0.92rem; }
+.ok { background: var(--good-soft); border-radius: 10px; padding: 0.7rem 0.9rem; font-weight: 600; font-size: 0.92rem; }
+p.muted, .muted { color: var(--muted); }
+.empty { padding: 2rem 1rem; border-style: dashed; box-shadow: none; }
+.empty h2 { font-size: 1.15rem; }
+.view-on-strava { white-space: nowrap; }
+
+/* Rides: cards instead of a squeezed table on phones. */
+@media (max-width: 40rem) {
+  .rides-table, .rides-table tbody { display: block; }
+  .rides-table thead { display: none; }
+  .rides-table tr { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem 0.75rem; padding: 0.8rem 0; border-bottom: 1px solid var(--border); }
+  .rides-table tr:last-child { border-bottom: 0; }
+  .rides-table td { border: 0; padding: 0; background: none !important; font-size: 0.88rem; color: var(--muted); }
+  .rides-table td:first-child { color: var(--foreground); font-weight: 700; font-size: 1.1rem; }
+  .rides-table td:nth-child(2) { flex: 1; }
+  .rides-table td:nth-child(3) { color: var(--foreground); }
+  .rides-table td:nth-child(5) { margin-left: auto; }
+  .rides-table td:last-child { flex-basis: 100%; }
+  main { padding-top: 1rem; }
+}
+
+/* Dense admin and workshop screens */
+.card details { border-top: 1px solid var(--border); padding-top: 0.6rem; }
+.card details > summary { color: var(--accent); font-size: 0.92rem; }
+.stat { transition: transform 0.15s; }
+@media (hover: hover) { .bike-card:hover, .card:has(h2 a):hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); } }
+@media (min-width: 40rem) { main > header h1 { font-size: 1.9rem; } }
+@media (max-width: 40rem) {
+  .nav { gap: 0.1rem; padding: 0.2rem; }
+  .nav a { padding: 0.4rem 0.6rem; font-size: 0.86rem; }
+}
