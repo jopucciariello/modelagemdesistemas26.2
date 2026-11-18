@@ -1,4 +1,4 @@
-// RF33: start the Strava OAuth flow with the logged-in athlete's own app.
+// RF04, ADR-006: start the Strava OAuth flow with the GearLog central app.
 import { NextResponse } from "next/server";
 import { appUrl } from "@/lib/env";
 import { randomToken } from "@/lib/crypto";

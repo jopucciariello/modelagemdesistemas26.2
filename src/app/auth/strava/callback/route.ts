@@ -1,4 +1,4 @@
-// RF33: Strava redirects here after the athlete authorizes (or denies) access to their own app.
+// RF04, ADR-006: Strava redirects here after the athlete authorizes (or denies) access.
 import { NextResponse, type NextRequest } from "next/server";
 import { appUrl } from "@/lib/env";
 import { getCurrentUser } from "@/lib/session";
