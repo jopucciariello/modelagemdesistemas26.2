@@ -109,12 +109,16 @@ export async function syncRides(userId: string): Promise<{ imported: number }> {
     const rides = await fetchRides(userId, source);
     const bikes = await prisma.bike.findMany({ where: { userId, stravaGearId: { not: null } }, select: { id: true, stravaGearId: true } });
     const bikeByGear = new Map(bikes.map((b) => [b.stravaGearId!, b.id]));
+    const chosen = new Set((await prisma.ride.findMany({ where: { userId, bikeChosen: true }, select: { externalId: true } })).map((r) => r.externalId));
     await prisma.$transaction(
       rides.map((r) => {
+        // OPEN-20: a bike the athlete chose by hand stays while the source sends no gear for the ride.
+        const keepChoice = !r.stravaGearId && chosen.has(r.externalId);
+        const gearBike = r.stravaGearId ? (bikeByGear.get(r.stravaGearId) ?? null) : null;
         const data = {
           source,
           stravaGearId: r.stravaGearId,
-          bikeId: r.stravaGearId ? (bikeByGear.get(r.stravaGearId) ?? null) : null,
+          ...(keepChoice ? {} : { bikeId: gearBike, bikeChosen: false }),
           sportType: r.sportType,
           startDate: r.startDate,
           distanceKm: r.distanceKm,
@@ -123,7 +127,7 @@ export async function syncRides(userId: string): Promise<{ imported: number }> {
         return prisma.ride.upsert({
           where: { userId_externalId: { userId, externalId: r.externalId } },
           update: data,
-          create: { ...data, userId, externalId: r.externalId },
+          create: { ...data, bikeId: gearBike, userId, externalId: r.externalId },
         });
       }),
     );
