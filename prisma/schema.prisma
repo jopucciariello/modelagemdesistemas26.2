@@ -266,6 +266,13 @@ model Part {
   removedAt    DateTime?
   initialKm    Float              @default(0)
   initialHours Float              @default(0)
+  // RF02: new or used part; for a used one, the condition the athlete noted.
+  isUsed        Boolean           @default(false)
+  usedCondition String?
+  // RF39: removed from the bike but kept in stock; stockKm/stockHours is its usage when it left the bike.
+  inStock       Boolean           @default(false)
+  stockKm       Float             @default(0)
+  stockHours    Float             @default(0)
   plans        MaintenancePlan[]
   events       MaintenanceEvent[]
   createdAt    DateTime           @default(now())

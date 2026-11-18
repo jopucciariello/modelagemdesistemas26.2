@@ -1,6 +1,7 @@
 // RF01, RF02, RF05, RF07-RF12, RB13, RB16: one bike with its parts, wear and history.
 import Link from "next/link";
 import { Suspense } from "react";
+import { removePart } from "@/app/actions/stock";
 import { addManualMaintenance, linkSourceBike, updatePart, recordShopVisit, replacePart, servicePlan, deleteBike, removeBikePhoto, setBikePhoto, toggleArchiveBike, updateBike, updatePlan } from "@/app/actions/bikes";
 import { BikeAvatar } from "@/components/bike-avatar";
 import { BikeFields } from "@/components/bike-fields";
@@ -26,6 +27,9 @@ const OK: Record<string, string> = {
   peca: "Peça instalada.",
   plano: "Plano atualizado.",
   revisao: "Revisão registrada: o contador desse plano recomeçou.",
+  peca_estoque: "Peça tirada da bike e guardada no estoque.",
+  peca_deletada: "Peça deletada.",
+  peca_instalada: "Peça do estoque instalada.",
   troca: "Troca registrada: a peça antiga foi para o histórico e a nova começou do zero.",
   manutencao: "Manutenção registrada no histórico.",
   peca_editada: "Peça atualizada: o desgaste foi recalculado.",
@@ -200,6 +204,20 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
                     <button className="button small" type="submit">Trocar peça</button>
                   </form>
                 </details>
+                <details>
+                  <summary>Tirar a peça da bike</summary>
+                  <form action={removePart} className="row">
+                    <input type="hidden" name="partId" value={part.id} />
+                    <label>Data <input name="date" type="date" required defaultValue={today} /></label>
+                    <label>O que fazer com ela
+                      <select name="mode" defaultValue="stock">
+                        <option value="stock">Guardar no estoque</option>
+                        <option value="delete">Deletar</option>
+                      </select>
+                    </label>
+                    <button className="button small" type="submit">Tirar peça</button>
+                  </form>
+                </details>
               </li>
             ))}
           </ul>
@@ -300,7 +318,7 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
             <summary>Peças trocadas ({removed.length})</summary>
             <ul className="list">
               {removed.map((p) => (
-                <li key={p.id}>{p.position ?? p.component.category.name} · {componentLabel(p.component)} <span className="muted">({formatDay(p.installedAt)} a {formatDay(p.removedAt!)})</span></li>
+                <li key={p.id}>{p.position ?? p.component.category.name} · {componentLabel(p.component)} <span className="muted">({formatDay(p.installedAt)} a {formatDay(p.removedAt!)}){p.inStock ? " · no estoque" : ""}</span></li>
               ))}
             </ul>
           </details>
