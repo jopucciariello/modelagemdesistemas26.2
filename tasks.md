@@ -86,5 +86,5 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 - [x] T-73 Oficinas próximas por distância e horários livres pela grade — RF25, RF26 — #69 #31
 - [x] T-74 Agendar com escolha de compartilhar histórico — RF26, RF27, RB09 — #31 #32
 - [ ] T-75 Cancelamento com aviso por e-mail — RF29, RF38 — #34
-- [ ] T-76 Concluir OS avança meta de revisão em etapas — RF28, RB23 — #33
+- [x] T-76 Concluir OS avança meta de revisão em etapas — RF28, RB23 — #33
 - [ ] T-77 Telas Expo de oficina e agenda — RF25–RF29 — #71
