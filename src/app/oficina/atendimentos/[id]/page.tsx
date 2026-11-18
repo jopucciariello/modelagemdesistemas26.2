@@ -7,7 +7,7 @@ import { prisma } from "@/lib/db";
 import { formatDay, toLocalDay } from "@/lib/dates";
 import { getCurrentWorkshop } from "@/lib/session";
 import { CONDITION_LABEL, FREE_ROWS, visitRows } from "@/lib/visit";
-import { canWorkshopAccessBike, formatSlot } from "@/lib/workshop";
+import { canWorkshopAccessBike, canWorkshopReadHistory, formatSlot } from "@/lib/workshop";
 import { connection } from "next/server";
 
 const ERR = {
@@ -49,7 +49,9 @@ async function Detail({ params, searchParams }: PageProps<"/oficina/atendimentos
   if (!appt || !canWorkshopAccessBike([appt], workshop.id, appt.bikeId)) {
     return <><Nav /><p className="alert" role="alert">Sem acesso a esta bike: não há agendamento ativo ou concluído com a sua oficina. <Link href="/oficina">Voltar</Link></p></>;
   }
-  const [parts, events] = await Promise.all([
+  // RF27, RNF03: the history is read only when the athlete chose to share it at booking.
+  const shared = canWorkshopReadHistory([appt], workshop.id, appt.bikeId);
+  const [parts, events] = !shared ? [[], []] : await Promise.all([
     prisma.part.findMany({ where: { bikeId: appt.bikeId, removedAt: null }, include: { plans: true, component: { include: { category: true } } }, orderBy: { installedAt: "asc" } }),
     prisma.maintenanceEvent.findMany({ where: { bikeId: appt.bikeId }, include: { visit: { select: { shop: true } } }, orderBy: { date: "desc" }, take: 50 }),
   ]);
@@ -71,12 +73,16 @@ async function Detail({ params, searchParams }: PageProps<"/oficina/atendimentos
         </p>
         <p><strong>Serviço:</strong> {appt.service?.name ?? "—"}</p>
         {items.length > 0 && <><p className="muted">O que o serviço inclui:</p><ul>{items.map((i) => <li key={i}>{i}</li>)}</ul></>}
-        <p className="muted">O atleta autorizou o compartilhamento deste histórico ao agendar. O acesso é somente leitura e termina se o agendamento for cancelado.</p>
+        <p className="muted">
+          {shared
+            ? "O atleta escolheu compartilhar o histórico desta bike ao agendar. O acesso é somente leitura e termina se o agendamento for cancelado."
+            : "O atleta não compartilhou o histórico desta bike: você vê só os dados do agendamento e pode registrar o serviço em itens livres."}
+        </p>
       </section>
 
       <section className="card">
         <h2>Peças instaladas</h2>
-        {parts.length === 0 ? <p className="muted">Nenhuma peça cadastrada.</p> : (
+        {!shared ? <p className="muted">Histórico não compartilhado.</p> : parts.length === 0 ? <p className="muted">Nenhuma peça cadastrada.</p> : (
           <div className="table-wrap"><table>
             <thead><tr><th>Posição / família</th><th>Componente</th><th>Instalada em</th></tr></thead>
             <tbody>{parts.map((p) => (
@@ -88,7 +94,7 @@ async function Detail({ params, searchParams }: PageProps<"/oficina/atendimentos
 
       <section className="card">
         <h2>Histórico de manutenção</h2>
-        {events.length === 0 ? <p className="muted">Sem registros.</p> : (
+        {!shared ? <p className="muted">Histórico não compartilhado.</p> : events.length === 0 ? <p className="muted">Sem registros.</p> : (
           <div className="table-wrap"><table>
             <thead><tr><th>Data</th><th>Registro</th></tr></thead>
             <tbody>{events.map((e) => <tr key={e.id}><td>{formatDay(e.date)}</td><td>{e.note}{e.visit?.shop ? ` · ${e.visit.shop}` : ""}</td></tr>)}</tbody>
