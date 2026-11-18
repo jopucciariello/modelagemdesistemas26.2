@@ -25,3 +25,15 @@ export type BikeDto = {
 };
 
 export type DashboardDto = { counts: { due: number; near: number; ok: number }; bikes: BikeDto[] };
+
+/** Formato de GET /api/bikes/:id (espelha src/lib/bike-detail-dto.ts). */
+export type BikeDetailDto = {
+  id: string;
+  name: string;
+  type: string;
+  archived: boolean;
+  totals: { km: number; hours: number; rides: number };
+  parts: { id: string; label: string; componentLabel: string; installedAt: string; plans: PlanDto[] }[];
+  removedCount: number;
+  events: { id: string; type: 'REPLACEMENT' | 'SERVICE' | 'MANUAL'; date: string; note: string; shop: string | null }[];
+};

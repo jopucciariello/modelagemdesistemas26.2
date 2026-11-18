@@ -8,6 +8,7 @@ export default function AppLayout() {
       <Tabs.Screen name="oficinas" options={{ title: 'Oficinas' }} />
       <Tabs.Screen name="mercado" options={{ title: 'Mercado' }} />
       <Tabs.Screen name="configuracoes" options={{ title: 'Configurações' }} />
+      <Tabs.Screen name="bike/[id]" options={{ href: null }} />
     </Tabs>
   );
 }
