@@ -51,3 +51,12 @@ export async function resolvePicked(userId: string, picked: Picked): Promise<{ c
   if (picked.requestAdd) await requestCatalogAddition(userId, { kind: "COMPONENT", family: category.name, text: requestText(category.name, brand, model) });
   return { componentId: component.id };
 }
+
+/**
+ * OPEN-49: id of the hidden component an athlete typed by hand with this brand and model, if any.
+ * When the admin registers the real model, it adopts this row, so the athletes' parts keep their wear history.
+ */
+export async function hiddenComponentId(input: { categoryId: string; brand: string; model: string }): Promise<string | null> {
+  const found = await prisma.component.findFirst({ where: { ...input, active: false, code: null } });
+  return found?.id ?? null;
+}

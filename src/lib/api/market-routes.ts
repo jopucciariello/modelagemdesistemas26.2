@@ -1,6 +1,7 @@
 // Router of the M3 endpoints (/api/v1/...), used by the Expo app. Framework-agnostic: Request -> Response.
 import "server-only";
 import { prisma } from "@/lib/db";
+import { hiddenComponentId } from "@/lib/catalog/pick";
 import { getApiUser, type ApiUser } from "@/lib/api/auth";
 import * as svc from "@/lib/market-service";
 import { ERROR_TEXT, whatsappLink } from "@/lib/market";
@@ -139,7 +140,10 @@ const routes: Array<[string, string, Handler]> = [
     if (!input) return err("componente_invalido");
     const { plans, ...data } = input;
     const dup = await prisma.component.findFirst({ where: { OR: [{ categoryId: data.categoryId, brand: data.brand, model: data.model }, ...(data.code ? [{ code: data.code }] : [])] } });
-    if (dup) return err("componente_existe", 409);
+    const hidden = await hiddenComponentId({ categoryId: data.categoryId, brand: data.brand, model: data.model });
+    if (dup && dup.id !== hidden) return err("componente_existe", 409);
+    // OPEN-49: adopt the hidden component athletes typed by hand, keeping their parts.
+    if (hidden) return json(await prisma.component.update({ where: { id: hidden }, data: { ...data, active: true, plans: { deleteMany: {}, create: plans } } }), 201);
     return json(await prisma.component.create({ data: { ...data, plans: { create: plans } } }), 201);
   }, true)],
   // RB15: components are deactivated, never deleted (parts may point to them).
