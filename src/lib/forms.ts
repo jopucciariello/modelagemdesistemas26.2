@@ -6,7 +6,11 @@ export function text(form: FormData, name: string, max = 120): string {
 
 /** Optional non-negative number; accepts "1.234,5" or "1234.5". Null when empty or invalid. */
 export function optNumber(form: FormData, name: string): number | null {
-  const raw = text(form, name, 30);
+  return parseDecimal(text(form, name, 30));
+}
+
+/** "12,5" or "12.5" -> 12.5; empty, negative or not a number -> null. */
+export function parseDecimal(raw: string): number | null {
   if (!raw) return null;
   const normalized = raw.includes(",") ? raw.replace(/\./g, "").replace(",", ".") : raw;
   const n = Number(normalized);
