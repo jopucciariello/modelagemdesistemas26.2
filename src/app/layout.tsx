@@ -28,7 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {children}
         <footer>
           <small>
-            Compatible with Strava. GearLog não é afiliado nem endossado pelo Strava. <a href="/privacidade">Privacidade</a>
+            Compatible with Strava. GearLog não é afiliado nem endossado pelo Strava. <a href="/privacidade">Privacidade</a> · <a href="/termos">Termos</a>
           </small>
         </footer>
       </body>
