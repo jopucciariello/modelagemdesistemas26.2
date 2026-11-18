@@ -1,4 +1,4 @@
-// RF32-RF34: the athlete picks where their rides come from.
+// RF32, RF34: the athlete picks where their rides come from.
 import Link from "next/link";
 import { Suspense } from "react";
 import { Nav } from "@/components/ui";
@@ -8,12 +8,11 @@ import { stravaCentralApp } from "@/lib/env";
 import { getCurrentUser } from "@/lib/session";
 
 const MESSAGES: Record<string, string> = {
-  strava_app_missing: "Cadastre primeiro o Client ID e o Client Secret do seu app do Strava.",
-  invalid_strava_app: "Client ID (só números) ou Client Secret inválido. Confira no Strava.",
+  strava_app_missing: "A conexão direta com o Strava ainda não está disponível.",
   access_denied: "Você não autorizou o acesso ao Strava.",
   missing_scope: "Marque todas as permissões ao autorizar (perfil, bikes e atividades, inclusive privadas).",
   invalid_state: "A sessão de autorização expirou. Tente de novo.",
-  token_exchange_failed: "O Strava recusou o app. Confira o Client ID, o Client Secret e o Authorization Callback Domain.",
+  token_exchange_failed: "O Strava recusou a autorização. Tente de novo mais tarde.",
   invalid_connector: "Informe a URL e a chave de API do conector.",
   connector_invalid_url: "URL inválida ou que não resolve.",
   connector_not_https: "A URL do conector precisa começar com https://.",
@@ -25,14 +24,14 @@ const MESSAGES: Record<string, string> = {
 };
 const OK: Record<string, string> = {
   manual: "Fonte alterada para lançamento manual.",
-  strava: "Strava vinculado com o seu app.",
+  strava: "Strava vinculado.",
   conector: "Conector vinculado.",
   desconectado: "Strava desconectado. Os tokens foram apagados.",
 };
 
 export default function SourcePage(props: PageProps<"/fonte">) {
   return (
-    <main>
+    <main className="wide">
       <header>
         <h1>Fonte dos pedais</h1>
         <p className="muted">Escolha de onde vêm os km e as horas de uso (RF32). Você pode trocar quando quiser.</p>
@@ -96,21 +95,8 @@ async function SourceArea({ searchParams }: { searchParams: PageProps<"/fonte">[
         </form>
       )}
 
-      <details className="card" open={!central}>
-        <summary><h2 style={{ display: "inline" }}>{central ? "Usar meu próprio app do Strava (avançado)" : "API do Strava"}{label("STRAVA")}</h2></summary>
-        <p className="muted">
-          Você usa o seu próprio app do Strava. <a href="/tutorial-strava">Veja o passo a passo para cadastrá-lo</a>.
-          {stravaLinked ? " Conta Strava vinculada." : user.strava ? " App salvo; falta autorizar no Strava." : ""}
-        </p>
-        <form action="/fonte/strava" method="post">
-          <label>Client ID <input name="clientId" inputMode="numeric" autoComplete="off" required /></label>
-          <label>Client Secret <input name="clientSecret" type="password" autoComplete="off" required placeholder={user.strava ? "já configurado (cole de novo para trocar)" : ""} /></label>
-          <button className="button button-strava" type="submit">Salvar e conectar com o Strava</button>
-        </form>
-      </details>
-
       <section className="card">
-        <h2>Conector{label("CONNECTOR")}{central ? " — temporário" : ""}</h2>
+        <h2>Strava pelo conector{label("CONNECTOR")}{central ? " — temporário" : ""}</h2>
         <p className="muted">
           Ponte temporária: você informa a URL e a chave de API do seu strava-connector, até o Strava aprovar o app do GearLog.
           {connector?.ok && (connector.data.linked ? " Conectado e com o Strava vinculado no conector." : " Conectado, mas o conector ainda não está vinculado ao Strava.")}
