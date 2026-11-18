@@ -82,3 +82,35 @@ describe("RF27, RB09, RB21", () => {
     expect(isWorkshopStaff(null, "dono@x.com", [])).toBe(false);
   });
 });
+
+import { canDecideRequest, canInviteMechanic, cleanWorkshopRequest } from "@/lib/workshop";
+
+describe("RF25: registration request", () => {
+  it("needs name, contact and a description", () => {
+    expect(cleanWorkshopRequest({ name: " Bike  Shop ", contact: "(11) 99999-0000", requestText: "Oficina em Pinheiros, revisão completa" })).toEqual({
+      name: "Bike Shop", contact: "(11) 99999-0000", requestText: "Oficina em Pinheiros, revisão completa",
+    });
+    expect(cleanWorkshopRequest({ name: "A", contact: "(11) 99999-0000", requestText: "texto longo o bastante" })).toBeNull();
+    expect(cleanWorkshopRequest({ name: "Bike Shop", contact: "1", requestText: "texto longo o bastante" })).toBeNull();
+    expect(cleanWorkshopRequest({ name: "Bike Shop", contact: "(11) 99999-0000", requestText: "curto" })).toBeNull();
+    expect(cleanWorkshopRequest({})).toBeNull();
+  });
+  it("the admin decides only pending requests; rejected ones may reopen", () => {
+    expect(canDecideRequest("PENDING", "approve")).toBe(true);
+    expect(canDecideRequest("PENDING", "reject")).toBe(true);
+    expect(canDecideRequest("ACTIVE", "approve")).toBe(false);
+    expect(canDecideRequest("REJECTED", "approve")).toBe(false);
+    expect(canDecideRequest("REJECTED", "reopen")).toBe(true);
+    expect(canDecideRequest("PENDING", "reopen")).toBe(false);
+  });
+});
+
+describe("RB21: inviting mechanics", () => {
+  it("only the owner invites, once, never the owner", () => {
+    expect(canInviteMechanic("dono@x.com", "dono@x.com", "mec@x.com", [])).toBe("ok");
+    expect(canInviteMechanic("mec@x.com", "dono@x.com", "novo@x.com", ["mec@x.com"])).toBe("not_owner");
+    expect(canInviteMechanic(null, "dono@x.com", "mec@x.com", [])).toBe("not_owner");
+    expect(canInviteMechanic("dono@x.com", "dono@x.com", "DONO@x.com", [])).toBe("is_owner");
+    expect(canInviteMechanic("dono@x.com", "dono@x.com", "Mec@x.com", ["mec@x.com"])).toBe("duplicate");
+  });
+});

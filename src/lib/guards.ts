@@ -22,3 +22,10 @@ export async function requireWorkshop() {
   if (!owned) redirect("/oficina");
   return owned;
 }
+
+/** RB21: only the owner of the workshop (not an invited mechanic) passes. */
+export async function requireWorkshopOwner() {
+  const owned = await getCurrentWorkshop();
+  if (!owned?.isOwner) redirect("/oficina");
+  return owned;
+}

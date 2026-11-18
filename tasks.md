@@ -81,10 +81,10 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 - [x] T-65 Regra `canWorkshopAccessBike` e página do atendimento só leitura — RF27, RNF03, RB09 — #5
 - [x] T-66 Extrair `recordVisit` e concluir o serviço no histórico da bike — RF28, RF36 — #5
 - [x] T-70 Migração M2 e regras puras: grade semanal, duração, distância, etapas, consentimento, equipe — RF25, RF26, RF27, RB21, RB23 — #69 #70
-- [ ] T-71 Pedido de cadastro de oficina e aprovação do admin — RF25 — #30
-- [ ] T-72 Responsável convida mecânicos por e-mail — RF25, RB21 — #30
-- [ ] T-73 Oficinas próximas por distância e horários livres pela grade — RF25, RF26 — #69 #31
-- [ ] T-74 Agendar com escolha de compartilhar histórico — RF26, RF27, RB09 — #31 #32
+- [x] T-71 Pedido de cadastro de oficina e aprovação do admin — RF25 — #30
+- [x] T-72 Responsável convida mecânicos por e-mail — RF25, RB21 — #30
+- [x] T-73 Oficinas próximas por distância e horários livres pela grade — RF25, RF26 — #69 #31
+- [x] T-74 Agendar com escolha de compartilhar histórico — RF26, RF27, RB09 — #31 #32
 - [ ] T-75 Cancelamento com aviso por e-mail — RF29, RF38 — #34
 - [ ] T-76 Concluir OS avança meta de revisão em etapas — RF28, RB23 — #33
 - [ ] T-77 Telas Expo de oficina e agenda — RF25–RF29 — #71

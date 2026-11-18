@@ -49,14 +49,18 @@ export async function getCurrentAdmin() {
 }
 
 /**
- * RB21: the workshop the current user owns, found by their verified Google e-mail on every call.
- * Null when the user has no active workshop registered by the admin.
+ * RB21: the workshop the current user works at: owner (ownerEmail) or invited mechanic
+ * (WorkshopMember), found by their verified Google e-mail on every call. Only approved,
+ * active workshops count; `isOwner` tells whether they may also invite mechanics.
  */
 export async function getCurrentWorkshop() {
   const user = await getCurrentUser();
   if (!user?.email) return null;
-  const workshop = await prisma.workshop.findFirst({ where: { ownerEmail: user.email.toLowerCase(), active: true } });
-  return workshop ? { user, workshop } : null;
+  const email = user.email.toLowerCase();
+  const workshop = await prisma.workshop.findFirst({
+    where: { active: true, status: "ACTIVE", OR: [{ ownerEmail: email }, { members: { some: { email } } }] },
+  });
+  return workshop ? { user, workshop, isOwner: workshop.ownerEmail === email } : null;
 }
 
 export async function destroySession(): Promise<void> {
