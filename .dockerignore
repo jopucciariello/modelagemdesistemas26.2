@@ -8,3 +8,5 @@ src/generated
 prisma/*.db
 prisma/*.db-journal
 *.tsbuildinfo
+app-expo/node_modules
+app-expo/dist

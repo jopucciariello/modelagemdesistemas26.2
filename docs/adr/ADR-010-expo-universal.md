@@ -37,3 +37,7 @@ O produto precisa ser **site e aplicativo** (iOS e Android, nas lojas da Apple e
 - A revisão das lojas leva dias; o primeiro envio deve ocorrer até 20/11.
 - Server actions e páginas do Next viram endpoints da API e telas do Expo; as regras puras e os testes de domínio permanecem.
 - `docs/arquitetura.md` e `plan.md` precisam ser atualizados quando este ADR for aceito.
+
+## Implantação do Expo web (issue #67, decidido em 18/11/2026)
+
+O Expo web é exportado no `Dockerfile` (`expo export -p web`, base `/app`) e servido pelo próprio app Fly `gearlog`, junto com a API. Não há segundo app, volume nem segredo novo. Até a troca de domínio ele fica em `gearlog.jopucci.com/app` e o site atual segue na raiz. **Troca de domínio:** depois do checklist ([testes-manuais-fase1.md](../testes-manuais-fase1.md)), mudar `experiments.baseUrl` do `app.json` para vazio e apontar o `fallback` de `next.config.ts` para `/:path*` → `/index.html` (as rotas do Next que sobrarem viram API).

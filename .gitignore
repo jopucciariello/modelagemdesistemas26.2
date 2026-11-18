@@ -50,3 +50,6 @@ next-env.d.ts
 app-expo/node_modules/
 app-expo/.expo/
 app-expo/dist/
+
+# Expo web export copied in by the Dockerfile (#67)
+/public/app

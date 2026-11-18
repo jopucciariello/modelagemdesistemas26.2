@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   // RF01: bike pictures up to 1 MB go through a server action.
   experimental: { serverActions: { bodySizeLimit: "2mb" } },
+  // ADR-010, #67: the Expo web build (public/app, made in the Dockerfile) is served under /app until the
+  // domain switch. Files in public/ win; any other /app/... path falls back to the single-page entry.
+  async rewrites() {
+    return { beforeFiles: [], afterFiles: [], fallback: [{ source: "/app/:path*", destination: "/app/index.html" }] };
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
