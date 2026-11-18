@@ -1,4 +1,3 @@
-Loaded Prisma config from prisma.config.ts.
 
 -- CreateTable
 CREATE TABLE "WorkshopHour" (
@@ -115,4 +114,4 @@ CREATE UNIQUE INDEX "WorkshopMember_workshopId_email_key" ON "WorkshopMember"("w
 
 
 -- Backfill: bookings made before this migration required consent (RF27 old rule) and lasted one hour.
-UPDATE "Appointment" SET "shareHistory" = true, "endsAt" = (SELECT datetime("startsAt", '+1 hour') FROM "WorkshopSlot" WHERE "WorkshopSlot"."id" = "Appointment"."slotId");
+UPDATE "Appointment" SET "shareHistory" = true, "endsAt" = (SELECT strftime('%Y-%m-%dT%H:%M:%f+00:00', "startsAt", '+1 hour') FROM "WorkshopSlot" WHERE "WorkshopSlot"."id" = "Appointment"."slotId");
