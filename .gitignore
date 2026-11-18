@@ -45,3 +45,8 @@ next-env.d.ts
 /src/generated/prisma
 /prisma/*.db
 /prisma/*.db-journal
+
+# expo app
+app-expo/node_modules/
+app-expo/.expo/
+app-expo/dist/
