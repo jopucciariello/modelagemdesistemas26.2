@@ -29,6 +29,9 @@ model User {
   name           String
   // ADR-005: the verified Google e-mail every user logs in with (admins are listed in ADMIN_EMAILS).
   email          String?        @unique
+  // RF04, RNF02: username/password login (scrypt hash). Null for Google-only accounts.
+  username       String?        @unique
+  passwordHash   String?
   role           Role           @default(ATHLETE)
   // RF32: chosen by the athlete after login; manual until they pick another.
   activitySource ActivitySource @default(MANUAL)
