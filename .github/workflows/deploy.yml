@@ -78,7 +78,12 @@ jobs:
           missing=""
           for k in $keys; do [ -n "${!k:-}" ] || missing="$missing $k"; done
           if [ -n "$missing" ]; then echo "::error::Missing in Infisical (prod):$missing"; exit 1; fi
-          for k in $keys; do printf '%s=%s\n' "$k" "${!k}"; done | flyctl secrets import --stage
+          # RF04: optional; without them the Strava button stays hidden (ADR-006).
+          optional="STRAVA_CLIENT_ID STRAVA_CLIENT_SECRET"
+          for k in $keys; do printf '%s=%s\n' "$k" "${!k}"; done > fly-secrets.env
+          for k in $optional; do [ -z "${!k:-}" ] || printf '%s=%s\n' "$k" "${!k}" >> fly-secrets.env; done
+          flyctl secrets import --stage < fly-secrets.env
+          rm -f fly-secrets.env
 
       - name: Deploy (remote build on Fly)
         if: steps.check.outputs.ready == 'true'
