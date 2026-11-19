@@ -31,7 +31,7 @@ const BASE_NAV: NavItem[] = [
 export function navItemsFor(roles: AccountRole[]): NavItem[] {
   const items = [...BASE_NAV];
   if (roles.includes("WORKSHOP")) items.push({ href: "/oficina", label: "Minha oficina" });
-  if (roles.includes("MERCHANT")) items.push({ href: "/mercado/meus", label: "Minha loja" });
+  if (roles.includes("MERCHANT")) items.push({ href: "/loja", label: "Minha loja" });
   if (roles.includes("ADMIN")) items.push({ href: "/admin", label: "Admin" });
   return items;
 }

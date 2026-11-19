@@ -35,7 +35,7 @@ describe("navItemsFor (RB24)", () => {
 describe("activeHref", () => {
   const items = navItemsFor(["ATHLETE", "MERCHANT", "WORKSHOP"]);
   it("lights only the most specific item", () => {
-    expect(activeHref("/mercado/meus", items)).toBe("/mercado/meus");
+    expect(activeHref("/loja", items)).toBe("/loja");
     expect(activeHref("/mercado/abc", items)).toBe("/mercado");
     expect(activeHref("/oficina/atendimentos/1", items)).toBe("/oficina");
     expect(activeHref("/oficinas/xyz", items)).toBe("/oficinas");
