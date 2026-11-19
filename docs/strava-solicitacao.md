@@ -35,21 +35,33 @@ Requisitos: RF04, RF32–RF34, RNF01, RNF05. App submetido: **app central do Gea
 - **URLs:** site https://gearlog.jopucci.com · privacidade https://gearlog.jopucci.com/privacidade · callback `gearlog.jopucci.com`.
 - **Contexto:** projeto acadêmico (Modelagem de Sistemas), sem fins comerciais.
 
-> **Estado em 17/11/2026:** o usuário decidiu seguir com o strava-connector como fonte em uso por enquanto e não criar o app central agora. Os passos abaixo ficam prontos para quando for submeter.
+## 4. Estado em 19/11/2026 e o que o usuário faz
 
-## 4. Passos do usuário (o envio exige a conta Strava)
+Decisão de 19/11 (usuário): pedir ao Strava a autorização para o GearLog receber os atletas **direto no site e no app Expo**. O strava-connector **não é desmontado**; segue como ponte até a aprovação.
 
-O Strava permite 1 app por conta e a sua conta já tem o app do strava-connector. Por isso o app central precisa de **outra conta Strava com assinatura ativa**.
+**Qual app submeter (recomendado, mais simples):** o app do Strava que o strava-connector já usa, com o *Authorization Callback Domain* trocado de `strava.jopucci.com` para o domínio pai **`jopucci.com`**, que cobre `strava.jopucci.com` e `gearlog.jopucci.com` (o Strava aceita subdomínios do domínio informado; **testar o login nos dois** logo depois da troca). Assim não precisa de outra conta Strava (1 app por conta), as credenciais já estão no Infisical do conector e o conector continua funcionando. Alternativa: um app novo numa segunda conta Strava com assinatura (callback `gearlog.jopucci.com`); só vale se o domínio pai não funcionar.
 
-1. Na conta nova, abrir strava.com/settings/api e criar o app: nome "GearLog", site `https://gearlog.jopucci.com`, domínio de callback `gearlog.jopucci.com`, ícone próprio (sem partes do logo do Strava).
-2. Guardar Client ID e Client Secret no Infisical (nunca no repositório) e avisar aqui; o código passa a usar esse app como padrão (PR de seguimento).
-3. Subir a capacidade a 10 atletas pelo painel de API (sem revisão).
-4. Quando houver o botão oficial, o link "View on Strava" e a política de privacidade no ar, enviar o [formulário de revisão](https://share.hsforms.com/1VXSwPUYqSH6IxK0y51FjHwcnkd8) com os textos da seção 3. Só é necessário para passar de 10 atletas.
-5. Enquanto o Strava não aprova, o conector (RF34) atende quem passar de 10 atletas ou antes do app central estar pronto; ao aprovar, o conector sai da tela.
+Callback do GearLog: `https://gearlog.jopucci.com/auth/strava/callback`. O app Expo (iOS e Android) não precisa de callback próprio: o OAuth abre no navegador do sistema, volta ao `gearlog.jopucci.com` e o site devolve ao app por deep link.
 
-## 5. Plano de código (PRs pequenos, depois do app central existir)
+### O que você faz (eu não envio nada em seu nome)
+
+1. Em strava.com/settings/api (conta do conector, assinatura ativa): trocar *Authorization Callback Domain* para `jopucci.com`; site `https://gearlog.jopucci.com`; descrição da seção 3. Conferir que o ícone do app não usa partes do logo do Strava.
+2. Copiar o mesmo `STRAVA_CLIENT_ID` e `STRAVA_CLIENT_SECRET` para o Infisical do **GearLog** (ambiente que o deploy lê). Avise aqui; sem isso o botão não aparece no site.
+3. Baixar os ZIPs oficiais em developers.strava.com/guidelines (botão "Connect with Strava" e logos) e colocar em `public/strava/` do repositório, ou me enviar os arquivos; meu ambiente não alcança o site do Strava.
+4. Conectar a sua conta pelo site, ver os pedais entrando e tirar capturas de tela (login/Fonte, lista de pedais com "View on Strava", página de privacidade) para anexar ao formulário.
+5. Subir a capacidade a 10 atletas no painel de API; para passar de 10, enviar o [formulário de revisão](https://share.hsforms.com/1VXSwPUYqSH6IxK0y51FjHwcnkd8) colando os textos da seção 3. O formulário é carregado por JavaScript e não consegui ler os campos; confira quais pede.
+6. Só depois da aprovação o conector sai da tela.
+
+### O que eu faço em seguida
+
+- Trocar o botão de texto pelo oficial (quando os arquivos existirem).
+- Atualizar a política de privacidade quando o app central estiver ativo: hoje ela diz "Não guardamos token do Strava", o que deixa de ser verdade (tokens ficam criptografados, RNF01).
+- Testar o fluxo ponta a ponta no site e no Expo.
+
+## 5. Plano de código
 
 1. Feito: credenciais do app central por `STRAVA_CLIENT_ID`/`STRAVA_CLIENT_SECRET` (Infisical); a opção "Conectar com o Strava" aparece na página Fonte quando ambas existem (RF04, RF32).
-2. Parcial: link "View on Strava" feito; botão oficial "Connect with Strava", logo "Compatible with Strava" e link "View on Strava" nos pedais importados.
+2. Feito: link "View on Strava". Pendente: botão e logo oficiais (item 3 acima).
 3. Feito: desconectar revoga e apaga tokens (RNF01).
-4. Feito: conector marcado como temporário; RF33 (app próprio por atleta) removido em 17/11/2026 (OPEN-23).
+4. Feito: conector marcado como temporário; RF33 removido em 17/11/2026 (OPEN-23).
+5. Pendente: privacidade e termos com o token do Strava (ativar junto com o item 2 dos passos).
