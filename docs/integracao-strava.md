@@ -210,3 +210,16 @@ Para isso, o GearLog **guarda as atividades importadas**, não só os totais. Os
 ## Atualização forçada do conector (ponte temporária) — RF06, RF34 *(aprovado e implementado em 18/11/2026)*
 
 Enquanto o app central do GearLog no Strava não é aprovado, o botão "Sincronizar" (site e app Expo) pede ao conector `POST /v1/gearlog/sync` com a chave do próprio atleta (a mesma das demais chamadas `/v1/gearlog/*`; a `ADMIN_API_KEY` do conector não é usada) e corpo opcional `{ "since": "<ISO>" }` (hoje − 90 dias). Respostas: `202` enfileirado; `429` com `retryAfterSeconds` (limite de uma chamada por hora; o atleta vê o tempo e não há nova tentativa automática); `409` conta não vinculada. O resultado chega pelo feed `/v1/gearlog/events`. É melhor esforço: se falhar, a leitura normal segue (RNF06). Remover quando o app central entrar.
+
+## Conexão pelo app (RF04, issue #62)
+
+O app Expo não tem cookie de sessão na janela do navegador. Fluxo:
+
+1. `POST /api/strava/start` (Bearer, corpo `{redirect}`) valida o destino (`safeAppRedirect`), grava o app central e devolve a URL de autorização do Strava. O `state` é assinado (HMAC-SHA256, 10 min) e carrega o usuário e o destino.
+2. O app abre a URL com `WebBrowser.openAuthSessionAsync`. O Strava redireciona para o mesmo `/auth/strava/callback` do site.
+3. O callback reconhece o `state` assinado `app.…`, troca o código por tokens (guardados cifrados, RNF01) e redireciona para o deep link do app com `?ok=strava` ou `?erro=<código>`.
+4. `GET /api/strava` informa `available`, `linked` e `source`; `POST /api/strava/disconnect` revoga e apaga os tokens (RF32).
+
+### Pedido de aprovação ao Strava
+
+O que submeter (app do conector, callback `jopucci.com`), os passos da pessoa responsável e os textos do formulário estão em [strava-solicitacao.md](strava-solicitacao.md) (PR #135). Este fluxo do app não precisa de callback próprio: o OAuth volta ao `gearlog.jopucci.com` e o site devolve ao app por deep link.
