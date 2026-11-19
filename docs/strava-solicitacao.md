@@ -35,11 +35,14 @@ Requisitos: RF04, RF32–RF34, RNF01, RNF05. App submetido: **app central do Gea
 - **Quem vê os dados:** só o próprio atleta. Sem compartilhamento com outros usuários, sem IA, sem venda.
 - **Retenção e exclusão:** tokens criptografados; o atleta desconecta no app (revoga no Strava e apaga os tokens) ou exclui a conta e todos os dados.
 - **URLs:** site https://gearlog.jopucci.com · privacidade https://gearlog.jopucci.com/privacidade · termos https://gearlog.jopucci.com/termos · callback `jopucci.com` (usa `https://gearlog.jopucci.com/auth/strava/callback`).
+- **Um app, três usos (dizer no formulário):** o mesmo app do Strava (hoje chamado "Portfolio", categoria Análise de desempenho, site jopucci.com, callback `jopucci.com`) atende o portfólio pessoal do desenvolvedor, o strava-connector (strava.jopucci.com) e o GearLog. O pedido de capacidade é para o login via Strava no GearLog; os outros dois usos continuam só com a conta do desenvolvedor.
 - **Contexto:** projeto acadêmico (Modelagem de Sistemas), sem fins comerciais, sem cobrança.
 
 ## 4. Estado em 19/11/2026 e o que o usuário faz
 
 Decisão de 19/11 (usuário): pedir ao Strava a autorização para o GearLog receber os atletas **direto no site e no app Expo**. O strava-connector **não é desmontado**; segue como ponte até a aprovação.
+
+**Estado confirmado em 19/11/2026 (print do painel):** o app já se chama "Portfolio", categoria Análise de desempenho, site `jopucci.com`, descrição "Portfolio pessoal + métricas patrocinio" e callback `jopucci.com`; o passo do callback já está feito. Antes de enviar, **troque o nome e a descrição**: o atleta vê o nome do app na tela de autorização do Strava e o revisor lê a descrição. Sugestão: nome `Jopucci` (sem "Strava" no nome) e descrição "Portfólio pessoal, strava-connector e GearLog: acompanha o desgaste das peças da bike a partir das atividades de ciclismo do atleta." Site `https://gearlog.jopucci.com` se o formulário pedir o do GearLog.
 
 **Qual app submeter (recomendado, mais simples):** o app do Strava que o strava-connector já usa, com o *Authorization Callback Domain* trocado de `strava.jopucci.com` para o domínio pai **`jopucci.com`**, que cobre `strava.jopucci.com` e `gearlog.jopucci.com` (o Strava aceita subdomínios do domínio informado; **testar o login nos dois** logo depois da troca). Assim não precisa de outra conta Strava (1 app por conta), as credenciais já estão no Infisical do conector e o conector continua funcionando. Alternativa: um app novo numa segunda conta Strava com assinatura (callback `gearlog.jopucci.com`); só vale se o domínio pai não funcionar.
 
