@@ -41,6 +41,7 @@ async function Mine({ searchParams }: { searchParams: PageProps<"/mercado/meus">
       <Flash ok={ok} erro={erro} okText={OK} errText={ERROR_TEXT} />
       <div className={s.actions}>
         <Link className="button" href="/mercado/novo">Anunciar uma peça</Link>
+        <Link className={s.back} href="/loja">Loja / pedir para ser lojista</Link>
         <Link className={s.back} href="/mercado">← Voltar ao mercado</Link>
       </div>
       <section aria-label="Meus anúncios">
