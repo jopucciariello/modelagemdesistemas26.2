@@ -220,6 +220,6 @@ O app Expo não tem cookie de sessão na janela do navegador. Fluxo:
 3. O callback reconhece o `state` assinado `app.…`, troca o código por tokens (guardados cifrados, RNF01) e redireciona para o deep link do app com `?ok=strava` ou `?erro=<código>`.
 4. `GET /api/strava` informa `available`, `linked` e `source`; `POST /api/strava/disconnect` revoga e apaga os tokens (RF32).
 
-### Pedido de aprovação ao Strava (limite de 1 atleta) `[PROPOSTO]`
+### Pedido de aprovação ao Strava
 
-Enquanto o app GearLog tem capacidade de um único atleta, só quem o criou consegue conectar. Para liberar outros atletas é preciso pedir o aumento do limite em https://share.hsforms.com/1VXPKJ6smRNaSWH1dQ2bUsg4s7ow (formulário "Developer Program"), com: nome do app, site `https://gearlog.jopucci.com`, política de privacidade `/privacidade`, escopos `read, profile:read_all, activity:read_all`, descrição do uso (manutenção de bike por desgaste a partir de distância e tempo) e prints do fluxo. Ação da pessoa responsável pelo app: criar o app central (callback `gearlog.jopucci.com`) e enviar o pedido; ver OPEN sobre a criação do app central em `docs/decisoes-em-aberto.md`.
+O que submeter (app do conector, callback `jopucci.com`), os passos da pessoa responsável e os textos do formulário estão em [strava-solicitacao.md](strava-solicitacao.md) (PR #135). Este fluxo do app não precisa de callback próprio: o OAuth volta ao `gearlog.jopucci.com` e o site devolve ao app por deep link.
