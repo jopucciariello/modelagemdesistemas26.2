@@ -1,5 +1,6 @@
 // RF18, RF24, RB06: admin section of the marketplace: merchants, seal and listing moderation.
 import { createMerchant, removeListing, setVerified } from "@/app/actions/merchants";
+import { decideStoreRequest } from "@/app/actions/store";
 import { SellerBadge } from "@/components/seller-badge";
 import { prisma } from "@/lib/db";
 import { text } from "@/lib/forms";
@@ -7,7 +8,8 @@ import { text } from "@/lib/forms";
 const brl = (cents: number) => (cents / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
 export async function AdminMarket() {
-  const [merchants, listings] = await Promise.all([
+  const [requests, merchants, listings] = await Promise.all([
+    prisma.merchantRequest.findMany({ where: { status: "PENDING" }, include: { user: { select: { name: true, email: true } } }, orderBy: { createdAt: "asc" } }),
     prisma.merchant.findMany({ include: { user: { select: { email: true } } }, orderBy: { createdAt: "desc" } }),
     prisma.listing.findMany({
       where: { status: "ACTIVE" },
@@ -21,6 +23,25 @@ export async function AdminMarket() {
       <section className="card" id="mercado">
         <h2>Mercado: lojistas (RF18)</h2>
         <p className="muted">Só o administrador cadastra lojistas e concede ou revoga o selo de verificado (RB06).</p>
+        {requests.length > 0 && (
+          <ul className="list" aria-label="Pedidos de lojista">
+            {requests.map((r) => {
+              const approve = async () => { "use server"; await decideStoreRequest(r.id, true); };
+              const reject = async () => { "use server"; await decideStoreRequest(r.id, false); };
+              return (
+                <li key={r.id} className="stack">
+                  <strong>Pedido: {r.storeName}</strong>
+                  <span className="muted">{r.user.name} ({r.user.email}) · contato: {r.contact}{r.shopUrl && ` · ${r.shopUrl}`}</span>
+                  <span>{r.message}</span>
+                  <div className="row">
+                    <form action={approve}><button className="button small" type="submit">Aprovar</button></form>
+                    <form action={reject}><button className="button small" type="submit">Recusar</button></form>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
         {merchants.length === 0 ? <p className="muted">Nenhum lojista cadastrado.</p> : (
           <ul className="list">
             {merchants.map((m) => {

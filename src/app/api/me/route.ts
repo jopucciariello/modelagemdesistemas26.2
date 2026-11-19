@@ -2,23 +2,13 @@
 import { checkAccountDeletion } from "@/lib/account-delete";
 import { getApiUser, unauthorized } from "@/lib/api-auth";
 import { prisma } from "@/lib/db";
-import { isAuthorizedAdmin } from "@/lib/google/oidc";
-import { allAdminEmailsSetting } from "@/lib/admin-emails";
-import { accountRoles } from "@/lib/roles";
+import { loadAccountRoles } from "@/lib/roles-server";
 
 export async function GET(request: Request) {
   const user = await getApiUser(request);
   if (!user) return unauthorized();
   // RB24: one account can be athlete, admin, workshop and merchant at the same time.
-  const email = user.email?.toLowerCase() ?? null;
-  const [workshop, merchant] = await Promise.all([
-    email
-      ? prisma.workshop.findFirst({ where: { active: true, status: "ACTIVE", OR: [{ ownerEmail: email }, { members: { some: { email } } }] }, select: { id: true } })
-      : null,
-    prisma.merchant.findUnique({ where: { userId: user.id }, select: { id: true } }),
-  ]);
-  const isAdmin = user.role === "ADMIN" && isAuthorizedAdmin(user.email, await allAdminEmailsSetting());
-  const roles = accountRoles({ isAdmin, hasWorkshop: !!workshop, hasMerchant: !!merchant });
+  const roles = await loadAccountRoles(user);
   return Response.json({ id: user.id, name: user.name, email: user.email ?? "", role: user.role, roles });
 }
 
