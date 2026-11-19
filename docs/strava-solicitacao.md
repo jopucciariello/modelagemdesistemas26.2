@@ -24,16 +24,18 @@ Requisitos: RF04, RF32–RF34, RNF01, RNF05. App submetido: **app central do Gea
 | Retenção/cache de dados | Os pedais ficam no banco (ADR-007). O Agreement não fixa prazo; resumos de terceiros citam 7 dias. **Confirmar** antes de submeter |
 | Uso em IA | Nenhum |
 
-## 3. Texto do formulário (rascunho para colar)
+## 3. Texto do formulário (foco: login via Strava para qualquer atleta)
 
+- **Pedido:** aumentar a capacidade de atletas do app para que **qualquer atleta** possa entrar no GearLog com o Strava ("Connect with Strava") no site gearlog.jopucci.com e no app, sem limite de 10.
 - **Nome do app:** GearLog
-- **Descrição:** GearLog acompanha o desgaste e a manutenção preventiva das peças de bicicletas (corrente, cassete, pneus, suspensão). Lê do Strava apenas as atividades de ciclismo (data, tipo, distância, tempo em movimento e bike) para somar km e horas às peças instaladas e avisar quando uma peça chega ao limite de revisão.
+- **Descrição:** GearLog acompanha o desgaste e a manutenção preventiva das peças de bicicletas (corrente, cassete, pneus, suspensão). O atleta entra com o Strava e o app lê só as atividades de ciclismo (data, tipo, distância, tempo em movimento e bike) para somar km e horas às peças instaladas e avisar quando uma peça chega ao limite de revisão.
+- **Por que o login via Strava:** o atleta já pedala no Strava; autorizar o app evita lançar cada pedal à mão e mantém o desgaste das peças atualizado.
 - **Escopos:** `read`, `profile:read_all` (lista de bikes), `activity:read_all`.
 - **Dados não usados:** GPS, frequência cardíaca, potência, fotos, segmentos, kudos, comentários.
-- **Quem vê os dados:** só o próprio atleta. Sem compartilhamento, sem IA, sem venda.
-- **Exclusão:** o atleta desconecta e apaga tokens e dados no app.
-- **URLs:** site https://gearlog.jopucci.com · privacidade https://gearlog.jopucci.com/privacidade · callback `gearlog.jopucci.com`.
-- **Contexto:** projeto acadêmico (Modelagem de Sistemas), sem fins comerciais.
+- **Quem vê os dados:** só o próprio atleta. Sem compartilhamento com outros usuários, sem IA, sem venda.
+- **Retenção e exclusão:** tokens criptografados; o atleta desconecta no app (revoga no Strava e apaga os tokens) ou exclui a conta e todos os dados.
+- **URLs:** site https://gearlog.jopucci.com · privacidade https://gearlog.jopucci.com/privacidade · termos https://gearlog.jopucci.com/termos · callback `jopucci.com` (usa `https://gearlog.jopucci.com/auth/strava/callback`).
+- **Contexto:** projeto acadêmico (Modelagem de Sistemas), sem fins comerciais, sem cobrança.
 
 ## 4. Estado em 19/11/2026 e o que o usuário faz
 
