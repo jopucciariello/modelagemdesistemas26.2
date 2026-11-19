@@ -2,7 +2,7 @@
 
 Gate para a troca de domínio para o Expo web (#67). A matriz liga cada requisito da Fase 1 ao teste automático que o cobre; o checklist cobre o que só se verifica na tela. Marque `[x]` ao conferir e abra uma issue para cada falha.
 
-**Contas necessárias:** (A) administrador (e-mail de admin do Infisical) e (B) atleta com Strava via conector ou pedais manuais.
+**Contas necessárias:** (A) administrador (e-mail de admin do Infisical) e (B) atleta com Strava conectado (limite de 10 atletas) ou pedais manuais.
 
 ## 1. Matriz requisito × teste automático
 
@@ -13,7 +13,7 @@ Resultado em 18/11/2026: 31 arquivos, 210 testes (`npx vitest run`), `tsc --noEm
 | RF01, RF35 | `catalog.test.ts`, `bike-photo.test.ts`, `bike-detail-dto.test.ts` | 3 |
 | RF02, RF03, RF39 | `catalog.test.ts`, `part-stock.test.ts` | 3 |
 | RF04 | `google-admin-login.test.ts`, `password.test.ts`, `app-login.test.ts`, `app-password-login.test.ts` | 2 |
-| RF05, RF06 | `rides-map.test.ts`, `activity-sources.test.ts`, `connector-admin-refresh.test.ts` | 4 |
+| RF05, RF06 | `rides-map.test.ts`, `activity-sources.test.ts`, `strava-webhook.test.ts` | 4 |
 | RF07–RF09 | `wear.test.ts`, `dashboard-dto.test.ts` | 3 |
 | RF10–RF12, RF36 | `wear.test.ts`, `visit.test.ts` | 3 |
 | RF13, RF14 | `manual-ride.test.ts`, `rides-map.test.ts` | 4 |
@@ -36,9 +36,9 @@ Resultado em 18/11/2026: 31 arquivos, 210 testes (`npx vitest run`), `tsc --noEm
 - [ ] Excluir uma bike exige confirmação e mantém os pedais importados (RF01).
 
 ## 4. Pedais e fonte (RF05, RF06, RF13, RF14, RF32, RF34)
-- [ ] Escolher a fonte: manual ou Strava (conector). Lançar um pedal manual com bike, data, km e horas; excluí-lo depois de confirmar.
+- [ ] Escolher a fonte: manual ou Strava (conectar com o botão e autorizar). Lançar um pedal manual com bike, data, km e horas; excluí-lo depois de confirmar.
 - [ ] Sincronizar pelo botão: km e horas somam nas peças da bike associada (RF06).
-- [ ] Com a URL do conector inválida: a falha é mostrada, os dados anteriores permanecem e dá para tentar de novo (RF13).
+- [ ] Com o Strava indisponível ou o token recusado: a falha é mostrada, os dados anteriores permanecem e dá para tentar de novo (RF13).
 
 ## 5. Admin e catálogo (RF30, RF31, RF35, RF37)
 - [ ] Admin vê o painel; usuário comum recebe 403 na rota de admin (RB17).

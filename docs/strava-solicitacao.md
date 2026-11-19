@@ -50,7 +50,7 @@ Callback do GearLog: `https://gearlog.jopucci.com/auth/strava/callback`. O app E
 3. Baixar os ZIPs oficiais em developers.strava.com/guidelines (botão "Connect with Strava" e logos) e colocar em `public/strava/` do repositório, ou me enviar os arquivos; meu ambiente não alcança o site do Strava.
 4. Conectar a sua conta pelo site, ver os pedais entrando e tirar capturas de tela (login/Fonte, lista de pedais com "View on Strava", página de privacidade) para anexar ao formulário.
 5. Subir a capacidade a 10 atletas no painel de API; para passar de 10, enviar o [formulário de revisão](https://share.hsforms.com/1VXSwPUYqSH6IxK0y51FjHwcnkd8) colando os textos da seção 3. O formulário é carregado por JavaScript e não consegui ler os campos; confira quais pede.
-6. Só depois da aprovação o conector sai da tela.
+6. O conector já saiu do GearLog em 19/11/2026 ([ADR-011](adr/ADR-011-strava-direto.md)); o strava-connector em si continua para o portfólio.
 
 ### O que eu faço em seguida
 

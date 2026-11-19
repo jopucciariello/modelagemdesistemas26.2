@@ -7,12 +7,12 @@ import { Field } from '@/components/field';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { today } from '@/features/painel/maintenance';
-import { addRide, chooseBike, refreshNotice, syncRides } from '@/features/painel/rides';
+import { addRide, chooseBike, syncRides } from '@/features/painel/rides';
 import type { RidesDto } from '@/features/painel/types';
 import { useTheme } from '@/hooks/use-theme';
 import { api } from '@/lib/api';
 
-const SOURCE_LABEL = { MANUAL: 'lançamento manual', STRAVA: 'API do Strava', CONNECTOR: 'conector' } as const;
+const SOURCE_LABEL = { MANUAL: 'lançamento manual', STRAVA: 'API do Strava' } as const;
 
 /** RF06, RF13, RF14, OPEN-20: pedais recentes, sincronização e lançamento manual. */
 export default function PedaisScreen() {
@@ -54,7 +54,7 @@ export default function PedaisScreen() {
               variant="outline"
               onPress={async () => {
                 const result = await syncRides();
-                setMessage('error' in result ? result.error : `${result.imported} pedais lidos.${refreshNotice(result.refresh)}`);
+                setMessage('error' in result ? result.error : `${result.imported} pedais lidos.`);
                 await load();
               }}
             />

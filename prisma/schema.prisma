@@ -17,11 +17,10 @@ enum Role {
   ADMIN
 }
 
-// RF32, ADR-006: where the athlete's rides come from.
+// RF32, ADR-006, ADR-011: where the athlete's rides come from.
 enum ActivitySource {
   MANUAL
   STRAVA
-  CONNECTOR
 }
 
 model User {
@@ -44,7 +43,6 @@ model User {
   bikes            Bike[]
   rides            Ride[]
   strava           StravaConnection?
-  connector        ConnectorConnection?
   sessions         Session[]
   modelRequests    ModelRequest[]
   // Fase 2 (ADR-008)
@@ -78,17 +76,8 @@ model StravaConnection {
   expiresAt             DateTime?
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
-}
-
-// RF34, RNF01: the athlete's own strava-connector. The API key is stored encrypted.
-model ConnectorConnection {
-  id              String   @id @default(cuid())
-  userId          String   @unique
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  baseUrl         String
-  apiKeyEncrypted String
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  // ADR-011: the webhook finds the athlete by the Strava owner id.
+  @@index([stravaAthleteId])
 }
 
 // Server-side session. Only the SHA-256 of the cookie token is stored.
@@ -239,7 +228,7 @@ model Bike {
   // RF35: factory model the bike was created from, if any.
   bikeModelId  String?
   bikeModel    BikeModel?         @relation(fields: [bikeModelId], references: [id])
-  // RF05: id of the matching bike (gear) in Strava or the connector.
+  // RF05: id of the matching bike (gear) in Strava.
   stravaGearId String?
   archivedAt   DateTime?
   parts        Part[]

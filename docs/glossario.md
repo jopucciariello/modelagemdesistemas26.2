@@ -16,13 +16,13 @@ Termos do domínio da Fase 1, em ordem alfabética. Entre parênteses, o nome no
 | Catálogo | Conjunto de famílias, componentes e bikes-modelo mantido pelo administrador. Fonte: a planilha de catálogo, exportada para `src/lib/catalog/seed.json`. |
 | Componente (`Component`) | Item do catálogo identificado por código (ex.: `TRX-018`), com marca, modelo, modalidade, faixa de preço e planos próprios. |
 | Condição (`ItemCondition`) | Estado de um item informado pelo mecânico numa revisão na oficina: boa, atenção ou trocar em breve (RF36). |
-| Conector | Serviço do próprio atleta (ex.: `strava-connector`) que guarda os tokens do Strava e expõe `/v1/gearlog/*` com chave de API (RF34, ADR-006). |
+| Conector | `strava-connector`, serviço do autor fora do GearLog (portfólio). O GearLog deixou de usá-lo em 19/11/2026 (ADR-011). |
 | Desgaste | Fração do intervalo já consumida por um plano: o maior entre km/intervaloKm e horas/intervaloHoras (RF07, RB11). Calculado a cada leitura, nunca gravado (ADR-007). |
 | Desgasta em rolo (`wearsOnTrainer`) | Marca da família que diz se pedais `VirtualRide` contam para ela (RB14). |
 | Evento de manutenção (`MaintenanceEvent`) | Linha do histórico: troca, revisão ou manutenção manual, com data, descrição e, se veio de uma revisão na oficina, a condição. |
 | Família (`Category`) | Grupo de componentes do catálogo: Transmissão, Suspensão, Pneus, Freios, Rodas, Canotes e Selins. Tem planos padrão. |
 | Faixa de durabilidade | Mínimo e máximo de vida útil que a planilha dá para um componente. O intervalo é a média; o mínimo vira o "amarelo a partir de". |
-| Fonte de pedais (`ActivitySource`) | De onde vêm os pedais do atleta: manual, API do Strava com app próprio ou conector (RF32). |
+| Fonte de pedais (`ActivitySource`) | De onde vêm os pedais do atleta: manual ou Strava, lido direto pelo app central (RF32). |
 | Histórico | Lista dos eventos de manutenção de uma bike, do mais recente para o mais antigo, e das peças já trocadas (RF11). |
 | Horas em movimento | Tempo em movimento do pedal (`moving_time`), não o tempo total. É a medida de uso em horas (RB12). |
 | Intervalo (`intervalKm`, `intervalHours`) | Uso, em km ou horas, em que o plano vence (100%). |

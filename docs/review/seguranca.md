@@ -16,7 +16,7 @@
 | Categoria | Situação no GearLog |
 |---|---|
 | A01 Controle de acesso | `requireUser`/`requireAdmin` em toda action; consultas filtradas pelo dono (`ownBike`, `ownPart`); admin reconferido a cada requisição (RB17) |
-| A02 Falhas criptográficas | AES-256-GCM para Client Secret, tokens e chave do conector; só o hash SHA-256 do token de sessão no banco; HTTPS forçado |
+| A02 Falhas criptográficas | AES-256-GCM para Client Secret e tokens do Strava; só o hash SHA-256 do token de sessão no banco; HTTPS forçado |
 | A03 Injeção | Prisma com consultas parametrizadas; React escapa a saída; nenhum SQL montado à mão |
 | A04 Design inseguro | Sem senhas; `state`, `nonce` e PKCE; e-mail verificado obrigatório |
 | A05 Configuração | Cabeçalhos de segurança (ver S1); `.env` fora do Git |
@@ -24,7 +24,7 @@
 | A07 Autenticação | Delegada ao Google; cookie `httpOnly`, `Secure`, `SameSite=Lax`, 30 dias |
 | A08 Integridade | Deploy só pelo GitHub Actions depois do CI; `npm ci` com lockfile |
 | A09 Log e monitoramento | Ver [observabilidade.md](observabilidade.md) |
-| A10 SSRF | URL do conector validada: só `https`, sem IP privado, loopback ou link-local |
+| A10 SSRF | O GearLog só chama hosts fixos (Strava, Google); não há mais URL informada pelo usuário (o conector saiu em 19/11/2026) |
 
 ## 3. Achados
 

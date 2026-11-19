@@ -38,9 +38,8 @@ export async function syncNow() {
   const user = await requireUser();
   let target: string;
   try {
-    const { imported, refresh } = await syncRides(user.id);
-    const extra = !refresh ? "" : refresh.status === "rate_limited" ? `&refresh=limite&espera=${refresh.retryAfterSeconds ?? ""}` : `&refresh=${refresh.status}`;
-    target = `/pedais?ok=sync&n=${imported}${extra}`;
+    const { imported } = await syncRides(user.id);
+    target = `/pedais?ok=sync&n=${imported}`;
   } catch (e) {
     target = `/pedais?erro=sync_${e instanceof SyncError ? e.code : "unexpected"}`;
   }

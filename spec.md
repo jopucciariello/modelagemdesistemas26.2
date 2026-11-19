@@ -6,7 +6,7 @@ Plano técnico: [plan.md](plan.md). Tarefas: [tasks.md](tasks.md).
 
 ## 1. Visão
 
-Ciclistas não sabem quanto cada peça da bike já gastou e só descobrem na quebra. O GearLog soma os km e as horas dos pedais (lançados à mão, pelo Strava, via conector do atleta ou app central) às peças instaladas e avisa antes da troca ou da revisão. Um administrador mantém o catálogo de componentes com intervalos de referência.
+Ciclistas não sabem quanto cada peça da bike já gastou e só descobrem na quebra. O GearLog soma os km e as horas dos pedais (lançados à mão, pelo Strava, pelo app central do Strava) às peças instaladas e avisa antes da troca ou da revisão. Um administrador mantém o catálogo de componentes com intervalos de referência.
 
 - Escopo da entrega: **Fase 1, tracker de desgaste**, só bicicletas. Detalhe em [visao.md](docs/visao.md).
 - Fora: mercado de peças e oficinas (Fases 2 e 3, em [segundo-estagio.md](docs/segundo-estagio.md)).
@@ -44,13 +44,13 @@ Issue épica: [#3](https://github.com/jopucciariello/modelagemdesistemas26.2/iss
 | 1 | Login pelo Google e perfis | RF04, RB17 | #9 | Feito |
 | 2 | Catálogo do admin e carga da planilha | RF30, RF35 | #3 | Feito |
 | 3 | Bikes, peças e planos | RF01–RF03 | #6, #7, #8 | Feito |
-| 4 | Fonte de pedais, Strava próprio, conector | RF32–RF34, RF05 | #10 | Feito |
+| 4 | Fonte de pedais, Strava direto (ADR-011) | RF32, RF05 | #10 | Feito |
 | 5 | Pedais manuais e sincronização | RF06, RF13, RF14 | #11, #18, #19 | Feito (sincronização manual) |
 | 6 | Desgaste, alertas e painel | RF07–RF09, RF15 | #12, #13, #14, #20 | Feito |
 | 7 | Troca, revisão, manutenção e histórico | RF10–RF12 | #15, #16, #17 | Feito |
 | 8 | Revisão na oficina com vários itens | RF36 | #3 | Feito |
 | 9 | Pedido de modelo novo pelo menu de ajuda | RF31 | #3 | Feito |
-| 10 | Sincronização automática (webhook do conector) | RNF05 | #3 | Pendente |
+| 10 | Sincronização automática (webhook do Strava, ADR-011) | RNF05 | #3 | Feito (ativar em /admin) |
 
 ## 5. Casos de uso
 

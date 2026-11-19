@@ -10,7 +10,7 @@ Casos de uso da Fase 1, a entrega da disciplina. Cada caso aponta para os requis
 | Atleta | Principal | Ciclista dono das bikes. Persona: Rafael ([personas.md](personas.md)). |
 | Administrador | Principal | Mantém o catálogo. Também pode ter bikes, por isso herda os casos do Atleta. Persona: Beatriz. |
 | Google | Secundário (sistema) | Provedor de identidade (OpenID Connect, [ADR-005](adr/ADR-005-login.md)). |
-| Fonte de pedais | Secundário (sistema) | Strava (com o app do próprio atleta) ou o conector do atleta ([ADR-006](adr/ADR-006-fontes-de-pedais.md)). |
+| Fonte de pedais | Secundário (sistema) | Strava, lido direto pelo app central do GearLog ([ADR-011](adr/ADR-011-strava-direto.md)). |
 
 ## Diagrama
 
@@ -22,7 +22,7 @@ flowchart LR
   Atleta[/"👤 Atleta"/]
   Admin[/"👤 Administrador"/]
   Google[/"⚙ Google"/]
-  Fonte[/"⚙ Fonte de pedais<br/>(Strava ou conector)"/]
+  Fonte[/"⚙ Fonte de pedais<br/>(Strava)"/]
 
   Atleta -- generaliza --> Usuario
   Admin -- generaliza --> Atleta
@@ -30,8 +30,7 @@ flowchart LR
   subgraph GearLog
     UC01([UC01 Entrar com Google])
     UC02([UC02 Escolher fonte de pedais])
-    UC02a([UC02a Vincular Strava com app próprio])
-    UC02b([UC02b Configurar conector])
+    UC02a([UC02a Conectar o Strava])
     UC03([UC03 Cadastrar bike])
     UC03a([UC03a Criar bike a partir de modelo])
     UC03b([UC03b Associar bike da fonte])
@@ -78,7 +77,6 @@ flowchart LR
 | UC01 Entrar com Google | RF04, RNF02 | RB17 | Feito |
 | UC02 Escolher fonte de pedais | RF32 | RB08 | Feito |
 | UC02a Vincular Strava com app próprio | RF33, RNF01, RNF05 | RB08 | Removido (17/11/2026, OPEN-23) |
-| UC02b Configurar conector | RF34, RNF01 | RB08 | Feito |
 | UC03 Cadastrar bike | RF01 | — | Feito |
 | UC03a Criar bike a partir de modelo | RF35 | RB15, RB16 | Feito |
 | UC03b Associar bike da fonte | RF05 | RB02 | Feito |
@@ -111,11 +109,10 @@ Formato: ator, pré-condições, fluxo principal (FP), fluxos alternativos (FA) 
 
 - **Ator:** Atleta.
 - **Pré:** sessão aberta.
-- **FP:** 1. O atleta abre "Fonte". 2. Escolhe manual, Strava (app próprio) ou conector. 3. O sistema grava a escolha.
-- **FA1 (UC02a):** escolheu Strava → o sistema mostra o tutorial, recebe `Client ID` e `Client Secret`, guarda o secret criptografado e faz o OAuth com os escopos `read`, `profile:read_all` e `activity:read_all`.
-- **FA2 (UC02b):** escolheu conector → o sistema recebe URL e chave, recusa URL sem `https` ou que aponte para rede privada (SSRF), testa `/v1/gearlog/status` e guarda a chave criptografada.
-- **FE1:** Strava ou conector recusam a credencial → a fonte não muda e o erro aparece.
-- **Pós:** a fonte do atleta é a escolhida. Credenciais nunca voltam ao navegador.
+- **FP:** 1. O atleta abre "Fonte". 2. Escolhe manual ou Strava. 3. O sistema grava a escolha.
+- **FA1 (UC02a):** escolheu Strava → o sistema faz o OAuth com o app central do GearLog (sem o atleta digitar credenciais), com os escopos `read`, `profile:read_all` e `activity:read_all`, e guarda os tokens criptografados. O atleta pode desconectar a qualquer hora (os tokens são apagados).
+- **FE1:** o Strava recusa a autorização (inclusive acima da capacidade de 10 atletas, RB08) → a fonte não muda e o erro aparece.
+- **Pós:** a fonte do atleta é a escolhida. Tokens nunca voltam ao navegador.
 
 ### UC03 — Cadastrar bike
 
@@ -149,9 +146,9 @@ Formato: ator, pré-condições, fluxo principal (FP), fluxos alternativos (FA) 
 ### UC06 — Sincronizar pedais
 
 - **Ator:** Atleta. **Secundário:** Fonte de pedais.
-- **Pré:** fonte Strava ou conector configurada.
-- **FP:** 1. O atleta clica em "Sincronizar agora". 2. O sistema busca as atividades (conector: todo o histórico com `since`; Strava: incremental, no máximo 10 páginas). 3. O sistema descarta o que não é ciclismo (RB03) e converte para km e horas em movimento (RB12). 4. Para cada atividade, grava ou atualiza o pedal pelo id externo e liga à bike associada pelo `gear_id`. 5. O sistema registra a hora da sincronização.
-- **FE1 (RF13):** a fonte não responde, recusa a chave ou devolve algo inesperado → nada guardado muda, o erro é registrado e o atleta pode tentar de novo.
+- **Pré:** Strava conectado.
+- **FP:** 1. O atleta clica em "Sincronizar agora". 2. O sistema busca as atividades (incremental, no máximo 10 páginas); além disso, o webhook do Strava traz pedais novos, editados e apagados sem o atleta pedir (ADR-011). 3. O sistema descarta o que não é ciclismo (RB03) e converte para km e horas em movimento (RB12). 4. Para cada atividade, grava ou atualiza o pedal pelo id externo e liga à bike associada pelo `gear_id`. 5. O sistema registra a hora da sincronização.
+- **FE1 (RF13):** o Strava não responde, recusa o token ou devolve algo inesperado → nada guardado muda, o erro é registrado e o atleta pode tentar de novo.
 - **Pós:** pedais atualizados. O desgaste é recalculado na próxima leitura (UC08).
 
 ### UC07 — Lançar pedal à mão

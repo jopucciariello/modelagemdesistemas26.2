@@ -11,7 +11,7 @@ export default function PrivacidadePage() {
         <li><strong>Conta:</strong> nome e e-mail do login Google, ou o usuário e a senha que você criou (a senha é guardada só como hash, nunca em texto).</li>
         <li><strong>Bikes e peças:</strong> as bikes, peças, manutenções e fotos de bike que você cadastra.</li>
         <li><strong>Pedais:</strong> importados do Strava ou lançados à mão: data, tipo de esporte, distância, tempo em movimento e a bike associada.</li>
-        <li><strong>Strava:</strong> a URL e a chave do seu conector, criptografadas, usadas só para ler os seus pedais. Não guardamos token do Strava.</li>
+        <li><strong>Strava:</strong> ao conectar, guardamos o código da sua conta Strava e os tokens de acesso que o Strava nos dá, criptografados (AES-256-GCM) e nunca enviados ao seu navegador nem aos logs. Servem só para ler os seus pedais e as suas bikes, e para receber do Strava os avisos de pedais novos, editados ou apagados. Quando você desconecta ou revoga o GearLog no Strava, os tokens são apagados.</li>
         <li><strong>Mercado:</strong> anúncios que você publica (texto, preço e até 3 fotos), os modelos que você deseja e, se você informar, seu WhatsApp para contato.</li>
         <li><strong>Oficinas:</strong> agendamentos que você faz e, só se você aceitar ao agendar, o histórico daquela bike para a oficina.</li>
         <li><strong>Localização:</strong> usada no aparelho para ordenar as oficinas por distância. A posição não é guardada nos nossos servidores.</li>

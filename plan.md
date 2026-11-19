@@ -12,7 +12,7 @@ Como o [spec.md](spec.md) é implementado. Decisões detalhadas em [docs/arquite
 | Dados | Prisma 7 + SQLite (`better-sqlite3`), migrações versionadas | ADR-001 |
 | Testes | Vitest (unidade, regras puras e integrações com `fetch` simulado) | ADR-001 |
 | Login | Google OpenID Connect com PKCE; admin por lista de e-mails | ADR-005 |
-| Pedais | Manual ou Strava (conector do atleta hoje; app central do GearLog depois) | ADR-006 |
+| Pedais | Manual ou Strava (direto, app central do GearLog) | ADR-006, ADR-011 |
 | Desgaste | Calculado na leitura a partir dos pedais guardados | ADR-007 |
 | Segredos | Infisical (OIDC no deploy); dados de terceiros criptografados (AES-256-GCM) | ADR-004 |
 | Deploy | Fly.io, uma máquina em `gru`, volume para o SQLite, GitHub Actions | ADR-004 |
@@ -36,7 +36,7 @@ Segue o [mapa de Specs](docs/mapa-specs.md): SPEC-001 → 002 → 003 → 004 �
 
 ## 4. Estratégia de testes
 
-Regras de negócio em módulos puros testados sem banco; integrações com Google, Strava e conector testadas com `fetch` simulado; fluxos de tela verificados ponta a ponta com Playwright contra um banco descartável antes de cada merge. Detalhe e evidências em [docs/testes.md](docs/testes.md).
+Regras de negócio em módulos puros testados sem banco; integrações com Google e Strava testadas com `fetch` simulado; fluxos de tela verificados ponta a ponta com Playwright contra um banco descartável antes de cada merge. Detalhe e evidências em [docs/testes.md](docs/testes.md).
 
 ## 5. Qualidade e segurança
 
@@ -48,7 +48,7 @@ Regras de negócio em módulos puros testados sem banco; integrações com Googl
 
 | Risco | Mitigação |
 |---|---|
-| Limite de leituras do Strava | Conector por atleta hoje e app central depois (ADR-006); paginação limitada |
+| Limite de leituras do Strava | App central, webhook e paginação limitada (ADR-011); capacidade de 10 atletas no modo atual |
 | Perda do volume do SQLite | Backup diário do volume (tarefa T-21) |
 | Regras de desgaste simplificadas | Valores são recomendações; recalibração pela medição real (issue #38) |
 | Prazo (26/11) | Fase 1 primeiro; Fases 2 e 3 são tentativa (decisão de 16/11/2026) e não podem quebrar a Fase 1 |
