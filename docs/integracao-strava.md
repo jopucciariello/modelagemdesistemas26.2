@@ -210,3 +210,16 @@ Para isso, o GearLog **guarda as atividades importadas**, não só os totais. Os
 ## Atualização forçada do conector (ponte temporária) — RF06, RF34 *(aprovado e implementado em 18/11/2026)*
 
 Enquanto o app central do GearLog no Strava não é aprovado, o botão "Sincronizar" (site e app Expo) pede ao conector `POST /v1/gearlog/sync` com a chave do próprio atleta (a mesma das demais chamadas `/v1/gearlog/*`; a `ADMIN_API_KEY` do conector não é usada) e corpo opcional `{ "since": "<ISO>" }` (hoje − 90 dias). Respostas: `202` enfileirado; `429` com `retryAfterSeconds` (limite de uma chamada por hora; o atleta vê o tempo e não há nova tentativa automática); `409` conta não vinculada. O resultado chega pelo feed `/v1/gearlog/events`. É melhor esforço: se falhar, a leitura normal segue (RNF06). Remover quando o app central entrar.
+
+## Conexão pelo app (RF04, issue #62)
+
+O app Expo não tem cookie de sessão na janela do navegador. Fluxo:
+
+1. `POST /api/strava/start` (Bearer, corpo `{redirect}`) valida o destino (`safeAppRedirect`), grava o app central e devolve a URL de autorização do Strava. O `state` é assinado (HMAC-SHA256, 10 min) e carrega o usuário e o destino.
+2. O app abre a URL com `WebBrowser.openAuthSessionAsync`. O Strava redireciona para o mesmo `/auth/strava/callback` do site.
+3. O callback reconhece o `state` assinado `app.…`, troca o código por tokens (guardados cifrados, RNF01) e redireciona para o deep link do app com `?ok=strava` ou `?erro=<código>`.
+4. `GET /api/strava` informa `available`, `linked` e `source`; `POST /api/strava/disconnect` revoga e apaga os tokens (RF32).
+
+### Pedido de aprovação ao Strava (limite de 1 atleta) `[PROPOSTO]`
+
+Enquanto o app GearLog tem capacidade de um único atleta, só quem o criou consegue conectar. Para liberar outros atletas é preciso pedir o aumento do limite em https://share.hsforms.com/1VXPKJ6smRNaSWH1dQ2bUsg4s7ow (formulário "Developer Program"), com: nome do app, site `https://gearlog.jopucci.com`, política de privacidade `/privacidade`, escopos `read, profile:read_all, activity:read_all`, descrição do uso (manutenção de bike por desgaste a partir de distância e tempo) e prints do fluxo. Ação da pessoa responsável pelo app: criar o app central (callback `gearlog.jopucci.com`) e enviar o pedido; ver OPEN sobre a criação do app central em `docs/decisoes-em-aberto.md`.
