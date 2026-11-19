@@ -1,6 +1,7 @@
 // RF32: the athlete picks where their rides come from.
 import Link from "next/link";
 import { Suspense } from "react";
+import { syncNow } from "@/app/actions/rides";
 import { Nav } from "@/components/ui";
 import { SettingsTabs } from "@/components/settings-tabs";
 import { stravaCentralApp } from "@/lib/env";
@@ -72,10 +73,16 @@ async function SourceArea({ searchParams }: { searchParams: PageProps<"/fonte">[
             {stravaLinked ? " Conta Strava vinculada." : ""} Lemos só data, esporte, distância, tempo em movimento e bike.
             {" "}<Link href="/privacidade">Privacidade</Link>.
           </p>
-          <form action="/fonte/strava" method="post">
-            <input type="hidden" name="central" value="1" />
-            <button className="button button-strava" type="submit">Conectar com o Strava</button>
-          </form>
+          {stravaLinked ? (
+            <form action={syncNow}>
+              <button className="button" type="submit">Sincronizar agora</button>
+            </form>
+          ) : (
+            <form action="/fonte/strava" method="post">
+              <input type="hidden" name="central" value="1" />
+              <button className="button button-strava" type="submit">Conectar com o Strava</button>
+            </form>
+          )}
         </section>
       )}
 
