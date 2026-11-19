@@ -6,7 +6,7 @@ Plano técnico: [plan.md](plan.md). Tarefas: [tasks.md](tasks.md).
 
 ## 1. Visão
 
-Ciclistas não sabem quanto cada peça da bike já gastou e só descobrem na quebra. O GearLog soma os km e as horas dos pedais (lançados à mão, pelo Strava do atleta ou pelo conector dele) às peças instaladas e avisa antes da troca ou da revisão. Um administrador mantém o catálogo de componentes com intervalos de referência.
+Ciclistas não sabem quanto cada peça da bike já gastou e só descobrem na quebra. O GearLog soma os km e as horas dos pedais (lançados à mão, pelo Strava, via conector do atleta ou app central) às peças instaladas e avisa antes da troca ou da revisão. Um administrador mantém o catálogo de componentes com intervalos de referência.
 
 - Escopo da entrega: **Fase 1, tracker de desgaste**, só bicicletas. Detalhe em [visao.md](docs/visao.md).
 - Fora: mercado de peças e oficinas (Fases 2 e 3, em [segundo-estagio.md](docs/segundo-estagio.md)).
@@ -18,7 +18,7 @@ Ciclistas não sabem quanto cada peça da bike já gastou e só descobrem na que
 | Rafael | Atleta | Saber o que trocar e quando, sem planilha; registrar o que a oficina fez |
 | Beatriz | Administradora | Manter um catálogo confiável de componentes e bikes-modelo |
 
-Detalhe e matriz persona × funcionalidade: [personas.md](docs/personas.md). Os dois perfis entram pelo Google; Administrador é quem está em `ADMIN_EMAILS` (RB17).
+Detalhe e matriz persona × funcionalidade: [personas.md](docs/personas.md). Todos entram por Google ou por usuário e senha (ADR-005); Administrador é quem está em `ADMIN_EMAILS` ou foi incluído em `/admin` (RB17, RF37). Uma conta pode acumular papéis (RB24).
 
 ## 3. Requisitos
 

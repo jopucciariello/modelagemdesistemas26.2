@@ -22,7 +22,7 @@ flowchart LR
     DB[(SQLite<br/>/data/gearlog.db)]
   end
   G[Google OIDC]
-  S[API do Strava<br/>app do atleta]
+  S[API do Strava<br/>app central, quando aprovado]
   C[Conector do atleta<br/>/v1/gearlog/*]
   I[Infisical<br/>segredos]
 
@@ -91,7 +91,7 @@ Atributos que a disciplina cobra:
 | Integração | Protocolo | Falha |
 |---|---|---|
 | Google | OpenID Connect com PKCE, `state` e `nonce` | Login recusado; sem sessão |
-| Strava (app do atleta) | OAuth 2.0; `GET /athlete/activities`, `GET /athlete`; refresh automático do token | Erro registrado (RF13); dados mantidos |
+| Strava (app central do GearLog, quando aprovado) | OAuth 2.0; `GET /athlete/activities`, `GET /athlete`; refresh automático do token | Erro registrado (RF13); dados mantidos |
 | Conector do atleta | HTTPS com `Authorization: Bearer`; `/v1/gearlog/status`, `/bikes`, `/activities?since=` | Idem; URL validada contra SSRF |
 
 O contrato do conector está em [integracao-strava.md](integracao-strava.md) e foi conferido contra o código do conector em 13/11/2026.

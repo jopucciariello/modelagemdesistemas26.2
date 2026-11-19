@@ -19,7 +19,7 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 
 ## SPEC-004 — Pedais e fontes
 - [x] T-10 Escolher a fonte de pedais — RF32 — #3
-- [x] T-11 Vincular Strava com app do atleta (tutorial e OAuth) — RF33 — #3
+- [x] T-11 Vincular Strava com app do atleta (tutorial e OAuth) — RF33, removido em 17/11/2026 — #3
 - [x] T-12 Configurar conector (URL validada contra SSRF, chave criptografada) — RF34, RNF01 — #3
 - [x] T-13 Sincronizar histórico inteiro sob demanda (`since`) — RF06, RF13 — #11, #18 (PR #40)
 - [x] T-14 Associar bike da fonte, inclusive na criação da bike — RF05 — #10 (PR #41)
