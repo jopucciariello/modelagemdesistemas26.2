@@ -1,9 +1,18 @@
 // Small shared pieces of the tracker UI (RNF07: plain HTML forms, responsive CSS).
 import { NavLinks } from "@/components/nav";
+import { navItemsFor } from "@/lib/roles";
+import { loadAccountRoles } from "@/lib/roles-server";
+import { getCurrentUser } from "@/lib/session";
 import { percent, type PlanWear } from "@/lib/wear";
 
-export function Nav({ isAdmin }: { isAdmin?: boolean }) {
-  return <NavLinks isAdmin={isAdmin} />;
+/**
+ * RB24: the menu follows the roles of the signed-in account (workshop, store, admin are added to the athlete menu).
+ * The old `isAdmin` prop is ignored: admin rights are re-checked here against ADMIN_EMAILS (RB17).
+ */
+export async function Nav(_props: { isAdmin?: boolean }) {
+  const user = await getCurrentUser();
+  const roles = user ? await loadAccountRoles(user) : (["ATHLETE"] as const);
+  return <NavLinks items={navItemsFor([...roles])} />;
 }
 
 /** Shows ?ok= and ?erro= feedback from a redirect. */
