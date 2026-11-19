@@ -2,6 +2,7 @@
 // RF30, RB15: only the admin maintains categories, default plans and components.
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
+import { hiddenComponentId } from "@/lib/catalog/pick";
 import { loadSeed } from "@/lib/catalog/load";
 import { optNumber, readPlans, text } from "@/lib/forms";
 import { requireAdmin } from "@/lib/guards";
@@ -66,22 +67,23 @@ export async function createComponent(form: FormData) {
   const code = text(form, "code", 20).toUpperCase() || null;
   if (!brand || !model) fail("componente_invalido");
   const dup = await prisma.component.findFirst({ where: { OR: [{ categoryId, brand, model }, ...(code ? [{ code }] : [])] } });
-  if (dup) fail("componente_existe");
-  await prisma.component.create({
-    data: {
-      categoryId,
-      code,
-      brand,
-      model,
-      modality: text(form, "modality", 40) || null,
-      subcategory: text(form, "subcategory", 60) || null,
-      details: text(form, "details", 200) || null,
-      priceMin: optNumber(form, "priceMin"),
-      priceMax: optNumber(form, "priceMax"),
-      // RF30: plans of this component; empty keeps the category defaults.
-      plans: { create: readPlans(form) },
-    },
-  });
+  const hidden = await hiddenComponentId({ categoryId, brand, model });
+  if (dup && dup.id !== hidden) fail("componente_existe");
+  const data = {
+    categoryId,
+    code,
+    brand,
+    model,
+    modality: text(form, "modality", 40) || null,
+    subcategory: text(form, "subcategory", 60) || null,
+    details: text(form, "details", 200) || null,
+    priceMin: optNumber(form, "priceMin"),
+    priceMax: optNumber(form, "priceMax"),
+  };
+  // RF30: plans of this component; empty keeps the category defaults.
+  // OPEN-49: a hidden component typed by athletes becomes the official one, keeping their parts.
+  if (hidden) await prisma.component.update({ where: { id: hidden }, data: { ...data, active: true, plans: { deleteMany: {}, create: readPlans(form) } } });
+  else await prisma.component.create({ data: { ...data, plans: { create: readPlans(form) } } });
   back("componente");
 }
 
