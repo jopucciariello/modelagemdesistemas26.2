@@ -20,12 +20,12 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 ## SPEC-004 — Pedais e fontes
 - [x] T-10 Escolher a fonte de pedais — RF32 — #3
 - [x] T-11 Vincular Strava com app do atleta (tutorial e OAuth) — RF33, removido em 17/11/2026 — #3
-- [x] T-12 Configurar conector (URL validada contra SSRF, chave criptografada) — RF34, RNF01 — #3
+- [x] T-12 ~~Configurar conector~~ (removido em 19/11/2026, ADR-011) — RF34 — #3
 - [x] T-13 Sincronizar histórico inteiro sob demanda (`since`) — RF06, RF13 — #11, #18 (PR #40)
 - [x] T-14 Associar bike da fonte, inclusive na criação da bike — RF05 — #10 (PR #41)
 - [x] T-15 Lançar e remover pedal manual — RF14 — #19
 - [ ] T-16 Atribuir bike a pedal sem `gear_id` sem perder na próxima sincronização — RF05 — #10 (OPEN-20)
-- [ ] T-17 Aplicar exclusões vindas do feed de eventos do conector — RF06, RNF05 — #11
+- [x] T-17 Aplicar exclusões e edições vindas do webhook do Strava — RF06, RNF05 — #11
 - [ ] T-18 Sincronização automática (webhook ou agendada) — RNF05 — #11
 
 ## SPEC-005 — Desgaste, alertas e painel

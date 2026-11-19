@@ -141,35 +141,35 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 
 **1. Identificação.** Objetivo: trazer os pedais do atleta para o GearLog. Valor: km e horas atualizados sem digitação, e o app funciona mesmo sem Strava.
 
-**2. Rastreabilidade.** RF05, RF06, RF13, RF14, RF32, RF34 · RB02, RB03, RB08, RB12 · RNF01, RNF05, RNF06 · UC02, UC06, UC07 · Pedal, Conexão Strava, Conexão conector · ADR-004, ADR-006.
+**2. Rastreabilidade.** RF05, RF06, RF13, RF14, RF32, RF34 · RB02, RB03, RB08, RB12 · RNF01, RNF05, RNF06 · UC02, UC06, UC07 · Pedal, Conexão Strava · ADR-004, ADR-006, ADR-011.
 
-**3. Escopo.** Incluído: escolher a fonte; vincular Strava com app próprio; configurar conector; sincronizar sob demanda; lançar e remover pedal manual; associar bike da fonte. Fora (pendente): sincronização automática, webhooks, exclusões vindas do Strava, atribuir bike a pedal sem `gear_id` (OPEN-20).
+**3. Escopo.** Incluído: escolher a fonte; conectar o Strava (app central); sincronizar sob demanda; webhook do Strava (pedal novo, editado ou apagado); lançar e remover pedal manual; associar bike da fonte. Fora (pendente): atribuir bike a pedal sem `gear_id` (OPEN-20).
 
 **4. Dependências.** SPEC-001, SPEC-003.
 
-**5. Comportamento esperado.** UC02, UC06, UC07 e [sequência 2.1](uml.md#21-sincronizar-pedais-pelo-conector-recalcular-o-desgaste-e-emitir-alerta-uc06--uc08).
+**5. Comportamento esperado.** UC02, UC06, UC07 e [sequência 2.1](uml.md#21-sincronizar-pedais-pelo-strava-recalcular-o-desgaste-e-emitir-alerta-uc06--uc08).
 
 **6. Regras e invariantes.**
 - INV-013: só os seis tipos de ciclismo entram (RB03). (`wear.test.ts` › ignores non-cycling activities; `rides-map.test.ts` › keeps cycling rides and drops invalid items)
 - INV-014: horas = tempo em movimento; metros e segundos do Strava viram km e horas (RB12). (`rides-map.test.ts` › converts to km and moving hours)
 - INV-015: sincronizar de novo não duplica pedais (único por atleta + id externo). (esquema `@@unique([userId, externalId])`)
-- INV-016: falha na fonte não altera dados guardados e registra só o código do erro (RF13). (`syncRides`; `activity-sources.test.ts` › maps 401, 5xx… without leaking the key)
-- INV-017: a URL do conector é `https` e não aponta para rede privada. (`activity-sources.test.ts` › connector URL (SSRF))
-- INV-018: o conector recebe `since` e devolve o histórico inteiro. (`activity-sources.test.ts` › asks /activities for the whole history…)
-- INV-019: segredos (Client Secret, tokens, chave do conector) ficam criptografados e nunca vão ao navegador (RNF01). (`crypto.test.ts`)
+- INV-016: falha na fonte não altera dados guardados e registra só o código do erro (RF13). (`syncRides`; só o código do erro é registrado)
+- INV-017: o webhook só aceita a validação com o `verify_token` correto e ignora eventos de atletas desconhecidos. (`strava-webhook.test.ts`)
+- INV-018: atleta que revoga o GearLog no Strava tem os tokens apagados e volta ao manual. (`strava-webhook.test.ts` › deauthorized)
+- INV-019: segredos (Client Secret e tokens) ficam criptografados e nunca vão ao navegador (RNF01). (`crypto.test.ts`)
 
 **7. Modelo de domínio.** Pedal pertence ao atleta e, opcionalmente, a uma bike (agregação). Conexões são 0..1 por usuário.
 
-**8. Impacto arquitetural.** `src/app/fonte/**`, `src/app/pedais/`, `src/app/actions/rides.ts`, `src/lib/rides/{sync,map}.ts`, `src/lib/connector/*`, `src/lib/strava/*`, `src/lib/crypto.ts`.
+**8. Impacto arquitetural.** `src/app/fonte/**`, `src/app/pedais/`, `src/app/actions/rides.ts`, `src/lib/rides/{sync,map}.ts`, `src/lib/strava/*`, `src/lib/crypto.ts`.
 
-**9. Contratos.** Conector: `GET /v1/gearlog/status | bikes | activities?since=<ISO>` com `Authorization: Bearer`. Strava: `GET /athlete`, `GET /athlete/activities?after&page&per_page=100`. Erros mapeados: `not_linked`, `unreachable`, `unauthorized`, `bad_response`, `unexpected`.
+**9. Contratos.** Strava: `GET /athlete`, `GET /athlete/activities?after&page&per_page=100`, `GET /activities/{id}`; webhook `GET|POST /api/strava/webhook`. Erros mapeados: `not_linked`, `unreachable`, `unauthorized`, `bad_response`, `unexpected`.
 
-**10. RNFs.** RNF05: no máximo 10 páginas por sincronização no Strava (parcial; sem webhook). RNF06: sem fonte, o lançamento manual e as telas continuam.
+**10. RNFs.** RNF05: no máximo 10 páginas por sincronização no Strava (o webhook evita novas leituras). RNF06: sem fonte, o lançamento manual e as telas continuam.
 
 **11. Critérios de aceitação.**
-- Dado o conector configurado, quando o atleta sincroniza, então todos os pedais de ciclismo do histórico entram uma vez só.
+- Dado o Strava conectado, quando o atleta sincroniza, então todos os pedais de ciclismo do histórico entram uma vez só.
 - Dada uma bike associada ao gear `b123`, quando um pedal desse gear chega, então ele entra nessa bike.
-- Dado o conector fora do ar, quando o atleta sincroniza, então aparece o erro e os pedais anteriores continuam.
+- Dado o Strava fora do ar, quando o atleta sincroniza, então aparece o erro e os pedais anteriores continuam.
 - Dada uma bike montada do zero e já pedalada 120 km no Strava antes do cadastro, quando o atleta associa a bike da fonte marcando "montada do zero", então as peças originais passam a valer desde o primeiro pedal e os 120 km contam no desgaste.
 - Dada a fonte manual, quando o atleta lança 40 km e 1,5 h, então o pedal aparece e conta para as peças instaladas na data.
 

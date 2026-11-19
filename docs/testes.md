@@ -5,7 +5,7 @@
 | Nível | Ferramenta | O que cobre | Onde |
 |---|---|---|---|
 | Unidade (regras puras) | Vitest | Desgaste, limiares, alertas, planos, revisão na oficina, mapeamento de pedais, datas | `tests/unit/wear`, `catalog`, `visit`, `rides-map` |
-| Integração com `fetch` simulado | Vitest | Google OIDC, OAuth do Strava, cliente do conector, SSRF, criptografia, domínio canônico | `tests/unit/google-admin-login`, `strava-oauth`, `activity-sources`, `crypto`, `canonical-host` |
+| Integração com `fetch` simulado | Vitest | Google OIDC, OAuth do Strava, criptografia, domínio canônico | `tests/unit/google-admin-login`, `strava-oauth`, `activity-sources`, `crypto`, `canonical-host` |
 | Ponta a ponta | Playwright, manual por PR | Fluxos de tela com sessão real contra banco descartável | Roteiro na seção 4 |
 | Estática | `tsc --noEmit`, ESLint | Tipos e padrões do Next/React | CI |
 

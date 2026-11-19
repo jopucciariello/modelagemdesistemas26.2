@@ -45,10 +45,6 @@ classDiagram
     +refreshTokenCriptografado: String?
     +expiraEm: DateTime?
   }
-  class ConexaoConector {
-    +urlBase: String
-    +chaveCriptografada: String
-  }
 
   class Categoria {
     +nome: String
@@ -137,7 +133,6 @@ classDiagram
     <<enumeration>>
     MANUAL
     STRAVA
-    CONNECTOR
   }
   class PlanAction {
     <<enumeration>>
@@ -171,13 +166,11 @@ classDiagram
   }
   class ridesMap {
     <<module>>
-    +parseConnectorActivities(json) RideInput[]
     +parseStravaActivities(json) RideInput[]
   }
 
   Usuario "1" *-- "0..*" Sessao
   Usuario "1" *-- "0..1" ConexaoStrava
-  Usuario "1" *-- "0..1" ConexaoConector
   Atleta "1" *-- "0..*" Bike
   Atleta "1" *-- "0..*" Pedal
 
@@ -213,7 +206,7 @@ Invariantes que o diagrama não mostra sozinho:
 
 ## 2. Diagramas de sequência
 
-### 2.1 Sincronizar pedais pelo conector, recalcular o desgaste e emitir alerta (UC06 + UC08)
+### 2.1 Sincronizar pedais pelo Strava, recalcular o desgaste e emitir alerta (UC06 + UC08)
 
 O desgaste não é gravado: ele é recalculado a cada leitura a partir dos pedais guardados ([ADR-007](adr/ADR-007-desgaste-calculado-dos-pedais.md)). Por isso a sincronização só grava pedais, e o alerta nasce quando o painel é aberto.
 
@@ -224,7 +217,7 @@ sequenceDiagram
   participant P as Página Pedais
   participant S as syncNow (server action)
   participant R as syncRides (lib/rides/sync)
-  participant C as Conector do atleta
+  participant C as API do Strava
   participant M as ridesMap
   participant DB as Banco (SQLite)
   participant D as Painel (loadDashboard)
@@ -234,11 +227,11 @@ sequenceDiagram
   P->>S: syncNow()
   S->>S: requireUser()
   S->>R: syncRides(userId)
-  R->>DB: lê fonte do atleta e conexão
-  R->>C: GET /v1/gearlog/activities?since=1970-01-01 (Bearer chave)
-  alt conector responde
-    C-->>R: { activities: [...] }
-    R->>M: parseConnectorActivities(json)
+  R->>DB: lê fonte do atleta e tokens (refresh se perto de expirar)
+  R->>C: GET /athlete/activities?after=... (Bearer token)
+  alt Strava responde
+    C-->>R: [ SummaryActivity ]
+    R->>M: parseStravaActivities(json)
     M-->>R: pedais de ciclismo em km e horas (RB03, RB12)
     R->>DB: bikes do atleta com stravaGearId
     loop cada pedal

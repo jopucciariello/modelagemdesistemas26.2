@@ -4,6 +4,7 @@ import "@/app/portfolio.css";
 import { AdminEmails } from "@/components/admin-emails";
 import { AdminCatalog } from "@/components/admin-catalog";
 import { AdminMarket } from "@/components/admin-market";
+import { AdminStravaWebhook } from "@/components/admin-strava-webhook";
 import { AdminRequests } from "@/components/admin-requests";
 import { AdminWorkshops } from "@/components/admin-workshops";
 import { Flash, Nav } from "@/components/ui";
@@ -24,9 +25,12 @@ const OK: Record<string, string> = {
   oficina: "Oficinas atualizadas.",
   admin_incluido: "Administrador incluído.",
   admin_removido: "Administrador removido.",
+  strava_webhook: "Avisos do Strava ativados.",
 };
 
 const ERROR_MESSAGES: Record<string, string> = {
+  strava_app_missing: "O app do Strava não está configurado.",
+  strava_webhook_falhou: "O Strava recusou a inscrição (ela pode já existir).",
   categoria_invalida: "Informe o nome da família.",
   categoria_existe: "Já existe uma categoria com esse nome.",
   plano_invalido: "O plano precisa de nome e de um intervalo em km ou em horas.",
@@ -98,6 +102,7 @@ async function AdminArea({ searchParams }: { searchParams: PageProps<"/admin">["
             </form>
           </section>
           <AdminEmails />
+          <AdminStravaWebhook />
           <AdminCatalog />
           <AdminMarket />
           <AdminRequests />

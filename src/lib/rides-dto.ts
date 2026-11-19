@@ -1,7 +1,7 @@
 // RF14, OPEN-20: JSON shape of the recent rides for the Expo app (issue #64). Pure.
 export type RideRow = {
   id: string;
-  source: "MANUAL" | "STRAVA" | "CONNECTOR";
+  source: "MANUAL" | "STRAVA";
   sportType: string;
   startDate: Date;
   distanceKm: number;

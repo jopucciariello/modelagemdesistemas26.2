@@ -27,7 +27,7 @@ Toda a documentação técnica e de engenharia de requisitos do projeto está ce
 * 🏗️ [Arquitetura](docs/arquitetura.md)
 * 🔍 [Revisão (arquitetura, desempenho, segurança, observabilidade)](docs/review/)
 * 🧪 [Estratégia de testes e evidências](docs/testes.md)
-* 🚴 [Integração com o Strava (contrato do conector)](docs/integracao-strava.md)
+* 🚴 [Integração com o Strava](docs/integracao-strava.md)
 * 🏛️ [Decisões de arquitetura (ADR-001 a ADR-007)](docs/adr/)
 * ❓ [Decisões em aberto](docs/decisoes-em-aberto.md)
 * 🤝 [Combinados de Equipe](docs/combinados.md)
@@ -85,7 +85,7 @@ npm run dev
 | Tela | Quem | O que faz | Requisitos |
 |---|---|---|---|
 | `/admin` | Admin | Catálogo: categorias, planos padrão (km, horas ou ambos; troca ou revisão; "desgasta em rolo") e componentes. As 7 famílias, 250 componentes e 17 bikes-modelo da planilha de catálogo entram sozinhos na primeira subida do servidor com o banco sem catálogo. O botão **Carregar catálogo da planilha** recarrega depois de uma nova exportação da planilha | RF30, RB14–RB16 |
-| `/configuracoes` | Todos | Configurações do usuário: **Fonte dos pedais** (manual, API do Strava ou conector) e **Adicionar bike** (a partir de um modelo de fábrica ou nova) | RF01, RF32–RF35 |
+| `/configuracoes` | Todos | Configurações do usuário: **Fonte dos pedais** (manual ou Strava) e **Adicionar bike** (a partir de um modelo de fábrica ou nova) | RF01, RF32–RF35 |
 | `/bikes/<id>` | Todos | Instala peças do catálogo (planos sugeridos e editáveis), registra revisão, troca e manutenção manual, mostra o histórico e associa a bike da fonte | RF02, RF03, RF05, RF10–RF12 |
 | `/pedais` | Todos | Pedais recentes (distância, tempo, tipo, bike, data e origem), botão de atualizar pela fonte e botão + para lançar pedal; pedais manuais podem ser excluídos | RF06, RF13, RF14 |
 | `/` | Todos | Painel: um cartão por bike (foto e nome) que expande para os alertas de desgaste; bikes aposentadas ao final | RF07–RF09, RF15 |

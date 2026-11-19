@@ -20,7 +20,7 @@ const ERROR_MESSAGES: Record<string, string> = {
 };
 
 const BIKE_OK: Record<string, string> = { aposentada: "Bike aposentada. O histórico continua guardado.", excluida: "Bike excluída." };
-const SOURCE_LABELS = { MANUAL: "lançamento manual", STRAVA: "API do Strava", CONNECTOR: "conector" } as const;
+const SOURCE_LABELS = { MANUAL: "lançamento manual", STRAVA: "API do Strava" } as const;
 
 export default function Home(props: PageProps<"/">) {
   return (

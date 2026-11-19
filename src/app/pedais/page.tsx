@@ -1,6 +1,5 @@
 // RF06, RF13, RF14: recent rides, a refresh button (sync) and a + button (new ride by hand).
 import Link from "next/link";
-import { refreshMessage } from "@/lib/rides/refresh-message";
 import { Suspense } from "react";
 import "@/app/portfolio-pages.css";
 import { chooseRideBike, createManualRide, deleteManualRide, syncNow } from "@/app/actions/rides";
@@ -26,7 +25,7 @@ const SYNC_ERR: Record<string, string> = {
   bad_response: "A fonte respondeu algo inesperado. Seus dados anteriores continuam salvos.",
   unexpected: "A sincronização falhou. Seus dados anteriores continuam salvos.",
 };
-const SOURCE_LABEL = { MANUAL: "manual", STRAVA: "Strava", CONNECTOR: "conector" } as const;
+const SOURCE_LABEL = { MANUAL: "manual", STRAVA: "Strava" } as const;
 
 export default function RidesPage(props: PageProps<"/pedais">) {
   return (
@@ -40,7 +39,7 @@ export default function RidesPage(props: PageProps<"/pedais">) {
 
 async function Rides({ searchParams }: { searchParams: PageProps<"/pedais">["searchParams"] }) {
   const user = await requireUser();
-  const { ok, erro, n, refresh, espera } = await searchParams;
+  const { ok, erro, n } = await searchParams;
   const [bikes, rides, status, total] = await Promise.all([
     prisma.bike.findMany({ where: { userId: user.id, archivedAt: null }, orderBy: { createdAt: "asc" } }),
     prisma.ride.findMany({ where: { userId: user.id }, include: { bike: { select: { name: true } } }, orderBy: { startDate: "desc" }, take: 100 }),
@@ -77,9 +76,6 @@ async function Rides({ searchParams }: { searchParams: PageProps<"/pedais">["sea
       {ok === "removido" && <p className="ok" role="status">Pedal excluído.</p>}
       {ok === "bike_escolhida" && <p className="ok" role="status">Bike do pedal atualizada.</p>}
       {ok === "sync" && <p className="ok" role="status">Atualizado: {typeof n === "string" ? n : 0} pedais lidos da fonte.</p>}
-      {ok === "sync" && typeof refresh === "string" && refreshMessage(refresh, typeof espera === "string" && espera !== "" ? Number(espera) : null) && (
-        <p className={refresh === "queued" ? "ok" : "muted"} role="status">{refreshMessage(refresh, typeof espera === "string" && espera !== "" ? Number(espera) : null)}</p>
-      )}
       {unassigned > 0 && <p className="muted">{unassigned} pedais ainda sem bike. Escolha a bike na própria linha do pedal ou associe as bikes da fonte na página de cada bike (RF05).</p>}
 
       <section className="card">

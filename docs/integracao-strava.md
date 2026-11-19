@@ -1,3 +1,5 @@
+> **Atualização de 19/11/2026 ([ADR-011](adr/ADR-011-strava-direto.md)):** o GearLog não usa mais o conector. Lê o Strava direto (OAuth do app central, `GET /athlete`, `GET /athlete/activities`, `GET /activities/{id}`) e recebe webhook em `/api/strava/webhook`. O texto abaixo descreve o contrato do conector e fica como referência histórica e para o portfólio do autor.
+
 # Integração Strava — Contrato do Conector
 
 Requisitos atendidos: RF04, RF05, RF06, RF13, RF14, RNF01, RNF05, RNF06, RB02, RB03, RB08, RB10–RB12.

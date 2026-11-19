@@ -41,7 +41,7 @@ export type BikeDetailDto = {
 /** Formato de GET /api/rides (espelha src/lib/rides-dto.ts). */
 export type RideDto = {
   id: string;
-  source: 'MANUAL' | 'STRAVA' | 'CONNECTOR';
+  source: 'MANUAL' | 'STRAVA';
   sportType: string;
   date: string;
   distanceKm: number;
@@ -52,4 +52,4 @@ export type RideDto = {
   manual: boolean;
 };
 
-export type RidesDto = { source: 'MANUAL' | 'STRAVA' | 'CONNECTOR'; bikes: { id: string; name: string }[]; rides: RideDto[] };
+export type RidesDto = { source: 'MANUAL' | 'STRAVA'; bikes: { id: string; name: string }[]; rides: RideDto[] };

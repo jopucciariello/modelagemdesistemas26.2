@@ -2,10 +2,10 @@ import { api, ApiError } from '@/lib/api';
 
 const ERRORS: Record<string, string> = {
   pedal_invalido: 'Pedal inválido: confira bike, data, km e horas.',
-  sync_not_linked: 'Conecte o Strava (ou o conector) nas configurações antes de sincronizar.',
-  sync_unreachable: 'Não foi possível falar com a fonte agora. Os dados antigos continuam salvos.',
-  sync_unauthorized: 'A fonte recusou o acesso. Reconecte nas configurações.',
-  sync_bad_response: 'A fonte respondeu algo inesperado. Os dados antigos continuam salvos.',
+  sync_not_linked: 'Conecte o Strava nas configurações antes de sincronizar.',
+  sync_unreachable: 'Não foi possível falar com o Strava agora. Os dados antigos continuam salvos.',
+  sync_unauthorized: 'O Strava recusou o acesso. Reconecte nas configurações.',
+  sync_bad_response: 'O Strava respondeu algo inesperado. Os dados antigos continuam salvos.',
   sync_unexpected: 'A sincronização falhou. Os dados antigos continuam salvos.',
 };
 
@@ -23,15 +23,10 @@ export async function addRide(input: { bikeId: string; date: string; distanceKm:
   }
 }
 
-/** RF13: sincroniza com a fonte e devolve quantos pedais vieram. */
-export type RefreshRequest =
-  | { status: 'queued' | 'not_linked' | 'failed' }
-  | { status: 'rate_limited'; retryAfterSeconds: number | null }
-  | null;
-
-export async function syncRides(): Promise<{ imported: number; refresh: RefreshRequest } | { error: string }> {
+/** RF13: sincroniza com o Strava e devolve quantos pedais vieram. */
+export async function syncRides(): Promise<{ imported: number } | { error: string }> {
   try {
-    return await api<{ imported: number; refresh: RefreshRequest }>('/api/rides/sync', { method: 'POST' });
+    return await api<{ imported: number }>('/api/rides/sync', { method: 'POST' });
   } catch (e) {
     return { error: message(e) };
   }
@@ -44,22 +39,5 @@ export async function chooseBike(rideId: string, bikeId: string) {
     return null;
   } catch (e) {
     return message(e);
-  }
-}
-
-/** RF06, RF34: aviso sobre o pedido de releitura ao conector (sem nova tentativa automática). */
-export function refreshNotice(refresh: RefreshRequest | undefined): string {
-  if (!refresh) return '';
-  switch (refresh.status) {
-    case 'queued':
-      return ' Pedimos ao conector para reler o Strava; atualize em instantes.';
-    case 'rate_limited': {
-      const min = refresh.retryAfterSeconds === null ? null : Math.max(1, Math.ceil(refresh.retryAfterSeconds / 60));
-      return ` O conector só relê o Strava uma vez por hora${min === null ? '' : `; peça de novo em ${min >= 60 ? 'cerca de 1 hora' : `${min} min`}`}.`;
-    }
-    case 'not_linked':
-      return ' A conta do Strava não está vinculada no conector.';
-    default:
-      return ' Não foi possível pedir a releitura ao conector agora.';
   }
 }

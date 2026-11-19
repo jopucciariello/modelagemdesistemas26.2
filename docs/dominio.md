@@ -12,7 +12,7 @@ classDiagram
     nome
     email
     perfil: ATLETA | ADMIN (oficina e lojista vêm de vínculos; papéis acumulam, RB24)
-    fonteDePedais: MANUAL | STRAVA | CONECTOR
+    fonteDePedais: MANUAL | STRAVA
     ultimaSincronizacao
     ultimoErroDeSincronizacao
   }
@@ -84,7 +84,7 @@ classDiagram
     ultimaRevisaoEm?
   }
   class Pedal["Pedal (Ride)"] {
-    origem: MANUAL | STRAVA | CONECTOR
+    origem: MANUAL | STRAVA
     idExterno?
     tipoDeEsporte
     data
@@ -130,7 +130,7 @@ classDiagram
 | Componente | Item do catálogo com código (ex.: `TRX-018`), marca, modelo, modalidade, subcategoria, detalhes e faixa de preço (ex.: Shimano Deore M6100). | RF30, RB15 |
 | Plano do componente | Intervalo próprio do componente, vindo da planilha (ex.: corrente e cassete de um grupo; revisão básica e completa de um garfo). | RF02, RF03, RB16 |
 | Bike-modelo | Bike de fábrica (aba Bikes da planilha) com as peças originais por posição. | RF35 |
-| Bike | Bicicleta do atleta. Pode ser associada a uma bike do Strava/conector pelo `idDoStrava`. Arquivar não apaga. | RF01, RF05 |
+| Bike | Bicicleta do atleta. Pode ser associada a uma bike do Strava pelo `idDoStrava`. Arquivar não apaga. | RF01, RF05 |
 | Peça | Um componente instalado numa bike numa data, numa posição (ex.: pneu traseiro). Encerra quando é trocada inteira (`removidaEm`). | RF02, RF10, RB01, RB05 |
 | Plano de manutenção | Cópia do plano do componente (ou da família) na peça, editável pelo atleta. O desgaste e os alertas valem por plano; a troca de um item (ex.: corrente do grupo) zera só o plano dele. | RB16, RB18, RF07–RF09 |
 | Pedal | Uma atividade de ciclismo, lançada à mão ou trazida da fonte do atleta. | RF06, RF14, RB02, RB03, RB12 |
