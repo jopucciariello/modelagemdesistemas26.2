@@ -4,7 +4,7 @@ Documento de arquitetura consolidado: visão, drivers, decisões técnicas, desc
 
 ## 1. Visão arquitetural
 
-O GearLog é um **monólito web** em Next.js (App Router) com banco SQLite, publicado numa única máquina do Fly.io. O navegador fala só com o servidor do GearLog. Ele, por sua vez, fala com o Google (login), com o Strava (pela API do app do próprio atleta) ou com o conector do atleta.
+O GearLog é um **monólito web** em Next.js (App Router) com banco SQLite, publicado numa única máquina do Fly.io. O navegador fala só com o servidor do GearLog. Ele, por sua vez, fala com o Google (login), com o Strava (API e webhook do app central do GearLog, ADR-011).
 
 ```mermaid
 flowchart LR
