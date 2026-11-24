@@ -33,7 +33,7 @@
 | S1 | Sem cabeçalhos de segurança (clickjacking, sniffing, HSTS) | Média | **Feito:** `next.config.ts` envia `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Strict-Transport-Security` e `Permissions-Policy` |
 | S2 | Deploy publicava sem rodar testes | Média | **Feito:** testes, tipos e lint antes do `flyctl deploy` |
 | S3 | Sem regras de permissão para agentes de IA no repositório | Média | **Feito:** `.claude/settings.json` com a matriz da seção 4 |
-| S4 | Sem backup do banco: perda do volume apaga tudo | Alta | Planejado: T-21 (snapshot diário do volume do Fly) |
+| S4 | Sem backup do banco: perda do volume apaga tudo | Alta | **Feito:** T-21, o volume do Fly tem snapshot diário automático (retenção padrão de 5 dias, ajustável por `fly volumes update --snapshot-retention`). Restauração: criar volume a partir do snapshot |
 | S5 | Sem limite de taxa nas server actions e no callback de login | Baixa | Aceito na Fase 1 (login delegado ao Google; ações exigem sessão) |
 | S6 | `npm audit` não roda no CI | Baixa | **Feito:** passo `npm audit --audit-level=high` informativo no CI |
 | S7 | Sem Content-Security-Policy | Baixa | Planejado: CSP com nonce exige ajuste no Next; fica para depois do prazo |

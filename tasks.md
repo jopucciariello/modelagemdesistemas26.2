@@ -24,9 +24,9 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 - [x] T-13 Sincronizar histórico inteiro sob demanda (`since`) — RF06, RF13 — #11, #18 (PR #40)
 - [x] T-14 Associar bike da fonte, inclusive na criação da bike — RF05 — #10 (PR #41)
 - [x] T-15 Lançar e remover pedal manual — RF14 — #19
-- [ ] T-16 Atribuir bike a pedal sem `gear_id` sem perder na próxima sincronização — RF05 — #10 (OPEN-20)
+- [x] T-16 Atribuir bike a pedal sem `gear_id` sem perder na próxima sincronização — RF05 — #10 (OPEN-20)
 - [x] T-17 Aplicar exclusões e edições vindas do webhook do Strava — RF06, RNF05 — #11
-- [ ] T-18 Sincronização automática (webhook ou agendada) — RNF05 — #11
+- [x] T-18 Sincronização automática por webhook do Strava — RNF05 — #11 (PR #139, ADR-011)
 
 ## SPEC-005 — Desgaste, alertas e painel
 - [x] T-19 Cálculo por plano, limiares e texto do alerta — RF07–RF09, RB02, RB04, RB11–RB14 — #12, #13, #14
@@ -48,7 +48,7 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 - [x] T-30 Deploy pelo GitHub Actions com segredos do Infisical — RNF01 — #3
 - [x] T-31 CI com tipos, lint, testes e build em todo PR; testes antes do deploy — RNF08 — #3
 - [x] T-32 Documentação da disciplina (spec, plan, tasks, UC, UML, specs, review) — RNF09 — #3
-- [ ] T-21 Backup diário do volume do SQLite — RNF06 — #3
+- [x] T-21 Backup do volume do SQLite — snapshots diários automáticos do Fly (retenção padrão de 5 dias; ajustável com `fly volumes update --snapshot-retention`) — #3
 - [ ] T-33 Regras de desgaste por fator de uso e recalibração pela medição — RF07 — #38
 
 # Fase 2 — Mercado de peças (tentativa de entrega; a Fase 1 não depende dela)
