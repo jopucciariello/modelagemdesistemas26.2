@@ -321,7 +321,7 @@ async function Bike({ params, searchParams }: PageProps<"/bikes/[id]">) {
       {sourceBikes && (
         <section className="card">
           <h2>Bike na fonte dos pedais</h2>
-          <p className="muted">Associe esta bike à bike do Strava para os pedais importados contarem aqui (RF05).</p>
+          <p className="muted">Associe esta bike à bike do Strava para os pedais importados contarem aqui.</p>
           <form action={linkSourceBike} className="row">
             <input type="hidden" name="bikeId" value={bike.id} />
             <label>Bike da fonte

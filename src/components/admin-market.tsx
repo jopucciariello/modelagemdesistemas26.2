@@ -21,8 +21,8 @@ export async function AdminMarket() {
   return (
     <>
       <section className="card" id="mercado">
-        <h2>Mercado: lojistas (RF18)</h2>
-        <p className="muted">Só o administrador cadastra lojistas e concede ou revoga o selo de verificado (RB06).</p>
+        <h2>Mercado: lojistas</h2>
+        <p className="muted">Só o administrador cadastra lojistas e concede ou revoga o selo de verificado.</p>
         {requests.length > 0 && (
           <ul className="list" aria-label="Pedidos de lojista">
             {requests.map((r) => {
@@ -81,7 +81,7 @@ export async function AdminMarket() {
       </section>
 
       <section className="card">
-        <h2>Mercado: anúncios ativos (RF24)</h2>
+        <h2>Mercado: anúncios ativos</h2>
         <p className="muted">A remoção guarda o motivo e a data; o anúncio sai da vitrine e o autor vê o motivo.</p>
         {listings.length === 0 ? <p className="muted">Nenhum anúncio ativo.</p> : (
           <ul className="list">

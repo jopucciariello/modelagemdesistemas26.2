@@ -13,7 +13,7 @@ export default function StockPage() {
     <main className="pf">
       <header>
         <h1>Estoque de peças</h1>
-        <p className="muted">Peças que você tirou da bike e guardou (RF39).</p>
+        <p className="muted">Peças que você tirou da bike e guardou.</p>
       </header>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <StockArea />

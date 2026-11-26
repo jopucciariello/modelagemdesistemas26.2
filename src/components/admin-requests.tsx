@@ -14,7 +14,7 @@ export async function AdminRequests() {
   return (
     <section className="card">
       <h2>Pedidos de modelos novos ({open.length} em aberto)</h2>
-      <p className="muted">Cadastre o modelo no catálogo acima e marque como cadastrado, ou recuse com o motivo (RF31).</p>
+      <p className="muted">Cadastre o modelo no catálogo acima e marque como cadastrado, ou recuse com o motivo.</p>
       {requests.length === 0 && <p className="muted">Nenhum pedido.</p>}
       {requests.map((r) => (
         <article key={r.id} className="card">

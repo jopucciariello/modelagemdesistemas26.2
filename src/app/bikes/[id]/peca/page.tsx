@@ -134,8 +134,8 @@ function PartForm({ bikeId, category, component, manual, defaultDay }: {
           {plans.length === 0
             ? "Este componente não tem desgaste regular no catálogo. Você pode instalar sem planos ou criar um."
             : component.plans.length > 0
-              ? "Sugeridos pelo catálogo para este componente (RF03). Ajuste ao manual da sua peça."
-              : "Sugeridos pela família (RF03). Ajuste ao manual da sua peça."}
+              ? "Sugeridos pelo catálogo para este componente. Ajuste ao manual da sua peça."
+              : "Sugeridos pela família. Ajuste ao manual da sua peça."}
           {" "}O intervalo é a média da faixa do catálogo, e a barra fica amarela a partir do mínimo (sem esse valor, a partir de 80%). Deixe o nome vazio para ignorar uma linha.
         </p>
         {rows.map((p, i) => (
