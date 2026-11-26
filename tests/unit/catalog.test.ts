@@ -48,6 +48,10 @@ describe("RF30: seed from the catalog spreadsheet", () => {
   it("points every bike model to existing components", () => {
     for (const b of seed.bikeModels) for (const part of b.parts) expect(codes.has(part.code)).toBe(true);
   });
+  it("keeps text fields as strings so the database load does not fail (RF30, RF35)", () => {
+    for (const b of seed.bikeModels) for (const v of [b.brand, b.model, b.version, b.category, b.frame, b.listPrice]) expect(v === null || typeof v === "string").toBe(true);
+    for (const c of seed.components) for (const v of [c.brand, c.model, c.modality, c.subcategory, c.details]) expect(v === null || typeof v === "string").toBe(true);
+  });
   it("uses the average of the range as interval and its minimum as warning (OPEN-17)", () => {
     const chain = seed.components.find((c) => c.code === "TRX-018")!.plans.find((p) => p.name === "Corrente")!;
     expect(chain.intervalKm).toBe(2250);

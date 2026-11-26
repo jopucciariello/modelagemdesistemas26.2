@@ -84,7 +84,7 @@ for r in rows("Bikes"):
     parts = [{"position": p, "code": r[col]} for col, p in pos if r[col]]
     missing = [p["code"] for p in parts if p["code"] not in codes]
     assert not missing, (r["ID"], missing)
-    bikes.append({"code": r["ID"], "brand": r["Marca"], "model": r["Modelo"], "version": r["Versão / ano"], "category": r["Categoria"],
+    bikes.append({"code": r["ID"], "brand": r["Marca"], "model": r["Modelo"], "version": None if r["Versão / ano"] is None else str(r["Versão / ano"]), "category": r["Categoria"],
                   "frame": r["Quadro"], "listPrice": r["Preço de lista"], "parts": parts})
 
 
@@ -135,7 +135,7 @@ def match_parts(r):
 
 for r in rows("Bikes antigas"):
     confirm = str(r["Confirmar peças?"]).startswith("Sim")
-    bikes.append({"code": r["ID"], "brand": r["Marca"], "model": r["Modelo"], "version": r["Ano"], "category": r["Modalidade"], "frame": r["Quadro"],
+    bikes.append({"code": r["ID"], "brand": r["Marca"], "model": r["Modelo"], "version": None if r["Ano"] is None else str(r["Ano"]), "category": r["Modalidade"], "frame": r["Quadro"],
                   "listPrice": r["Preço original"], "parts": [] if confirm else match_parts(r)})
 
 d = {"source": "Planilha 'Catálogo de Peças de Ciclismo — UNIFICADO' (pesquisa de nov/2026)", "categories": old["categories"], "components": components, "bikeModels": bikes}
