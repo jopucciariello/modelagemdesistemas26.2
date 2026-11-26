@@ -1,7 +1,7 @@
 // RF14, OPEN-20: rides typed by hand and the bike choice of a ride without one (shared by actions and API).
 import "server-only";
 import { prisma } from "@/lib/db";
-import { parseLocalDay } from "@/lib/dates";
+import { parseLocalDay, toLocalDay } from "@/lib/dates";
 import { parseDecimal } from "@/lib/forms";
 import { CYCLING_SPORT_TYPES } from "@/lib/wear";
 
@@ -32,6 +32,24 @@ export async function chooseRideBikeFor(userId: string, rideId: string, bikeId: 
   if (!ride) return false;
   const bike = bikeId ? await prisma.bike.findFirst({ where: { id: bikeId, userId, archivedAt: null } }) : null;
   if (bikeId && !bike) return false;
-  await prisma.ride.update({ where: { id: ride.id }, data: { bikeId: bike?.id ?? null, bikeChosen: Boolean(bike) } });
+  const day = parseLocalDay(toLocalDay(ride.startDate));
+  const parts = bike && day ? await prisma.part.findMany({ where: { bikeId: bike.id }, select: { id: true, installedAt: true, removedAt: true } }) : [];
+  const backdate = day ? originalPartsToBackdate(parts, day) : [];
+  await prisma.$transaction([
+    prisma.ride.update({ where: { id: ride.id }, data: { bikeId: bike?.id ?? null, bikeChosen: Boolean(bike) } }),
+    ...(backdate.length ? [prisma.part.updateMany({ where: { id: { in: backdate } }, data: { installedAt: day! } })] : []),
+  ]);
   return true;
+}
+
+/**
+ * RB02: a ride from before the bike's original parts were registered still belongs to the bike
+ * once the athlete assigns it, so the original parts (earliest installation date) start at that
+ * day and the ride counts in their wear. Parts replaced before that day stay as they are.
+ */
+export function originalPartsToBackdate(parts: { id: string; installedAt: Date; removedAt: Date | null }[], rideDay: Date): string[] {
+  if (parts.length === 0) return [];
+  const first = Math.min(...parts.map((p) => p.installedAt.getTime()));
+  if (rideDay.getTime() >= first) return [];
+  return parts.filter((p) => p.installedAt.getTime() === first && (!p.removedAt || p.removedAt > rideDay)).map((p) => p.id);
 }

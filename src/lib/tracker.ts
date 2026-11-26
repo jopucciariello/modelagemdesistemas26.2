@@ -60,6 +60,8 @@ export async function loadDashboard(userId: string) {
     const view = withWear(p, rides);
     return view.planViews.map((plan) => ({ bikeId: p.bikeId, bikeName: bikeName.get(p.bikeId) ?? "", part: view, plan, wear: plan.wear }));
   });
-  const bikeList = bikes.map((b) => ({ id: b.id, name: b.name, photoVersion: b.photo ? b.photo.updatedAt.getTime() : null }));
+  const totalKm = new Map<string, number>();
+  for (const r of rides) if (r.bikeId) totalKm.set(r.bikeId, (totalKm.get(r.bikeId) ?? 0) + r.distanceKm);
+  const bikeList = bikes.map((b) => ({ id: b.id, name: b.name, photoVersion: b.photo ? b.photo.updatedAt.getTime() : null, totalKm: totalKm.get(b.id) ?? 0 }));
   return { rows: byWearDesc(rows), bikeCount: bikes.length, bikes: bikeList };
 }
