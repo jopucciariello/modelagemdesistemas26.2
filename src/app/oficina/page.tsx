@@ -120,7 +120,7 @@ async function Area({ searchParams }: { searchParams: PageProps<"/oficina">["sea
 
       <section className="card">
         <h2>Perfil</h2>
-        <form action={updateWorkshopProfile}>
+        <form className="stack" action={updateWorkshopProfile}>
           <div className="row">
             <label>Nome <input name="name" required maxLength={80} defaultValue={workshop.name} /></label>
             <label>Telefone <input name="phone" maxLength={30} defaultValue={workshop.phone ?? ""} /></label>
@@ -140,7 +140,7 @@ async function Area({ searchParams }: { searchParams: PageProps<"/oficina">["sea
             <form action={removeWorkshopService}><input type="hidden" name="id" value={s.id} /><button className="button small" type="submit">Remover</button></form>
           </div>
         ))}
-        <form action={addWorkshopService}>
+        <form className="stack" action={addWorkshopService}>
           <div className="row">
             <label>Nome <input name="name" required maxLength={80} placeholder="Ex.: Revisão completa" /></label>
             <label>Descrição <input name="description" maxLength={300} /></label>
