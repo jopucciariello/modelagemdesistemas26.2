@@ -7934,6 +7934,1254 @@
      "code": "CAN-018"
     }
    ]
+  },
+  {
+   "code": "BKA-001",
+   "brand": "Trek",
+   "model": "Émonda ALR 5",
+   "version": "2019",
+   "category": "Road",
+   "frame": "Alumínio",
+   "listPrice": "US$ 1.659",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-067"
+    }
+   ]
+  },
+  {
+   "code": "BKA-002",
+   "brand": "Trek",
+   "model": "Émonda ALR 5 Disc",
+   "version": "2019",
+   "category": "Road",
+   "frame": "Alumínio",
+   "listPrice": "US$ 1.999",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-067"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-047"
+    }
+   ]
+  },
+  {
+   "code": "BKA-003",
+   "brand": "Trek",
+   "model": "Émonda ALR 5",
+   "version": "2021",
+   "category": "Road",
+   "frame": "Alumínio",
+   "listPrice": "US$ 2.099",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-067"
+    }
+   ]
+  },
+  {
+   "code": "BKA-004",
+   "brand": "Trek",
+   "model": "Émonda ALR 5",
+   "version": "2022+",
+   "category": "Road",
+   "frame": "Alumínio",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-004"
+    }
+   ]
+  },
+  {
+   "code": "BKA-005",
+   "brand": "Trek",
+   "model": "X-Caliber 7",
+   "version": "2019",
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": "US$ 1.019",
+   "parts": []
+  },
+  {
+   "code": "BKA-006",
+   "brand": "Trek",
+   "model": "X-Caliber 8",
+   "version": "2019",
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": "US$ 1.199",
+   "parts": []
+  },
+  {
+   "code": "BKA-007",
+   "brand": "Trek",
+   "model": "X-Caliber 8",
+   "version": "2020",
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": "US$ 1.199",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-059"
+    }
+   ]
+  },
+  {
+   "code": "BKA-008",
+   "brand": "Trek",
+   "model": "Marlin 7",
+   "version": "2019",
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": "US$ 789",
+   "parts": []
+  },
+  {
+   "code": "BKA-009",
+   "brand": "Trek",
+   "model": "Marlin 7",
+   "version": "2020",
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": "US$ 799",
+   "parts": []
+  },
+  {
+   "code": "BKA-010",
+   "brand": "Specialized",
+   "model": "Chisel Comp X1",
+   "version": "2019",
+   "category": "MTB",
+   "frame": "Alumínio M5",
+   "listPrice": "US$ 1.620 (aprox.)",
+   "parts": [
+    {
+     "position": "Garfo",
+     "code": "SUS-020"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-003"
+    }
+   ]
+  },
+  {
+   "code": "BKA-011",
+   "brand": "Specialized",
+   "model": "Chisel Comp",
+   "version": "2020",
+   "category": "MTB",
+   "frame": "Alumínio M5",
+   "listPrice": "€ 1.699",
+   "parts": []
+  },
+  {
+   "code": "BKA-012",
+   "brand": "Specialized",
+   "model": "Chisel Comp",
+   "version": "2021",
+   "category": "MTB",
+   "frame": "Alumínio Smartweld M5",
+   "listPrice": "US$ 1.900",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-017"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-020"
+    }
+   ]
+  },
+  {
+   "code": "BKA-013",
+   "brand": "Specialized",
+   "model": "Chisel Base",
+   "version": "2021",
+   "category": "MTB",
+   "frame": "Alumínio Smartweld M5",
+   "listPrice": "US$ 1.600",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-018"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-020"
+    }
+   ]
+  },
+  {
+   "code": "BKA-014",
+   "brand": "Specialized",
+   "model": "Epic Comp Carbon",
+   "version": "2019",
+   "category": "MTB XC",
+   "frame": "Carbono FACT 11m",
+   "listPrice": "US$ 4.020",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-039"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-018"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-050"
+    }
+   ]
+  },
+  {
+   "code": "BKA-015",
+   "brand": "Specialized",
+   "model": "Epic Comp EVO",
+   "version": "2019/2020",
+   "category": "MTB trail/XC",
+   "frame": "Alumínio",
+   "listPrice": "US$ 3.220",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-039"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-018"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-050"
+    }
+   ]
+  },
+  {
+   "code": "BKA-016",
+   "brand": "Specialized",
+   "model": "Epic Comp",
+   "version": "2020/2021",
+   "category": "MTB XC",
+   "frame": "Carbono FACT 11m",
+   "listPrice": "US$ 4.125",
+   "parts": [
+    {
+     "position": "Garfo",
+     "code": "SUS-018"
+    }
+   ]
+  },
+  {
+   "code": "BKA-017",
+   "brand": "Specialized",
+   "model": "Epic Expert",
+   "version": "2020/2021",
+   "category": "MTB XC",
+   "frame": "Carbono FACT 11m",
+   "listPrice": "US$ 5.925",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-077"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-016"
+    }
+   ]
+  },
+  {
+   "code": "BKA-018",
+   "brand": "Scott",
+   "model": "Aspect 970",
+   "version": "2020",
+   "category": "MTB",
+   "frame": "Alumínio 6061",
+   "listPrice": "US$ 449",
+   "parts": []
+  },
+  {
+   "code": "BKA-019",
+   "brand": "Scott",
+   "model": "Aspect 970",
+   "version": "2021",
+   "category": "MTB",
+   "frame": "Alumínio 6061",
+   "listPrice": "€ 459",
+   "parts": []
+  },
+  {
+   "code": "BKA-020",
+   "brand": "Scott",
+   "model": "Aspect 950",
+   "version": "2020",
+   "category": "MTB",
+   "frame": "Alumínio 6061",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-021",
+   "brand": "Scott",
+   "model": "Aspect 940",
+   "version": "2020",
+   "category": "MTB",
+   "frame": "Alumínio 6061",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-022",
+   "brand": "Scott",
+   "model": "Scale 970",
+   "version": "2020",
+   "category": "MTB XC",
+   "frame": "Alumínio 6061 Boost",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-059"
+    }
+   ]
+  },
+  {
+   "code": "BKA-023",
+   "brand": "Scott",
+   "model": "Scale 970",
+   "version": "2021",
+   "category": "MTB XC",
+   "frame": "Alumínio 6061 Boost",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-059"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-020"
+    }
+   ]
+  },
+  {
+   "code": "BKA-024",
+   "brand": "Scott",
+   "model": "Scale 980",
+   "version": "2021",
+   "category": "MTB XC",
+   "frame": "Alumínio 6061 Boost",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-018"
+    }
+   ]
+  },
+  {
+   "code": "BKA-025",
+   "brand": "Cannondale",
+   "model": "CAAD13 Disc 105",
+   "version": "2020",
+   "category": "Road",
+   "frame": "SmartForm C1 alumínio",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-067"
+    }
+   ]
+  },
+  {
+   "code": "BKA-026",
+   "brand": "Cannondale",
+   "model": "CAAD13 Disc 105",
+   "version": "2024",
+   "category": "Road",
+   "frame": "SmartForm C1 alumínio",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-027",
+   "brand": "Cannondale",
+   "model": "Trail 5",
+   "version": "2020",
+   "category": "MTB",
+   "frame": "SmartForm C3 alumínio",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-028",
+   "brand": "Cannondale",
+   "model": "Trail 5",
+   "version": "2023",
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": "US$ 670",
+   "parts": []
+  },
+  {
+   "code": "BKA-029",
+   "brand": "Caloi",
+   "model": "Elite Carbon Sport",
+   "version": "2020",
+   "category": "MTB XC",
+   "frame": "Carbono",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-030",
+   "brand": "Caloi",
+   "model": "Elite Carbon Sport",
+   "version": "2021",
+   "category": "MTB XC",
+   "frame": "Carbono",
+   "listPrice": "R$ 13.990",
+   "parts": [
+    {
+     "position": "Garfo",
+     "code": "SUS-019"
+    }
+   ]
+  },
+  {
+   "code": "BKA-031",
+   "brand": "Caloi",
+   "model": "Elite Carbon Racing",
+   "version": "2020",
+   "category": "MTB XC",
+   "frame": "Carbono",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-038"
+    }
+   ]
+  },
+  {
+   "code": "BKA-032",
+   "brand": "Caloi",
+   "model": "Elite Carbon Racing",
+   "version": "2021",
+   "category": "MTB XC",
+   "frame": "Carbono",
+   "listPrice": "R$ 19.990",
+   "parts": []
+  },
+  {
+   "code": "BKA-033",
+   "brand": "Oggi",
+   "model": "Big Wheel 7.0",
+   "version": "2019",
+   "category": "MTB",
+   "frame": "Alumínio 6061",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-034",
+   "brand": "Oggi",
+   "model": "Big Wheel 7.0",
+   "version": "2020",
+   "category": "MTB",
+   "frame": "Alumínio 6061",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-074"
+    }
+   ]
+  },
+  {
+   "code": "BKA-035",
+   "brand": "Oggi",
+   "model": "Big Wheel 7.0",
+   "version": "2021",
+   "category": "MTB",
+   "frame": "Alumínio 6061",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-072"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-001"
+    }
+   ]
+  },
+  {
+   "code": "BKA-036",
+   "brand": "Oggi",
+   "model": "Big Wheel 7.0 (Nova)",
+   "version": "2024",
+   "category": "MTB",
+   "frame": "Alumínio 6061 T6",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-054"
+    }
+   ]
+  },
+  {
+   "code": "BKA-037",
+   "brand": "Oggi",
+   "model": "Big Wheel 7.0 (Nova)",
+   "version": "2026",
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": "R$ 3.649",
+   "parts": []
+  },
+  {
+   "code": "BKA-038",
+   "brand": "Oggi",
+   "model": "Big Wheel 7.1",
+   "version": "2019",
+   "category": "MTB",
+   "frame": "Alumínio 6061",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-073"
+    }
+   ]
+  },
+  {
+   "code": "BKA-039",
+   "brand": "Oggi",
+   "model": "Big Wheel 7.1",
+   "version": "2021",
+   "category": "MTB",
+   "frame": "Alumínio 6061",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-072"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-020"
+    }
+   ]
+  },
+  {
+   "code": "BKA-040",
+   "brand": "Oggi",
+   "model": "Big Wheel 7.2",
+   "version": "2021",
+   "category": "MTB",
+   "frame": "Alumínio 6061",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Garfo",
+     "code": "SUS-020"
+    }
+   ]
+  },
+  {
+   "code": "BKA-041",
+   "brand": "Oggi",
+   "model": "Big Wheel 7.3",
+   "version": "2020/2021",
+   "category": "MTB",
+   "frame": "Alumínio 6061",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Garfo",
+     "code": "SUS-041"
+    }
+   ]
+  },
+  {
+   "code": "BKA-042",
+   "brand": "Oggi",
+   "model": "Big Wheel 7.4",
+   "version": "2020/2021",
+   "category": "MTB",
+   "frame": "Alumínio 6061",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-017"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-040"
+    }
+   ]
+  },
+  {
+   "code": "BKA-043",
+   "brand": "Oggi",
+   "model": "Big Wheel 7.5",
+   "version": "2020/2021",
+   "category": "MTB",
+   "frame": "Alumínio 6061 Boost",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Garfo",
+     "code": "SUS-040"
+    }
+   ]
+  },
+  {
+   "code": "BKA-044",
+   "brand": "Oggi",
+   "model": "Big Wheel 7.6",
+   "version": "2020",
+   "category": "MTB",
+   "frame": "Alumínio 6061",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Garfo",
+     "code": "SUS-040"
+    }
+   ]
+  },
+  {
+   "code": "BKA-045",
+   "brand": "Oggi",
+   "model": "Big Wheel 7.6",
+   "version": "2021",
+   "category": "MTB",
+   "frame": "Alumínio 6061",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-038"
+    },
+    {
+     "position": "Garfo",
+     "code": "SUS-040"
+    }
+   ]
+  },
+  {
+   "code": "BKA-046",
+   "brand": "Specialized",
+   "model": "Rockhopper",
+   "version": "2019",
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": "US$ 560",
+   "parts": []
+  },
+  {
+   "code": "BKA-047",
+   "brand": "Specialized",
+   "model": "Rockhopper 29",
+   "version": "2020",
+   "category": "MTB",
+   "frame": "Alumínio A1",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-048",
+   "brand": "Specialized",
+   "model": "Rockhopper Expert",
+   "version": "2019",
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Freios",
+     "code": "FRE-001"
+    }
+   ]
+  },
+  {
+   "code": "BKA-049",
+   "brand": "Specialized",
+   "model": "Rockhopper Comp 29",
+   "version": "2020/2021",
+   "category": "MTB",
+   "frame": "Alumínio A1",
+   "listPrice": "US$ 1.000",
+   "parts": []
+  },
+  {
+   "code": "BKA-050",
+   "brand": "Specialized",
+   "model": "Rockhopper Comp 29 2x",
+   "version": "2020/2021",
+   "category": "MTB",
+   "frame": "Alumínio A1",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-051",
+   "brand": "Specialized",
+   "model": "Allez Sport (Tiagra)",
+   "version": "2020+",
+   "category": "Road",
+   "frame": "Alumínio E5",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-052",
+   "brand": "Specialized",
+   "model": "Allez Sprint Comp Disc",
+   "version": "2020+",
+   "category": "Road",
+   "frame": "Alumínio E5 Smartweld Sprint",
+   "listPrice": "US$ 3.465 (2022)",
+   "parts": [
+    {
+     "position": "Freios",
+     "code": "FRE-047"
+    }
+   ]
+  },
+  {
+   "code": "BKA-053",
+   "brand": "Specialized",
+   "model": "Diverge E5",
+   "version": "2020",
+   "category": "Gravel",
+   "frame": "Alumínio E5 Premium",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-054",
+   "brand": "Specialized",
+   "model": "Diverge Elite E5",
+   "version": "2020",
+   "category": "Gravel",
+   "frame": "Alumínio E5 Premium",
+   "listPrice": "US$ 1.700",
+   "parts": [
+    {
+     "position": "Freios",
+     "code": "FRE-049"
+    }
+   ]
+  },
+  {
+   "code": "BKA-055",
+   "brand": "Specialized",
+   "model": "Stumpjumper Comp Alloy 29",
+   "version": "2020",
+   "category": "MTB trail",
+   "frame": "Alumínio",
+   "listPrice": "US$ 3.320",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-039"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-051"
+    }
+   ]
+  },
+  {
+   "code": "BKA-056",
+   "brand": "Specialized",
+   "model": "Stumpjumper Comp Alloy",
+   "version": "2021",
+   "category": "MTB trail",
+   "frame": "Alumínio",
+   "listPrice": "US$ 3.500",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-039"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-052"
+    }
+   ]
+  },
+  {
+   "code": "BKA-057",
+   "brand": "Specialized",
+   "model": "Stumpjumper Comp (carbono)",
+   "version": "2021",
+   "category": "MTB trail",
+   "frame": "Carbono",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Freios",
+     "code": "FRE-026"
+    }
+   ]
+  },
+  {
+   "code": "BKA-058",
+   "brand": "Trek",
+   "model": "Fuel EX 5",
+   "version": "2020",
+   "category": "MTB trail",
+   "frame": "Alumínio Alpha Platinum",
+   "listPrice": "US$ 2.099",
+   "parts": [
+    {
+     "position": "Garfo",
+     "code": "SUS-019"
+    }
+   ]
+  },
+  {
+   "code": "BKA-059",
+   "brand": "Trek",
+   "model": "Fuel EX 5",
+   "version": "2021",
+   "category": "MTB trail",
+   "frame": "Alumínio",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-060",
+   "brand": "Trek",
+   "model": "Domane SL 5",
+   "version": "2020",
+   "category": "Road endurance",
+   "frame": "Carbono",
+   "listPrice": "US$ 2.899",
+   "parts": []
+  },
+  {
+   "code": "BKA-061",
+   "brand": "Trek",
+   "model": "Domane SL 5",
+   "version": "2021",
+   "category": "Road endurance",
+   "frame": "Carbono",
+   "listPrice": "€ 2.999",
+   "parts": []
+  },
+  {
+   "code": "BKA-062",
+   "brand": "Cannondale",
+   "model": "Scalpel-Si Carbon 4",
+   "version": "2020",
+   "category": "MTB XC",
+   "frame": "Carbono BallisTec",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-038"
+    }
+   ]
+  },
+  {
+   "code": "BKA-063",
+   "brand": "Cannondale",
+   "model": "Scalpel Carbon 4",
+   "version": "2021+",
+   "category": "MTB XC",
+   "frame": "Carbono BallisTec FlexPivot",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-064",
+   "brand": "Cannondale",
+   "model": "SuperSix EVO Carbon Disc 105",
+   "version": "2020/2021",
+   "category": "Road",
+   "frame": "Carbono BallisTec",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-067"
+    }
+   ]
+  },
+  {
+   "code": "BKA-065",
+   "brand": "Cannondale",
+   "model": "SuperSix EVO 4",
+   "version": "2023+",
+   "category": "Road",
+   "frame": "Carbono SuperSix EVO",
+   "listPrice": "US$ 3.699",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-004"
+    },
+    {
+     "position": "Freios",
+     "code": "FRE-009"
+    }
+   ]
+  },
+  {
+   "code": "BKA-066",
+   "brand": "Caloi",
+   "model": "Explorer Sport",
+   "version": "2020",
+   "category": "MTB",
+   "frame": "Alumínio 6061",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Freios",
+     "code": "FRE-001"
+    }
+   ]
+  },
+  {
+   "code": "BKA-067",
+   "brand": "Caloi",
+   "model": "Explorer Comp",
+   "version": "2021",
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-068",
+   "brand": "Caloi",
+   "model": "Explorer Sport",
+   "version": "2022/2023",
+   "category": "MTB",
+   "frame": "Alumínio 6061 T6",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-069",
+   "brand": "Caloi",
+   "model": "Explorer Comp SL",
+   "version": "2024-2026",
+   "category": "MTB",
+   "frame": "Alumínio hidroformado 6069 (tapered, boost)",
+   "listPrice": "R$ 4.490",
+   "parts": []
+  },
+  {
+   "code": "BKA-070",
+   "brand": "Caloi",
+   "model": "Vulcan",
+   "version": "2023/2024",
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-071",
+   "brand": "Sunpeed",
+   "model": "Cheetah",
+   "version": null,
+   "category": "MTB",
+   "frame": null,
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-059"
+    }
+   ]
+  },
+  {
+   "code": "BKA-072",
+   "brand": "Sunpeed",
+   "model": "Zero",
+   "version": "2022",
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-073",
+   "brand": "Sunpeed",
+   "model": "Invincible",
+   "version": null,
+   "category": "Road",
+   "frame": "Carbono",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-067"
+    }
+   ]
+  },
+  {
+   "code": "BKA-074",
+   "brand": "Audax",
+   "model": "X-Blitz",
+   "version": null,
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-018"
+    }
+   ]
+  },
+  {
+   "code": "BKA-075",
+   "brand": "Audax",
+   "model": "Havok FX",
+   "version": "2020",
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-076",
+   "brand": "Audax",
+   "model": "Havok TX",
+   "version": "2021",
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-077",
+   "brand": "Audax",
+   "model": "Havok NX",
+   "version": "2021",
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-078",
+   "brand": "Audax",
+   "model": "ADX 400",
+   "version": "2021",
+   "category": "MTB",
+   "frame": "Alumínio",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-018"
+    }
+   ]
+  },
+  {
+   "code": "BKA-079",
+   "brand": "Audax",
+   "model": "Auge 527 NX",
+   "version": "2020",
+   "category": "MTB",
+   "frame": "Carbono",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-080",
+   "brand": "Audax",
+   "model": "Auge 527 GX",
+   "version": "2020",
+   "category": "MTB",
+   "frame": "Carbono",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-081",
+   "brand": "Audax",
+   "model": "Auge 700 NX",
+   "version": "2021",
+   "category": "MTB",
+   "frame": "Carbono",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-039"
+    }
+   ]
+  },
+  {
+   "code": "BKA-082",
+   "brand": "Audax",
+   "model": "Ventus 1000",
+   "version": null,
+   "category": "Road",
+   "frame": "Alumínio 6061 T6",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-007"
+    }
+   ]
+  },
+  {
+   "code": "BKA-083",
+   "brand": "Specialized",
+   "model": "Tarmac SL6 Disc",
+   "version": "2020",
+   "category": "Road",
+   "frame": "Carbono FACT 9r",
+   "listPrice": "US$ 2.000",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-005"
+    }
+   ]
+  },
+  {
+   "code": "BKA-084",
+   "brand": "Specialized",
+   "model": "Tarmac SL6 Disc Sport",
+   "version": "2019/2020",
+   "category": "Road",
+   "frame": "Carbono FACT 9r",
+   "listPrice": null,
+   "parts": []
+  },
+  {
+   "code": "BKA-085",
+   "brand": "Specialized",
+   "model": "Tarmac SL6 Sport",
+   "version": "2021",
+   "category": "Road",
+   "frame": "Carbono FACT 9r",
+   "listPrice": "US$ 2.600",
+   "parts": []
+  },
+  {
+   "code": "BKA-086",
+   "brand": "Specialized",
+   "model": "Tarmac SL6 Comp",
+   "version": "2020/2021",
+   "category": "Road",
+   "frame": "Carbono FACT 9r",
+   "listPrice": "US$ 3.500",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-066"
+    }
+   ]
+  },
+  {
+   "code": "BKA-087",
+   "brand": "Specialized",
+   "model": "Tarmac SL7 Expert Ultegra Di2",
+   "version": "2021",
+   "category": "Road",
+   "frame": "Carbono FACT 10r",
+   "listPrice": "US$ 7.419 (Canadá)",
+   "parts": []
+  },
+  {
+   "code": "BKA-088",
+   "brand": "Specialized",
+   "model": "Tarmac SL7 Expert Ultegra",
+   "version": "2021",
+   "category": "Road",
+   "frame": "Carbono FACT 10r",
+   "listPrice": "€ 5.599",
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-066"
+    }
+   ]
+  },
+  {
+   "code": "BKA-089",
+   "brand": "Specialized",
+   "model": "Tarmac SL7 Pro Ultegra Di2",
+   "version": "2021",
+   "category": "Road",
+   "frame": "Carbono FACT 10r",
+   "listPrice": "US$ 7.800",
+   "parts": []
+  },
+  {
+   "code": "BKA-090",
+   "brand": "Specialized",
+   "model": "Tarmac SL7 Sport 105",
+   "version": "2024",
+   "category": "Road",
+   "frame": "Carbono",
+   "listPrice": "US$ 3.800",
+   "parts": []
+  },
+  {
+   "code": "BKA-091",
+   "brand": "Specialized",
+   "model": "Tarmac SL8 Expert Rival AXS",
+   "version": "2024",
+   "category": "Road",
+   "frame": "Carbono FACT 10r",
+   "listPrice": "US$ 6.500",
+   "parts": []
+  },
+  {
+   "code": "BKA-092",
+   "brand": "Specialized",
+   "model": "Tarmac SL8 Expert Ultegra Di2",
+   "version": "2025",
+   "category": "Road",
+   "frame": "Carbono FACT 10r",
+   "listPrice": null,
+   "parts": [
+    {
+     "position": "Grupo",
+     "code": "TRX-002"
+    }
+   ]
+  },
+  {
+   "code": "BKA-093",
+   "brand": "Specialized",
+   "model": "Tarmac SL8 Comp 105 Di2",
+   "version": "2025",
+   "category": "Road",
+   "frame": "Carbono FACT 10r",
+   "listPrice": null,
+   "parts": []
   }
  ]
 }
