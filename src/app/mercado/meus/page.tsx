@@ -33,7 +33,7 @@ async function Mine({ searchParams }: { searchParams: PageProps<"/mercado/meus">
   const { ok, erro, editar } = await searchParams;
   const [categories, listings] = await Promise.all([
     pickerCategories(),
-    prisma.listing.findMany({ where: { sellerId: user.id }, include: { category: true }, orderBy: { createdAt: "desc" } }),
+    prisma.listing.findMany({ where: { sellerId: user.id }, include: { category: true, photos: { select: { id: true }, orderBy: { position: "asc" } } }, orderBy: { createdAt: "desc" } }),
   ]);
   return (
     <>
@@ -49,7 +49,7 @@ async function Mine({ searchParams }: { searchParams: PageProps<"/mercado/meus">
           <ul className={s.mine}>
             {listings.map((l) => (
               <li key={l.id} className={s.mineItem}>
-                <Photo url={splitPhotos(l.photoUrls)[0]} alt={`Foto de ${l.title}`} />
+                <Photo url={[...l.photos.map((p) => `/api/v1/market/photos/${p.id}`), ...splitPhotos(l.photoUrls)][0]} alt={`Foto de ${l.title}`} />
                 <div className={s.mineBody}>
                   <span className={s.cat}>{l.category.name} · {l.condition === "NEW" ? "Nova" : "Usada"} · {STATUS[l.status]}</span>
                   <Link className={s.name} href={`/mercado/${l.id}`}>{l.title}</Link>

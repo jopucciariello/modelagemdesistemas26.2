@@ -27,10 +27,10 @@ async function Listing({ params, searchParams }: PageProps<"/mercado/[id]">) {
   const user = await requireUser();
   const { id } = await params;
   const { ok, erro } = await searchParams;
-  const l = await prisma.listing.findUnique({ where: { id }, include: { category: true, seller: { include: { merchant: true } } } });
+  const l = await prisma.listing.findUnique({ where: { id }, include: { category: true, photos: { select: { id: true }, orderBy: { position: "asc" } }, seller: { include: { merchant: true } } } });
   // INV-041: inactive listings are visible only to their author.
   if (!l || (l.status !== "ACTIVE" && l.sellerId !== user.id)) notFound();
-  const photos = splitPhotos(l.photoUrls);
+  const photos = [...l.photos.map((p) => `/api/v1/market/photos/${p.id}`), ...splitPhotos(l.photoUrls)];
   return (
     <>
       <Nav isAdmin={user.role === "ADMIN"} />

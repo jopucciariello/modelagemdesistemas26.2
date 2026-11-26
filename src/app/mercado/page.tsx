@@ -34,7 +34,7 @@ async function Market({ searchParams }: { searchParams: PageProps<"/mercado">["s
     prisma.category.findMany({ where: { active: true }, orderBy: { name: "asc" } }),
     prisma.listing.findMany({
       where: buildListingFilter(q),
-      include: { category: true, seller: { include: { merchant: true } } },
+      include: { category: true, photos: { select: { id: true }, orderBy: { position: "asc" } }, seller: { include: { merchant: true } } },
       orderBy: { createdAt: "desc" },
       take: 100,
     }),
@@ -80,7 +80,7 @@ async function Market({ searchParams }: { searchParams: PageProps<"/mercado">["s
             {listings.map((l) => (
               <li key={l.id}>
                 <Link href={`/mercado/${l.id}`} className={s.product}>
-                  <Photo url={splitPhotos(l.photoUrls)[0]} alt={`Foto de ${l.title}`}>
+                  <Photo url={l.photos[0] ? `/api/v1/market/photos/${l.photos[0].id}` : splitPhotos(l.photoUrls)[0]} alt={`Foto de ${l.title}`}>
                     <span className={`${s.tag} ${l.condition === "NEW" ? s.tagNew : ""}`}>
                       {l.condition === "NEW" ? "Nova" : `Usada${l.usedKm !== null ? ` · ${l.usedKm.toLocaleString("pt-BR")} km` : ""}`}
                     </span>
