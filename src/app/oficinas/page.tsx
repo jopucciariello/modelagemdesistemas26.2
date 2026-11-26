@@ -24,7 +24,7 @@ async function List({ searchParams }: { searchParams: PageProps<"/oficinas">["se
   await connection();
   const workshops = await prisma.workshop.findMany({
     where: { active: true },
-    include: { _count: { select: { services: { where: { active: true } } } }, slots: { where: { startsAt: { gt: new Date() }, appointments: { none: { status: { not: "CANCELLED" } } } }, select: { id: true } } },
+    include: { _count: { select: { services: { where: { active: true } } } } },
     orderBy: { name: "asc" },
   });
   return (
@@ -40,7 +40,7 @@ async function List({ searchParams }: { searchParams: PageProps<"/oficinas">["se
                 <span className={s.rowTitle}>{w.name}</span>
                 <span className={s.rowMeta}>{[w.address, w.phone].filter(Boolean).join(" · ")}</span>
                 {w.description && <span className={s.rowMeta}>{w.description}</span>}
-                <span className={s.rowStats}>{w._count.services} serviço(s) · {w.slots.length} horário(s) livre(s)</span>
+                <span className={s.rowStats}>{w._count.services} serviço(s) · atende seg–sáb, 8h–19h</span>
               </span>
               <span className={s.arrow} aria-hidden>→</span>
             </Link>
