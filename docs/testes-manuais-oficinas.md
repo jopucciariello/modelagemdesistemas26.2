@@ -12,8 +12,8 @@ Roteiro para testar no app Expo (web, Expo Go ou simulador) contra a produção 
 
 ## 2. Perfil, serviços e grade semanal (RF25, RF29)
 - [ ] **Sou uma oficina** (dono aprovado): salvar endereço, site e coordenadas. Esperado: a oficina passa a ter distância na lista.
-- [ ] Adicionar serviço com duração múltipla de 15 min, itens incluídos e preço opcional. Esperado: salvo; duração 20 min ou 0 é recusada; sem preço o app mostra "Valor a combinar".
-- [ ] Definir a grade semanal (ex.: seg a sex 09:00–18:00). Esperado: janelas sobrepostas no mesmo dia são recusadas.
+- [ ] Adicionar serviço escolhendo a **duração em horas** (de 0,5 h a 8 h) e, em "O que inclui", marcar categorias do catálogo (ex.: Transmissão, Suspensão), cada uma com a opção **zera desgaste** (marcada por padrão). Esperado: salvo; a lista mostra a duração e "· zera desgaste" ao lado de cada categoria (RF25, RF28).
+- [ ] Horários de atendimento: a oficina sem grade própria atende **segunda a sábado, 8h às 19h**; não existe mais o botão "Adicionar horário" (RF25, RF26).
 - [ ] Remover um serviço: some da lista dos atletas; agendamentos já feitos continuam.
 
 ## 3. Mecânico convidado (RB21)
@@ -27,8 +27,9 @@ Roteiro para testar no app Expo (web, Expo Go ou simulador) contra a produção 
 - [ ] Oficina pendente ou recusada **não** aparece.
 
 ## 5. Agendar (RF26, RF27, RB22)
-- [ ] **Ver e agendar**: escolher serviço, bike e um horário livre. Esperado: só horários dentro da grade, que cabem a duração do serviço.
-- [ ] Deixar o interruptor "Compartilhar histórico" **desligado** e confirmar. Esperado: agendamento aparece em **Meus agendamentos** como "histórico não compartilhado".
+- [ ] **Ver e agendar**: escolher o serviço, clicar em **Ver horários**, depois escolher bike e horário. Esperado: só horários de segunda a sábado entre 8h e 19h, e cada um mostra o início e o fim; nenhum horário termina depois das 19h.
+- [ ] Agendar um serviço de 2 h às 10h e voltar a ver os horários de outro serviço: 10h, 10h30 e 11h não aparecem mais (sem sobreposição, RB22).
+- [ ] Deixar a caixa "Autorizo a oficina a ver o histórico" **desmarcada** (é opcional) e confirmar. Esperado: agendamento aparece em **Meus agendamentos** como "histórico não compartilhado".
 - [ ] Tentar agendar o mesmo horário em duas contas quase ao mesmo tempo. Esperado: a segunda recebe "horário acabou de ser ocupado" (RB22, 409) e a lista recarrega.
 - [ ] Agendar com o interruptor **ligado** (segunda bike ou outro horário).
 
@@ -44,12 +45,19 @@ Roteiro para testar no app Expo (web, Expo Go ou simulador) contra a produção 
 - [ ] Sem `RESEND_API_KEY` o cancelamento ainda funciona (o e-mail apenas não sai).
 
 ## 8. Concluir a OS (RF28, RB23)
-- [ ] **Sou uma oficina > Abrir e concluir**: marcar um item do catálogo como "Zerar contador". Esperado: o desgaste da peça volta a zero e a meta avança para a próxima etapa (RB23).
+- [ ] Abrir um atendimento de um serviço que inclui a categoria Transmissão com "zera desgaste": os itens dessa categoria já vêm marcados como **Zerar contador**; categorias fora do serviço vêm em branco.- [ ] **Sou uma oficina > Abrir e concluir**: marcar um item do catálogo como "Zerar contador". Esperado: o desgaste da peça volta a zero e a meta avança para a próxima etapa (RB23).
 - [ ] Marcar "Trocada" em uma peça: peça nova começa na primeira etapa.
 - [ ] Concluir: o agendamento vira "Concluído" e a visita entra no histórico da bike do atleta.
 - [ ] Concluir duas vezes o mesmo atendimento: a segunda é recusada.
 
-## 9. Fora do escopo e pendências conhecidas
+## 9. Demonstração: revisão hipotética e exclusão (RF28)
+Roteiro curto para a apresentação.
+- [ ] Anotar o desgaste de uma peça de transmissão da bike (ex.: corrente em 60 %).
+- [ ] Agendar o serviço com a categoria Transmissão (zera desgaste), abrir o atendimento como oficina e **concluir**. Esperado: o desgaste da corrente volta a 0 %, a visita aparece no histórico da bike e o agendamento fica "Concluído".
+- [ ] No mesmo atendimento, clicar em **Excluir revisão**. Esperado: o agendamento volta a "Agendado", a visita some do histórico e o desgaste da corrente volta aos 60 % anotados (peças trocadas voltam à bike, a peça nova é apagada).
+- [ ] Excluir uma revisão de outra oficina ou de um atendimento não concluído é recusado.
+
+## 10. Fora do escopo e pendências conhecidas
 - Etapas de revisão por peça (OPEN-48, issue #87): adiado por decisão do usuário.
 - Google Agenda e WhatsApp Business para avisos: fases futuras.
 - Não testado em dispositivo físico antes de 18/11; se algo quebrar no iOS/Android, registrar plataforma e versão do Expo Go.

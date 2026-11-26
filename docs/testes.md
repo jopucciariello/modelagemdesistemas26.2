@@ -27,7 +27,7 @@ Cada `describe` começa pelo ID do requisito (ex.: `RF08 / OPEN-17: yellow from 
 ## 3. Evidências
 
 - **GitHub Actions:** o workflow [CI](../.github/workflows/ci.yml) roda em todo PR e push na `main`: `npm ci`, `prisma generate`, `tsc`, ESLint, Vitest e `next build`. O [deploy](../.github/workflows/deploy.yml) repete os testes antes de publicar. Histórico em [Actions](https://github.com/jopucciariello/modelagemdesistemas26.2/actions).
-- **Resultado em 18/11/2026:** 31 arquivos, 210 testes passando.
+- **Resultado em 26/11/2026:** 38 arquivos, 236 testes passando (`npx vitest run`); em 18/11 eram 31 arquivos e 210 testes.
 - **Paridade da Fase 1 (web e app):** matriz requisito × teste e checklist manual em [testes-manuais-fase1.md](testes-manuais-fase1.md); as oficinas têm o seu em [testes-manuais-oficinas.md](testes-manuais-oficinas.md).
 - **Ponta a ponta:** cada PR de funcionalidade (#40 a #44) registra no corpo o roteiro executado e o resultado.
 

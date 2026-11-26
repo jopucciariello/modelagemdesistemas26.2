@@ -83,7 +83,7 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 **10. RNFs.** —
 
 **11. Critérios de aceitação.**
-- Dado um banco sem catálogo, quando o servidor sobe, então 7 famílias, 250 componentes e 17 bikes-modelo existem.
+- Dado um banco sem catálogo, quando o servidor sobe, então 7 famílias, 309 componentes e 110 bikes-modelo (17 atuais e 93 antigas, OPEN-51) existem.
 - Dado o catálogo carregado, quando o admin carrega a planilha de novo, então não há componentes duplicados.
 - Dado um Atleta, quando ele tenta uma ação do catálogo, então ela é negada.
 
@@ -359,7 +359,7 @@ Texto completo das Specs do [mapa de Specs](mapa-specs.md), cada uma com as 14 s
 
 **1. Identificação.** Objetivo: a oficina tem perfil, serviços e horários; o admin a cadastra. Valor: base para o atleta agendar.
 
-**2. Rastreabilidade.** RF25 · RB21 · UC19, UC20 · Entidades `Workshop`, `WorkshopService`, `WorkshopSlot` · ADR-009.
+**2. Rastreabilidade.** RF25 · RB21 · UC19, UC20 · Entidades `Workshop`, `WorkshopService`, `WorkshopServiceItem`, `WorkshopHour`, `Appointment` · ADR-009.
 
 **3. Escopo.** Incluído: cadastro da oficina pelo admin (nome e e-mail do responsável); o responsável edita perfil, serviços (com itens incluídos) e horários avulsos. Fora: calendário recorrente, pagamento, avaliações.
 
