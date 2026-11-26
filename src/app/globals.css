@@ -1,5 +1,7 @@
 /* Tema do portfólio (mesmos tokens do app Expo): quase preto, laranja de destaque, linhas finas. */
 :root {
+  --page-width: 62rem; /* one content width for every page */
+
   --background: #ffffff;
   --surface: #f3f3f1;
   --foreground: #0b0c0e;
@@ -65,7 +67,7 @@ body {
 }
 
 main {
-  max-width: 40rem;
+  max-width: var(--page-width);
   margin: 0 auto;
   padding: 1.5rem 1rem 3rem;
   display: flex;
@@ -139,7 +141,7 @@ form input {
 }
 
 /* Tracker UI (RF01-RF15) */
-main.wide { max-width: 56rem; }
+main.narrow { max-width: 40rem; }
 .nav { display: flex; flex-wrap: wrap; gap: 0.25rem; font-weight: 600; padding: 0.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: 1.4rem; box-shadow: var(--shadow); align-self: flex-start; max-width: 100%; }
 .nav a { color: var(--muted); text-decoration: none; padding: 0.4rem 0.95rem; border-radius: 999px; white-space: nowrap; font-size: 0.92rem; }
 .nav a:hover { color: var(--foreground); background: var(--background); }
@@ -276,7 +278,7 @@ details[open] > .bike-summary::after { transform: rotate(180deg); }
 .new-ride-card { display: none; }
 .new-ride-card:target, .new-ride-card.open { display: block; }
 
-body > footer { max-width: 56rem; margin: 0 auto; padding: 0 1rem 2rem; text-align: center; color: var(--muted); }
+body > footer { max-width: var(--page-width); margin: 0 auto; padding: 0 1rem 2rem; text-align: center; color: var(--muted); }
 
 /* ===== Polish pass (visual only) ===== */
 :root { --radius: 14px; --ring: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent); }

@@ -29,7 +29,7 @@ const SOURCE_LABEL = { MANUAL: "manual", STRAVA: "Strava" } as const;
 
 export default function RidesPage(props: PageProps<"/pedais">) {
   return (
-    <main className="wide pf">
+    <main className="pf">
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <Rides searchParams={props.searchParams} />
       </Suspense>

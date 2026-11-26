@@ -9,7 +9,7 @@ import { requireUser } from "@/lib/guards";
 
 export default function NotificationsPage() {
   return (
-    <main className="wide">
+    <main>
       <header><h1>Avisos</h1></header>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <Notifications />

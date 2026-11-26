@@ -11,7 +11,7 @@ import s from "../mercado.module.css";
 
 export default function NewListingPage(props: PageProps<"/mercado/novo">) {
   return (
-    <main className={`wide ${s.root}`}>
+    <main className={`${s.root}`}>
       <header className={s.head}>
         <span className={s.eyebrow}>Marketplace</span>
         <h1 className={s.title}>Anunciar uma peça</h1>

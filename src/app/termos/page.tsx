@@ -3,7 +3,7 @@ export const metadata = { title: "Termos de uso — GearLog" };
 
 export default function TermosPage() {
   return (
-    <main>
+    <main className="narrow">
       <h1>Termos de uso</h1>
       <p>Atualizados em 18/11/2026. Ao usar o GearLog você concorda com estes termos.</p>
       <h2>O serviço</h2>

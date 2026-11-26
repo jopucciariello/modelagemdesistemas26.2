@@ -13,7 +13,7 @@ const ERR = { sonho_invalido: "Escolha o componente, a marca e o modelo e inform
 
 export default function DreamsPage(props: PageProps<"/sonhos">) {
   return (
-    <main className="wide">
+    <main>
       <header><h1>Sonhos</h1><p className="muted">Diga a peça que você quer e o preço máximo. O GearLog avisa quando aparecer um anúncio compatível.</p></header>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <Dreams searchParams={props.searchParams} />

@@ -1,6 +1,6 @@
 /* Refinos do visual do portfólio para /entrar, /configuracoes e /admin (só estilo).
    Usa apenas as variáveis do tema global (claro/escuro); nenhuma cor fixa aqui. */
-.pf { max-width: 62rem; gap: 1.25rem; }
+.pf { gap: 1.25rem; }
 .pf > header { padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
 .pf > header h1 { font-size: clamp(2.4rem, 7vw, 3.6rem); }
 .pf .card > h2:first-child { padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }

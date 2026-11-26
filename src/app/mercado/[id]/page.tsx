@@ -15,7 +15,7 @@ const STATUS = { ACTIVE: "Ativo", SOLD: "Vendido", REMOVED: "Encerrado" } as con
 
 export default function ListingPage(props: PageProps<"/mercado/[id]">) {
   return (
-    <main className={`wide ${s.root}`}>
+    <main className={`${s.root}`}>
       <Suspense fallback={<p className={s.sub}>Carregando…</p>}>
         <Listing {...props} />
       </Suspense>

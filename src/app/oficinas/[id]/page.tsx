@@ -18,7 +18,7 @@ const ERR = {
 
 export default function WorkshopPage(props: PageProps<"/oficinas/[id]">) {
   return (
-    <main className={`wide ${s.root}`}>
+    <main className={`${s.root}`}>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <Detail {...props} />
       </Suspense>

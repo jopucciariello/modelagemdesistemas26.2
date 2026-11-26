@@ -12,7 +12,7 @@ const OK = { pedido_enviado: "Pedido enviado. O administrador vai conferir e avi
 
 export default function StorePage(props: PageProps<"/loja">) {
   return (
-    <main className="wide">
+    <main>
       <h1>Minha loja</h1>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <Store searchParams={props.searchParams} />

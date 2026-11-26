@@ -16,7 +16,7 @@ const ERR = { modelo_invalido: "Escolha um modelo do catálogo e a data em que a
 
 export default function SettingsPage(props: PageProps<"/configuracoes">) {
   return (
-    <main className="wide pf">
+    <main className="pf">
       <header><h1>Configurações</h1></header>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <Settings searchParams={props.searchParams} />

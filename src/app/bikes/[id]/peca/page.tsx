@@ -20,7 +20,7 @@ const ERR: Record<string, string> = {
 
 export default function NewPartPage(props: PageProps<"/bikes/[id]/peca">) {
   return (
-    <main className="wide pf">
+    <main className="pf">
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <NewPart {...props} />
       </Suspense>

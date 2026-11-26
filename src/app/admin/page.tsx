@@ -61,7 +61,7 @@ const ERROR_MESSAGES: Record<string, string> = {
 
 export default function AdminPage(props: PageProps<"/admin">) {
   return (
-    <main className="wide pf">
+    <main className="pf">
       <header>
         <h1>GearLog · Administração</h1>
         <p className="muted">Catálogo de categorias e componentes.</p>

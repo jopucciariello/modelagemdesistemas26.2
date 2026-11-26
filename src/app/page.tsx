@@ -24,7 +24,7 @@ const SOURCE_LABELS = { MANUAL: "lançamento manual", STRAVA: "API do Strava" } 
 
 export default function Home(props: PageProps<"/">) {
   return (
-    <main className={`wide ${s.pf}`}>
+    <main className={`${s.pf}`}>
       <header className="app-header">
         <div className="brand"><BrandGear size={32} />GearLog</div>
       </header>
