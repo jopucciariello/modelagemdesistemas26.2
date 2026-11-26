@@ -6,7 +6,7 @@ Gate para a troca de domínio para o Expo web (#67). A matriz liga cada requisit
 
 ## 1. Matriz requisito × teste automático
 
-Resultado em 18/11/2026: 31 arquivos, 210 testes (`npx vitest run`), `tsc --noEmit` limpo na API e no app-expo.
+Resultado em 26/11/2026: 38 arquivos, 236 testes (`npx vitest run`). A contagem de 18/11 era 31 arquivos e 210 testes, com `tsc --noEmit` limpo na API e no app-expo.
 
 | Requisito | Teste automático | Verificação manual (seção) |
 |---|---|---|
@@ -43,6 +43,9 @@ Resultado em 18/11/2026: 31 arquivos, 210 testes (`npx vitest run`), `tsc --noEm
 ## 5. Admin e catálogo (RF30, RF31, RF35, RF37)
 - [ ] Admin vê o painel; usuário comum recebe 403 na rota de admin (RB17).
 - [ ] Incluir e remover e-mail de administrador (RF37).
+- [ ] **Carregar catálogo da planilha** em `/admin`: o catálogo fica com 7 famílias e 309 componentes, sem duplicar ao clicar de novo (RF30).
+- [ ] Em Bikes, criar a partir de um modelo antigo (ex.: código BKA-001): a bike nasce, com peças de fábrica só quando o acerto foi inequívoco; as demais se escolhem pelo seletor de marca e modelo (RF35, OPEN-51). Total de 110 modelos de bike.
+- [ ] Mercado: publicar um anúncio com **até 3 fotos enviadas**; a 4ª é recusada, e arquivo que não é JPG/PNG/WebP ou maior que 1 MB mostra o erro (RF16).
 - [ ] Pedir um modelo novo pelo menu de ajuda como atleta; o admin o vê e cadastra ou recusa (RF31).
 
 ## 6. Avisos (RF38)

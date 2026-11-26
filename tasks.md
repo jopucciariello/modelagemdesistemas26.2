@@ -9,7 +9,7 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 
 ## SPEC-002 — Catálogo
 - [x] T-04 CRUD de famílias, planos padrão e componentes no `/admin` — RF30 — #3
-- [x] T-05 Carga da planilha (`seed.json`) e carga automática com banco vazio — RF30, RF35 — #3 (PR #37, #39)
+- [x] T-05 Carga da planilha (`seed.json`) e carga automática com banco vazio — RF30, RF35 — #3 (PR #37, #39); em 26/11/2026 a planilha UNIFICADA: 309 componentes e 110 bikes-modelo (PR #142, #143, OPEN-51)
 
 ## SPEC-003 — Bikes e peças
 - [x] T-06 Criar, editar e arquivar bike; criar a partir de bike-modelo — RF01, RF35 — #6 (PR #43)
@@ -91,3 +91,7 @@ Tarefas atômicas derivadas do [plan.md](plan.md). Cada uma cita Spec, requisito
 - [x] T-77b API do back-office da oficina (perfil, serviços, grade, mecânicos) e da fila do admin — RF25, RB21, RB17 — #70 #71
 - [x] T-77a API HTTP de oficinas e agenda com token (`/api/v1/oficinas`) — RF25–RF29 — #71
 - [x] T-77 Telas Expo de oficina e agenda — RF25–RF29 — #71
+- [x] T-79 Upload de até 3 fotos próprias no anúncio, com validação de imagem e tamanho — RF16 — #4 (PR #144, OPEN-31)
+- [x] T-80 Serviço da oficina com itens do catálogo e "zera desgaste"; concluir a OS já vem com os itens marcados — RF25, RF28 — #5 (PR #146, OPEN-52)
+- [x] T-81 Excluir revisão concluída desfazendo planos, peças trocadas e histórico — RF28 — #5 (PR #146, OPEN-52)
+- [x] T-82 Duração do serviço em horas, grade padrão seg–sáb 8h–19h, horários sem sobreposição, histórico compartilhado opcional, fim da criação manual de horários — RF25, RF26, RF27, RB22 — #5 (PR #147, OPEN-53 [PROPOSTO])
