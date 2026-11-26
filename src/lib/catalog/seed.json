@@ -1,5 +1,5 @@
 {
- "source": "Planilha 'Catálogo de Peças de Ciclismo — Grupos, Suspensões e Pneus (BR 2026)', pesquisa de nov/2026",
+ "source": "Planilha 'Catálogo de Peças de Ciclismo — UNIFICADO' (pesquisa de nov/2026)",
  "categories": [
   {
    "name": "Transmissão",
@@ -103,16 +103,16 @@
    "code": "TRX-001",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "Dura-Ace Di2",
+   "model": "Dura-Ace Di2 R9200",
    "modality": "Road",
    "subcategory": "Performance / Race",
-   "details": "R9200 (R9270 disco) · 2x12 · Eletrônico · nível Topo",
+   "details": "R9200 (R9270 disco) · 2x12 · Eletrônico — Di2 (semi-wireless) · nível Topo",
    "priceMin": 23400,
    "priceMax": 31000,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -120,7 +120,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 12000.0,
+     "intervalKm": 12000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 9000,
@@ -132,16 +132,16 @@
    "code": "TRX-002",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "Ultegra Di2",
+   "model": "Ultegra Di2 R8100",
    "modality": "Road",
    "subcategory": "Performance / Race",
-   "details": "R8100 (R8170 disco) · 2x12 · Eletrônico · nível Alto",
+   "details": "R8100 (R8170 disco) · 2x12 · Eletrônico — Di2 (semi-wireless) · nível Alto",
    "priceMin": 10000,
    "priceMax": 15000,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -149,7 +149,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 12000.0,
+     "intervalKm": 12000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 9000,
@@ -161,16 +161,16 @@
    "code": "TRX-003",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "105 Di2",
+   "model": "105 Di2 R7100",
    "modality": "Road",
    "subcategory": "Endurance / Performance",
-   "details": "R7100 (R7170 disco) · 2x12 · Eletrônico · nível Médio-alto",
+   "details": "R7100 (R7170 disco) · 2x12 · Eletrônico — Di2 (semi-wireless) · nível Médio-alto",
    "priceMin": 7500,
    "priceMax": 9600,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -178,7 +178,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 12000.0,
+     "intervalKm": 12000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 9000,
@@ -190,7 +190,7 @@
    "code": "TRX-004",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "105 mecânico",
+   "model": "105 mecânico R7100",
    "modality": "Road",
    "subcategory": "Endurance / Performance",
    "details": "R7100 (R7120 hidráulico) · 2x12 · Mecânico · nível Médio",
@@ -199,7 +199,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -207,7 +207,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 12000.0,
+     "intervalKm": 12000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 9000,
@@ -219,7 +219,7 @@
    "code": "TRX-005",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "Tiagra",
+   "model": "Tiagra mecânico 4700",
    "modality": "Road",
    "subcategory": "Entrada / Treino",
    "details": "4700 · 2x10 · Mecânico · nível Entrada+",
@@ -228,7 +228,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -236,7 +236,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 10000.0,
+     "intervalKm": 10000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 8000,
@@ -248,7 +248,7 @@
    "code": "TRX-006",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "Sora",
+   "model": "Sora mecânico R3000",
    "modality": "Road",
    "subcategory": "Entrada / Treino",
    "details": "R3000 · 2x9 · Mecânico · nível Entrada",
@@ -257,7 +257,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -265,7 +265,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 10000.0,
+     "intervalKm": 10000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 8000,
@@ -277,7 +277,7 @@
    "code": "TRX-007",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "Claris",
+   "model": "Claris mecânico R2000",
    "modality": "Road",
    "subcategory": "Entrada / Treino",
    "details": "R2000 · 2x8 · Mecânico · nível Entrada",
@@ -286,7 +286,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -294,7 +294,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 10000.0,
+     "intervalKm": 10000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 8000,
@@ -306,16 +306,16 @@
    "code": "TRX-008",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "Dura-Ace / Ultegra Di2 TT",
+   "model": "Dura-Ace Di2 R9200 (kit TT)",
    "modality": "Triathlon / TT",
    "subcategory": "Contra-relógio",
-   "details": "Kit TT sobre R9200 / R8100 · 2x12 · Eletrônico · nível Topo / Alto",
+   "details": "Kit TT sobre R9200 · 2x12 · Eletrônico — Di2 (semi-wireless) · nível Topo",
    "priceMin": null,
    "priceMax": null,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -323,7 +323,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 12000.0,
+     "intervalKm": 12000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 9000,
@@ -335,7 +335,7 @@
    "code": "TRX-009",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "GRX 820",
+   "model": "GRX mecânico RX820",
    "modality": "Gravel",
    "subcategory": "Race / Aventura",
    "details": "RX820 · 1x12 / 2x12 · Mecânico · nível Alto",
@@ -344,7 +344,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 3000.0,
+     "intervalKm": 3000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2000,
@@ -352,7 +352,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 8000.0,
+     "intervalKm": 8000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 6000,
@@ -364,7 +364,7 @@
    "code": "TRX-010",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "GRX 610",
+   "model": "GRX mecânico RX610",
    "modality": "Gravel",
    "subcategory": "Aventura / Custo",
    "details": "RX610 · 1x12 / 2x12 · Mecânico · nível Médio",
@@ -373,7 +373,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 3000.0,
+     "intervalKm": 3000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2000,
@@ -381,7 +381,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 8000.0,
+     "intervalKm": 8000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 6000,
@@ -393,16 +393,16 @@
    "code": "TRX-011",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "GRX Di2",
+   "model": "GRX Di2 RX815",
    "modality": "Gravel",
    "subcategory": "Race",
-   "details": "RX815 · 1x11 / 2x11 · Eletrônico · nível Alto",
+   "details": "RX815 · 1x11 / 2x11 · Eletrônico — Di2 · nível Alto",
    "priceMin": null,
    "priceMax": null,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 3000.0,
+     "intervalKm": 3000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2000,
@@ -410,7 +410,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 8000.0,
+     "intervalKm": 8000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 6000,
@@ -422,7 +422,7 @@
    "code": "TRX-012",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "XTR",
+   "model": "XTR mecânico M9100",
    "modality": "MTB",
    "subcategory": "XC / Maratona / Trail",
    "details": "M9100 · 1x12 / 2x12 · Mecânico · nível Topo",
@@ -431,7 +431,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -439,7 +439,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -451,16 +451,16 @@
    "code": "TRX-013",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "XTR Di2",
+   "model": "XTR Di2 M9200",
    "modality": "MTB",
    "subcategory": "XC / Trail",
-   "details": "M9200 · 1x12 · Eletrônico (wireless) · nível Topo",
+   "details": "M9200 · 1x12 · Eletrônico — Di2 (wireless) · nível Topo",
    "priceMin": 14000,
    "priceMax": 18000,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -468,7 +468,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -480,7 +480,7 @@
    "code": "TRX-014",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "Deore XT",
+   "model": "Deore XT mecânico M8100",
    "modality": "MTB",
    "subcategory": "Trail / Enduro",
    "details": "M8100 · 1x12 / 2x12 · Mecânico · nível Alto",
@@ -489,7 +489,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -497,7 +497,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -509,7 +509,7 @@
    "code": "TRX-015",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "Deore XT (nova geração)",
+   "model": "Deore XT mecânico M8200",
    "modality": "MTB",
    "subcategory": "Trail / Enduro",
    "details": "M8200 · 1x12 · Mecânico · nível Alto",
@@ -518,7 +518,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -526,7 +526,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -538,16 +538,16 @@
    "code": "TRX-016",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "Deore XT Di2",
+   "model": "Deore XT Di2 M8250",
    "modality": "MTB",
    "subcategory": "Trail / E-MTB",
-   "details": "M8250 · 1x12 · Eletrônico · nível Alto",
+   "details": "M8250 · 1x12 · Eletrônico — Di2 · nível Alto",
    "priceMin": 4300,
    "priceMax": 4900,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -555,7 +555,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -567,7 +567,7 @@
    "code": "TRX-017",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "SLX",
+   "model": "SLX mecânico M7100",
    "modality": "MTB",
    "subcategory": "XC / Trail",
    "details": "M7100 · 1x12 / 2x12 · Mecânico · nível Médio-alto",
@@ -576,7 +576,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -584,7 +584,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -596,7 +596,7 @@
    "code": "TRX-018",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "Deore",
+   "model": "Deore mecânico M6100",
    "modality": "MTB",
    "subcategory": "XC / Trail",
    "details": "M6100 · 1x12 · Mecânico · nível Médio",
@@ -605,7 +605,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -613,7 +613,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -625,16 +625,16 @@
    "code": "TRX-019",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "Deore Di2",
+   "model": "Deore Di2 M6250",
    "modality": "MTB",
    "subcategory": "XC / Trail",
-   "details": "M6250 · 1x12 · Eletrônico · nível Médio",
+   "details": "M6250 · 1x12 · Eletrônico — Di2 · nível Médio",
    "priceMin": 4400,
    "priceMax": 5900,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -642,7 +642,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -654,16 +654,16 @@
    "code": "TRX-020",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "CUES",
+   "model": "CUES mecânico U6000",
    "modality": "MTB",
    "subcategory": "Entrada / Lazer / Urbano",
-   "details": "U6000 / U4000 / U3000 · 9 / 10 / 11v · Mecânico (Linkglide) · nível Entrada",
-   "priceMin": 470,
-   "priceMax": 2330,
+   "details": "U6000 · 10 / 11v · Mecânico (Linkglide) · nível Entrada+",
+   "priceMin": 1200,
+   "priceMax": 1800,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -671,7 +671,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 14000.0,
+     "intervalKm": 14000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 10000,
@@ -683,7 +683,7 @@
    "code": "TRX-021",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "Saint",
+   "model": "Saint mecânico M820",
    "modality": "MTB",
    "subcategory": "Downhill",
    "details": "M820 · 1x10 · Mecânico · nível Topo (gravidade)",
@@ -692,7 +692,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 1500.0,
+     "intervalKm": 1500,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1000,
@@ -700,7 +700,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -712,16 +712,16 @@
    "code": "TRX-022",
    "category": "Transmissão",
    "brand": "Shimano",
-   "model": "Deore XT / Deore Linkglide",
+   "model": "Deore XT Linkglide mecânico M8130 (E-MTB)",
    "modality": "E-bike",
    "subcategory": "E-MTB",
-   "details": "M8130 / M5130 · 1x11 · Mecânico (Linkglide) · nível Alto / Médio",
+   "details": "M8130 · 1x11 · Mecânico (Linkglide) · nível Alto",
    "priceMin": null,
    "priceMax": null,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 1500.0,
+     "intervalKm": 1500,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1000,
@@ -729,7 +729,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 14000.0,
+     "intervalKm": 14000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 10000,
@@ -741,16 +741,16 @@
    "code": "TRX-023",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "Red AXS",
+   "model": "Red AXS E1",
    "modality": "Road",
    "subcategory": "Performance / Race",
-   "details": "E1 (2024) · 2x12 / 1x12 · Eletrônico (wireless) · nível Topo",
+   "details": "E1 (2024) · 2x12 / 1x12 · Eletrônico — AXS (wireless) · nível Topo",
    "priceMin": 23800,
    "priceMax": 26800,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -758,7 +758,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 12000.0,
+     "intervalKm": 12000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 9000,
@@ -770,16 +770,16 @@
    "code": "TRX-024",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "Force AXS",
+   "model": "Force AXS D2",
    "modality": "Road",
    "subcategory": "Performance",
-   "details": "D2 · 2x12 · Eletrônico (wireless) · nível Alto",
+   "details": "D2 · 2x12 · Eletrônico — AXS (wireless) · nível Alto",
    "priceMin": 15000,
    "priceMax": 18700,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -787,7 +787,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 12000.0,
+     "intervalKm": 12000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 9000,
@@ -799,16 +799,16 @@
    "code": "TRX-025",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "Rival AXS",
+   "model": "Rival AXS D1",
    "modality": "Road",
    "subcategory": "Endurance / Performance",
-   "details": "D1 · 2x12 · Eletrônico (wireless) · nível Médio",
+   "details": "D1 · 2x12 · Eletrônico — AXS (wireless) · nível Médio",
    "priceMin": 11700,
    "priceMax": 16200,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -816,7 +816,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 12000.0,
+     "intervalKm": 12000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 9000,
@@ -828,16 +828,16 @@
    "code": "TRX-026",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "Apex AXS / Apex XPLR AXS",
-   "modality": "Road / Gravel",
+   "model": "Apex AXS D1 (estrada)",
+   "modality": "Road",
    "subcategory": "Entrada",
-   "details": "D1 · 1x12 / 2x12 · Eletrônico (wireless) · nível Entrada-médio",
+   "details": "D1 · 1x12 / 2x12 · Eletrônico — AXS (wireless) · nível Entrada-médio",
    "priceMin": 2890,
    "priceMax": 3250,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 3000.0,
+     "intervalKm": 3000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2000,
@@ -845,7 +845,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 8000.0,
+     "intervalKm": 8000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 6000,
@@ -857,16 +857,16 @@
    "code": "TRX-027",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "Apex mecânico / Apex XPLR",
-   "modality": "Road / Gravel",
+   "model": "Apex XPLR mecânico 1x12",
+   "modality": "Gravel",
    "subcategory": "Entrada",
-   "details": "1x12 · Mecânico · nível Entrada",
+   "details": "1x12 · 1x12 · Mecânico · nível Entrada",
    "priceMin": 1715,
    "priceMax": 1930,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 3000.0,
+     "intervalKm": 3000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2000,
@@ -874,7 +874,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 8000.0,
+     "intervalKm": 8000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 6000,
@@ -886,16 +886,16 @@
    "code": "TRX-028",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "Red XPLR AXS",
+   "model": "Red XPLR AXS E1",
    "modality": "Gravel",
    "subcategory": "Race",
-   "details": "E1 · 1x13 · Eletrônico (wireless) · nível Topo",
+   "details": "E1 · 1x13 · Eletrônico — AXS (wireless) · nível Topo",
    "priceMin": 24000,
    "priceMax": 27500,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 3000.0,
+     "intervalKm": 3000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2000,
@@ -903,7 +903,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 8000.0,
+     "intervalKm": 8000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 6000,
@@ -915,16 +915,16 @@
    "code": "TRX-029",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "Force XPLR AXS",
+   "model": "Force XPLR AXS E1",
    "modality": "Gravel",
    "subcategory": "Race / Aventura",
-   "details": "E1 · 1x13 · Eletrônico (wireless) · nível Alto",
+   "details": "E1 · 1x13 · Eletrônico — AXS (wireless) · nível Alto",
    "priceMin": 14000,
    "priceMax": 18000,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 3000.0,
+     "intervalKm": 3000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2000,
@@ -932,7 +932,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 8000.0,
+     "intervalKm": 8000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 6000,
@@ -947,13 +947,13 @@
    "model": "Rival XPLR AXS",
    "modality": "Gravel",
    "subcategory": "Aventura",
-   "details": "1x13 · Eletrônico (wireless) · nível Médio",
+   "details": "— · 1x13 · Eletrônico — AXS (wireless) · nível Médio",
    "priceMin": 10000,
    "priceMax": 13000,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 3000.0,
+     "intervalKm": 3000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2000,
@@ -961,7 +961,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 8000.0,
+     "intervalKm": 8000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 6000,
@@ -973,16 +973,16 @@
    "code": "TRX-031",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "XX SL Eagle Transmission",
+   "model": "XX SL Eagle Transmission AXS (T-Type)",
    "modality": "MTB",
    "subcategory": "XC (corrida)",
-   "details": "T-Type · 1x12 · Eletrônico (wireless) · nível Topo",
+   "details": "T-Type · 1x12 · Eletrônico — AXS (wireless) · nível Topo",
    "priceMin": 17900,
    "priceMax": 24000,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -990,7 +990,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -1002,16 +1002,16 @@
    "code": "TRX-032",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "XX Eagle Transmission",
+   "model": "XX Eagle Transmission AXS (T-Type)",
    "modality": "MTB",
    "subcategory": "Trail / Enduro",
-   "details": "T-Type · 1x12 · Eletrônico (wireless) · nível Topo",
+   "details": "T-Type · 1x12 · Eletrônico — AXS (wireless) · nível Topo",
    "priceMin": 15000,
    "priceMax": 22400,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -1019,7 +1019,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -1031,16 +1031,16 @@
    "code": "TRX-033",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "X0 Eagle Transmission",
+   "model": "X0 Eagle Transmission AXS (T-Type)",
    "modality": "MTB",
    "subcategory": "XC / Trail / Enduro",
-   "details": "T-Type · 1x12 · Eletrônico (wireless) · nível Alto",
+   "details": "T-Type · 1x12 · Eletrônico — AXS (wireless) · nível Alto",
    "priceMin": 12500,
    "priceMax": 18700,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -1048,7 +1048,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -1060,16 +1060,16 @@
    "code": "TRX-034",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "GX Eagle Transmission",
+   "model": "GX Eagle Transmission AXS (T-Type)",
    "modality": "MTB",
    "subcategory": "XC / Trail / Enduro",
-   "details": "T-Type · 1x12 · Eletrônico (wireless) · nível Médio",
+   "details": "T-Type · 1x12 · Eletrônico — AXS (wireless) · nível Médio",
    "priceMin": 7800,
    "priceMax": 13200,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -1077,7 +1077,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -1089,16 +1089,16 @@
    "code": "TRX-035",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "S1000 Eagle Transmission",
+   "model": "S1000 Eagle Transmission AXS (T-Type)",
    "modality": "MTB",
    "subcategory": "XC / Trail",
-   "details": "T-Type · 1x12 · Eletrônico (wireless) · nível Entrada (OEM)",
+   "details": "T-Type · 1x12 · Eletrônico — AXS (wireless) · nível Entrada (OEM)",
    "priceMin": 5200,
    "priceMax": 6500,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -1106,7 +1106,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -1118,7 +1118,7 @@
    "code": "TRX-036",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "Eagle 90 Transmission",
+   "model": "Eagle 90 Transmission mecânico (T-Type)",
    "modality": "MTB",
    "subcategory": "XC / Trail",
    "details": "T-Type · 1x12 · Mecânico · nível Médio",
@@ -1127,7 +1127,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -1135,7 +1135,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -1147,7 +1147,7 @@
    "code": "TRX-037",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "Eagle 70 Transmission",
+   "model": "Eagle 70 Transmission mecânico (T-Type)",
    "modality": "MTB",
    "subcategory": "XC / Trail",
    "details": "T-Type · 1x12 · Mecânico · nível Entrada",
@@ -1156,7 +1156,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -1164,7 +1164,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -1176,7 +1176,7 @@
    "code": "TRX-038",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "GX Eagle (geração anterior)",
+   "model": "GX Eagle mecânico",
    "modality": "MTB",
    "subcategory": "XC / Trail",
    "details": "Lunar · 1x12 · Mecânico · nível Legado",
@@ -1185,7 +1185,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -1193,7 +1193,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -1205,16 +1205,16 @@
    "code": "TRX-039",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "SX / NX Eagle",
+   "model": "NX Eagle mecânico",
    "modality": "MTB",
    "subcategory": "Entrada",
-   "details": "1x12 · Mecânico · nível Entrada (legado)",
+   "details": "— · 1x12 · Mecânico · nível Entrada (legado)",
    "priceMin": 2070,
    "priceMax": 2300,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -1222,7 +1222,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -1234,16 +1234,16 @@
    "code": "TRX-040",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "Eagle Transmission E-MTB (XX / X0 / GX / 90)",
+   "model": "GX Eagle Transmission AXS (T-Type) E-MTB",
    "modality": "E-bike",
    "subcategory": "E-MTB",
-   "details": "T-Type (Bosch / Brose / 104BCD) · 1x12 · Eletrônico ou mecânico · nível Médio a Topo",
+   "details": "T-Type (Bosch / Brose / 104BCD) · 1x12 · Eletrônico — AXS (wireless) · nível Médio",
    "priceMin": 9900,
    "priceMax": 9900,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 1500.0,
+     "intervalKm": 1500,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1000,
@@ -1251,7 +1251,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -1263,7 +1263,7 @@
    "code": "TRX-041",
    "category": "Transmissão",
    "brand": "SRAM",
-   "model": "X01 DH",
+   "model": "X01 DH mecânico 7v",
    "modality": "MTB",
    "subcategory": "Downhill",
    "details": "7v (cassete curto) · 1x7 · Mecânico · nível Topo (gravidade)",
@@ -1272,7 +1272,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 1500.0,
+     "intervalKm": 1500,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1000,
@@ -1280,7 +1280,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -1292,16 +1292,16 @@
    "code": "TRX-042",
    "category": "Transmissão",
    "brand": "Campagnolo",
-   "model": "Super Record 13",
+   "model": "Super Record 13 Wireless",
    "modality": "Road",
    "subcategory": "Performance / Race",
-   "details": "WRL · 2x13 / 1x13 · Eletrônico (wireless) · nível Topo",
+   "details": "WRL · 2x13 / 1x13 · Eletrônico — Wireless (WRL) · nível Topo",
    "priceMin": 30000,
    "priceMax": 40000,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -1309,7 +1309,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 12000.0,
+     "intervalKm": 12000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 9000,
@@ -1321,16 +1321,16 @@
    "code": "TRX-043",
    "category": "Transmissão",
    "brand": "Campagnolo",
-   "model": "Record 13",
+   "model": "Record 13 Wireless",
    "modality": "Road / Gravel",
    "subcategory": "Performance",
-   "details": "WRL (2026) · 2x13 / 1x13 · Eletrônico (wireless) · nível Alto",
+   "details": "WRL (2026) · 2x13 / 1x13 · Eletrônico — Wireless (WRL) · nível Alto",
    "priceMin": 17500,
    "priceMax": 21000,
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -1338,7 +1338,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 12000.0,
+     "intervalKm": 12000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 9000,
@@ -1350,7 +1350,7 @@
    "code": "TRX-044",
    "category": "Transmissão",
    "brand": "Campagnolo",
-   "model": "Chorus",
+   "model": "Chorus mecânico 12v",
    "modality": "Road",
    "subcategory": "Performance",
    "details": "12v · 2x12 · Mecânico · nível Médio-alto",
@@ -1359,7 +1359,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -1367,7 +1367,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 12000.0,
+     "intervalKm": 12000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 9000,
@@ -1379,7 +1379,7 @@
    "code": "TRX-045",
    "category": "Transmissão",
    "brand": "Campagnolo",
-   "model": "Ekar",
+   "model": "Ekar mecânico 13v",
    "modality": "Gravel",
    "subcategory": "Race / Aventura",
    "details": "13v · 1x13 · Mecânico · nível Alto",
@@ -1388,7 +1388,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 3000.0,
+     "intervalKm": 3000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2000,
@@ -1396,7 +1396,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 8000.0,
+     "intervalKm": 8000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 6000,
@@ -1408,7 +1408,7 @@
    "code": "TRX-046",
    "category": "Transmissão",
    "brand": "Campagnolo",
-   "model": "Ekar GT",
+   "model": "Ekar GT mecânico 13v",
    "modality": "Gravel",
    "subcategory": "Aventura",
    "details": "13v · 1x13 · Mecânico · nível Médio-alto",
@@ -1417,7 +1417,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 3000.0,
+     "intervalKm": 3000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2000,
@@ -1425,7 +1425,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 8000.0,
+     "intervalKm": 8000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 6000,
@@ -1437,7 +1437,7 @@
    "code": "TRX-047",
    "category": "Transmissão",
    "brand": "Microshift",
-   "model": "Advent X",
+   "model": "Advent X mecânico 10v",
    "modality": "MTB / Gravel",
    "subcategory": "Entrada",
    "details": "10v · 1x10 · Mecânico · nível Entrada",
@@ -1446,7 +1446,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2750.0,
+     "intervalKm": 2750,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2000,
@@ -1454,7 +1454,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 7000.0,
+     "intervalKm": 7000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 5000,
@@ -1466,7 +1466,7 @@
    "code": "TRX-048",
    "category": "Transmissão",
    "brand": "Microshift",
-   "model": "Advent",
+   "model": "Advent mecânico 9v",
    "modality": "MTB",
    "subcategory": "Entrada",
    "details": "9v · 1x9 · Mecânico · nível Entrada",
@@ -1475,7 +1475,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2750.0,
+     "intervalKm": 2750,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2000,
@@ -1483,7 +1483,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 7000.0,
+     "intervalKm": 7000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 5000,
@@ -1495,7 +1495,7 @@
    "code": "TRX-049",
    "category": "Transmissão",
    "brand": "L-Twoo",
-   "model": "AX",
+   "model": "AX mecânico 12v",
    "modality": "MTB",
    "subcategory": "Entrada",
    "details": "12v · 1x12 · Mecânico · nível Entrada",
@@ -1504,7 +1504,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -1512,7 +1512,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 6000.0,
+     "intervalKm": 6000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -1524,7 +1524,7 @@
    "code": "TRX-050",
    "category": "Transmissão",
    "brand": "L-Twoo",
-   "model": "RX",
+   "model": "RX mecânico 12v",
    "modality": "Road",
    "subcategory": "Entrada",
    "details": "12v · 2x12 · Mecânico · nível Entrada",
@@ -1533,7 +1533,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -1541,7 +1541,7 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 10000.0,
+     "intervalKm": 10000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 8000,
@@ -1553,7 +1553,7 @@
    "code": "TRX-051",
    "category": "Transmissão",
    "brand": "L-Twoo",
-   "model": "GRT",
+   "model": "GRT mecânico 12v",
    "modality": "Gravel",
    "subcategory": "Entrada",
    "details": "12v · 1x12 / 2x12 · Mecânico · nível Entrada",
@@ -1562,7 +1562,7 @@
    "plans": [
     {
      "name": "Corrente",
-     "intervalKm": 3000.0,
+     "intervalKm": 3000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2000,
@@ -1570,7 +1570,877 @@
     },
     {
      "name": "Cassete",
-     "intervalKm": 8000.0,
+     "intervalKm": 8000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 6000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-052",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Ultegra Di2 R8100 (kit TT)",
+   "modality": "Triathlon / TT",
+   "subcategory": "Contra-relógio",
+   "details": "Kit TT sobre R8100 · 2x12 · Eletrônico — Di2 (semi-wireless) · nível Alto",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 12000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 9000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-053",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "CUES mecânico U3000",
+   "modality": "MTB",
+   "subcategory": "Entrada / Lazer / Urbano",
+   "details": "U3000 · 9v · Mecânico (Linkglide) · nível Entrada",
+   "priceMin": 470,
+   "priceMax": 800,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 14000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 10000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-054",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "CUES mecânico U4000",
+   "modality": "MTB",
+   "subcategory": "Entrada / Lazer / Urbano",
+   "details": "U4000 · 9v · Mecânico (Linkglide) · nível Entrada",
+   "priceMin": 700,
+   "priceMax": 1300,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 14000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 10000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-055",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "CUES mecânico U8000",
+   "modality": "MTB",
+   "subcategory": "Entrada / Lazer / Urbano",
+   "details": "U8000 · 11v · Mecânico (Linkglide) · nível Médio",
+   "priceMin": 1800,
+   "priceMax": 2330,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 14000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 10000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-056",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Deore Linkglide mecânico M5130 (E-MTB)",
+   "modality": "E-bike",
+   "subcategory": "E-MTB",
+   "details": "M5130 · 1x11 · Mecânico (Linkglide) · nível Médio",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 1500,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 14000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 10000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-057",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "Apex XPLR AXS D1",
+   "modality": "Gravel",
+   "subcategory": "Entrada",
+   "details": "D1 · 1x12 · Eletrônico — AXS (wireless) · nível Entrada-médio",
+   "priceMin": 2890,
+   "priceMax": 3250,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 3000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 8000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 6000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-058",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "Apex mecânico 1x11 (geração anterior)",
+   "modality": "Road / Gravel",
+   "subcategory": "Entrada",
+   "details": "— · 1x11 · Mecânico · nível Entrada (legado)",
+   "priceMin": 3690,
+   "priceMax": 3690,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 3000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 8000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 6000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-059",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "SX Eagle mecânico",
+   "modality": "MTB",
+   "subcategory": "Entrada",
+   "details": "— · 1x12 · Mecânico · nível Entrada (OEM, legado)",
+   "priceMin": 1500,
+   "priceMax": 2070,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-060",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "XX Eagle Transmission AXS (T-Type) E-MTB",
+   "modality": "E-bike",
+   "subcategory": "E-MTB",
+   "details": "T-Type (Bosch / Brose / 104BCD) · 1x12 · Eletrônico — AXS (wireless) · nível Topo",
+   "priceMin": 15000,
+   "priceMax": 22400,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 1500,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 4500,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-061",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "X0 Eagle Transmission AXS (T-Type) E-MTB",
+   "modality": "E-bike",
+   "subcategory": "E-MTB",
+   "details": "T-Type (Bosch / Brose / 104BCD) · 1x12 · Eletrônico — AXS (wireless) · nível Alto",
+   "priceMin": 12500,
+   "priceMax": 18700,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 1500,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 4500,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-062",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "Eagle 90 Transmission mecânico (T-Type) E-MTB",
+   "modality": "E-bike",
+   "subcategory": "E-MTB",
+   "details": "T-Type (Bosch / Brose / 104BCD) · 1x12 · Mecânico · nível Médio",
+   "priceMin": 6400,
+   "priceMax": 7000,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 1500,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 4500,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-063",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "GRX mecânico RX810",
+   "modality": "Gravel",
+   "subcategory": "Race / Aventura",
+   "details": "RX810 · 1x11 / 2x11 · Mecânico · nível Alto",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 3000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 8000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 6000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-064",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Dura-Ace mecânico R9100",
+   "modality": "Road",
+   "subcategory": "Performance / Race",
+   "details": "R9100 · 2x11 · Mecânico · nível Topo",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 12000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 9000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-065",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Ultegra Di2 R8050",
+   "modality": "Road",
+   "subcategory": "Performance",
+   "details": "R8050 (R8070 disco) · 2x11 · Eletrônico — Di2 · nível Alto",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 12000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 9000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-066",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Ultegra mecânico R8000",
+   "modality": "Road",
+   "subcategory": "Performance",
+   "details": "R8000 (R8020 disco) · 2x11 · Mecânico · nível Alto",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 12000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 9000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-067",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "105 mecânico R7000",
+   "modality": "Road",
+   "subcategory": "Endurance / Performance",
+   "details": "R7000 (R7020 disco) · 2x11 · Mecânico · nível Médio",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 4000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 3000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 12000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 9000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-068",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "SLX mecânico M7000",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "M7000 · 1x11 / 2x11 / 3x11 · Mecânico · nível Médio-alto",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-069",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Deore XT mecânico M8000",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "M8000 · 1x11 / 2x11 / 3x11 · Mecânico · nível Alto",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-070",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Deore mecânico M6000",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "M6000 · 1x10 / 2x10 / 3x10 · Mecânico · nível Médio",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-071",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Deore mecânico M5120",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "M5120 · 1x10 · Mecânico · nível Médio",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-072",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Alivio mecânico M3100",
+   "modality": "MTB",
+   "subcategory": "Entrada / Lazer",
+   "details": "M3100 · 1x9 / 2x9 / 3x9 · Mecânico · nível Entrada+",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-073",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Acera mecânico M3000",
+   "modality": "MTB",
+   "subcategory": "Entrada / Lazer",
+   "details": "M3000 · 9v · Mecânico · nível Entrada",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-074",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Altus mecânico M2000",
+   "modality": "MTB",
+   "subcategory": "Entrada / Lazer",
+   "details": "M2000 · 9v · Mecânico · nível Entrada",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-075",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "Tourney mecânico TY/TX",
+   "modality": "MTB",
+   "subcategory": "Entrada / Lazer",
+   "details": "TY / TX · 7 / 8v · Mecânico · nível Entrada",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-076",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "XX1 Eagle mecânico",
+   "modality": "MTB",
+   "subcategory": "XC (corrida)",
+   "details": "— · 1x12 · Mecânico · nível Topo (legado)",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-077",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "X01 Eagle mecânico",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "— · 1x12 · Mecânico · nível Alto (legado)",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-078",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "XX1 Eagle AXS",
+   "modality": "MTB",
+   "subcategory": "XC (corrida)",
+   "details": "— · 1x12 · Eletrônico — AXS (wireless) · nível Topo (legado)",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-079",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "X01 Eagle AXS",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "— · 1x12 · Eletrônico — AXS (wireless) · nível Alto (legado)",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-080",
+   "category": "Transmissão",
+   "brand": "SRAM",
+   "model": "GX Eagle AXS",
+   "modality": "MTB",
+   "subcategory": "XC / Trail / Enduro",
+   "details": "— · 1x12 · Eletrônico — AXS (wireless) · nível Médio (legado)",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 2250,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 6000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 4000,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "TRX-081",
+   "category": "Transmissão",
+   "brand": "Shimano",
+   "model": "GRX Di2 RX825",
+   "modality": "Gravel",
+   "subcategory": "Race",
+   "details": "RX825 · 1x12 / 2x12 · Eletrônico — Di2 · nível Alto",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Corrente",
+     "intervalKm": 3000,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 2000,
+     "warnHours": null
+    },
+    {
+     "name": "Cassete",
+     "intervalKm": 8000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 6000,
@@ -1585,7 +2455,7 @@
    "model": "32 Step-Cast (SC)",
    "modality": "MTB",
    "subcategory": "XC",
-   "details": "Garfo · bengala 32 mm · curso 100 mm · Factory / Performance",
+   "details": "Garfo · bengala 32 mm · curso 100 mm · Factory / Performance (Grip, Grip SL)",
    "priceMin": 4590,
    "priceMax": 9390,
    "plans": [
@@ -1672,7 +2542,7 @@
    "model": "36 SL",
    "modality": "MTB",
    "subcategory": "Trail",
-   "details": "Garfo · bengala 36 mm · curso 120–140 mm · Factory / Perf. Elite / Performance",
+   "details": "Garfo · bengala 36 mm · curso 120–140 mm · Factory / Perf. Elite / Performance (Grip X, Grip X2)",
    "priceMin": 5900,
    "priceMax": 10000,
    "plans": [
@@ -1730,7 +2600,7 @@
    "model": "38",
    "modality": "MTB",
    "subcategory": "Enduro",
-   "details": "Garfo · bengala 38 mm · curso 160–180 mm · Factory / Perf. Elite",
+   "details": "Garfo · bengala 38 mm · curso 160–180 mm · Factory / Perf. Elite (Grip X2)",
    "priceMin": 9000,
    "priceMax": 10500,
    "plans": [
@@ -1759,7 +2629,7 @@
    "model": "40",
    "modality": "MTB",
    "subcategory": "Downhill",
-   "details": "Garfo coroa dupla · bengala 40 mm · curso 203 mm · Factory / Performance",
+   "details": "Garfo coroa dupla · bengala 40 mm · curso 203 mm · Factory / Performance (Grip X2)",
    "priceMin": 14000,
    "priceMax": 17000,
    "plans": [
@@ -1904,7 +2774,7 @@
    "model": "Float X",
    "modality": "MTB",
    "subcategory": "Trail / All-Mountain",
-   "details": "Amortecedor (ar) · Factory / Perf. Elite",
+   "details": "Amortecedor (ar) · Factory / Perf. Elite (Live Valve Neo opcional)",
    "priceMin": 4500,
    "priceMax": 5500,
    "plans": [
@@ -2020,7 +2890,7 @@
    "model": "SID SL",
    "modality": "MTB",
    "subcategory": "XC",
-   "details": "Garfo · bengala 32 mm · curso 100–110 mm · Ultimate / Select",
+   "details": "Garfo · bengala 32 mm · curso 100–110 mm · Ultimate / Select (Flight Attendant opcional)",
    "priceMin": 4655,
    "priceMax": 6000,
    "plans": [
@@ -2194,7 +3064,7 @@
    "model": "Pike",
    "modality": "MTB",
    "subcategory": "Trail",
-   "details": "Garfo · bengala 35 mm · curso 120–150 mm · Ultimate / Select",
+   "details": "Garfo · bengala 35 mm · curso 120–150 mm · Ultimate / Select (Flight Attendant opcional); Pike DJ",
    "priceMin": 4800,
    "priceMax": 9200,
    "plans": [
@@ -2223,7 +3093,7 @@
    "model": "Lyrik",
    "modality": "MTB",
    "subcategory": "All-Mountain / Enduro",
-   "details": "Garfo · bengala 35 mm · curso 140–170 mm · Ultimate / Select / Base",
+   "details": "Garfo · bengala 35 mm · curso 140–170 mm · Ultimate (LinearXL) / Select / Base",
    "priceMin": 7000,
    "priceMax": 10000,
    "plans": [
@@ -2339,7 +3209,7 @@
    "model": "Rudy Ultimate XPLR",
    "modality": "Gravel",
    "subcategory": "Gravel / Aventura",
-   "details": "Garfo · curso 30–40 mm · Ultimate",
+   "details": "Garfo · curso 30–40 mm · Ultimate (Charger Race Day 2)",
    "priceMin": 6500,
    "priceMax": 7500,
    "plans": [
@@ -2484,7 +3354,7 @@
    "model": "Bomber Z2",
    "modality": "MTB",
    "subcategory": "Trail",
-   "details": "Garfo · bengala 34 mm · curso 100–150 mm · Ar ou mola",
+   "details": "Garfo · bengala 34 mm · curso 100–150 mm · Ar ou mola (damper Rail)",
    "priceMin": 3500,
    "priceMax": 4500,
    "plans": [
@@ -2513,7 +3383,7 @@
    "model": "Bomber Z1",
    "modality": "MTB",
    "subcategory": "Trail / Enduro",
-   "details": "Garfo · bengala 36 mm · curso 130–180 mm · Ar ou mola",
+   "details": "Garfo · bengala 36 mm · curso 130–180 mm · Ar ou mola (Coil)",
    "priceMin": 4300,
    "priceMax": 6000,
    "plans": [
@@ -2600,7 +3470,7 @@
    "model": "Bomber DJ",
    "modality": "MTB",
    "subcategory": "Dirt jump",
-   "details": "Garfo · bengala 36 mm · curso 100 mm · Grip",
+   "details": "Garfo · bengala 36 mm · curso 100 mm · Grip (Sweep-Adjust)",
    "priceMin": 5849,
    "priceMax": 5849,
    "plans": [
@@ -2629,7 +3499,7 @@
    "model": "Bomber CR",
    "modality": "MTB",
    "subcategory": "Enduro / DH",
-   "details": "Amortecedor (mola)",
+   "details": "Amortecedor (mola) · —",
    "priceMin": 2200,
    "priceMax": 2500,
    "plans": [
@@ -2694,7 +3564,7 @@
    "model": "Markhor",
    "modality": "MTB",
    "subcategory": "XC (entrada)",
-   "details": "Garfo · bengala 32 mm · curso 100 mm",
+   "details": "Garfo · bengala 32 mm · curso 100 mm · —",
    "priceMin": null,
    "priceMax": null,
    "plans": []
@@ -2718,7 +3588,7 @@
    "model": "XCT / XCM / XCR (mola)",
    "modality": "MTB",
    "subcategory": "Entrada / Lazer",
-   "details": "Garfo · bengala 30–32 mm · curso 80–120 mm · Mola",
+   "details": "Garfo · bengala 30–32 mm · curso 80–120 mm · Mola, trava no ombro ou guidão",
    "priceMin": 685,
    "priceMax": 1990,
    "plans": [
@@ -2921,7 +3791,7 @@
    "model": "Rux",
    "modality": "MTB",
    "subcategory": "Downhill",
-   "details": "Garfo coroa dupla · bengala 38 mm · curso 200 mm",
+   "details": "Garfo coroa dupla · bengala 38 mm · curso 200 mm · —",
    "priceMin": null,
    "priceMax": null,
    "plans": [
@@ -3020,7 +3890,7 @@
    "model": "Grit SL",
    "modality": "Gravel",
    "subcategory": "Gravel / Aventura",
-   "details": "Garfo de lâminas · curso 30 mm",
+   "details": "Garfo de lâminas · curso 30 mm · —",
    "priceMin": 7000,
    "priceMax": 8000,
    "plans": []
@@ -3069,12 +3939,12 @@
    "modality": "Road",
    "subcategory": "Treino / All-round",
    "details": "Ambos · 700x25–32 · Tubeless; BlackChili; Vectran",
-   "priceMin": 700,
-   "priceMax": 1130,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 5650.0,
+     "intervalKm": 5650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4800,
@@ -3090,12 +3960,12 @@
    "modality": "Road",
    "subcategory": "Chuva / Inverno",
    "details": "Ambos · 700x25–35 · Tubeless; all season",
-   "priceMin": 750,
-   "priceMax": 1120,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 6500.0,
+     "intervalKm": 6500,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 5000,
@@ -3110,13 +3980,13 @@
    "model": "Grand Prix 5000 TT TR",
    "modality": "Triathlon / TT",
    "subcategory": "Contra-relógio",
-   "details": "Ambos · 700x25–28 · Tubeless",
-   "priceMin": 890,
-   "priceMax": 1250,
+   "details": "Ambos · 700x25–28 · Tubeless; foco em baixa resistência",
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -3132,12 +4002,12 @@
    "modality": "Road",
    "subcategory": "Treino / All-round",
    "details": "Ambos · 700x23–28 · Clincher; BlackChili",
-   "priceMin": 529,
-   "priceMax": 900,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 5650.0,
+     "intervalKm": 5650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4800,
@@ -3153,12 +4023,12 @@
    "modality": "Road",
    "subcategory": "Treino (custo)",
    "details": "Ambos · 700x25–28 · Clincher kevlar",
-   "priceMin": 363,
-   "priceMax": 399,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 6500.0,
+     "intervalKm": 6500,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 5000,
@@ -3174,12 +4044,12 @@
    "modality": "Gravel",
    "subcategory": "Rápido",
    "details": "Ambos · 700x35–45 · TR Protection",
-   "priceMin": 405,
-   "priceMax": 750,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -3195,12 +4065,12 @@
    "modality": "Gravel",
    "subcategory": "Misto",
    "details": "Ambos · 700x35–45 · TR Protection / ShieldWall",
-   "priceMin": 320,
-   "priceMax": 650,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 3500.0,
+     "intervalKm": 3500,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2500,
@@ -3221,7 +4091,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -3236,13 +4106,13 @@
    "model": "Kryptotal / Xynotal / Argotal",
    "modality": "MTB",
    "subcategory": "Enduro / DH",
-   "details": "Diant. / Tras. · 29x2.4–2.6 · Trail / Enduro / DH",
+   "details": "Diant. / Tras. · 29x2.4–2.6 · Trail / Enduro / DH; Soft, SuperSoft",
    "priceMin": null,
    "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 850.0,
+     "intervalKm": 850,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 500,
@@ -3258,12 +4128,12 @@
    "modality": "MTB",
    "subcategory": "XC",
    "details": "Ambos · 29x2.25–2.4 · EXO/TR, 120 TPI",
-   "priceMin": 382,
-   "priceMax": 586,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -3279,12 +4149,12 @@
    "modality": "MTB",
    "subcategory": "XC / Downcountry",
    "details": "Ambos · 29x2.2–2.6 · EXO/TR, 3C MaxxSpeed",
-   "priceMin": 400,
-   "priceMax": 648,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -3300,12 +4170,12 @@
    "modality": "MTB",
    "subcategory": "Trail / Downcountry",
    "details": "Ambos · 29x2.4–2.6 · EXO/TR",
-   "priceMin": 333,
-   "priceMax": 520,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 1750.0,
+     "intervalKm": 1750,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1000,
@@ -3320,13 +4190,13 @@
    "model": "Minion DHF",
    "modality": "MTB",
    "subcategory": "Trail / Enduro",
-   "details": "Dianteiro · 29x2.3–2.6 · EXO / EXO+ / DD / DH",
-   "priceMin": 420,
-   "priceMax": 980,
+   "details": "Dianteiro · 29x2.3–2.6 · EXO / EXO+ / DD / DH; Dual, MaxxTerra, MaxxGrip",
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 1100.0,
+     "intervalKm": 1100,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 700,
@@ -3341,13 +4211,13 @@
    "model": "Minion DHR II",
    "modality": "MTB",
    "subcategory": "Trail / Enduro",
-   "details": "Traseiro · 29x2.3–2.6 · EXO / EXO+ / DD / DH",
-   "priceMin": 445,
-   "priceMax": 986,
+   "details": "Traseiro · 29x2.3–2.6 · EXO / EXO+ / DD / DH; Dual, MaxxTerra, MaxxGrip",
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 750.0,
+     "intervalKm": 750,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 500,
@@ -3362,13 +4232,13 @@
    "model": "Assegai",
    "modality": "MTB",
    "subcategory": "Enduro / DH",
-   "details": "Dianteiro · 29x2.5 · EXO / EXO+ / DD / DH",
-   "priceMin": 590,
-   "priceMax": 1110,
+   "details": "Dianteiro · 29x2.5 · EXO / EXO+ / DD / DH; MaxxTerra, MaxxGrip",
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 1100.0,
+     "intervalKm": 1100,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 700,
@@ -3389,7 +4259,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 900.0,
+     "intervalKm": 900,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 600,
@@ -3405,12 +4275,12 @@
    "modality": "MTB",
    "subcategory": "Downhill",
    "details": "Ambos · 29x2.4–2.5 · DH; 3C MaxxGrip",
-   "priceMin": 980,
-   "priceMax": 1110,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 500.0,
+     "intervalKm": 500,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 300,
@@ -3425,13 +4295,13 @@
    "model": "Minion DHF / DHR II (e50)",
    "modality": "E-bike",
    "subcategory": "E-MTB",
-   "details": "Ambos · 29x2.4–2.5 · DH e50",
-   "priceMin": 980,
-   "priceMax": 986,
+   "details": "Ambos · 29x2.4–2.5 · DH e50 (homologado e-bike)",
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 1150.0,
+     "intervalKm": 1150,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -3447,12 +4317,12 @@
    "modality": "Gravel",
    "subcategory": "Misto",
    "details": "Ambos · 700x38–45 · SilkShield / EXO, TR",
-   "priceMin": 351,
-   "priceMax": 440,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -3468,12 +4338,12 @@
    "modality": "Gravel",
    "subcategory": "Rápido",
    "details": "Ambos · 700x40 · EXO/TR, MaxxShield",
-   "priceMin": 380,
-   "priceMax": 500,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -3489,12 +4359,12 @@
    "modality": "Gravel",
    "subcategory": "Barro / Ciclocross",
    "details": "Ambos · 700x40 · SilkShield, TR",
-   "priceMin": 337,
-   "priceMax": 337,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 3500.0,
+     "intervalKm": 3500,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2500,
@@ -3510,12 +4380,12 @@
    "modality": "Road",
    "subcategory": "Race / Treino",
    "details": "Ambos · 700x26–32 · SmartEVO / SpeedCore",
-   "priceMin": 412,
-   "priceMax": 555,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 5250.0,
+     "intervalKm": 5250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3500,
@@ -3536,7 +4406,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 7500.0,
+     "intervalKm": 7500,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 6000,
@@ -3557,7 +4427,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -3573,12 +4443,12 @@
    "modality": "MTB",
    "subcategory": "XC (competição)",
    "details": "Ambos · 29x2.2–2.4 · ProWall / Lite",
-   "priceMin": 490,
-   "priceMax": 745,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -3594,12 +4464,12 @@
    "modality": "MTB",
    "subcategory": "XC",
    "details": "Ambos · 29x2.2–2.4 · ProWall, 120 TPI",
-   "priceMin": 530,
-   "priceMax": 690,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -3615,12 +4485,12 @@
    "modality": "MTB",
    "subcategory": "XC (entrada)",
    "details": "Ambos · 29x2.2–2.4 · ProWall, kevlar",
-   "priceMin": 256,
-   "priceMax": 430,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -3641,7 +4511,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 900.0,
+     "intervalKm": 900,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 600,
@@ -3662,7 +4532,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 1150.0,
+     "intervalKm": 1150,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -3677,13 +4547,13 @@
    "model": "Racing Ray",
    "modality": "MTB",
    "subcategory": "XC",
-   "details": "Dianteiro · 29x2.25–2.35 · Addix",
-   "priceMin": 275,
-   "priceMax": 700,
+   "details": "Dianteiro · 29x2.25–2.35 · Performance / Evo Super Race / Super Ground, Addix",
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -3698,13 +4568,13 @@
    "model": "Racing Ralph",
    "modality": "MTB",
    "subcategory": "XC",
-   "details": "Traseiro · 29x2.25–2.35 · Addix",
-   "priceMin": 320,
-   "priceMax": 480,
+   "details": "Traseiro · 29x2.25–2.35 · Performance / Evo, Addix",
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -3720,12 +4590,12 @@
    "modality": "MTB",
    "subcategory": "XC / Maratona",
    "details": "Traseiro · 29x2.35 · Evo Super Race / Super Ground",
-   "priceMin": 479,
-   "priceMax": 495,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -3740,13 +4610,13 @@
    "model": "Nobby Nic / Hans Dampf / Magic Mary / Big Betty / Albert",
    "modality": "MTB",
    "subcategory": "Trail / Enduro",
-   "details": "Diant. / Tras. · 29x2.4–2.6 · Super Trail / Gravity",
+   "details": "Diant. / Tras. · 29x2.4–2.6 · Super Trail / Gravity, Addix Soft/Ultra Soft",
    "priceMin": null,
    "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 900.0,
+     "intervalKm": 900,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 600,
@@ -3767,7 +4637,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 1150.0,
+     "intervalKm": 1150,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -3783,12 +4653,12 @@
    "modality": "Gravel",
    "subcategory": "Todos os terrenos",
    "details": "Ambos · 700x35–50 · Super Ground / Race, Addix",
-   "priceMin": 376,
-   "priceMax": 600,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -3809,7 +4679,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 5000.0,
+     "intervalKm": 5000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -3830,7 +4700,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 10000.0,
+     "intervalKm": 10000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 8000,
@@ -3851,7 +4721,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 3600.0,
+     "intervalKm": 3600,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3200,
@@ -3866,13 +4736,13 @@
    "model": "Corsa Pro Speed",
    "modality": "Triathlon / TT",
    "subcategory": "Contra-relógio",
-   "details": "Ambos · 700x25–28 · TLR",
+   "details": "Ambos · 700x25–28 · TLR, foco em baixa resistência",
    "priceMin": null,
    "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -3893,7 +4763,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 6500.0,
+     "intervalKm": 6500,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 5000,
@@ -3909,12 +4779,12 @@
    "modality": "Gravel",
    "subcategory": "Misto",
    "details": "Ambos · 700x38–47 · TNT, Graphene",
-   "priceMin": 419,
-   "priceMax": 419,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -3930,12 +4800,12 @@
    "modality": "MTB",
    "subcategory": "XC",
    "details": "Traseiro / Ambos · 29x2.1–2.6 · XC-Race / Sport, Graphene 2.0 4C",
-   "priceMin": 299,
-   "priceMax": 549,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -3950,13 +4820,13 @@
    "model": "Barzo",
    "modality": "MTB",
    "subcategory": "XC / Trail",
-   "details": "Dianteiro / Ambos · 29x2.25–2.6 · XC-Race / XC-Trail TNT",
-   "priceMin": 359,
-   "priceMax": 629,
+   "details": "Dianteiro / Ambos · 29x2.25–2.6 · XC-Race / XC-Trail TNT, Graphene 2.0",
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -3977,7 +4847,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 900.0,
+     "intervalKm": 900,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 600,
@@ -3998,7 +4868,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 5000.0,
+     "intervalKm": 5000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 4000,
@@ -4014,12 +4884,12 @@
    "modality": "MTB",
    "subcategory": "XC",
    "details": "Dianteiro / Ambos · 29x2.25 · Kevlar TLR",
-   "priceMin": 192,
-   "priceMax": 666,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -4035,12 +4905,12 @@
    "modality": "MTB",
    "subcategory": "XC",
    "details": "Traseiro / Ambos · 29x2.25–2.35 · Performance / Racing Line",
-   "priceMin": 349,
-   "priceMax": 651,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -4056,12 +4926,12 @@
    "modality": "MTB",
    "subcategory": "Enduro",
    "details": "Diant. / Tras. · 29x2.4–2.5 · Gum-X, 3x60 TPI",
-   "priceMin": 430,
-   "priceMax": 599,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 850.0,
+     "intervalKm": 850,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 500,
@@ -4077,12 +4947,12 @@
    "modality": "E-bike",
    "subcategory": "E-MTB",
    "details": "Diant. / Tras. · 29x2.6 · E-Gum-X",
-   "priceMin": 790,
-   "priceMax": 790,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 1150.0,
+     "intervalKm": 1150,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4103,7 +4973,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -4119,12 +4989,12 @@
    "modality": "MTB",
    "subcategory": "XC",
    "details": "Ambos · 29x2.2–2.35 · Gripton T5/T7, 2Bliss",
-   "priceMin": 390,
-   "priceMax": 600,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -4140,12 +5010,12 @@
    "modality": "MTB",
    "subcategory": "XC / Trail",
    "details": "Ambos · 29x2.2–2.35 · Control / Grid, Gripton T5",
-   "priceMin": 370,
-   "priceMax": 425,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2000.0,
+     "intervalKm": 2000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -4161,12 +5031,12 @@
    "modality": "MTB",
    "subcategory": "XC (rápido)",
    "details": "Traseiro · 29x2.1–2.35 · Control, 2Bliss",
-   "priceMin": 249,
-   "priceMax": 249,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 2250.0,
+     "intervalKm": 2250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -4187,7 +5057,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 900.0,
+     "intervalKm": 900,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 600,
@@ -4208,7 +5078,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3500,
@@ -4229,7 +5099,7 @@
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -4245,12 +5115,12 @@
    "modality": "Gravel",
    "subcategory": "Todos os terrenos",
    "details": "Ambos · 700x35–50 · Tubeless",
-   "priceMin": 217,
-   "priceMax": 664,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 4000.0,
+     "intervalKm": 4000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 3000,
@@ -4266,12 +5136,12 @@
    "modality": "Gravel",
    "subcategory": "Entrada",
    "details": "Ambos · 700x40 · Arame / kevlar",
-   "priceMin": 79,
-   "priceMax": 122,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 3250.0,
+     "intervalKm": 3250,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2500,
@@ -4287,12 +5157,12 @@
    "modality": "MTB",
    "subcategory": "Entrada / Lazer",
    "details": "Ambos · 29x2.1 · Arame, borracha dura",
-   "priceMin": 63,
-   "priceMax": 63,
+   "priceMin": null,
+   "priceMax": null,
    "plans": [
     {
      "name": "Troca",
-     "intervalKm": 3000.0,
+     "intervalKm": 3000,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 2000,
@@ -4313,7 +5183,7 @@
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4325,16 +5195,16 @@
    "code": "FRE-002",
    "category": "Freios",
    "brand": "Shimano",
-   "model": "MT410 / MT400",
+   "model": "MT410",
    "modality": "MTB",
    "subcategory": "Entrada / Trail",
    "details": "Hidráulico 2 pistões",
-   "priceMin": 450,
+   "priceMin": 500,
    "priceMax": 650,
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4355,7 +5225,7 @@
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4376,7 +5246,7 @@
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4388,16 +5258,16 @@
    "code": "FRE-005",
    "category": "Freios",
    "brand": "Shimano",
-   "model": "SLX M7100 / M7120",
+   "model": "SLX M7100",
    "modality": "MTB",
    "subcategory": "XC / Trail",
-   "details": "2 ou 4 pistões",
+   "details": "Hidráulico 2 pistões",
    "priceMin": 1200,
-   "priceMax": 1900,
+   "priceMax": 1500,
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4409,16 +5279,16 @@
    "code": "FRE-006",
    "category": "Freios",
    "brand": "Shimano",
-   "model": "Deore XT M8100 / M8120",
+   "model": "Deore XT M8100",
    "modality": "MTB",
    "subcategory": "Trail / Enduro",
-   "details": "2 ou 4 pistões",
+   "details": "Hidráulico 2 pistões",
    "priceMin": 2000,
-   "priceMax": 2800,
+   "priceMax": 2400,
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4430,16 +5300,16 @@
    "code": "FRE-007",
    "category": "Freios",
    "brand": "Shimano",
-   "model": "XTR M9100 / M9120",
+   "model": "XTR M9100",
    "modality": "MTB",
    "subcategory": "XC / Enduro (topo)",
-   "details": "2 ou 4 pistões",
+   "details": "Hidráulico 2 pistões",
    "priceMin": 3500,
-   "priceMax": 5000,
+   "priceMax": 4200,
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4451,7 +5321,7 @@
    "code": "FRE-008",
    "category": "Freios",
    "brand": "Shimano",
-   "model": "Alivio M445 / M4050",
+   "model": "Alivio M445",
    "modality": "MTB",
    "subcategory": "Entrada / Lazer",
    "details": "Hidráulico 2 pistões",
@@ -4460,7 +5330,7 @@
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4481,7 +5351,7 @@
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 2750.0,
+     "intervalKm": 2750,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -4493,16 +5363,16 @@
    "code": "FRE-010",
    "category": "Freios",
    "brand": "Shimano",
-   "model": "Ultegra R8170 / Dura-Ace R9270 (pinça)",
+   "model": "Ultegra R8170 (pinça)",
    "modality": "Road",
    "subcategory": "Performance / Race",
    "details": "Alavanca é a do câmbio (STI)",
    "priceMin": 900,
-   "priceMax": 1700,
+   "priceMax": 1200,
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 2750.0,
+     "intervalKm": 2750,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -4514,16 +5384,16 @@
    "code": "FRE-011",
    "category": "Freios",
    "brand": "Shimano",
-   "model": "GRX RX810 / RX820 (pinça)",
+   "model": "GRX RX810 (pinça)",
    "modality": "Gravel",
    "subcategory": "Aventura / Race",
    "details": "Alavanca é a do câmbio",
    "priceMin": 700,
-   "priceMax": 1300,
+   "priceMax": 1000,
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 2750.0,
+     "intervalKm": 2750,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -4544,7 +5414,7 @@
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4565,7 +5435,7 @@
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4586,7 +5456,7 @@
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4598,16 +5468,16 @@
    "code": "FRE-015",
    "category": "Freios",
    "brand": "SRAM",
-   "model": "Level Bronze / Silver / Ultimate",
+   "model": "Level Bronze",
    "modality": "MTB",
    "subcategory": "XC / Trail",
    "details": "Hidráulico 2 pistões",
    "priceMin": 1200,
-   "priceMax": 3000,
+   "priceMax": 1700,
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4619,16 +5489,16 @@
    "code": "FRE-016",
    "category": "Freios",
    "brand": "SRAM",
-   "model": "Motive Bronze / Silver / Ultimate",
+   "model": "Motive Bronze",
    "modality": "MTB",
    "subcategory": "Trail / Downcountry",
    "details": "Hidráulico 4 pistões",
    "priceMin": 1800,
-   "priceMax": 3500,
+   "priceMax": 2300,
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4640,16 +5510,16 @@
    "code": "FRE-017",
    "category": "Freios",
    "brand": "SRAM",
-   "model": "Maven Bronze / Silver / Ultimate",
+   "model": "Maven Bronze",
    "modality": "MTB",
    "subcategory": "Trail / Enduro",
    "details": "Hidráulico 4 pistões, alta potência",
    "priceMin": 2500,
-   "priceMax": 4500,
+   "priceMax": 3200,
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4661,16 +5531,16 @@
    "code": "FRE-018",
    "category": "Freios",
    "brand": "SRAM",
-   "model": "Code R / RSC / Ultimate",
+   "model": "Code R",
    "modality": "MTB",
    "subcategory": "Enduro / E-MTB",
    "details": "Hidráulico 4 pistões",
    "priceMin": 2000,
-   "priceMax": 4200,
+   "priceMax": 2700,
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4682,16 +5552,16 @@
    "code": "FRE-019",
    "category": "Freios",
    "brand": "SRAM",
-   "model": "Rival / Force / Red AXS HRD (pinça)",
+   "model": "Rival AXS HRD (pinça)",
    "modality": "Road / Gravel",
    "subcategory": "Performance / Aventura",
    "details": "Alavanca é a do câmbio AXS",
    "priceMin": 700,
-   "priceMax": 1600,
+   "priceMax": 1000,
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 2750.0,
+     "intervalKm": 2750,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 1500,
@@ -4703,16 +5573,16 @@
    "code": "FRE-020",
    "category": "Freios",
    "brand": "Magura",
-   "model": "MT5 / MT7",
+   "model": "MT5",
    "modality": "MTB",
    "subcategory": "Trail / Enduro",
    "details": "Hidráulico 4 pistões",
    "priceMin": 1500,
-   "priceMax": 3200,
+   "priceMax": 2000,
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4724,16 +5594,16 @@
    "code": "FRE-021",
    "category": "Freios",
    "brand": "Tektro",
-   "model": "HD-M275 / HD-M280",
+   "model": "HD-M275",
    "modality": "MTB",
    "subcategory": "Entrada",
    "details": "Hidráulico 2 pistões",
    "priceMin": 250,
-   "priceMax": 500,
+   "priceMax": 350,
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4745,16 +5615,16 @@
    "code": "FRE-022",
    "category": "Freios",
    "brand": "Absolute",
-   "model": "M310 / Wild 2 / DXU-16",
+   "model": "M310",
    "modality": "MTB",
    "subcategory": "Entrada",
    "details": "Hidráulico 2 pistões, nacional",
-   "priceMin": 165,
-   "priceMax": 260,
+   "priceMin": 190,
+   "priceMax": 250,
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4775,7 +5645,7 @@
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4796,7 +5666,616 @@
    "plans": [
     {
      "name": "Pastilhas",
-     "intervalKm": 1650.0,
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-025",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "MT400",
+   "modality": "MTB",
+   "subcategory": "Entrada / Trail",
+   "details": "Hidráulico 2 pistões",
+   "priceMin": 450,
+   "priceMax": 600,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-026",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "SLX M7120",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Hidráulico 4 pistões",
+   "priceMin": 1500,
+   "priceMax": 1900,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-027",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "Deore XT M8120",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Hidráulico 4 pistões",
+   "priceMin": 2400,
+   "priceMax": 2800,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-028",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "XTR M9120",
+   "modality": "MTB",
+   "subcategory": "XC / Enduro (topo)",
+   "details": "Hidráulico 4 pistões",
+   "priceMin": 4200,
+   "priceMax": 5000,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-029",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "Alivio M4050",
+   "modality": "MTB",
+   "subcategory": "Entrada / Lazer",
+   "details": "Hidráulico 2 pistões",
+   "priceMin": 773,
+   "priceMax": 901,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-030",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "Dura-Ace R9270 (pinça)",
+   "modality": "Road",
+   "subcategory": "Performance / Race",
+   "details": "Alavanca é a do câmbio (STI)",
+   "priceMin": 1300,
+   "priceMax": 1700,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 2750,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-031",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "GRX RX820 (pinça)",
+   "modality": "Gravel",
+   "subcategory": "Aventura / Race",
+   "details": "Alavanca é a do câmbio",
+   "priceMin": 900,
+   "priceMax": 1300,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 2750,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-032",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Level Silver",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Hidráulico 2 pistões",
+   "priceMin": 1700,
+   "priceMax": 2300,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-033",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Level Ultimate",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Hidráulico 2 pistões",
+   "priceMin": 2300,
+   "priceMax": 3000,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-034",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Motive Silver",
+   "modality": "MTB",
+   "subcategory": "Trail / Downcountry",
+   "details": "Hidráulico 4 pistões",
+   "priceMin": 2300,
+   "priceMax": 2900,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-035",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Motive Ultimate",
+   "modality": "MTB",
+   "subcategory": "Trail / Downcountry",
+   "details": "Hidráulico 4 pistões",
+   "priceMin": 2900,
+   "priceMax": 3500,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-036",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Maven Silver",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Hidráulico 4 pistões, alta potência",
+   "priceMin": 3200,
+   "priceMax": 3800,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-037",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Maven Ultimate",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Hidráulico 4 pistões, alta potência",
+   "priceMin": 3800,
+   "priceMax": 4500,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-038",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Code RSC",
+   "modality": "MTB",
+   "subcategory": "Enduro / E-MTB",
+   "details": "Hidráulico 4 pistões",
+   "priceMin": 2700,
+   "priceMax": 3500,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-039",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Code Ultimate",
+   "modality": "MTB",
+   "subcategory": "Enduro / E-MTB",
+   "details": "Hidráulico 4 pistões",
+   "priceMin": 3500,
+   "priceMax": 4200,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-040",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Force AXS HRD (pinça)",
+   "modality": "Road / Gravel",
+   "subcategory": "Performance / Aventura",
+   "details": "Alavanca é a do câmbio AXS",
+   "priceMin": 1000,
+   "priceMax": 1300,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 2750,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-041",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Red AXS HRD (pinça)",
+   "modality": "Road / Gravel",
+   "subcategory": "Performance / Aventura",
+   "details": "Alavanca é a do câmbio AXS",
+   "priceMin": 1300,
+   "priceMax": 1600,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 2750,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-042",
+   "category": "Freios",
+   "brand": "Magura",
+   "model": "MT7",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Hidráulico 4 pistões",
+   "priceMin": 2200,
+   "priceMax": 3200,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-043",
+   "category": "Freios",
+   "brand": "Tektro",
+   "model": "HD-M280",
+   "modality": "MTB",
+   "subcategory": "Entrada",
+   "details": "Hidráulico 2 pistões",
+   "priceMin": 350,
+   "priceMax": 500,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-044",
+   "category": "Freios",
+   "brand": "Absolute",
+   "model": "Wild 2",
+   "modality": "MTB",
+   "subcategory": "Entrada",
+   "details": "Hidráulico 2 pistões, nacional",
+   "priceMin": 184,
+   "priceMax": 259,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-045",
+   "category": "Freios",
+   "brand": "Absolute",
+   "model": "DXU-16",
+   "modality": "MTB",
+   "subcategory": "Entrada",
+   "details": "Hidráulico 2 pistões, nacional",
+   "priceMin": 165,
+   "priceMax": 165,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-046",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "Deore M6120",
+   "modality": "MTB",
+   "subcategory": "XC / Trail",
+   "details": "Hidráulico 4 pistões",
+   "priceMin": 1100,
+   "priceMax": 1500,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-047",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "105 R7070 (pinça)",
+   "modality": "Road",
+   "subcategory": "Endurance / Performance",
+   "details": "Alavanca é a do câmbio (STI), 11v",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 2750,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-048",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "Ultegra R8070 (pinça)",
+   "modality": "Road",
+   "subcategory": "Performance",
+   "details": "Alavanca é a do câmbio (STI), 11v",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 2750,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-049",
+   "category": "Freios",
+   "brand": "Shimano",
+   "model": "GRX RX400 (pinça)",
+   "modality": "Gravel",
+   "subcategory": "Aventura / Custo",
+   "details": "Alavanca é a do câmbio",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 2750,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 1500,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-050",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Level TL",
+   "modality": "MTB",
+   "subcategory": "XC / Trail (entrada)",
+   "details": "Hidráulico 2 pistões",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-051",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "Guide R",
+   "modality": "MTB",
+   "subcategory": "Trail",
+   "details": "Hidráulico 4 pistões",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-052",
+   "category": "Freios",
+   "brand": "SRAM",
+   "model": "G2 R",
+   "modality": "MTB",
+   "subcategory": "Trail / Enduro",
+   "details": "Hidráulico 4 pistões",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
+     "intervalHours": null,
+     "action": "REPLACE",
+     "warnKm": 800,
+     "warnHours": null
+    }
+   ]
+  },
+  {
+   "code": "FRE-053",
+   "category": "Freios",
+   "brand": "Genérico (OEM)",
+   "model": "Mecânico a disco",
+   "modality": "MTB / Road",
+   "subcategory": "Entrada (OEM)",
+   "details": "Cabo; marca/modelo não identificados na ficha",
+   "priceMin": null,
+   "priceMax": null,
+   "plans": [
+    {
+     "name": "Pastilhas",
+     "intervalKm": 1650,
      "intervalHours": null,
      "action": "REPLACE",
      "warnKm": 800,
@@ -4817,7 +6296,7 @@
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -4832,13 +6311,13 @@
    "model": "Overland R29",
    "modality": "MTB",
    "subcategory": "XC",
-   "details": "Cubos QC300 / TC500 Boost",
+   "details": "Cubos QC300 / TC500 Boost; original da Caloi Explorer Pro",
    "priceMin": null,
    "priceMax": null,
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -4859,7 +6338,7 @@
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -4880,7 +6359,7 @@
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -4901,7 +6380,7 @@
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -4922,7 +6401,7 @@
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -4943,7 +6422,7 @@
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -4958,13 +6437,13 @@
    "model": "Crossmax 29 Boost",
    "modality": "MTB",
    "subcategory": "XC / Trail",
-   "details": "Alumínio, 25 mm internos",
+   "details": "Alumínio, 25 mm internos, Center Lock ou 6 furos",
    "priceMin": 4409,
    "priceMax": 4409,
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -4985,7 +6464,7 @@
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -5006,7 +6485,7 @@
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -5027,7 +6506,7 @@
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -5048,7 +6527,7 @@
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -5069,7 +6548,7 @@
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -5090,7 +6569,7 @@
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -5111,7 +6590,7 @@
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -5126,13 +6605,13 @@
    "model": "MD25",
    "modality": "MTB",
    "subcategory": "XC / Trail",
-   "details": "Cubos MT410 + TC500-B Boost",
+   "details": "Cubos MT410 (diant.) + TC500-B Boost (tras.); Oggi Big Wheel 7.3",
    "priceMin": null,
    "priceMax": null,
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -5153,7 +6632,7 @@
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -5168,13 +6647,13 @@
    "model": "R470",
    "modality": "Road",
    "subcategory": "Performance (disco)",
-   "details": "Alumínio, disco",
+   "details": "Alumínio, disco; original da Tarmac SL8 Comp",
    "priceMin": 2500,
    "priceMax": 3800,
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -5189,13 +6668,13 @@
    "model": "G540",
    "modality": "Gravel",
    "subcategory": "Aventura",
-   "details": "Alumínio, disco",
+   "details": "Alumínio, disco; original da Diverge Comp",
    "priceMin": 3000,
    "priceMax": 4500,
    "plans": [
     {
      "name": "Revisão de rolamentos",
-     "intervalKm": 4500.0,
+     "intervalKm": 4500,
      "intervalHours": null,
      "action": "SERVICE",
      "warnKm": 3000,
@@ -5217,7 +6696,7 @@
     {
      "name": "Revisão",
      "intervalKm": null,
-     "intervalHours": 150.0,
+     "intervalHours": 150,
      "action": "SERVICE",
      "warnKm": null,
      "warnHours": 100
@@ -5231,14 +6710,14 @@
    "model": "Manic",
    "modality": "MTB",
    "subcategory": "XC / Trail",
-   "details": "Dropper",
+   "details": "Dropper; original da Epic 8 e Turbo Levo",
    "priceMin": 1800,
    "priceMax": 2700,
    "plans": [
     {
      "name": "Revisão",
      "intervalKm": null,
-     "intervalHours": 150.0,
+     "intervalHours": 150,
      "action": "SERVICE",
      "warnKm": null,
      "warnHours": 100
@@ -5259,7 +6738,7 @@
     {
      "name": "Revisão",
      "intervalKm": null,
-     "intervalHours": 125.0,
+     "intervalHours": 125,
      "action": "SERVICE",
      "warnKm": null,
      "warnHours": 50
@@ -5280,7 +6759,7 @@
     {
      "name": "Revisão",
      "intervalKm": null,
-     "intervalHours": 125.0,
+     "intervalHours": 125,
      "action": "SERVICE",
      "warnKm": null,
      "warnHours": 50
@@ -5301,7 +6780,7 @@
     {
      "name": "Revisão",
      "intervalKm": null,
-     "intervalHours": 350.0,
+     "intervalHours": 350,
      "action": "SERVICE",
      "warnKm": null,
      "warnHours": null
@@ -5322,7 +6801,7 @@
     {
      "name": "Revisão",
      "intervalKm": null,
-     "intervalHours": 150.0,
+     "intervalHours": 150,
      "action": "SERVICE",
      "warnKm": null,
      "warnHours": 100
@@ -5343,7 +6822,7 @@
     {
      "name": "Revisão",
      "intervalKm": null,
-     "intervalHours": 150.0,
+     "intervalHours": 150,
      "action": "SERVICE",
      "warnKm": null,
      "warnHours": 100
@@ -5364,7 +6843,7 @@
     {
      "name": "Revisão",
      "intervalKm": null,
-     "intervalHours": 150.0,
+     "intervalHours": 150,
      "action": "SERVICE",
      "warnKm": null,
      "warnHours": 100
@@ -5385,7 +6864,7 @@
     {
      "name": "Revisão",
      "intervalKm": null,
-     "intervalHours": 150.0,
+     "intervalHours": 150,
      "action": "SERVICE",
      "warnKm": null,
      "warnHours": 100
@@ -5406,7 +6885,7 @@
     {
      "name": "Revisão",
      "intervalKm": null,
-     "intervalHours": 150.0,
+     "intervalHours": 150,
      "action": "SERVICE",
      "warnKm": null,
      "warnHours": 100
@@ -5420,14 +6899,14 @@
    "model": "DownLow",
    "modality": "MTB",
    "subcategory": "XC",
-   "details": "Dropper 31.6, 125 / 150",
+   "details": "Dropper 31.6, 125 / 150; Scalpel 4",
    "priceMin": null,
    "priceMax": null,
    "plans": [
     {
      "name": "Revisão",
      "intervalKm": null,
-     "intervalHours": 150.0,
+     "intervalHours": 150,
      "action": "SERVICE",
      "warnKm": null,
      "warnHours": 100
@@ -5448,7 +6927,7 @@
     {
      "name": "Revisão",
      "intervalKm": null,
-     "intervalHours": 150.0,
+     "intervalHours": 150,
      "action": "SERVICE",
      "warnKm": null,
      "warnHours": 100
@@ -5474,7 +6953,7 @@
    "model": "Alumínio 27.2 / 30.9",
    "modality": "MTB",
    "subcategory": "Rígido",
-   "details": "Originais da Caloi Explorer",
+   "details": "Originais da Caloi Explorer Sport (27.2) e Pro (30.9)",
    "priceMin": null,
    "priceMax": null,
    "plans": []
@@ -5534,7 +7013,7 @@
    "model": "Power Sport",
    "modality": "MTB / Road / Gravel",
    "subcategory": "Original",
-   "details": "Body Geometry",
+   "details": "Body Geometry; original de Chisel, Epic 8, Tarmac SL8 e Diverge",
    "priceMin": null,
    "priceMax": null,
    "plans": []
@@ -6110,14 +7589,14 @@
    "code": "BKE-008",
    "brand": "Specialized",
    "model": "Diverge Comp Carbon",
-   "version": "2023",
+   "version": 2023,
    "category": "Gravel",
    "frame": "Carbono, Future Shock 2.0",
    "listPrice": null,
    "parts": [
     {
      "position": "Grupo",
-     "code": "TRX-009"
+     "code": "TRX-063"
     },
     {
      "position": "Garfo",
@@ -6200,7 +7679,7 @@
    "code": "BKE-010",
    "brand": "Caloi",
    "model": "Explorer Pro",
-   "version": "2026",
+   "version": 2026,
    "category": "MTB — XC",
    "frame": null,
    "listPrice": "R$ 6.590",
@@ -6243,14 +7722,14 @@
    "code": "BKE-011",
    "brand": "Caloi",
    "model": "Explorer Sport",
-   "version": "2026",
+   "version": 2026,
    "category": "MTB — entrada",
    "frame": null,
    "listPrice": "R$ 3.590",
    "parts": [
     {
      "position": "Grupo",
-     "code": "TRX-020"
+     "code": "TRX-054"
     },
     {
      "position": "Garfo",
@@ -6286,7 +7765,7 @@
    "code": "BKE-012",
    "brand": "Cannondale",
    "model": "Scalpel 4",
-   "version": "2025",
+   "version": 2025,
    "category": "MTB — XC full",
    "frame": null,
    "listPrice": "US$ 4.199 (aprox.)",
@@ -6333,7 +7812,7 @@
    "code": "BKE-013",
    "brand": "Scott",
    "model": "Spark RC Comp",
-   "version": "2025",
+   "version": 2025,
    "category": "MTB — XC full",
    "frame": null,
    "listPrice": null,
@@ -6372,7 +7851,7 @@
    "code": "BKE-014",
    "brand": "Oggi",
    "model": "Big Wheel 7.2",
-   "version": "2026",
+   "version": 2026,
    "category": "MTB — XC",
    "frame": null,
    "listPrice": null,
@@ -6399,7 +7878,7 @@
    "code": "BKE-015",
    "brand": "Oggi",
    "model": "Big Wheel 7.3",
-   "version": "2025",
+   "version": 2025,
    "category": "MTB — XC",
    "frame": null,
    "listPrice": null,
