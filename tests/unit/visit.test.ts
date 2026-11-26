@@ -1,6 +1,6 @@
 // RF36: shop visit with several items and their conditions.
 import { describe, expect, it } from "vitest";
-import { readVisitItems, visitItemNote, type VisitRow } from "@/lib/visit";
+import { defaultAction, readVisitItems, visitItemNote, type VisitRow } from "@/lib/visit";
 
 const rows: VisitRow[] = [
   { key: "plan_a", partId: "p1", planId: "a", label: "Suspensão: revisão completa" },
@@ -38,5 +38,19 @@ describe("RF36: readVisitItems", () => {
   });
   it("writes the history line", () => {
     expect(visitItemNote({ label: "Movimento central", action: "check", note: "folga" }, "verificado")).toBe("Movimento central: verificado (folga)");
+  });
+});
+
+describe("RF28: defaultAction (items of the service)", () => {
+  const items = [{ categoryId: "chain", resetsWear: true }, { categoryId: "brakes", resetsWear: false }];
+  it("resets a covered category when the service resets wear", () => {
+    expect(defaultAction({ categoryId: "chain", canReset: true }, items)).toBe("reset");
+  });
+  it("only checks when the service does not reset wear, or the plan cannot be reset", () => {
+    expect(defaultAction({ categoryId: "brakes", canReset: true }, items)).toBe("check");
+    expect(defaultAction({ categoryId: "chain", canReset: false }, items)).toBe("check");
+  });
+  it("leaves rows outside the service blank", () => {
+    expect(defaultAction({ categoryId: "tyre", canReset: true }, items)).toBe("");
   });
 });

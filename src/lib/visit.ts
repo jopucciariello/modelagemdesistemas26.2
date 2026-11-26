@@ -70,11 +70,11 @@ export function visitItemNote(item: Pick<VisitItem, "label" | "action" | "note">
 type VisitPart = {
   id: string;
   position: string | null;
-  component: { brand: string; model: string; category: { name: string } };
+  component: { brand: string; model: string; category: { id?: string; name: string } };
   plans: { id: string; name: string; action: "REPLACE" | "SERVICE" }[];
 };
 
-export type VisitRowView = VisitRow & { canReset: boolean; resetLabel: string };
+export type VisitRowView = VisitRow & { canReset: boolean; resetLabel: string; categoryId: string | null };
 
 /** Rows of the visit form: one per plan of each installed part, one per part without plans. */
 export function visitRows(parts: readonly VisitPart[]): VisitRowView[] {
@@ -82,7 +82,7 @@ export function visitRows(parts: readonly VisitPart[]): VisitRowView[] {
   for (const part of parts) {
     const where = part.position ?? part.component.category.name;
     if (part.plans.length === 0) {
-      rows.push({ key: `part_${part.id}`, partId: part.id, planId: null, label: where, canReset: false, resetLabel: "" });
+      rows.push({ key: `part_${part.id}`, partId: part.id, planId: null, label: where, canReset: false, resetLabel: "", categoryId: part.component.category.id ?? null });
       continue;
     }
     for (const plan of part.plans) {
@@ -93,9 +93,24 @@ export function visitRows(parts: readonly VisitPart[]): VisitRowView[] {
         planId: plan.id,
         label: `${where}: ${plan.name}`,
         canReset,
+        categoryId: part.component.category.id ?? null,
         resetLabel: plan.action === "SERVICE" ? "Revisado (zera o plano)" : `Trocado: ${plan.name} (zera o item)`,
       });
     }
   }
   return rows;
+}
+
+/**
+ * RF28: default action of a row when the service lists catalog categories (items of the
+ * service). A covered category is "check"; if the service resets wear and the row can be reset,
+ * it is "reset". Rows outside the service stay blank.
+ */
+export function defaultAction(
+  row: Pick<VisitRowView, "categoryId" | "canReset">,
+  items: readonly { categoryId: string; resetsWear: boolean }[],
+): VisitAction | "" {
+  const item = items.find((i) => i.categoryId === row.categoryId);
+  if (!item) return "";
+  return item.resetsWear && row.canReset ? "reset" : "check";
 }

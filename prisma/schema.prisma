@@ -55,7 +55,7 @@ model User {
   // RF16: seller contact shown to buyers (digits only, with country code).
   whatsapp         String?
   // RF38: e-mail copy of notifications is opt-in; the in-app notice is always created.
-  emailAlerts      Boolean              @default(false)
+  emailAlerts      Boolean           @default(false)
   merchantRequests MerchantRequest[]
   listingReports   ListingReport[]
 }
@@ -76,6 +76,7 @@ model StravaConnection {
   expiresAt             DateTime?
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
+
   // ADR-011: the webhook finds the athlete by the Strava owner id.
   @@index([stravaAthleteId])
 }
@@ -123,17 +124,18 @@ enum ItemCondition {
 
 // RF30: part category, maintained by the admin. RB14: wearsOnTrainer.
 model Category {
-  id               String           @id @default(cuid())
-  name             String           @unique
-  wearsOnTrainer   Boolean          @default(false)
-  active           Boolean          @default(true)
+  id               String                @id @default(cuid())
+  name             String                @unique
+  wearsOnTrainer   Boolean               @default(false)
+  active           Boolean               @default(true)
   plans            CategoryPlan[]
   components       Component[]
   listings         Listing[]
   dreams           Dream[]
   merchantFamilies MerchantFamily[]
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
+  serviceItems     WorkshopServiceItem[]
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
 }
 
 // RF30, RF03, RB10: default maintenance plan of a category (km, hours or both).
@@ -245,27 +247,27 @@ model Bike {
 
 // RF02, RB01, RB05: a component installed on a bike. Replaced parts keep removedAt.
 model Part {
-  id           String             @id @default(cuid())
-  bikeId       String
-  bike         Bike               @relation(fields: [bikeId], references: [id], onDelete: Cascade)
-  componentId  String
-  component    Component          @relation(fields: [componentId], references: [id])
+  id            String             @id @default(cuid())
+  bikeId        String
+  bike          Bike               @relation(fields: [bikeId], references: [id], onDelete: Cascade)
+  componentId   String
+  component     Component          @relation(fields: [componentId], references: [id])
   // Slot on the bike, e.g. "Pneu traseiro" (optional).
-  position     String?
-  installedAt  DateTime
-  removedAt    DateTime?
-  initialKm    Float              @default(0)
-  initialHours Float              @default(0)
+  position      String?
+  installedAt   DateTime
+  removedAt     DateTime?
+  initialKm     Float              @default(0)
+  initialHours  Float              @default(0)
   // RF02: new or used part; for a used one, the condition the athlete noted.
-  isUsed        Boolean           @default(false)
+  isUsed        Boolean            @default(false)
   usedCondition String?
   // RF39: removed from the bike but kept in stock; stockKm/stockHours is its usage when it left the bike.
-  inStock       Boolean           @default(false)
-  stockKm       Float             @default(0)
-  stockHours    Float             @default(0)
-  plans        MaintenancePlan[]
-  events       MaintenanceEvent[]
-  createdAt    DateTime           @default(now())
+  inStock       Boolean            @default(false)
+  stockKm       Float              @default(0)
+  stockHours    Float              @default(0)
+  plans         MaintenancePlan[]
+  events        MaintenanceEvent[]
+  createdAt     DateTime           @default(now())
 }
 
 // RB16: a part's own maintenance plan, copied from the category and editable.
@@ -337,6 +339,8 @@ model ServiceVisit {
   date        DateTime
   shop        String?
   note        String?
+  // RF28: snapshot of what the visit changed (plan counters, replaced parts), used to undo it.
+  undoJson    String?
   events      MaintenanceEvent[]
   appointment Appointment?
   createdAt   DateTime           @default(now())
@@ -384,17 +388,31 @@ model Workshop {
 
 // RF25, OPEN-44: a service/revision level; `includes` holds one included item per line.
 model WorkshopService {
-  id           String        @id @default(cuid())
+  id           String                @id @default(cuid())
   workshopId   String
-  workshop     Workshop      @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  workshop     Workshop              @relation(fields: [workshopId], references: [id], onDelete: Cascade)
   name         String
   description  String?
-  includes     String        @default("")
+  includes     String                @default("")
   // RF25, RF26: estimated duration that occupies the agenda; optional price [PROPOSTO] (#69).
-  durationMin  Int           @default(60)
+  durationMin  Int                   @default(60)
   priceCents   Int?
-  active       Boolean       @default(true)
+  active       Boolean               @default(true)
+  items        WorkshopServiceItem[]
   appointments Appointment[]
+}
+
+// RF25, RF28: a catalog category the service covers; resetsWear = concluding the visit
+// restarts the wear counter of the athlete's matching parts.
+model WorkshopServiceItem {
+  id         String          @id @default(cuid())
+  serviceId  String
+  service    WorkshopService @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category        @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  resetsWear Boolean         @default(true)
+
+  @@unique([serviceId, categoryId])
 }
 
 // RF25, OPEN-41: weekly grid (0 = Sunday .. 6 = Saturday), minutes since 00:00 São Paulo time.

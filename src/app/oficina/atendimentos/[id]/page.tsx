@@ -2,12 +2,12 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import s from "@/styles/oficinas.module.css";
-import { concludeAppointment } from "@/app/actions/workshops";
+import { concludeAppointment, deleteConclusion } from "@/app/actions/workshops";
 import { Flash, Nav } from "@/components/ui";
 import { prisma } from "@/lib/db";
 import { formatDay, toLocalDay } from "@/lib/dates";
 import { getCurrentWorkshop } from "@/lib/session";
-import { CONDITION_LABEL, FREE_ROWS, visitRows } from "@/lib/visit";
+import { CONDITION_LABEL, FREE_ROWS, defaultAction, visitRows } from "@/lib/visit";
 import { canWorkshopAccessBike, canWorkshopReadHistory, formatSlot } from "@/lib/workshop";
 import { connection } from "next/server";
 
@@ -39,12 +39,12 @@ export default function VisitPage(props: PageProps<"/oficina/atendimentos/[id]">
 async function Detail({ params, searchParams }: PageProps<"/oficina/atendimentos/[id]">) {
   const owned = await getCurrentWorkshop();
   const { id } = await params;
-  const { erro } = await searchParams;
+  const { erro, ok } = await searchParams;
   if (!owned) return <p className="alert" role="alert">Acesso restrito à oficina. <Link href="/oficina">Voltar</Link></p>;
   const { workshop } = owned;
   const appt = await prisma.appointment.findFirst({
     where: { id, workshopId: workshop.id },
-    include: { slot: true, user: { select: { name: true } }, service: true, bike: true },
+    include: { slot: true, user: { select: { name: true } }, service: { include: { items: { include: { category: true } } } }, bike: true },
   });
   // RNF03, RB09: re-checked on every request, from the appointment itself.
   if (!appt || !canWorkshopAccessBike([appt], workshop.id, appt.bikeId)) {
@@ -59,20 +59,22 @@ async function Detail({ params, searchParams }: PageProps<"/oficina/atendimentos
   await connection();
   const today = toLocalDay(new Date());
   const rows = visitRows(parts);
-  const items = appt.service?.includes ? appt.service.includes.split("\n") : [];
+  const svcItems = appt.service?.items ?? [];
+  const items = svcItems.length > 0 ? [] : appt.service?.includes ? appt.service.includes.split("\n") : [];
   const open = appt.status === "SCHEDULED";
 
   return (
     <>
       <Nav />
       <p><Link href="/oficina">← Minha oficina</Link></p>
-      <Flash erro={erro} errText={ERR} okText={{}} />
+      <Flash ok={ok} erro={erro} errText={ERR} okText={{ revisao_excluida: "Revisão excluída e desgaste restaurado." }} />
       <section className="card">
         <h1>{appt.bike.name}</h1>
         <p className="muted">
           {[appt.bike.brand, appt.bike.model, appt.bike.year].filter(Boolean).join(" ")} · atleta {appt.user.name} · {formatSlot(appt.slot.startsAt)} · {open ? "Agendado" : "Concluído"}
         </p>
         <p><strong>Serviço:</strong> {appt.service?.name ?? "—"}</p>
+        {svcItems.length > 0 && <><p className="muted">O que o serviço inclui:</p><ul>{svcItems.map((i) => <li key={i.id}>{i.category.name}{i.resetsWear && " · zera desgaste"}</li>)}</ul></>}
         {items.length > 0 && <><p className="muted">O que o serviço inclui:</p><ul>{items.map((i) => <li key={i}>{i}</li>)}</ul></>}
         <p className="muted">
           {shared
@@ -103,6 +105,17 @@ async function Detail({ params, searchParams }: PageProps<"/oficina/atendimentos
         )}
       </section>
 
+      {!open && (
+        <section className="card">
+          <h2>Excluir revisão</h2>
+          <p className="muted">Lançou na bike errada? Excluir desfaz a revisão: os contadores de desgaste voltam ao valor anterior, as peças trocadas voltam e o registro sai do histórico da bike. O atendimento volta para Agendado.</p>
+          <form action={deleteConclusion}>
+            <input type="hidden" name="id" value={appt.id} />
+            <button className="button small" type="submit">Excluir revisão</button>
+          </form>
+        </section>
+      )}
+
       {open && (
         <section className="card">
           <h2>Concluir serviço</h2>
@@ -120,7 +133,7 @@ async function Detail({ params, searchParams }: PageProps<"/oficina/atendimentos
                   <tr key={r.key}>
                     <td>{r.label}</td>
                     <td>
-                      <select name={`${r.key}_act`} defaultValue="">
+                      <select name={`${r.key}_act`} defaultValue={defaultAction(r, svcItems)}>
                         <option value="">—</option>
                         <option value="check">Verificado / ajustado</option>
                         {r.canReset && <option value="reset">{r.resetLabel}</option>}

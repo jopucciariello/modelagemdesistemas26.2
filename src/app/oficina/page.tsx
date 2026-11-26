@@ -76,8 +76,9 @@ async function Area({ searchParams }: { searchParams: PageProps<"/oficina">["sea
   const { user, workshop } = owned;
   await connection();
   const now = new Date();
-  const [services, slots, appointments, notices] = await Promise.all([
-    prisma.workshopService.findMany({ where: { workshopId: workshop.id, active: true }, orderBy: { name: "asc" } }),
+  const [services, categories, slots, appointments, notices] = await Promise.all([
+    prisma.workshopService.findMany({ where: { workshopId: workshop.id, active: true }, include: { items: { include: { category: true } } }, orderBy: { name: "asc" } }),
+    prisma.category.findMany({ where: { active: true }, select: { id: true, name: true }, orderBy: { name: "asc" } }),
     prisma.workshopSlot.findMany({ where: { workshopId: workshop.id, startsAt: { gt: now } }, include: { appointments: { select: { status: true } } }, orderBy: { startsAt: "asc" } }),
     prisma.appointment.findMany({
       where: { workshopId: workshop.id, status: { not: "CANCELLED" } },
@@ -136,7 +137,8 @@ async function Area({ searchParams }: { searchParams: PageProps<"/oficina">["sea
         {services.map((s) => (
           <div key={s.id} className="row">
             <div><strong>{s.name}</strong>{s.description && <span className="muted"> · {s.description}</span>}
-              {s.includes && <ul>{s.includes.split("\n").map((i) => <li key={i}>{i}</li>)}</ul>}</div>
+              {s.items.length > 0 ? <ul>{s.items.map((i) => <li key={i.id}>{i.category.name}{i.resetsWear && <span className="muted"> · zera desgaste</span>}</li>)}</ul>
+                : s.includes && <ul>{s.includes.split("\n").map((i) => <li key={i}>{i}</li>)}</ul>}</div>
             <form action={removeWorkshopService}><input type="hidden" name="id" value={s.id} /><button className="button small" type="submit">Remover</button></form>
           </div>
         ))}
@@ -145,7 +147,15 @@ async function Area({ searchParams }: { searchParams: PageProps<"/oficina">["sea
             <label>Nome <input name="name" required maxLength={80} placeholder="Ex.: Revisão completa" /></label>
             <label>Descrição <input name="description" maxLength={300} /></label>
           </div>
-          <label>O que inclui (um item por linha) <textarea name="includes" rows={4} placeholder={"Troca de corrente\nRegulagem dos câmbios\nCentragem das rodas"} /></label>
+          <fieldset className="service-items">
+            <legend>O que inclui (marque as peças e se a revisão zera o desgaste)</legend>
+            {categories.map((c) => (
+              <div key={c.id} className="service-item">
+                <label className="check"><input type="checkbox" name={`cat_${c.id}`} /> {c.name}</label>
+                <label className="check"><input type="checkbox" name={`reset_${c.id}`} defaultChecked /> zera desgaste</label>
+              </div>
+            ))}
+          </fieldset>
           <button className="button small" type="submit">Adicionar serviço</button>
         </form>
       </section>
