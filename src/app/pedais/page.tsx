@@ -76,7 +76,7 @@ async function Rides({ searchParams }: { searchParams: PageProps<"/pedais">["sea
       {ok === "removido" && <p className="ok" role="status">Pedal excluído.</p>}
       {ok === "bike_escolhida" && <p className="ok" role="status">Bike do pedal atualizada.</p>}
       {ok === "sync" && <p className="ok" role="status">Atualizado: {typeof n === "string" ? n : 0} pedais lidos da fonte.</p>}
-      {unassigned > 0 && <p className="muted">{unassigned} pedais ainda sem bike. Escolha a bike na própria linha do pedal ou associe as bikes da fonte na página de cada bike (RF05).</p>}
+      {unassigned > 0 && <p className="muted">{unassigned} pedais ainda sem bike. Escolha a bike na própria linha do pedal ou associe as bikes da fonte na página de cada bike.</p>}
 
       <section className="card">
         {rides.length === 0 ? <p className="muted">Nenhum pedal ainda. Use o + para lançar um{user.activitySource !== "MANUAL" ? " ou ↻ para buscar da fonte" : ""}.</p> : (

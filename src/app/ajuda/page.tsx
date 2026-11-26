@@ -14,7 +14,7 @@ export default function HelpPage(props: PageProps<"/ajuda">) {
     <main>
       <header>
         <h1>Ajuda</h1>
-        <p className="muted">Não achou o componente ou a bike no catálogo? Peça a inclusão aqui (RF31).</p>
+        <p className="muted">Não achou o componente ou a bike no catálogo? Peça a inclusão aqui.</p>
       </header>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <HelpArea searchParams={props.searchParams} />

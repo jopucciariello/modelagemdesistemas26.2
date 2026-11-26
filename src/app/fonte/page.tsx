@@ -26,7 +26,7 @@ export default function SourcePage(props: PageProps<"/fonte">) {
     <main className="wide">
       <header>
         <h1>Fonte dos pedais</h1>
-        <p className="muted">Escolha de onde vêm os km e as horas de uso (RF32). Você pode trocar quando quiser.</p>
+        <p className="muted">Escolha de onde vêm os km e as horas de uso. Você pode trocar quando quiser.</p>
       </header>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <SourceArea searchParams={props.searchParams} />

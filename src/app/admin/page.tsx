@@ -64,7 +64,7 @@ export default function AdminPage(props: PageProps<"/admin">) {
     <main className="wide pf">
       <header>
         <h1>GearLog · Administração</h1>
-        <p className="muted">Catálogo de categorias e componentes (RF30).</p>
+        <p className="muted">Catálogo de categorias e componentes.</p>
       </header>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <AdminArea searchParams={props.searchParams} />

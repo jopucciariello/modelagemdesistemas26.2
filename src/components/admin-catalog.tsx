@@ -40,7 +40,7 @@ export async function AdminCatalog() {
         <h2>Catálogo de peças</h2>
         <p className="muted">
           Famílias (categorias) com os planos padrão, componentes com código, modalidade, faixa de preço e planos próprios, e bikes-modelo com as peças
-          de fábrica. Só o administrador altera o catálogo (RB15).
+          de fábrica. Só o administrador altera o catálogo.
         </p>
         <form action={loadCatalogSeed}>
           <button className="button small" type="submit">Carregar catálogo da planilha</button>
@@ -56,7 +56,7 @@ export async function AdminCatalog() {
           <form action={updateCategory} className="row">
             <input type="hidden" name="id" value={c.id} />
             <label>Nome <input name="name" defaultValue={c.name} maxLength={60} required /></label>
-            <label className="check"><input type="checkbox" name="wearsOnTrainer" defaultChecked={c.wearsOnTrainer} /> Desgasta em rolo (RB14)</label>
+            <label className="check"><input type="checkbox" name="wearsOnTrainer" defaultChecked={c.wearsOnTrainer} /> Desgasta em rolo</label>
             <label className="check"><input type="checkbox" name="active" defaultChecked={c.active} /> Ativa</label>
             <button className="button small" type="submit">Salvar</button>
           </form>
@@ -134,7 +134,7 @@ export async function AdminCatalog() {
       ))}
 
       <section className="card">
-        <h2>Bikes-modelo (RF35)</h2>
+        <h2>Bikes-modelo</h2>
         {bikeModels.length === 0 ? <p className="muted">Nenhuma. Carregue o catálogo da planilha.</p> : (
           <div className="table-wrap">
             <table>
@@ -157,8 +157,8 @@ export async function AdminCatalog() {
         <h2>Nova família</h2>
         <form action={createCategory} className="stack">
           <label>Nome <input name="name" required maxLength={60} /></label>
-          <label className="check"><input type="checkbox" name="wearsOnTrainer" /> Desgasta em rolo (RB14)</label>
-          <p className="muted">Planos padrão (opcional): intervalo em km, em horas ou nos dois (RB10, RB16).</p>
+          <label className="check"><input type="checkbox" name="wearsOnTrainer" /> Desgasta em rolo</label>
+          <p className="muted">Planos padrão (opcional): intervalo em km, em horas ou nos dois.</p>
           <PlanRow i={0} />
           <PlanRow i={1} />
           <button className="button" type="submit">Criar família</button>
