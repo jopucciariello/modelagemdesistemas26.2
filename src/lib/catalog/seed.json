@@ -6290,7 +6290,7 @@
    "model": "Alumínio 27 mm, 28 raios",
    "modality": "MTB",
    "subcategory": "XC / Trail",
-   "details": "Cubos MT410-B; original da Chisel Comp",
+   "details": "Cubos MT410-B; original da Chisel FS Comp",
    "priceMin": null,
    "priceMax": null,
    "plans": [
@@ -6689,7 +6689,7 @@
    "model": "Dropper 30.9 (100 / 125 / 150)",
    "modality": "MTB",
    "subcategory": "XC / Trail",
-   "details": "Original da Specialized Chisel Comp",
+   "details": "Original da Specialized Chisel FS Comp",
    "priceMin": 450,
    "priceMax": 800,
    "plans": [
@@ -7013,7 +7013,7 @@
    "model": "Power Sport",
    "modality": "MTB / Road / Gravel",
    "subcategory": "Original",
-   "details": "Body Geometry; original de Chisel, Epic 8, Tarmac SL8 e Diverge",
+   "details": "Body Geometry; original de Chisel FS, Epic 8, Tarmac SL8 e Diverge",
    "priceMin": null,
    "priceMax": null,
    "plans": []
@@ -7275,7 +7275,7 @@
   {
    "code": "BKE-001",
    "brand": "Specialized",
-   "model": "Chisel Comp (Shimano SLX)",
+   "model": "Chisel FS Comp (Shimano SLX)",
    "version": "Site nov/2026",
    "category": "MTB — XC full",
    "frame": "Alumínio M5, 110 mm",
@@ -7322,7 +7322,7 @@
   {
    "code": "BKE-002",
    "brand": "Specialized",
-   "model": "Chisel Comp (SRAM GX)",
+   "model": "Chisel FS Comp (SRAM GX)",
    "version": "Site nov/2026",
    "category": "MTB — XC full",
    "frame": "Alumínio M5, 110 mm",
@@ -8057,7 +8057,7 @@
   {
    "code": "BKA-010",
    "brand": "Specialized",
-   "model": "Chisel Comp X1",
+   "model": "Chisel Hardtail Comp X1",
    "version": "2019",
    "category": "MTB",
    "frame": "Alumínio M5",
@@ -8076,7 +8076,7 @@
   {
    "code": "BKA-011",
    "brand": "Specialized",
-   "model": "Chisel Comp",
+   "model": "Chisel Hardtail Comp",
    "version": "2020",
    "category": "MTB",
    "frame": "Alumínio M5",
@@ -8086,7 +8086,7 @@
   {
    "code": "BKA-012",
    "brand": "Specialized",
-   "model": "Chisel Comp",
+   "model": "Chisel Hardtail Comp",
    "version": "2021",
    "category": "MTB",
    "frame": "Alumínio Smartweld M5",
@@ -8105,7 +8105,7 @@
   {
    "code": "BKA-013",
    "brand": "Specialized",
-   "model": "Chisel Base",
+   "model": "Chisel Hardtail Base",
    "version": "2021",
    "category": "MTB",
    "frame": "Alumínio Smartweld M5",
