@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import s from "@/styles/oficinas.module.css";
-import { requestWorkshop, addWorkshopService, addWorkshopSlot, markNoticesRead, removeWorkshopService, removeWorkshopSlot, updateWorkshopProfile } from "@/app/actions/workshops";
+import { requestWorkshop, addWorkshopService, markNoticesRead, removeWorkshopService, updateWorkshopProfile } from "@/app/actions/workshops";
 import { Flash, Nav } from "@/components/ui";
 import { prisma } from "@/lib/db";
 import { getCurrentUser, getCurrentWorkshop } from "@/lib/session";
@@ -75,11 +75,9 @@ async function Area({ searchParams }: { searchParams: PageProps<"/oficina">["sea
   }
   const { user, workshop } = owned;
   await connection();
-  const now = new Date();
-  const [services, categories, slots, appointments, notices] = await Promise.all([
+  const [services, categories, appointments, notices] = await Promise.all([
     prisma.workshopService.findMany({ where: { workshopId: workshop.id, active: true }, include: { items: { include: { category: true } } }, orderBy: { name: "asc" } }),
     prisma.category.findMany({ where: { active: true }, select: { id: true, name: true }, orderBy: { name: "asc" } }),
-    prisma.workshopSlot.findMany({ where: { workshopId: workshop.id, startsAt: { gt: now } }, include: { appointments: { select: { status: true } } }, orderBy: { startsAt: "asc" } }),
     prisma.appointment.findMany({
       where: { workshopId: workshop.id, status: { not: "CANCELLED" } },
       include: { slot: true, bike: { select: { name: true } }, user: { select: { name: true } }, service: { select: { name: true } } },
@@ -136,7 +134,7 @@ async function Area({ searchParams }: { searchParams: PageProps<"/oficina">["sea
         <h2>Serviços e níveis de revisão</h2>
         {services.map((s) => (
           <div key={s.id} className="row">
-            <div><strong>{s.name}</strong>{s.description && <span className="muted"> · {s.description}</span>}
+            <div><strong>{s.name}</strong>{s.description && <span className="muted"> · {s.description}</span>}<span className="muted"> · {fmtHours(s.durationMin)}</span>
               {s.items.length > 0 ? <ul>{s.items.map((i) => <li key={i.id}>{i.category.name}{i.resetsWear && <span className="muted"> · zera desgaste</span>}</li>)}</ul>
                 : s.includes && <ul>{s.includes.split("\n").map((i) => <li key={i}>{i}</li>)}</ul>}</div>
             <form action={removeWorkshopService}><input type="hidden" name="id" value={s.id} /><button className="button small" type="submit">Remover</button></form>
@@ -146,6 +144,7 @@ async function Area({ searchParams }: { searchParams: PageProps<"/oficina">["sea
           <div className="row">
             <label>Nome <input name="name" required maxLength={80} placeholder="Ex.: Revisão completa" /></label>
             <label>Descrição <input name="description" maxLength={300} /></label>
+            <label>Duração (horas) <select name="durationHours" defaultValue="1">{[0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 8].map((h) => <option key={h} value={h}>{String(h).replace(".", ",")} h</option>)}</select></label>
           </div>
           <fieldset className="service-items">
             <legend>O que inclui (marque as peças e se a revisão zera o desgaste)</legend>
@@ -161,24 +160,14 @@ async function Area({ searchParams }: { searchParams: PageProps<"/oficina">["sea
       </section>
 
       <section className="card">
-        <h2>Horários disponíveis</h2>
-        <p className="muted">Horário de Brasília. Cada horário recebe um agendamento.</p>
-        {slots.length === 0 ? <p className="muted">Nenhum horário futuro cadastrado.</p> : (
-          <ul>{slots.map((s) => {
-            const taken = s.appointments.some((a) => a.status !== "CANCELLED");
-            return (
-              <li key={s.id}>{formatSlot(s.startsAt)} {taken ? <span className="badge">Agendado</span> : (
-                <form action={removeWorkshopSlot} style={{ display: "inline" }}><input type="hidden" name="id" value={s.id} /><button className="button small" type="submit">Remover</button></form>
-              )}</li>
-            );
-          })}</ul>
-        )}
-        <form action={addWorkshopSlot} className="row">
-          <label>Dia <input name="day" type="date" required /></label>
-          <label>Hora <input name="time" type="time" required /></label>
-          <button className="button small" type="submit">Adicionar horário</button>
-        </form>
+        <h2>Horários de atendimento</h2>
+        <p className="muted">Segunda a sábado, das 8h às 19h (horário de Brasília). O atleta escolhe o horário de início e o serviço ocupa a agenda pela duração cadastrada: um serviço de 2 h marcado às 10h bloqueia das 10h às 12h.</p>
       </section>
     </>
   );
+}
+
+function fmtHours(min: number) {
+  const h = min / 60;
+  return `${Number.isInteger(h) ? h : h.toFixed(1).replace(".", ",")} h`;
 }

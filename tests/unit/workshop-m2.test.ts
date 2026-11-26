@@ -114,3 +114,19 @@ describe("RB21: inviting mechanics", () => {
     expect(canInviteMechanic("dono@x.com", "dono@x.com", "Mec@x.com", ["mec@x.com"])).toBe("duplicate");
   });
 });
+
+describe("RF26: 2 h service on the 8h-19h grid", () => {
+  const grid = [{ weekday: 5, startMin: 8 * 60, endMin: 19 * 60 }]; // Friday
+  const early = new Date("2026-11-19T03:00:00Z"); // Thursday night in São Paulo
+  const at = (hhmm: string) => new Date(`2026-11-20T${hhmm}:00-03:00`);
+  it("a booking at 10h blocks 10h-12h and the service must end by 19h", () => {
+    const busy = [{ startsAt: at("10:00"), endsAt: at("12:00") }];
+    const starts = availableStarts({ hours: grid, durationMin: 120, busy, now: early, days: 3 }).map((d) => d.getTime());
+    expect(starts).toContain(at("08:00").getTime());
+    expect(starts).not.toContain(at("09:00").getTime()); // would end at 11h, overlapping
+    expect(starts).not.toContain(at("11:30").getTime());
+    expect(starts).toContain(at("12:00").getTime());
+    expect(starts).toContain(at("17:00").getTime());
+    expect(starts).not.toContain(at("17:30").getTime()); // would end after 19h
+  });
+});

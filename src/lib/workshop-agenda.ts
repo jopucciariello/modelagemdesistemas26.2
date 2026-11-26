@@ -5,9 +5,12 @@ import { type Coords, sortByDistance } from "@/lib/geo";
 import { sendEmail } from "@/lib/email";
 import { recordVisit, undoVisit } from "@/lib/visit-record";
 import { visitRows } from "@/lib/visit";
-import { availableStarts, canBook, canWorkshopReadHistory, cancellationNotice, isLateCancellation } from "@/lib/workshop";
+import { availableStarts, canBook, type GridHour, canWorkshopReadHistory, cancellationNotice, isLateCancellation } from "@/lib/workshop";
 
 export const AGENDA_DAYS = 14;
+
+/** RF25: when a workshop has not set its own grid, it serves Monday to Saturday, 8h to 19h. */
+export const DEFAULT_GRID: GridHour[] = [1, 2, 3, 4, 5, 6].map((weekday) => ({ weekday, startMin: 8 * 60, endMin: 19 * 60 }));
 
 /** #69: active workshops with their active services, nearest first when `origin` is given. */
 export async function listNearbyWorkshops(origin?: Coords | null) {
@@ -37,7 +40,7 @@ export async function freeStarts(workshopId: string, serviceId: string, now = ne
     startsAt: a.slot.startsAt,
     endsAt: a.endsAt ?? new Date(a.slot.startsAt.getTime() + (a.service?.durationMin ?? 60) * 60_000),
   }));
-  return availableStarts({ hours, durationMin: service.durationMin, busy, now, days: AGENDA_DAYS });
+  return availableStarts({ hours: hours.length > 0 ? hours : DEFAULT_GRID, durationMin: service.durationMin, busy, now, days: AGENDA_DAYS });
 }
 
 export type BookResult = { ok: true; appointmentId: string } | { ok: false; error: "invalid" | "unavailable" };
