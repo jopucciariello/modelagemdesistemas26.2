@@ -1,4 +1,5 @@
 // RF16, RF17, RB07: pure rules of the parts market (no DB, no UI). M3: contact, reports, dream-by-model.
+import { checkPhoto } from "@/lib/bike-photo";
 
 export const MAX_PHOTOS = 3;
 
@@ -66,6 +67,16 @@ export function joinPhotos(urls: string[]): string {
   return urls.join("\n");
 }
 
+/** RF16: new uploads plus the photos already kept (links and uploaded) cannot pass 3; each upload must be a valid image. */
+export function checkNewPhotos(keptCount: number, files: Uint8Array[]): { ok: true } | { ok: false; error: string } {
+  if (keptCount + files.length > MAX_PHOTOS) return { ok: false, error: "fotos_demais" };
+  for (const bytes of files) {
+    const c = checkPhoto(bytes);
+    if (!c.ok) return { ok: false, error: c.error };
+  }
+  return { ok: true };
+}
+
 export type MarketQuery = { categoria?: string; condicao?: string; min?: string; max?: string; vendedor?: string };
 
 export type MarketWhere = {
@@ -100,6 +111,9 @@ export const ERROR_TEXT: Record<string, string> = {
   preco_invalido: "Informe um preço maior que zero, como R$ 1.234,50.",
   fotos_demais: "Use no máximo 3 fotos.",
   foto_invalida: "As fotos precisam ser links http ou https.",
+  foto_vazia: "Escolha uma imagem válida.",
+  foto_grande: "Cada foto pode ter no máximo 1 MB.",
+  foto_tipo: "Use fotos JPG, PNG ou WebP.",
   km_so_usada: "A km de uso só vale para peça usada.",
   km_invalida: "Informe a km de uso como um número válido.",
   anuncio_nao_encontrado: "Anúncio não encontrado ou não é seu.",

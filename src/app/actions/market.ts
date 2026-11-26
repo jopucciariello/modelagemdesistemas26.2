@@ -6,8 +6,9 @@ import { optNumber, text } from "@/lib/forms";
 import { notifyDreamMatches } from "@/lib/dreams";
 import { resolvePicked } from "@/lib/catalog/pick";
 import { readPicked } from "@/lib/picker";
+import { checkPhoto } from "@/lib/bike-photo";
 import { requireUser } from "@/lib/guards";
-import { joinPhotos, parsePriceToCents, validateListing } from "@/lib/market";
+import { checkNewPhotos, joinPhotos, parsePriceToCents, validateListing } from "@/lib/market";
 
 function readListing(form: FormData) {
   const raw = text(form, "condition");
@@ -25,7 +26,23 @@ function readListing(form: FormData) {
   };
 }
 
-async function checked(form: FormData, back: string, userId: string) {
+/** RF16: uploaded files from the form (empty file inputs are ignored). */
+async function readFiles(form: FormData): Promise<Uint8Array[]> {
+  const files = form.getAll("photoFiles").filter((f): f is File => f instanceof File && f.size > 0);
+  return Promise.all(files.map(async (f) => new Uint8Array(await f.arrayBuffer())));
+}
+
+/** Saves the new uploads after the listing exists (position follows the kept uploads). */
+async function saveFiles(listingId: string, files: Uint8Array[]) {
+  let position = await prisma.listingPhoto.count({ where: { listingId } });
+  for (const bytes of files) {
+    const check = checkPhoto(bytes);
+    if (!check.ok) continue;
+    await prisma.listingPhoto.create({ data: { listingId, position: position++, contentType: check.type, data: Buffer.from(bytes) } });
+  }
+}
+
+async function checked(form: FormData, back: string, userId: string, keptUploads = 0) {
   const sep = back.includes("?") ? "&" : "?";
   const input = readListing(form);
   const picked = readPicked(form);
@@ -37,9 +54,13 @@ async function checked(form: FormData, back: string, userId: string) {
   input.categoryId = picked!.categoryId;
   const result = validateListing(input);
   if (!result.ok) redirect(`${back}${sep}erro=${result.error}`);
+  const files = await readFiles(form);
+  const photoCheck = checkNewPhotos(keptUploads + input.photoUrls.length, files);
+  if (!photoCheck.ok) redirect(`${back}${sep}erro=${photoCheck.error}`);
   const category = await prisma.category.findFirst({ where: { id: input.categoryId, active: true } });
   if (!category) redirect(`${back}${sep}erro=familia_invalida`);
   return {
+    files,
     title: input.title,
     categoryId: input.categoryId,
     componentId: picked!.componentId,
@@ -60,8 +81,9 @@ async function ownListing(userId: string, id: string) {
 
 export async function createListing(form: FormData) {
   const user = await requireUser();
-  const data = await checked(form, "/mercado/novo", user.id);
+  const { files, ...data } = await checked(form, "/mercado/novo", user.id);
   const listing = await prisma.listing.create({ data: { ...data, sellerId: user.id } });
+  await saveFiles(listing.id, files);
   // RF21: tell the owners of matching dreams; a notification failure must not lose the listing.
   await notifyDreamMatches(listing.id).catch((e) => console.error("notifyDreamMatches failed", e));
   redirect(`/mercado/${listing.id}?ok=publicado`);
@@ -71,8 +93,13 @@ export async function updateListing(form: FormData) {
   const user = await requireUser();
   const listing = await ownListing(user.id, text(form, "id", 40));
   if (listing.status !== "ACTIVE") redirect("/mercado/meus?erro=anuncio_nao_encontrado");
-  const data = await checked(form, `/mercado/meus?editar=${listing.id}`, user.id);
+  // RF16: the author may drop uploaded photos while editing; what is left counts toward the limit of 3.
+  const removeIds = form.getAll("removePhoto").map(String);
+  const kept = await prisma.listingPhoto.count({ where: { listingId: listing.id, id: { notIn: removeIds } } });
+  const { files, ...data } = await checked(form, `/mercado/meus?editar=${listing.id}`, user.id, kept);
   await prisma.listing.update({ where: { id: listing.id }, data });
+  if (removeIds.length) await prisma.listingPhoto.deleteMany({ where: { listingId: listing.id, id: { in: removeIds } } });
+  await saveFiles(listing.id, files);
   redirect("/mercado/meus?ok=editado");
 }
 

@@ -1,6 +1,6 @@
 // RF16, RF17, RB07: listing validation, price handling and showcase filters, without DB or UI (RNF08).
 import { describe, expect, it } from "vitest";
-import { buildListingFilter, formatBRL, parsePriceToCents, splitPhotos, validateListing, type ListingInput } from "@/lib/market";
+import { checkNewPhotos, buildListingFilter, formatBRL, parsePriceToCents, splitPhotos, validateListing, type ListingInput } from "@/lib/market";
 
 const valid = (over: Partial<ListingInput> = {}): ListingInput => ({
   title: "Cassete 11-34",
@@ -73,5 +73,20 @@ describe("RF17: showcase filter", () => {
     expect(buildListingFilter({ vendedor: "loja" }).seller).toEqual({ merchant: { isNot: null } });
     expect(buildListingFilter({ vendedor: "atleta" }).seller).toEqual({ merchant: { is: null } });
     expect(buildListingFilter({ vendedor: "outro" }).seller).toBeUndefined();
+  });
+});
+
+describe("RF16: seller photo uploads", () => {
+  const png = new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0]);
+  it("accepts up to 3 valid images in total", () => {
+    expect(checkNewPhotos(0, [png, png, png]).ok).toBe(true);
+    expect(checkNewPhotos(1, [png, png]).ok).toBe(true);
+  });
+  it("refuses more than 3 photos counting the kept ones", () => {
+    expect(checkNewPhotos(2, [png, png])).toEqual({ ok: false, error: "fotos_demais" });
+  });
+  it("refuses files that are not images or are too large", () => {
+    expect(checkNewPhotos(0, [new Uint8Array([1, 2, 3])])).toEqual({ ok: false, error: "foto_tipo" });
+    expect(checkNewPhotos(0, [new Uint8Array(1_000_001)])).toEqual({ ok: false, error: "foto_grande" });
   });
 });
