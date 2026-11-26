@@ -121,7 +121,7 @@ async function Dashboard({ userId }: { userId: string }) {
             <span className="bike-summary-text">
               <strong>{bike.name}</strong>
               <span className="muted">
-                {bikeRows.length === 0 ? "Sem peças instaladas" : alerts === 0 ? "Tudo em dia" : `${alerts} ${alerts === 1 ? "alerta" : "alertas"}`}
+                {km(bike.totalKm)} no total · {bikeRows.length === 0 ? "Sem peças instaladas" : alerts === 0 ? "Tudo em dia" : `${alerts} ${alerts === 1 ? "alerta" : "alertas"}`}
               </span>
             </span>
             {bikeRows.length > 0 && <span className={`dot ${bikeDue > 0 ? "dot-due" : alerts > 0 ? "dot-near" : "dot-ok"}`} aria-hidden="true" />}
