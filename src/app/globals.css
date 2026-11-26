@@ -450,3 +450,9 @@ form.stack.fill input:not([type="checkbox"]), form.stack.fill select, form.stack
   .wear-bar > span { transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
   html { scroll-behavior: smooth; }
 }
+
+/* RF25: service items picker (category + "zera desgaste"). */
+.service-items { border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem 0.75rem; display: flex; flex-direction: column; gap: 0.35rem; }
+.service-items legend { font-size: 0.82rem; font-weight: 600; color: var(--muted); padding: 0 0.3rem; }
+.service-item { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem; }
+.service-item input[type="checkbox"] { width: auto; }

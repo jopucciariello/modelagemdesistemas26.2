@@ -3,7 +3,7 @@
 import { prisma } from "@/lib/db";
 import { type Coords, sortByDistance } from "@/lib/geo";
 import { sendEmail } from "@/lib/email";
-import { recordVisit } from "@/lib/visit-record";
+import { recordVisit, undoVisit } from "@/lib/visit-record";
 import { visitRows } from "@/lib/visit";
 import { availableStarts, canBook, canWorkshopReadHistory, cancellationNotice, isLateCancellation } from "@/lib/workshop";
 
@@ -150,6 +150,18 @@ export async function concludeFor(workshop: { id: string; name: string }, appoin
   });
   if (result === null) return { ok: false, error: "not_scheduled" };
   return result.ok ? { ok: true } : { ok: false, error: result.error };
+}
+
+/** RF28: deletes a concluded service: undoes its effects on the bike and reopens the appointment. */
+export async function undoConclusion(workshop: { id: string }, appointmentId: string): Promise<{ ok: boolean }> {
+  const appt = await prisma.appointment.findFirst({ where: { id: appointmentId, workshopId: workshop.id, status: "COMPLETED" } });
+  if (!appt) return { ok: false };
+  await prisma.$transaction(async (tx) => {
+    // The appointment points to the visit; release it first, then undo the visit.
+    await tx.appointment.update({ where: { id: appt.id }, data: { status: "SCHEDULED", completedAt: null, visitId: null } });
+    if (appt.visitId) await undoVisit(tx, appt.visitId);
+  });
+  return { ok: true };
 }
 
 /** RF27, RB09, RNF03: what the workshop may see of an appointment (bike, and the history only if shared). */

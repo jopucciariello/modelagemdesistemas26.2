@@ -5,8 +5,8 @@ import { connection } from "next/server";
 import { prisma } from "@/lib/db";
 import { text } from "@/lib/forms";
 import { requireAdmin, requireUser, requireWorkshop, requireWorkshopOwner } from "@/lib/guards";
-import { bookAt, cancelFor, concludeFor } from "@/lib/workshop-agenda";
-import { canBook, canDecideRequest, canInviteMechanic, cleanWorkshopRequest, parseIncludes, parseSlotStart } from "@/lib/workshop";
+import { bookAt, cancelFor, concludeFor, undoConclusion } from "@/lib/workshop-agenda";
+import { canBook, canDecideRequest, canInviteMechanic, cleanWorkshopRequest, parseSlotStart } from "@/lib/workshop";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -92,8 +92,19 @@ export async function addWorkshopService(form: FormData) {
   const { workshop } = await requireWorkshop();
   const name = text(form, "name", 80);
   if (!name) redirect("/oficina?erro=servico_invalido");
-  const includes = parseIncludes(String(form.get("includes") ?? "")).join("\n");
-  await prisma.workshopService.create({ data: { workshopId: workshop.id, name, description: text(form, "description", 300) || null, includes } });
+  // RF25, RF28: the service covers catalog categories; each may restart the wear counter on conclusion.
+  const cats = await prisma.category.findMany({ where: { active: true }, select: { id: true, name: true }, orderBy: { name: "asc" } });
+  const picked = cats.filter((c) => form.get(`cat_${c.id}`) === "on");
+  const includes = picked.map((c) => c.name).join("\n");
+  await prisma.workshopService.create({
+    data: {
+      workshopId: workshop.id,
+      name,
+      description: text(form, "description", 300) || null,
+      includes,
+      items: { create: picked.map((c) => ({ categoryId: c.id, resetsWear: form.get(`reset_${c.id}`) === "on" })) },
+    },
+  });
   redirect("/oficina?ok=servico");
 }
 
@@ -173,6 +184,13 @@ export async function concludeAppointment(form: FormData) {
   if (result.ok) redirect("/oficina?ok=concluido");
   if (result.error === "not_found" || result.error === "not_scheduled") redirect("/oficina?erro=atendimento_invalido");
   redirect(`/oficina/atendimentos/${id}?erro=${result.error}`);
+}
+
+export async function deleteConclusion(form: FormData) {
+  const { workshop } = await requireWorkshop();
+  const id = text(form, "id", 40);
+  const result = await undoConclusion(workshop, id);
+  redirect(result.ok ? `/oficina/atendimentos/${id}?ok=revisao_excluida` : "/oficina?erro=atendimento_invalido");
 }
 
 // ---- RF26, RF27: book on the weekly grid (duration-aware), athlete chooses to share history ----
