@@ -3,10 +3,11 @@ import Link from "next/link";
 import { Suspense } from "react";
 import s from "@/styles/oficinas.module.css";
 import { connection } from "next/server";
-import { bookAppointment } from "@/app/actions/workshops";
+import { bookOnGrid } from "@/app/actions/workshops";
 import { Flash, Nav } from "@/components/ui";
 import { prisma } from "@/lib/db";
 import { requireUser } from "@/lib/guards";
+import { freeStarts } from "@/lib/workshop-agenda";
 import { formatSlot } from "@/lib/workshop";
 
 const ERR = {
@@ -28,18 +29,21 @@ export default function WorkshopPage(props: PageProps<"/oficinas/[id]">) {
 async function Detail({ params, searchParams }: PageProps<"/oficinas/[id]">) {
   const user = await requireUser();
   const { id } = await params;
-  const { erro } = await searchParams;
+  const { erro, servico } = await searchParams;
   await connection();
   const workshop = await prisma.workshop.findFirst({
     where: { id, active: true },
     include: {
       services: { where: { active: true }, orderBy: { name: "asc" } },
-      slots: { where: { startsAt: { gt: new Date() }, appointments: { none: { status: { not: "CANCELLED" } } } }, orderBy: { startsAt: "asc" }, take: 60 },
     },
   });
   const bikes = await prisma.bike.findMany({ where: { userId: user.id, archivedAt: null }, orderBy: { name: "asc" } });
   if (!workshop) return <><Nav /><p className="alert">Oficina não encontrada. <Link href="/oficinas">Voltar</Link></p></>;
-  const canBook = bikes.length > 0 && workshop.services.length > 0 && workshop.slots.length > 0;
+  // RF26: the athlete picks the service first; the free starts depend on its duration.
+  const chosen = workshop.services.find((x) => x.id === (typeof servico === "string" ? servico : "")) ?? null;
+  const starts = chosen ? await freeStarts(workshop.id, chosen.id) : [];
+  const endOf = (d: Date, min: number) => new Date(d.getTime() + min * 60_000);
+  const hhmm = (d: Date) => d.toLocaleTimeString("pt-BR", { timeZone: "America/Sao_Paulo", hour: "2-digit", minute: "2-digit" });
 
   return (
     <>
@@ -63,20 +67,31 @@ async function Detail({ params, searchParams }: PageProps<"/oficinas/[id]">) {
       <section className="card">
         <h2>Agendar revisão</h2>
         {bikes.length === 0 && <p className="alert">Cadastre uma bike antes de agendar. <Link href="/configuracoes">Adicionar bike</Link></p>}
-        {!canBook ? <p className="muted">Sem horários livres ou serviços no momento.</p> : (
-          <form action={bookAppointment}>
+        {workshop.services.length === 0 ? <p className="muted">Nenhum serviço disponível no momento.</p> : (
+          <form method="get">
+            <div className="row">
+              <label>Serviço <select name="servico" defaultValue={chosen?.id ?? ""} required>
+                <option value="" disabled>Escolha</option>
+                {workshop.services.map((x) => <option key={x.id} value={x.id}>{x.name} ({x.durationMin / 60} h)</option>)}
+              </select></label>
+              <button className="button small" type="submit">Ver horários</button>
+            </div>
+          </form>
+        )}
+        {chosen && (starts.length === 0 || bikes.length === 0 ? <p className="muted">{bikes.length === 0 ? "Cadastre uma bike para agendar." : "Sem horários livres para esse serviço nos próximos dias."}</p> : (
+          <form action={bookOnGrid} className="stack">
             <input type="hidden" name="workshopId" value={workshop.id} />
+            <input type="hidden" name="serviceId" value={chosen.id} />
             <div className="row">
               <label>Bike <select name="bikeId" required>{bikes.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}</select></label>
-              <label>Serviço <select name="serviceId" required>{workshop.services.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}</select></label>
-              <label>Horário <select name="slotId" required>{workshop.slots.map((s) => <option key={s.id} value={s.id}>{formatSlot(s.startsAt)}</option>)}</select></label>
+              <label>Horário <select name="startsAt" required>{starts.map((d) => <option key={d.getTime()} value={d.toISOString()}>{formatSlot(d)} às {hhmm(endOf(d, chosen.durationMin))}</option>)}</select></label>
             </div>
-            <label>
-              <input type="checkbox" name="consent" /> Autorizo a oficina a ver os dados da bike, as peças instaladas e o histórico de manutenção enquanto o agendamento estiver ativo ou concluído.
+            <label className="check">
+              <input type="checkbox" name="shareHistory" /> Compartilhar com a oficina os dados da bike, as peças instaladas e o histórico de manutenção enquanto o agendamento estiver ativo ou concluído (opcional).
             </label>
             <button className="button" type="submit">Agendar</button>
           </form>
-        )}
+        ))}
       </section>
     </>
   );

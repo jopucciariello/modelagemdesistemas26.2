@@ -96,10 +96,15 @@ export async function addWorkshopService(form: FormData) {
   const cats = await prisma.category.findMany({ where: { active: true }, select: { id: true, name: true }, orderBy: { name: "asc" } });
   const picked = cats.filter((c) => form.get(`cat_${c.id}`) === "on");
   const includes = picked.map((c) => c.name).join("\n");
+  // RF25, RF26: duration in hours (multiple of 15 min, 15 min to 12 h) blocks that much of the agenda.
+  const hours = Number(String(form.get("durationHours") ?? "1").replace(",", "."));
+  const durationMin = Math.round(hours * 4) * 15;
+  if (!Number.isFinite(hours) || durationMin < 15 || durationMin > 720) redirect("/oficina?erro=servico_invalido");
   await prisma.workshopService.create({
     data: {
       workshopId: workshop.id,
       name,
+      durationMin,
       description: text(form, "description", 300) || null,
       includes,
       items: { create: picked.map((c) => ({ categoryId: c.id, resetsWear: form.get(`reset_${c.id}`) === "on" })) },
