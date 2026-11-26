@@ -8,7 +8,7 @@ export async function AdminWorkshops() {
   const requests = all.filter((w) => w.status === "PENDING");
   return (
     <section className="card">
-      <h2>Oficinas (Fase 3)</h2>
+      <h2>Oficinas</h2>
       <p className="muted">Quem entra com o e-mail Google cadastrado acessa a área /oficina e edita só essa oficina.</p>
       {requests.length > 0 && (
         <>

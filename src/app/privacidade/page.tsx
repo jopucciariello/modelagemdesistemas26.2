@@ -3,7 +3,7 @@ export const metadata = { title: "Privacidade — GearLog" };
 
 export default function PrivacidadePage() {
   return (
-    <main>
+    <main className="narrow">
       <h1>Política de privacidade</h1>
       <p>Atualizada em 18/11/2026. O GearLog calcula o desgaste das peças da sua bike a partir dos seus pedais, ajuda a agendar revisões em oficinas e a negociar peças. Esta página diz o que guardamos, para quê e como apagar.</p>
       <h2>O que guardamos</h2>

@@ -19,7 +19,7 @@ const ERR = { componente: "Escolha o componente, a marca e o modelo.", peca_com_
 
 export default function VerifyPage(props: PageProps<"/bikes/[id]/verificar">) {
   return (
-    <main className="wide pf">
+    <main className="pf">
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <Verify {...props} />
       </Suspense>

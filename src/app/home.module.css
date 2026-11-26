@@ -2,7 +2,7 @@
  * Refinements for home / painel (the `/` route) on top of the global portfolio theme.
  * Uses only the global CSS variables, so light and dark (html[data-theme]) both work.
  */
-.pf { max-width: 62rem; gap: 1.75rem; }
+.pf { gap: 1.75rem; }
 
 /* Titles in the display font, as in the portfolio */
 .pf :global(.page-title h1) {

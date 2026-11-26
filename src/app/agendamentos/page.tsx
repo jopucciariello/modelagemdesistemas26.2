@@ -14,7 +14,7 @@ const STATUS = { SCHEDULED: "Agendado", COMPLETED: "Concluído", CANCELLED: "Can
 
 export default function AppointmentsPage(props: PageProps<"/agendamentos">) {
   return (
-    <main className="wide">
+    <main>
       <header><h1>Meus agendamentos</h1></header>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <List searchParams={props.searchParams} />

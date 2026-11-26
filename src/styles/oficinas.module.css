@@ -33,7 +33,10 @@
   border-radius: var(--of-radius);
   box-shadow: none;
 }
-.root :global(.nav) { background: var(--of-surface); border-color: var(--of-line); border-radius: 999px; box-shadow: none; }
+/* The shared top nav keeps its global style on every page; only undo the accent link color set above. */
+.root :global(.nav) a { color: var(--muted); }
+.root :global(.nav) a:hover { color: var(--foreground); text-decoration: none; }
+.root :global(.nav) a:global([aria-current="page"]) { color: var(--foreground); }
 .root :global(.alert) { background: transparent; color: var(--of-accent); border: 1px solid var(--of-accent); border-radius: var(--of-radius); }
 .root :global(.badge) { background: transparent; color: var(--of-accent); border: 1px solid var(--of-accent); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.68rem; }
 

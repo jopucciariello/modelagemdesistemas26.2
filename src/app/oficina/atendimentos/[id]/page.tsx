@@ -28,7 +28,7 @@ function ConditionSelect({ name }: { name: string }) {
 
 export default function VisitPage(props: PageProps<"/oficina/atendimentos/[id]">) {
   return (
-    <main className={`wide ${s.root}`}>
+    <main className={`${s.root}`}>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <Detail {...props} />
       </Suspense>

@@ -16,7 +16,7 @@ const STATUS = { ACTIVE: "Ativo", SOLD: "Vendido", REMOVED: "Encerrado" } as con
 
 export default function MyListingsPage(props: PageProps<"/mercado/meus">) {
   return (
-    <main className={`wide ${s.root}`}>
+    <main className={`${s.root}`}>
       <header className={s.head}>
         <span className={s.eyebrow}>Marketplace</span>
         <h1 className={s.title}>Meus anúncios</h1>

@@ -9,7 +9,7 @@ import { requireUser } from "@/lib/guards";
 
 export default function WorkshopsPage(props: PageProps<"/oficinas">) {
   return (
-    <main className={`wide ${s.root}`}>
+    <main className={`${s.root}`}>
       <header><h1>Oficinas</h1></header>
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <List searchParams={props.searchParams} />

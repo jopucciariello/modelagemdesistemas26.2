@@ -60,7 +60,7 @@ const EVENT_LABEL = { REPLACEMENT: "Troca", SERVICE: "Revisão", MANUAL: "Manute
 
 export default function BikePage(props: PageProps<"/bikes/[id]">) {
   return (
-    <main className="wide pf">
+    <main className="pf">
       <Suspense fallback={<p className="muted">Carregando…</p>}>
         <Bike {...props} />
       </Suspense>

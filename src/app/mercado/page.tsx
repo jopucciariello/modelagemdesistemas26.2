@@ -13,7 +13,7 @@ const one = (v: string | string[] | undefined) => (typeof v === "string" ? v : u
 
 export default function MarketPage(props: PageProps<"/mercado">) {
   return (
-    <main className={`wide ${s.root}`}>
+    <main className={`${s.root}`}>
       <header className={s.head}>
         <span className={s.eyebrow}>GearLog · Marketplace</span>
         <h1 className={s.title}>Mercado de peças</h1>
